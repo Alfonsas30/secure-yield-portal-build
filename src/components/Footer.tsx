@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { Banknote, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,9 +11,6 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="bg-gradient-to-r from-blue-600 to-green-600 p-2 rounded-lg">
-                <Banknote className="h-6 w-6 text-white" />
-              </div>
               <span className="font-bold text-xl">LTB Bankas</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
