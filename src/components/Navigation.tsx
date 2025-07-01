@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, Banknote, Sparkles } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,10 +48,12 @@ const Navigation = () => {
           : 'bg-white/80 backdrop-blur-sm border-b border-slate-100'
       }`}>
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-2 group cursor-pointer">
-            <div className="bg-gradient-to-r from-blue-600 to-green-600 p-2 rounded-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg animate-pulse-glow">
-              <Banknote className="h-6 w-6 text-white transition-transform duration-300 group-hover:rotate-12" />
-            </div>
+          <div className="flex items-center space-x-3 group cursor-pointer">
+            <img 
+              src="/lovable-uploads/f185e86a-c06e-471b-b66e-a92de2d6655b.png" 
+              alt="LTB Bankas" 
+              className="h-8 w-auto transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
+            />
             <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
               LTB Bankas
             </span>
