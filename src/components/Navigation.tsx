@@ -3,13 +3,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, Sparkles, Banknote } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [logoError, setLogoError] = useState(false);
 
   const menuItems = [
     { href: "#paslaugos", label: "Paslaugos" },
@@ -33,38 +32,6 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLogoError = () => {
-    console.log("Logo failed to load, using fallback");
-    console.log("Attempted logo path: /lovable-uploads/421e54c9-1500-44c4-9365-34245fe9b63a.png");
-    setLogoError(true);
-  };
-
-  const handleLogoLoad = () => {
-    console.log("Logo loaded successfully");
-  };
-
-  // SVG Logotipo komponentas
-  const LogoSVG = () => (
-    <svg 
-      width="56" 
-      height="56" 
-      viewBox="0 0 56 56" 
-      className="h-10 md:h-14 w-10 md:w-14 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
-    >
-      <defs>
-        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#2563eb" />
-          <stop offset="100%" stopColor="#16a34a" />
-        </linearGradient>
-      </defs>
-      <rect width="56" height="56" rx="12" fill="url(#logoGradient)" />
-      <circle cx="28" cy="20" r="8" fill="white" opacity="0.9" />
-      <rect x="16" y="32" width="24" height="3" rx="1.5" fill="white" opacity="0.9" />
-      <rect x="16" y="38" width="18" height="3" rx="1.5" fill="white" opacity="0.7" />
-      <rect x="16" y="44" width="12" height="3" rx="1.5" fill="white" opacity="0.5" />
-    </svg>
-  );
-
   return (
     <>
       {/* Scroll progress indikatorius */}
@@ -82,17 +49,6 @@ const Navigation = () => {
       }`}>
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3 group cursor-pointer">
-            {!logoError ? (
-              <img 
-                src="/lovable-uploads/421e54c9-1500-44c4-9365-34245fe9b63a.png"
-                alt="LTB Bank" 
-                className="h-10 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
-                onError={handleLogoError}
-                onLoad={handleLogoLoad}
-              />
-            ) : (
-              <LogoSVG />
-            )}
             <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
               LTB Bankas
             </span>
