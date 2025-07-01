@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="font-bold text-xl">LTB Bankas</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
-              Pirmasis Lietuvoje bankas, mokantis palūkanas kasdien. Saugus, paprastas ir pelningas taupymas.
+              Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.
             </p>
             <div className="flex space-x-4">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">

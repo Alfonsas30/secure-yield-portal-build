@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Shield, Zap, Coins, Banknote, Star, Sparkles } from "lucide-react";
@@ -68,8 +67,8 @@ const Hero = () => {
         
         <div className="animate-slide-in-right">
           <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Pirmasis Lietuvoje bankas, mokantis palūkanas kasdien. 
-            Jokių ataskaičių, jokių slepiamų mokesčių - tik saugus ir pelningas taupymas.
+            Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. 
+            Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.
           </p>
         </div>
 
