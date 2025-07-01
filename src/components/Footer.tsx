@@ -1,4 +1,3 @@
-
 import { Separator } from "@/components/ui/separator";
 import { Banknote, Mail, Phone, MapPin } from "lucide-react";
 
@@ -15,7 +14,7 @@ const Footer = () => {
               <div className="bg-gradient-to-r from-blue-600 to-green-600 p-2 rounded-lg">
                 <Banknote className="h-6 w-6 text-white" />
               </div>
-              <span className="font-bold text-xl">InnoBank</span>
+              <span className="font-bold text-xl">LTB Bankas</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
               Pirmasis Lietuvoje bankas, mokantis palūkanas kasdien. Saugus, paprastas ir pelningas taupymas.
@@ -71,7 +70,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-slate-400 text-sm">
-            © {currentYear} InnoBank. Visos teisės šzasaugotos.
+            © {currentYear} LTB Bankas. Visos teisės šzasaugotos.
           </div>
           
           <div className="flex items-center space-x-6 text-sm text-slate-400">
@@ -83,7 +82,7 @@ const Footer = () => {
 
         <div className="mt-8 p-4 bg-slate-800 rounded-lg">
           <p className="text-xs text-slate-400 text-center leading-relaxed">
-            <strong>Svarbi informacija:</strong> InnoBank yra licencijuotas kredito institucijos bankas, prižiūrimas Lietuvos banko. 
+            <strong>Svarbi informacija:</strong> LTB Bankas yra licencijuotas kredito institucijos bankas, prižiūrimas Lietuvos banko. 
             Indėliai apdrausti pagal ES direktyvas iki 100,000 € per klientą. Palūkanų dydis priklauso nuo rinkos sąlygų ir gali keistis. 
             Prieš priimant sprendimus konsultuokitės su mūsų ekspertais.
           </p>

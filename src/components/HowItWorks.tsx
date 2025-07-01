@@ -46,7 +46,7 @@ const HowItWorks = () => {
             Kaip tai veikia?
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Pradėti taupyti su InnoBank yra paprasta ir greitai. Štai kaip tai veikia.
+            Pradėti taupyti su LTB Bankas yra paprasta ir greitai. Štai kaip tai veikia.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const HowItWorks = () => {
               Pasiruošę pradėti taupyti?
             </h3>
             <p className="text-slate-600 mb-6 text-lg">
-              Prisijunkite prie tūkstančių klientų, kurie jau uždirba su InnoBank
+              Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg">

@@ -57,7 +57,7 @@ const Services = () => {
             Mūsų paslaugos
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            Kodėl rinktis InnoBank?
+            Kodėl rinktis LTB Bankas?
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.

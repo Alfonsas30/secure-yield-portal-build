@@ -36,7 +36,7 @@ const FAQ = () => {
     },
     {
       question: "Kas nutiks, jei bankrotuosite?",
-      answer: "InnoBank yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs."
+      answer: "LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs."
     }
   ];
 
@@ -52,7 +52,7 @@ const FAQ = () => {
             Turite klausimų?
           </h2>
           <p className="text-xl text-slate-600">
-            Štai atsakymai į dažniausiai užduodamus klausimus apie InnoBank paslaugas
+            Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas
           </p>
         </div>
 

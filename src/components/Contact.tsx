@@ -147,8 +147,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">El. paštas</h4>
-                      <p className="opacity-90">info@innobank.lt</p>
-                      <p className="opacity-90">support@innobank.lt</p>
+                      <p className="opacity-90">info@ltb.lt</p>
+                      <p className="opacity-90">support@ltb.lt</p>
                     </div>
                   </div>
 

@@ -22,7 +22,7 @@ const Navigation = () => {
           <div className="bg-gradient-to-r from-blue-600 to-green-600 p-2 rounded-lg">
             <Banknote className="h-6 w-6 text-white" />
           </div>
-          <span className="font-bold text-xl text-slate-900">InnoBank</span>
+          <span className="font-bold text-xl text-slate-900">LTB Bankas</span>
         </div>
 
         {/* Desktop Navigation */}
