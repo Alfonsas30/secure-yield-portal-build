@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -52,7 +51,7 @@ const Navigation = () => {
             <img 
               src="/lovable-uploads/f185e86a-c06e-471b-b66e-a92de2d6655b.png" 
               alt="LTB Bankas" 
-              className="h-8 w-auto transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
+              className="h-8 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
             />
             <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
               LTB Bankas
