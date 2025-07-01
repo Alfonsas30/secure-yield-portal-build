@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, Sparkles } from "lucide-react";
+import { Menu, Sparkles, Banknote } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   const menuItems = [
     { href: "#paslaugos", label: "Paslaugos" },
@@ -31,6 +32,11 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLogoError = () => {
+    console.log("Logo failed to load, using fallback");
+    setLogoError(true);
+  };
+
   return (
     <>
       {/* Scroll progress indikatorius */}
@@ -48,11 +54,18 @@ const Navigation = () => {
       }`}>
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3 group cursor-pointer">
-            <img 
-              src="/lovable-uploads/f185e86a-c06e-471b-b66e-a92de2d6655b.png" 
-              alt="LTB Bankas" 
-              className="h-8 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
-            />
+            {!logoError ? (
+              <img 
+                src="/lovable-uploads/f185e86a-c06e-471b-b66e-a92de2d6655b.png" 
+                alt="LTB Bankas" 
+                className="h-8 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
+                onError={handleLogoError}
+              />
+            ) : (
+              <div className="h-8 md:h-12 w-8 md:w-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg">
+                <Banknote className="h-4 md:h-6 w-4 md:w-6 text-white" />
+              </div>
+            )}
             <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
               LTB Bankas
             </span>
