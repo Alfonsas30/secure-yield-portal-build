@@ -56,9 +56,9 @@ const Navigation = () => {
           <div className="flex items-center space-x-3 group cursor-pointer">
             {!logoError ? (
               <img 
-                src="/lovable-uploads/f185e86a-c06e-471b-b66e-a92de2d6655b.png" 
-                alt="LTB Bankas" 
-                className="h-8 md:h-12 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
+                src="/lovable-uploads/f4a1502a-7d5b-446d-ad34-6015cfbf251d.png" 
+                alt="LTB Bank" 
+                className="h-8 md:h-12 w-8 md:w-12 object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
                 onError={handleLogoError}
               />
             ) : (
