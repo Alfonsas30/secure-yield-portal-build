@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -35,7 +36,12 @@ const Navigation = () => {
 
   const handleLogoError = () => {
     console.log("Logo failed to load, using fallback");
+    console.log("Attempted logo path: /logo.png");
     setLogoError(true);
+  };
+
+  const handleLogoLoad = () => {
+    console.log("Logo loaded successfully");
   };
 
   return (
@@ -57,10 +63,11 @@ const Navigation = () => {
           <div className="flex items-center space-x-3 group cursor-pointer">
             {!logoError ? (
               <img 
-                src="/lovable-uploads/421e54c9-1500-44c4-9365-34245fe9b63a.png" 
+                src="/logo.png"
                 alt="LTB Bank" 
                 className="h-10 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
                 onError={handleLogoError}
+                onLoad={handleLogoLoad}
               />
             ) : (
               <div className="h-10 md:h-14 w-10 md:w-14 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg">
