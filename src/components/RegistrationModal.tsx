@@ -13,24 +13,16 @@ import { supabase } from "@/integrations/supabase/client";
 interface RegistrationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onRequestDiscount: () => void;
 }
 
-export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: RegistrationModalProps) {
+export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    accountType: "personal" as "personal" | "company",
-    discountCode: ""
+    accountType: "personal" as "personal" | "company"
   });
-  const [discountInfo, setDiscountInfo] = useState<{
-    valid: boolean;
-    discount_percent: number;
-    message: string;
-  } | null>(null);
   const [loading, setLoading] = useState(false);
-  const [validatingCode, setValidatingCode] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
 
@@ -71,52 +63,10 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
 
   const originalPrice = prices[formData.accountType];
   
-  // Apply automatic 50% campaign discount if active and no manual discount code
-  const automaticDiscount = isCampaignActive && !discountInfo?.valid ? 50 : 0;
-  const manualDiscount = discountInfo?.valid ? discountInfo.discount_percent : 0;
-  const totalDiscount = Math.max(automaticDiscount, manualDiscount);
-  
+  // Apply automatic 50% campaign discount if active
+  const totalDiscount = isCampaignActive ? 50 : 0;
   const discountAmount = (originalPrice * totalDiscount / 100);
   const finalPrice = originalPrice - discountAmount;
-
-  const validateDiscountCode = async () => {
-    if (!formData.discountCode.trim() || !formData.email.trim()) {
-      toast({
-        title: "Klaida",
-        description: "Įveskite el. paštą ir nuolaidos kodą",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setValidatingCode(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('validate-discount-code', {
-        body: {
-          code: formData.discountCode.trim(),
-          email: formData.email.trim()
-        }
-      });
-
-      if (error) throw error;
-
-      setDiscountInfo(data);
-      toast({
-        title: data.valid ? "Sėkmė" : "Perspėjimas",
-        description: data.message,
-        variant: data.valid ? "default" : "destructive"
-      });
-    } catch (error) {
-      console.error("Error validating discount code:", error);
-      toast({
-        title: "Klaida",
-        description: "Nepavyko patikrinti nuolaidos kodo",
-        variant: "destructive"
-      });
-    } finally {
-      setValidatingCode(false);
-    }
-  };
 
   const handlePayment = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
@@ -134,8 +84,7 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),
-          account_type: formData.accountType,
-          discount_code: discountInfo?.valid ? formData.discountCode.trim() : undefined
+          account_type: formData.accountType
         }
       });
 
@@ -268,44 +217,6 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
                 placeholder="+370..."
               />
             </div>
-          </div>
-
-          {/* Discount Code */}
-          <div className="space-y-3">
-            <Label htmlFor="discountCode">Nuolaidos kodas</Label>
-            <div className="flex gap-2">
-              <Input
-                id="discountCode"
-                value={formData.discountCode}
-                onChange={(e) => setFormData(prev => ({ ...prev, discountCode: e.target.value.toUpperCase() }))}
-                placeholder="ABCD1234"
-                maxLength={8}
-              />
-              <Button
-                variant="outline"
-                onClick={validateDiscountCode}
-                disabled={validatingCode || !formData.discountCode.trim() || !formData.email.trim()}
-              >
-                {validatingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : <Percent className="w-4 h-4" />}
-              </Button>
-            </div>
-            
-            {discountInfo && (
-              <div className={`text-sm p-2 rounded ${discountInfo.valid ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-                {discountInfo.message}
-              </div>
-            )}
-
-            <Button
-              variant="ghost"
-              className="text-sm text-blue-600 hover:text-blue-800 p-0 h-auto"
-              onClick={() => {
-                onOpenChange(false);
-                onRequestDiscount();
-              }}
-            >
-              Neturite nuolaidos kodo? Prašykite čia →
-            </Button>
           </div>
 
           <Separator />

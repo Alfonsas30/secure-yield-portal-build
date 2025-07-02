@@ -187,7 +187,6 @@ const Hero = () => {
       <RegistrationModal 
         open={registrationOpen} 
         onOpenChange={setRegistrationOpen}
-        onRequestDiscount={() => setDiscountRequestOpen(true)}
       />
       <DiscountRequestModal 
         open={discountRequestOpen} 

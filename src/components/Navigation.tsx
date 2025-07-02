@@ -238,10 +238,6 @@ const Navigation = () => {
       <RegistrationModal
         open={registrationModalOpen}
         onOpenChange={setRegistrationModalOpen}
-        onRequestDiscount={() => {
-          setRegistrationModalOpen(false);
-          setDiscountRequestModalOpen(true);
-        }}
       />
       
       <DiscountRequestModal

@@ -190,7 +190,6 @@ const HowItWorks = () => {
       <RegistrationModal 
         open={registrationOpen} 
         onOpenChange={setRegistrationOpen}
-        onRequestDiscount={() => setDiscountRequestOpen(true)}
       />
       <DiscountRequestModal 
         open={discountRequestOpen} 
