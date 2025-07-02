@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, CreditCard, TrendingUp } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Calculator, CreditCard, TrendingUp, FileText } from "lucide-react";
 import { LoanApplicationModal } from "./LoanApplicationModal";
 
 const LoanCalculator = () => {
@@ -35,7 +36,8 @@ const LoanCalculator = () => {
         monthlyPayment: 0,
         totalPayment: 0,
         totalInterest: 0,
-        interestRate
+        interestRate,
+        paymentSchedule: []
       };
     }
 
@@ -47,11 +49,30 @@ const LoanCalculator = () => {
     const totalPayment = validMonthlyPayment * validLoanTerm;
     const totalInterest = totalPayment - validLoanAmount;
 
+    // Generate payment schedule
+    const paymentSchedule = [];
+    let remainingBalance = validLoanAmount;
+    
+    for (let month = 1; month <= validLoanTerm; month++) {
+      const interestPayment = remainingBalance * monthlyRate;
+      const principalPayment = validMonthlyPayment - interestPayment;
+      remainingBalance = Math.max(0, remainingBalance - principalPayment);
+      
+      paymentSchedule.push({
+        month,
+        payment: validMonthlyPayment,
+        principal: principalPayment,
+        interest: interestPayment,
+        balance: remainingBalance
+      });
+    }
+
     return {
       monthlyPayment: validMonthlyPayment,
       totalPayment,
       totalInterest,
-      interestRate
+      interestRate,
+      paymentSchedule
     };
   }, [validLoanAmount, validLoanTerm]);
 
@@ -168,8 +189,11 @@ const LoanCalculator = () => {
               <CreditCard className="w-6 h-6 text-white" />
             </div>
             <h3 className="text-lg font-semibold mb-2 text-slate-900">Mėnesinis mokėjimas</h3>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-3xl font-bold text-blue-600 mb-2">
               {calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+            </p>
+            <p className="text-sm text-slate-600">
+              Ši suma bus mokama kiekvieną mėnesį {validLoanTerm} mėnesių
             </p>
           </CardContent>
         </Card>
@@ -198,6 +222,66 @@ const LoanCalculator = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Payment Schedule */}
+      {calculations.monthlyPayment > 0 && (
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50">
+          <CardHeader className="text-center pb-4">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+            </div>
+            <CardTitle className="text-xl font-bold text-slate-900">
+              Mokėjimo grafikas
+            </CardTitle>
+            <CardDescription className="text-slate-600">
+              Išsamus kiekvieno mėnesio mokėjimo paskirstymas
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="max-h-96 overflow-y-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-center">Mėnuo</TableHead>
+                    <TableHead className="text-center">Mokėjimas</TableHead>
+                    <TableHead className="text-center">Pagrindinis kapitalas</TableHead>
+                    <TableHead className="text-center">Palūkanos</TableHead>
+                    <TableHead className="text-center">Likutis</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {calculations.paymentSchedule.slice(0, 12).map((payment) => (
+                    <TableRow key={payment.month}>
+                      <TableCell className="text-center font-medium">{payment.month}</TableCell>
+                      <TableCell className="text-center font-semibold text-blue-600">
+                        {payment.payment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                      </TableCell>
+                      <TableCell className="text-center text-green-600">
+                        {payment.principal.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                      </TableCell>
+                      <TableCell className="text-center text-orange-600">
+                        {payment.interest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                      </TableCell>
+                      <TableCell className="text-center text-slate-600">
+                        {payment.balance.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            {calculations.paymentSchedule.length > 12 && (
+              <div className="mt-4 text-center">
+                <Badge variant="outline" className="text-slate-600">
+                  Rodomi tik pirmieji 12 mėnesių. Iš viso: {calculations.paymentSchedule.length} mėnesių
+                </Badge>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Application Button */}
       <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50/80 to-green-50/80">
