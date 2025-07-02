@@ -23,14 +23,14 @@ const Navigation = () => {
   const [discountRequestModalOpen, setDiscountRequestModalOpen] = useState(false);
   
   const { user, profile, signOut } = useAuth();
-  const { currentLanguage, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
 
   const languageOptions = [
-    { code: 'lt' as Language, name: 'Lietuvių', flag: '🇱🇹' },
-    { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
-    { code: 'ru' as Language, name: 'Русский', flag: '🇷🇺' },
-    { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' }
+    { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
   ];
 
   const menuItems = [
@@ -140,7 +140,7 @@ const Navigation = () => {
                   <DropdownMenuItem
                     key={lang.code}
                     onClick={() => setLanguage(lang.code)}
-                    className={`cursor-pointer hover:bg-blue-50 ${currentLanguage === lang.code ? 'bg-blue-100 text-blue-600' : ''}`}
+                    className={`cursor-pointer hover:bg-blue-50 ${language === lang.code ? 'bg-blue-100 text-blue-600' : ''}`}
                   >
                     <span className="mr-2">{lang.flag}</span>
                     {lang.name}
