@@ -215,7 +215,7 @@ const InterestCalculator = () => {
                   <Button 
                     onClick={() => setShowAuthModal(true)}
                     variant="outline"
-                    className="border-white text-white hover:bg-white/20 font-semibold py-3 transition-all duration-300"
+                    className="bg-white/20 backdrop-blur-sm border-white/40 text-white hover:bg-white/30 font-semibold py-3 transition-all duration-300"
                     size="lg"
                   >
                     Prisijungti
