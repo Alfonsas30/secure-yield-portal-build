@@ -44,6 +44,11 @@ const Navigation = () => {
     }
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Scroll progress ir blur efektas
   useEffect(() => {
     const handleScroll = () => {
@@ -90,7 +95,7 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <button
-              onClick={() => navigate('/')}
+              onClick={handleHomeClick}
               className="relative text-slate-600 hover:text-blue-600 transition-all duration-300 font-medium group py-2"
             >
               Pradžia
@@ -182,7 +187,7 @@ const Navigation = () => {
                 <button
                   onClick={() => {
                     setIsOpen(false);
-                    navigate('/');
+                    handleHomeClick();
                   }}
                   className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform text-left"
                 >
