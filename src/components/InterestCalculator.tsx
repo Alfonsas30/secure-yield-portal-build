@@ -100,7 +100,7 @@ const InterestCalculator = () => {
             <CardContent className="space-y-6">
               <div>
                 <Label htmlFor="amount" className="text-base font-medium text-slate-700 mb-2 block">
-                  Taupoma suma (€)
+                  Taupoma suma (LT)
                 </Label>
                 <div className="relative">
                   <Input
@@ -132,7 +132,7 @@ const InterestCalculator = () => {
               <div className="flex items-center justify-center space-x-4 py-4">
                 <div className="flex items-center space-x-2 animate-slide-in-left" style={{ animationDelay: '0.5s' }}>
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center animate-pulse">
-                    <span className="text-white text-sm font-bold">€</span>
+                    <span className="text-white text-sm font-bold">LT</span>
                   </div>
                   <ArrowRight className="w-6 h-6 text-slate-400 animate-pulse" />
                   <ArrowRight className="w-6 h-6 text-slate-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
@@ -160,7 +160,7 @@ const InterestCalculator = () => {
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
                   <div className="text-sm opacity-90 mb-1">Per dieną</div>
                   <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedDaily.toFixed(2)} €
+                    +{animatedDaily.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-full animate-shimmer" style={{ width: '30%' }}></div>
@@ -170,7 +170,7 @@ const InterestCalculator = () => {
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
                   <div className="text-sm opacity-90 mb-1">Per mėnesį</div>
                   <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedMonthly.toFixed(2)} €
+                    +{animatedMonthly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-blue-400 to-green-400 rounded-full animate-shimmer" style={{ width: '60%', animationDelay: '0.5s' }}></div>
@@ -180,7 +180,7 @@ const InterestCalculator = () => {
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.4s' }}>
                   <div className="text-sm opacity-90 mb-1">Per metus</div>
                   <div className="text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedYearly.toFixed(2)} €
+                    +{animatedYearly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-shimmer" style={{ width: '100%', animationDelay: '1s' }}></div>
