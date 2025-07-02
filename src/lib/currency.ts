@@ -1,11 +1,11 @@
 /**
  * Currency conversion utilities for LT to EUR
- * Exchange rate: 1 LT = 0.286 EUR (approximately 3.5 LT = 1 EUR)
+ * Exchange rate: 1 LT = 3.5 EUR (approximately 1 EUR = 0.286 LT)
  */
 
 export const EXCHANGE_RATE = {
-  LT_TO_EUR: 0.286,
-  EUR_TO_LT: 3.5
+  LT_TO_EUR: 3.5,
+  EUR_TO_LT: 0.286
 };
 
 /**
