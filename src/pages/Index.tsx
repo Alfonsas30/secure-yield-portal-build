@@ -16,7 +16,6 @@ import InterestCalculator from "@/components/InterestCalculator";
 import TermDepositCalculator from "@/components/TermDepositCalculator";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
-import NewsletterSubscription from "@/components/NewsletterSubscription";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -57,7 +56,6 @@ const Index = () => {
       <HowItWorks />
       <FAQ />
       <Contact />
-      <NewsletterSubscription />
       <Footer />
     </div>
   );
