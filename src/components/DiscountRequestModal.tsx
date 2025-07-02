@@ -33,61 +33,36 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
     }
 
     setLoading(true);
-    console.log("=== TESTING SIMPLE EDGE FUNCTION ===");
     
     try {
-      // Test the simplest possible edge function first
-      console.log("Testing simple-test function...");
-      const { data: simpleData, error: simpleError } = await supabase.functions.invoke('simple-test', {
-        body: {
+      // Directly save to database (email will be sent via database trigger)
+      const { error } = await supabase
+        .from('discount_requests')
+        .insert({
           name: formData.name.trim(),
           email: formData.email.trim(),
-          account_type: formData.accountType
-        }
+          account_type: formData.accountType,
+          status: 'pending'
+        });
+
+      if (error) {
+        console.error("Database error:", error);
+        throw new Error("Nepavyko išsaugoti užklausos");
+      }
+
+      toast({
+        title: "Sėkmė!",
+        description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
       });
 
-      console.log("Simple test function result:", { simpleData, simpleError });
-
-      if (simpleError) {
-        console.error("Simple function failed:", simpleError);
-        throw new Error(`Edge funkcijos neveikia: ${simpleError.message}`);
-      }
-
-      if (simpleData?.success) {
-        console.log("Edge funkcijos veikia! Bandome siųsti el. paštą...");
-        
-        // Now try the discount request function
-        const { data, error } = await supabase.functions.invoke('request-discount', {
-          body: {
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            account_type: formData.accountType
-          }
-        });
-
-        console.log("Request-discount function result:", { data, error });
-
-        if (error) {
-          throw new Error(`El. pašto siuntimas nepavyko: ${error.message}`);
-        }
-
-        toast({
-          title: "Sėkmė!",
-          description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
-        });
-
-        // Reset form and close modal
-        setFormData({
-          name: "",
-          email: "",
-          accountType: "personal"
-        });
-        onOpenChange(false);
-      } else {
-        throw new Error("Edge funkcijos neatsakė teisingai");
-      }
+      // Reset form and close modal
+      setFormData({
+        name: "",
+        email: "",
+        accountType: "personal"
+      });
+      onOpenChange(false);
     } catch (error) {
-      console.error("=== ERROR IN DISCOUNT REQUEST ===");
       console.error("Error details:", error);
       
       toast({
