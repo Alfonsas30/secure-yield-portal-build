@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Menu, Sparkles, User, LogOut, Languages } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AuthModal } from "./auth/AuthModal";
 import { RegistrationModal } from "./RegistrationModal";
