@@ -7,12 +7,14 @@ import { TransactionHistory } from "@/components/banking/TransactionHistory";
 import { Analytics } from "@/components/banking/Analytics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
+import Navigation from "@/components/Navigation";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
     <ProtectedRoute>
+      <Navigation />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-8">
