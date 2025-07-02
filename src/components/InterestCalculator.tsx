@@ -10,6 +10,7 @@ import { RegistrationModal } from "./RegistrationModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const InterestCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");

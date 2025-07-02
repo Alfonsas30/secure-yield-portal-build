@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { HelpCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const FAQ = () => {
   const [showContactForm, setShowContactForm] = useState(false);
@@ -19,6 +20,7 @@ const FAQ = () => {
     message: ""
   });
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
