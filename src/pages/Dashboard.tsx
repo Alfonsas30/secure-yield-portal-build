@@ -5,6 +5,7 @@ import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
 import { Analytics } from "@/components/banking/Analytics";
+import NewsletterAdmin from "@/components/NewsletterAdmin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
@@ -27,10 +28,11 @@ export default function Dashboard() {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-5 mb-8">
               <TabsTrigger value="overview">Pagrindinis</TabsTrigger>
               <TabsTrigger value="transactions">Operacijos</TabsTrigger>
               <TabsTrigger value="analytics">Ataskaitos</TabsTrigger>
+              <TabsTrigger value="newsletter">Naujienlaiškis</TabsTrigger>
               <TabsTrigger value="profile">Profilis</TabsTrigger>
             </TabsList>
 
@@ -56,6 +58,10 @@ export default function Dashboard() {
 
             <TabsContent value="analytics">
               <Analytics />
+            </TabsContent>
+
+            <TabsContent value="newsletter">
+              <NewsletterAdmin />
             </TabsContent>
 
             <TabsContent value="profile">
