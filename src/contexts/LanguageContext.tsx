@@ -200,74 +200,173 @@ const getTranslations = () => ({
       badge: 'Palūkanų skaičiuoklė',
       title: 'Apskaičiuokite savo pelną',
       subtitle: 'Sužinokite, kiek uždirbsite su mūsų dienos palūkanomis',
-      form: {
-        amountLabel: 'Taupoma suma (LT)',
-        amountPlaceholder: '10000',
-        rateLabel: 'Palūkanų norma:',
-        rateValue: 'per metus'
-      },
+      amountLabel: 'Taupoma suma',
+      amount: 'Įveskite sumą (LT)',
+      rate: 'Palūkanų norma:',
+      rateValue: 'per metus',
       results: {
         title: 'Jūsų pelnas',
         daily: 'Per dieną',
         monthly: 'Per mėnesį',
-        yearly: 'Per metus',
-        manageDashboard: 'Valdyti sąskaitą',
+        yearly: 'Per metus'
+      },
+      buttons: {
+        manage: 'Valdyti sąskaitą',
         register: 'Registruotis',
         login: 'Prisijungti'
+      }
+    },
+    termDeposit: {
+      badge: 'Terminuotų indėlių skaičiuoklė',
+      title: 'Terminuoti indėliai',
+      subtitle: 'Aukštesnės palūkanos už didesnės sumos indėlius',
+      termSelection: {
+        title: 'Pasirinkite terminą',
+        subtitle: 'Skirtingi terminai - skirtingos palūkanos',
+        oneYear: {
+          title: '1 metų terminas',
+          subtitle: 'Tradiciniu palūkanų normu',
+          rates: {
+            up10k: 'Iki 10,000 LT:',
+            up100k: '10,000-100,000 LT:',
+            over100k: '100,000+ LT:'
+          }
+        },
+        sixYear: {
+          title: '6 metų terminas',
+          subtitle: 'Ypatingas pasiūlymas',
+          rate: '100%',
+          forAnyAmount: 'Bet kokiai sumai!',
+          badge: 'AUKŠČIAUSIOS PALŪKANOS'
+        }
+      },
+      form: {
+        enterAmount: 'Įveskite indėlio sumą',
+        enterInvestment: 'Įveskite investuojamą sumą',
+        sixYearNote: 'Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis',
+        depositAmount: 'Indėlio suma (LT)',
+        maxAmount: 'maks.',
+        accountBalance: 'Sąskaitos likutis:',
+        remainingBalance: 'Liks sąskaitoje:',
+        overBalance: 'Suma viršija sąskaitos likutį'
+      },
+      categories: {
+        beginner: 'Pradedantis',
+        advanced: 'Pažengęs',
+        vip: 'VIP',
+        vip6years: 'VIP 6 metai',
+        level: 'lygis',
+        yourRate: 'Jūsų palūkanų norma'
+      },
+      results: {
+        title: 'Jūsų pelnas',
+        yearlyProfit: 'Pelnas per metus',
+        totalProfit: 'Bendras pelnas už',
+        oneYear: '1 metus',
+        sixYears: '6 metus',
+        totalAmount: 'Gaunama suma:'
+      },
+      actions: {
+        createDeposit: 'Sukurti terminuotą indėlį',
+        login: 'Prisijunkite norėdami sukurti',
+        register: 'Registruotis dabar',
+        goToDashboard: 'Eiti į paskyrą'
+      }
+    },
+    loans: {
+      badge: 'Paskolų skaičiuoklė',
+      title: 'Paskolos skaičiuoklė',
+      subtitle: 'Sužinokite savo mėnesinio mokėjimo dydį su',
+      interestRate: '14% metine palūkanų norma',
+      form: {
+        loanAmount: 'Paskolos suma:',
+        loanTerm: 'Paskolos terminas:',
+        months: 'mėn.',
+        exactAmount: 'Tiksli suma (€)',
+        exactTerm: 'Tikslus terminas (mėn.)'
+      },
+      results: {
+        monthlyPayment: 'MOKĖSITE KAS MĖNESĮ:',
+        calculating: 'Skaičiuojama...',
+        checkInput: 'Patikrinkite įvesties duomenis',
+        paymentNote: 'Ši suma bus mokama kiekvieną mėnesį',
+        totalAmount: 'Bendra suma',
+        interest: 'Palūkanos'
+      },
+      schedule: {
+        title: 'Mokėjimo grafikas',
+        subtitle: 'Išsamus kiekvieno mėnesio mokėjimo paskirstymas',
+        headers: {
+          month: 'Mėnuo',
+          payment: 'Mokėjimas',
+          principal: 'Pagrindinis kapitalas',
+          interest: 'Palūkanos',
+          balance: 'Likutis'
+        },
+        showingFirst: 'Rodomi tik pirmieji 12 mėnesių. Iš viso:',
+        totalMonths: 'mėnesių'
+      },
+      application: {
+        title: 'Patenkino skaičiavimas?',
+        subtitle: 'Pateikite paraišką paskolai ir gaukite sprendimą per 24 valandas',
+        button: 'Pateikti paraišką paskolai'
+      },
+      modal: {
+        title: 'Paraiška paskolai',
+        subtitle: 'Užpildykite formą ir gaukite sprendimą per 24 valandas',
+        loanParams: 'Paskolos parametrai',
+        amount: 'Suma',
+        term: 'Terminas',
+        monthlyPayment: 'Mėnesinis mokėjimas',
+        totalAmount: 'Bendra suma',
+        personalInfo: 'Asmens duomenys',
+        fullName: 'Vardas, pavardė',
+        email: 'El. pašto adresas',
+        phone: 'Telefono numeris',
+        financialInfo: 'Finansinė informacija',
+        monthlyIncome: 'Mėnesinės pajamos (€)',
+        employment: 'Darbo vieta',
+        loanPurpose: 'Paskolos paskirtis',
+        purposeQuestion: 'Kam reikalinga paskola?',
+        purposePlaceholder: 'Trumpai aprašykite, kam planuojate panaudoti paskolą',
+        terms: {
+          title: 'Sutinku su sąlygomis:',
+          rate: '14% metinė palūkanų norma be paslėptų mokesčių',
+          decision: 'Sprendimas per 24 valandas',
+          privacy: 'Duomenų tvarkymas pagal privatumo politiką',
+          contact: 'Susisiekimas dėl papildomos informacijos'
+        },
+        submit: 'Pateikti paraišką',
+        submitting: 'Pateikiama paraiška...',
+        placeholders: {
+          fullName: 'Jūsų vardas ir pavardė',
+          email: 'jusu@elpastas.lt',
+          phone: '+370 600 00000',
+          monthlyIncome: '2000',
+          employment: 'UAB Pavyzdys'
+        }
       }
     },
     faq: {
       badge: 'Dažniausiai užduodami klausimai',
       title: 'Turite klausimų?',
       subtitle: 'Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas',
-      questions: {
-        dailyInterest: {
-          question: 'Kaip veikia dienos palūkanos?',
-          answer: 'Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje.'
-        },
-        noReports: {
-          question: 'Ar tikrai nereikia teikti jokių ataskaičių?',
-          answer: 'Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems.'
-        },
-        security: {
-          question: 'Kiek saugūs mano pinigai?',
-          answer: 'Jūsų indėliai yra apdrausti pagal ES direktyvas iki 100,000 € per klientą. Mes naudojame aukščiausio lygio šifravimo technologijas ir laikome griežtus saugumo protokolus. Jūsų duomenys yra konfidencialūs ir niekam neatskleidžiami.'
-        },
-        withdrawal: {
-          question: 'Ar galiu išsiimti pinigus bet kada?',
-          answer: 'Taip, jūsų pinigai yra prieinami bet kada. Nėra jokių užšaldymo terminų ar baudų už ankstyvas išėmimas. Galite išsiimti visą sumą arba tik dalį - sprendžiate patys.'
-        },
-        fees: {
-          question: 'Kokie yra mokesčiai?',
-          answer: 'Mes neimame jokių mokesčių už sąskaitos tvarkymą, pervedimu ar saugojimą. Vienintelis mokestis, kurį mokate, yra standartinis valstybės pajamų mokestis nuo užvaldytų palūkanų.'
-        },
-        minimum: {
-          question: 'Kokia minimuma suma reikalinga pradėti?',
-          answer: 'Minimalus indėlio dydis yra tik 100 €. Maksimalaus dydžio apribojimų nėra, tačiau indėliai viršijantys 100,000 € nėra apdrausti pagal ES direktyvas.'
-        },
-        speed: {
-          question: 'Kaip greitai gaunu palūkanas?',
-          answer: 'Palūkanos skaičiuojamos ir prijungiamos prie jūsų sąskaitos kasdien. Galite matyti, kaip jūsų balansas auga kiekvieną dieną mūsų mobilejeje aplikacijoje arba internetinėje bankininkystėje.'
-        },
-        bankruptcy: {
-          question: 'Kas nutiks, jei bankrotuosite?',
-          answer: 'LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs.'
-        }
-      },
-      contact: {
+      notFound: {
         title: 'Neradote atsakymo į savo klausimą?',
-        subtitle: 'Susisiekite su mūsų ekspertų komanda - mes mielai padėsime',
-        button: 'Susisiekti',
-        form: {
-          name: 'Vardas',
-          email: 'El. paštas',
-          message: 'Žinutė',
-          send: 'Siųsti',
-          cancel: 'Atšaukti',
-          sending: 'Siunčiama...',
-          namePlaceholder: 'Jūsų vardas',
-          emailPlaceholder: 'jusu.pastas@example.com',
-          messagePlaceholder: 'Jūsų klausimas...'
+        description: 'Susisiekite su mūsų ekspertų komanda - mes mielai padėsime',
+        button: 'Susisiekti'
+      },
+      form: {
+        name: 'Vardas',
+        email: 'El. paštas',
+        message: 'Žinutė',
+        send: 'Siųsti',
+        cancel: 'Atšaukti',
+        sending: 'Siunčiama...',
+        placeholder: {
+          name: 'Jūsų vardas',
+          email: 'jusu.pastas@example.com',
+          message: 'Jūsų klausimas...'
         }
       }
     },
@@ -276,28 +375,7 @@ const getTranslations = () => ({
       title: 'Turime klausimų?',
       subtitle: 'Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.',
       form: {
-        title: 'Parašykite mums',
-        name: 'Vardas',
-        phone: 'Telefonas',
-        email: 'El. paštas',
-        message: 'Žinutė',
-        send: 'Siųsti žinutę',
-        sending: 'Siunčiama...',
-        namePlaceholder: 'Jūsų vardas',
-        phonePlaceholder: '+370 XXX XXXXX',
-        emailPlaceholder: 'jusu.paštas@example.com',
-        messagePlaceholder: 'Parašykite savo klausimą arba komentarą...'
-      },
-      newsletter: {
-        title: 'Prenumeruoti naujienas',
-        description: 'Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus',
-        email: 'El. pašto adresas',
-        name: 'Vardas (neprivaloma)',
-        consent: 'Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui',
-        subscribe: 'Prenumeruoti',
-        subscribing: 'Prenumeruojama...',
-        emailPlaceholder: 'jusu.pastas@example.com',
-        namePlaceholder: 'Jūsų vardas'
+        title: 'Parašykite mums'
       }
     },
     footer: {
@@ -448,74 +526,173 @@ const getTranslations = () => ({
       badge: 'Interest Calculator',
       title: 'Calculate Your Profit',
       subtitle: 'Find out how much you\'ll earn with our daily interest',
+      amountLabel: 'Savings Amount',
+      amount: 'Enter amount (LT)',
+      rate: 'Interest rate:',
+      rateValue: 'per year',
+      results: {
+        title: 'Your Profit',
+        daily: 'Per day',
+        monthly: 'Per month',
+        yearly: 'Per year'
+      },
+      buttons: {
+        manage: 'Manage Account',
+        register: 'Register',
+        login: 'Login'
+      }
+    },
+    termDeposit: {
+      badge: 'Term Deposit Calculator',
+      title: 'Term Deposits',
+      subtitle: 'Higher interest rates for larger deposits',
+      termSelection: {
+        title: 'Choose Term',
+        subtitle: 'Different terms - different interest rates',
+        oneYear: {
+          title: '1 Year Term',
+          subtitle: 'Traditional interest rates',
+          rates: {
+            up10k: 'Up to 10,000 LT:',
+            up100k: '10,000-100,000 LT:',
+            over100k: '100,000+ LT:'
+          }
+        },
+        sixYear: {
+          title: '6 Year Term',
+          subtitle: 'Special offer',
+          rate: '100%',
+          forAnyAmount: 'For any amount!',
+          badge: 'HIGHEST INTEREST'
+        }
+      },
       form: {
-        amountLabel: 'Savings Amount (LT)',
-        amountPlaceholder: '10000',
-        rateLabel: 'Interest Rate:',
-        rateValue: 'per year'
+        enterAmount: 'Enter deposit amount',
+        enterInvestment: 'Enter investment amount',
+        sixYearNote: 'Choose amount to invest for 6 years with 100% interest',
+        depositAmount: 'Deposit amount (LT)',
+        maxAmount: 'max.',
+        accountBalance: 'Account balance:',
+        remainingBalance: 'Will remain in account:',
+        overBalance: 'Amount exceeds account balance'
+      },
+      categories: {
+        beginner: 'Beginner',
+        advanced: 'Advanced',
+        vip: 'VIP',
+        vip6years: 'VIP 6 Years',
+        level: 'level',
+        yourRate: 'Your interest rate'
       },
       results: {
         title: 'Your Profit',
-        daily: 'Per Day',
-        monthly: 'Per Month',
-        yearly: 'Per Year',
-        manageDashboard: 'Manage Account',
-        register: 'Register',
-        login: 'Login'
+        yearlyProfit: 'Profit per year',
+        totalProfit: 'Total profit for',
+        oneYear: '1 year',
+        sixYears: '6 years',
+        totalAmount: 'Total amount:'
+      },
+      actions: {
+        createDeposit: 'Create Term Deposit',
+        login: 'Login to Create',
+        register: 'Register Now',
+        goToDashboard: 'Go to Dashboard'
+      }
+    },
+    loans: {
+      badge: 'Loan Calculator',
+      title: 'Loan Calculator',
+      subtitle: 'Find out your monthly payment with',
+      interestRate: '14% annual interest rate',
+      form: {
+        loanAmount: 'Loan amount:',
+        loanTerm: 'Loan term:',
+        months: 'months',
+        exactAmount: 'Exact amount (€)',
+        exactTerm: 'Exact term (months)'
+      },
+      results: {
+        monthlyPayment: 'YOU WILL PAY MONTHLY:',
+        calculating: 'Calculating...',
+        checkInput: 'Check input data',
+        paymentNote: 'This amount will be paid monthly for',
+        totalAmount: 'Total amount',
+        interest: 'Interest'
+      },
+      schedule: {
+        title: 'Payment Schedule',
+        subtitle: 'Detailed breakdown of each monthly payment',
+        headers: {
+          month: 'Month',
+          payment: 'Payment',
+          principal: 'Principal',
+          interest: 'Interest',
+          balance: 'Balance'
+        },
+        showingFirst: 'Showing only first 12 months. Total:',
+        totalMonths: 'months'
+      },
+      application: {
+        title: 'Satisfied with calculation?',
+        subtitle: 'Submit loan application and get decision within 24 hours',
+        button: 'Submit Loan Application'
+      },
+      modal: {
+        title: 'Loan Application',
+        subtitle: 'Fill out the form and get decision within 24 hours',
+        loanParams: 'Loan Parameters',
+        amount: 'Amount',
+        term: 'Term',
+        monthlyPayment: 'Monthly payment',
+        totalAmount: 'Total amount',
+        personalInfo: 'Personal Information',
+        fullName: 'Full name',
+        email: 'Email address',
+        phone: 'Phone number',
+        financialInfo: 'Financial Information',
+        monthlyIncome: 'Monthly income (€)',
+        employment: 'Workplace',
+        loanPurpose: 'Loan Purpose',
+        purposeQuestion: 'What do you need the loan for?',
+        purposePlaceholder: 'Briefly describe what you plan to use the loan for',
+        terms: {
+          title: 'I agree to the terms:',
+          rate: '14% annual interest rate without hidden fees',
+          decision: 'Decision within 24 hours',
+          privacy: 'Data processing according to privacy policy',
+          contact: 'Contact for additional information'
+        },
+        submit: 'Submit Application',
+        submitting: 'Submitting application...',
+        placeholders: {
+          fullName: 'Your full name',
+          email: 'your@email.com',
+          phone: '+370 600 00000',
+          monthlyIncome: '2000',
+          employment: 'Company Name'
+        }
       }
     },
     faq: {
       badge: 'Frequently Asked Questions',
       title: 'Have Questions?',
       subtitle: 'Here are answers to the most frequently asked questions about LTB Bank services',
-      questions: {
-        dailyInterest: {
-          question: 'How do daily interest payments work?',
-          answer: 'Interest is calculated daily based on your account balance. Instead of paying interest once a year, we pay it daily. This means your money grows every day, not just at year-end.'
-        },
-        noReports: {
-          question: 'Do I really not need to provide any reports?',
-          answer: 'Yes, we don\'t need income declarations, employment certificates or other documents. Just open an account and start saving. We believe saving should be simple and accessible to everyone.'
-        },
-        security: {
-          question: 'How safe is my money?',
-          answer: 'Your deposits are insured under EU directives up to €100,000 per customer. We use highest-level encryption technologies and maintain strict security protocols. Your data is confidential and not disclosed to anyone.'
-        },
-        withdrawal: {
-          question: 'Can I withdraw money anytime?',
-          answer: 'Yes, your money is available anytime. There are no freeze periods or penalties for early withdrawals. You can withdraw all or part - you decide.'
-        },
-        fees: {
-          question: 'What are the fees?',
-          answer: 'We don\'t charge any fees for account management, transfers or storage. The only fee you pay is the standard state income tax on earned interest.'
-        },
-        minimum: {
-          question: 'What\'s the minimum amount needed to start?',
-          answer: 'The minimum deposit is just 100 €. There are no maximum limits, but deposits exceeding €100,000 are not insured under EU directives.'
-        },
-        speed: {
-          question: 'How quickly do I get interest?',
-          answer: 'Interest is calculated and added to your account daily. You can see your balance grow every day in our mobile app or online banking.'
-        },
-        bankruptcy: {
-          question: 'What happens if you go bankrupt?',
-          answer: 'LTB Bank is a licensed bank supervised by the Bank of Lithuania. Our operations are regulated under EU directives, and deposits are insured up to €100,000 per customer. Your money is safe.'
-        }
+      notFound: {
+        title: 'Didn\'t find answer to your question?',
+        description: 'Contact our expert team - we\'re happy to help',
+        button: 'Contact Us'
       },
-      contact: {
-        title: 'Didn\'t find the answer to your question?',
-        subtitle: 'Contact our expert team - we\'re happy to help',
-        button: 'Contact Us',
-        form: {
-          name: 'Name',
-          email: 'Email',
-          message: 'Message',
-          send: 'Send',
-          cancel: 'Cancel',
-          sending: 'Sending...',
-          namePlaceholder: 'Your name',
-          emailPlaceholder: 'your.email@example.com',
-          messagePlaceholder: 'Your question...'
+      form: {
+        name: 'Name',
+        email: 'Email',
+        message: 'Message',
+        send: 'Send',
+        cancel: 'Cancel',
+        sending: 'Sending...',
+        placeholder: {
+          name: 'Your name',
+          email: 'your.email@example.com',
+          message: 'Your question...'
         }
       }
     },
@@ -524,28 +701,7 @@ const getTranslations = () => ({
       title: 'Have Questions?',
       subtitle: 'Our expert team is always ready to help. Contact us in any way convenient for you.',
       form: {
-        title: 'Write to Us',
-        name: 'Name',
-        phone: 'Phone',
-        email: 'Email',
-        message: 'Message',
-        send: 'Send Message',
-        sending: 'Sending...',
-        namePlaceholder: 'Your name',
-        phonePlaceholder: '+370 XXX XXXXX',
-        emailPlaceholder: 'your.email@example.com',
-        messagePlaceholder: 'Write your question or comment...'
-      },
-      newsletter: {
-        title: 'Subscribe to Newsletter',
-        description: 'Get the latest information about interest rate changes, new services and financial advice',
-        email: 'Email Address',
-        name: 'Name (optional)',
-        consent: 'I agree that my data will be processed for newsletter delivery',
-        subscribe: 'Subscribe',
-        subscribing: 'Subscribing...',
-        emailPlaceholder: 'your.email@example.com',
-        namePlaceholder: 'Your name'
+        title: 'Write to Us'
       }
     },
     footer: {
@@ -553,34 +709,72 @@ const getTranslations = () => ({
       information: 'Information',
       help: 'Help',
       techSupport: 'Technical Support',
-      calculatorIssues: 'Calculator issues:',
+      calculatorIssues: 'Calculator Issues:',
       copyright: 'All rights reserved.',
       licensed: 'Licensed by Bank of Lithuania',
       insured: 'Deposits insured up to €100,000',
-      disclaimer: 'LTB Bank is a licensed credit institution supervised by the Bank of Lithuania. Deposits are insured under EU directives up to €100,000 per customer. Interest rates depend on market conditions and may change. Consult our experts before making decisions.'
+      disclaimer: 'LTB Bank is a licensed credit institution supervised by the Bank of Lithuania. Deposits are insured under EU directives up to €100,000 per customer. Interest rates depend on market conditions and may change. Consult with our experts before making decisions.'
     }
   },
   ru: {
     nav: {
       home: 'Главная',
       services: 'Услуги',
-      howItWorks: 'Как работает',
+      howItWorks: 'Как это работает',
       about: 'О нас',
       contact: 'Контакты',
       login: 'Войти',
       register: 'Регистрация',
-      dashboard: 'Мой счет',
+      dashboard: 'Мой счёт',
       logout: 'Выйти'
     },
+    calculators: {
+      title: 'Выберите тип калькулятора',
+      daily: 'Ежедневные проценты',
+      term: 'Срочные депозиты',
+      loans: 'Кредиты'
+    },
+    about: {
+      title: 'LTB Банк - Ваш надёжный партнёр',
+      subtitle: 'Мы являемся инновационным поставщиком финансовых решений, который помогает клиентам безопасно и выгодно сберегать деньги.',
+      security: {
+        title: 'Безопасность',
+        description: 'Ваши деньги защищены самыми современными решениями безопасности и страхованием.'
+      },
+      profitability: {
+        title: 'Прибыльность',
+        description: 'Мы предлагаем конкурентную годовую процентную ставку 8% с ежедневными выплатами процентов.'
+      },
+      experience: {
+        title: 'Опыт',
+        description: 'У нас многолетний опыт в сфере финансов и тысячи довольных клиентов.'
+      }
+    },
     hero: {
-      title: 'Первый банк в мире, выплачивающий проценты ежедневно',
-      subtitle: 'Получайте 8% годовых с ежедневными выплатами процентов. Прозрачно, безопасно, без скрытых комиссий.',
-      cta: 'Начать накопления',
-      learnMore: 'Узнать больше'
+      title: 'Сберегайте разумно',
+      subtitle: 'с ежедневными процентами',
+      description: 'Первый в мире банк, выплачивающий проценты ежедневно. Прозрачно, безопасно, без скрытых комиссий – так выглядит современное сбережение.',
+      ctaPrimary: 'Начать сберегать сейчас',
+      ctaSecondary: 'Узнать больше',
+      newSolutions: 'Инновационные решения для сбережений',
+      features: {
+        daily: {
+          title: 'Ежедневные проценты',
+          description: 'Получайте проценты каждый день, а не раз в году'
+        },
+        security: {
+          title: '100% безопасность',
+          description: 'Ваши деньги защищены банковской лицензией и страховкой'
+        },
+        noFees: {
+          title: 'Без комиссий',
+          description: 'Никаких скрытых комиссий или ежемесячных тарифов'
+        }
+      }
     },
     services: {
       badge: 'Наши услуги',
-      title: 'Почему выбрать LTB Банк?',
+      title: 'Почему стоит выбрать LTB Банк?',
       subtitle: 'Мы предлагаем инновационные решения, которые помогут вам сберегать более эффективно и безопасно, чем когда-либо прежде.',
       items: {
         dailyInterest: {
@@ -589,8 +783,8 @@ const getTranslations = () => ({
           badge: 'Самая популярная'
         },
         noReports: {
-          title: 'Никаких отчетов',
-          description: 'Никто не будет просить декларации или объяснения доходов. Просто сберегайте и получайте проценты.',
+          title: 'Никаких отчётов',
+          description: 'Никто не просит декларации или объяснения доходов. Просто сберегайте и получайте проценты.',
           badge: 'Просто'
         },
         confidentiality: {
@@ -599,7 +793,7 @@ const getTranslations = () => ({
           badge: 'Безопасно'
         },
         transparent: {
-          title: 'Прозрачный расчет',
+          title: 'Прозрачный расчёт',
           description: 'Вы всегда знаете, сколько заработаете. Никаких скрытых комиссий или сложных условий.',
           badge: 'Ясно'
         },
@@ -615,8 +809,8 @@ const getTranslations = () => ({
         },
         loans: {
           title: 'Кредиты под 14% годовых',
-          description: 'Получите кредит с прозрачной ставкой 14% годовых без скрытых комиссий.',
-          badge: 'Новинка'
+          description: 'Получите кредит с прозрачной годовой процентной ставкой 14% без скрытых комиссий.',
+          badge: 'Новое'
         }
       },
       cta: {
@@ -625,26 +819,215 @@ const getTranslations = () => ({
         button: 'Зарегистрироваться сейчас'
       }
     },
-    calculators: {
-      title: 'Выберите тип калькулятора',
-      daily: 'Ежедневные проценты',
-      term: 'Срочные вклады',
-      loans: 'Кредиты'
+    howItWorks: {
+      badge: 'Простой процесс',
+      title: 'Как это работает?',
+      subtitle: 'Начать сберегать с LTB Банк просто и быстро. Вот как это работает.',
+      steps: {
+        register: {
+          title: 'Зарегистрируйтесь',
+          description: 'Создайте аккаунт за 3 минуты. Никаких сложных документов или отчётов не требуется.'
+        },
+        deposit: {
+          title: 'Внесите деньги',
+          description: 'Внесите деньги на свой счёт из любого банка мира, внесение безопасное и быстрое.'
+        },
+        earn: {
+          title: 'Получайте проценты',
+          description: 'Ваши деньги начнут работать сразу. Проценты рассчитываются и выплачиваются ежедневно.'
+        },
+        withdraw: {
+          title: 'Пользуйтесь деньгами',
+          description: 'Деньги доступны в любое время. Можете снять всю сумму или только часть - как вам удобно.'
+        }
+      },
+      cta: {
+        title: 'Готовы начать сберегать?',
+        description: 'Присоединяйтесь к тысячам клиентов, которые уже зарабатывают с LTB Банк',
+        buttonPrimary: 'Зарегистрироваться сейчас',
+        buttonSecondary: 'Читать далее'
+      }
     },
-    about: {
-      title: 'LTB Банк - Ваш надежный партнер',
-      subtitle: 'Мы инновационный поставщик финансовых решений, который помогает клиентам безопасно и выгодно сберегать деньги.',
-      security: {
-        title: 'Безопасность',
-        description: 'Ваши деньги защищены самыми современными решениями безопасности и страхованием.'
+    calculator: {
+      badge: 'Калькулятор процентов',
+      title: 'Рассчитайте свою прибыль',
+      subtitle: 'Узнайте, сколько вы заработаете с нашими ежедневными процентами',
+      amountLabel: 'Сумма накоплений',
+      amount: 'Введите сумму (LT)',
+      rate: 'Процентная ставка:',
+      rateValue: 'в год',
+      results: {
+        title: 'Ваша прибыль',
+        daily: 'В день',
+        monthly: 'В месяц',
+        yearly: 'В год'
       },
-      profitability: {
-        title: 'Доходность',
-        description: 'Мы предлагаем конкурентоспособную ставку 8% годовых с ежедневными выплатами процентов.'
+      buttons: {
+        manage: 'Управлять счётом',
+        register: 'Регистрация',
+        login: 'Войти'
+      }
+    },
+    termDeposit: {
+      badge: 'Калькулятор срочных депозитов',
+      title: 'Срочные депозиты',
+      subtitle: 'Более высокие процентные ставки для больших депозитов',
+      termSelection: {
+        title: 'Выберите срок',
+        subtitle: 'Разные сроки - разные проценты',
+        oneYear: {
+          title: 'Срок 1 год',
+          subtitle: 'Традиционные процентные ставки',
+          rates: {
+            up10k: 'До 10,000 LT:',
+            up100k: '10,000-100,000 LT:',
+            over100k: '100,000+ LT:'
+          }
+        },
+        sixYear: {
+          title: 'Срок 6 лет',
+          subtitle: 'Особое предложение',
+          rate: '100%',
+          forAnyAmount: 'Для любой суммы!',
+          badge: 'САМЫЕ ВЫСОКИЕ ПРОЦЕНТЫ'
+        }
       },
-      experience: {
-        title: 'Опыт',
-        description: 'У нас многолетний опыт в сфере финансов и тысячи довольных клиентов.'
+      form: {
+        enterAmount: 'Введите сумму депозита',
+        enterInvestment: 'Введите инвестируемую сумму',
+        sixYearNote: 'Выберите сумму, которую хотите инвестировать на 6 лет под 100% годовых',
+        depositAmount: 'Сумма депозита (LT)',
+        maxAmount: 'макс.',
+        accountBalance: 'Баланс счёта:',
+        remainingBalance: 'Останется на счёте:',
+        overBalance: 'Сумма превышает баланс счёта'
+      },
+      categories: {
+        beginner: 'Начинающий',
+        advanced: 'Продвинутый',
+        vip: 'VIP',
+        vip6years: 'VIP 6 лет',
+        level: 'уровень',
+        yourRate: 'Ваша процентная ставка'
+      },
+      results: {
+        title: 'Ваша прибыль',
+        yearlyProfit: 'Прибыль в год',
+        totalProfit: 'Общая прибыль за',
+        oneYear: '1 год',
+        sixYears: '6 лет',
+        totalAmount: 'Получаемая сумма:'
+      },
+      actions: {
+        createDeposit: 'Создать срочный депозит',
+        login: 'Войдите, чтобы создать',
+        register: 'Зарегистрироваться сейчас',
+        goToDashboard: 'Перейти в аккаунт'
+      }
+    },
+    loans: {
+      badge: 'Калькулятор кредитов',
+      title: 'Калькулятор кредитов',
+      subtitle: 'Узнайте размер ежемесячного платежа с',
+      interestRate: '14% годовой процентной ставкой',
+      form: {
+        loanAmount: 'Сумма кредита:',
+        loanTerm: 'Срок кредита:',
+        months: 'мес.',
+        exactAmount: 'Точная сумма (€)',
+        exactTerm: 'Точный срок (мес.)'
+      },
+      results: {
+        monthlyPayment: 'ВЫ БУДЕТЕ ПЛАТИТЬ ЕЖЕМЕСЯЧНО:',
+        calculating: 'Рассчитывается...',
+        checkInput: 'Проверьте входные данные',
+        paymentNote: 'Эта сумма будет выплачиваться ежемесячно в течение',
+        totalAmount: 'Общая сумма',
+        interest: 'Проценты'
+      },
+      schedule: {
+        title: 'График платежей',
+        subtitle: 'Подробная разбивка каждого ежемесячного платежа',
+        headers: {
+          month: 'Месяц',
+          payment: 'Платёж',
+          principal: 'Основной долг',
+          interest: 'Проценты',
+          balance: 'Остаток'
+        },
+        showingFirst: 'Показаны только первые 12 месяцев. Всего:',
+        totalMonths: 'месяцев'
+      },
+      application: {
+        title: 'Довольны расчётом?',
+        subtitle: 'Подайте заявку на кредит и получите решение в течение 24 часов',
+        button: 'Подать заявку на кредит'
+      },
+      modal: {
+        title: 'Заявка на кредит',
+        subtitle: 'Заполните форму и получите решение в течение 24 часов',
+        loanParams: 'Параметры кредита',
+        amount: 'Сумма',
+        term: 'Срок',
+        monthlyPayment: 'Ежемесячный платёж',
+        totalAmount: 'Общая сумма',
+        personalInfo: 'Личные данные',
+        fullName: 'Полное имя',
+        email: 'Адрес электронной почты',
+        phone: 'Номер телефона',
+        financialInfo: 'Финансовая информация',
+        monthlyIncome: 'Ежемесячный доход (€)',
+        employment: 'Место работы',
+        loanPurpose: 'Цель кредита',
+        purposeQuestion: 'Для чего вам нужен кредит?',
+        purposePlaceholder: 'Кратко опишите, на что планируете использовать кредит',
+        terms: {
+          title: 'Соглашаюсь с условиями:',
+          rate: '14% годовая процентная ставка без скрытых комиссий',
+          decision: 'Решение в течение 24 часов',
+          privacy: 'Обработка данных согласно политике конфиденциальности',
+          contact: 'Связь для получения дополнительной информации'
+        },
+        submit: 'Подать заявку',
+        submitting: 'Подача заявки...',
+        placeholders: {
+          fullName: 'Ваше полное имя',
+          email: 'ваш@email.com',
+          phone: '+370 600 00000',
+          monthlyIncome: '2000',
+          employment: 'Название компании'
+        }
+      }
+    },
+    faq: {
+      badge: 'Часто задаваемые вопросы',
+      title: 'Есть вопросы?',
+      subtitle: 'Вот ответы на самые частые вопросы об услугах LTB Банк',
+      notFound: {
+        title: 'Не нашли ответ на свой вопрос?',
+        description: 'Свяжитесь с нашей командой экспертов - мы будем рады помочь',
+        button: 'Связаться с нами'
+      },
+      form: {
+        name: 'Имя',
+        email: 'Email',
+        message: 'Сообщение',
+        send: 'Отправить',
+        cancel: 'Отменить',
+        sending: 'Отправляется...',
+        placeholder: {
+          name: 'Ваше имя',
+          email: 'ваш.email@example.com',
+          message: 'Ваш вопрос...'
+        }
+      }
+    },
+    contact: {
+      badge: 'Свяжитесь с нами',
+      title: 'Есть вопросы?',
+      subtitle: 'Наша команда экспертов всегда готова помочь. Свяжитесь с нами любым удобным для вас способом.',
+      form: {
+        title: 'Напишите нам'
       }
     },
     footer: {
@@ -652,18 +1035,18 @@ const getTranslations = () => ({
       information: 'Информация',
       help: 'Помощь',
       techSupport: 'Техническая поддержка',
-      calculatorIssues: 'Проблемы с калькулятором:',
+      calculatorIssues: 'Проблемы с калькуляторами:',
       copyright: 'Все права защищены.',
       licensed: 'Лицензирован Банком Литвы',
       insured: 'Депозиты застрахованы до €100,000',
-      disclaimer: 'LTB Банк является лицензированным кредитным учреждением под надзором Банка Литвы. Депозиты застрахованы согласно директивам ЕС до €100,000 на клиента. Процентные ставки зависят от рыночных условий и могут изменяться. Консультируйтесь с нашими экспертами перед принятием решений.'
+      disclaimer: 'LTB Банк является лицензированным кредитным учреждением, надзор осуществляет Банк Литвы. Депозиты застрахованы согласно директивам ЕС до €100,000 на клиента. Размер процентов зависит от рыночных условий и может изменяться. Перед принятием решений консультируйтесь с нашими экспертами.'
     }
   },
   de: {
     nav: {
       home: 'Startseite',
       services: 'Dienstleistungen',
-      howItWorks: 'So funktioniert es',
+      howItWorks: 'Wie es funktioniert',
       about: 'Über uns',
       contact: 'Kontakt',
       login: 'Anmelden',
@@ -671,11 +1054,49 @@ const getTranslations = () => ({
       dashboard: 'Mein Konto',
       logout: 'Abmelden'
     },
+    calculators: {
+      title: 'Rechnertyp wählen',
+      daily: 'Tägliche Zinsen',
+      term: 'Festgeld',
+      loans: 'Kredite'
+    },
+    about: {
+      title: 'LTB Bank - Ihr vertrauensvoller Partner',
+      subtitle: 'Wir sind ein innovativer Anbieter von Finanzlösungen, der Kunden dabei hilft, Geld sicher und profitabel zu sparen.',
+      security: {
+        title: 'Sicherheit',
+        description: 'Ihr Geld ist durch modernste Sicherheitslösungen und Versicherungen geschützt.'
+      },
+      profitability: {
+        title: 'Rentabilität',
+        description: 'Wir bieten einen wettbewerbsfähigen Jahreszinssatz von 8% mit täglichen Zinszahlungen.'
+      },
+      experience: {
+        title: 'Erfahrung',
+        description: 'Wir haben jahrelange Erfahrung im Finanzbereich und Tausende zufriedene Kunden.'
+      }
+    },
     hero: {
-      title: 'Weltweit erste Bank mit täglicher Zinszahlung',
-      subtitle: 'Erhalten Sie 8% Jahreszins mit täglichen Zinszahlungen. Transparent, sicher, ohne versteckte Gebühren.',
-      cta: 'Sparen beginnen',
-      learnMore: 'Mehr erfahren'
+      title: 'Sparen Sie klug',
+      subtitle: 'mit täglichen Zinsen',
+      description: 'Die weltweit erste Bank, die täglich Zinsen zahlt. Transparent, sicher, ohne versteckte Gebühren – so sieht modernes Sparen aus.',
+      ctaPrimary: 'Jetzt sparen starten',
+      ctaSecondary: 'Mehr erfahren',
+      newSolutions: 'Innovative Sparlösungen',
+      features: {
+        daily: {
+          title: 'Tägliche Zinsen',
+          description: 'Erhalten Sie täglich Zinsen, nicht nur einmal im Jahr'
+        },
+        security: {
+          title: '100% Sicherheit',
+          description: 'Ihr Geld ist durch Banklizenz und Versicherung geschützt'
+        },
+        noFees: {
+          title: 'Keine Gebühren',
+          description: 'Keine versteckten Gebühren oder monatlichen Tarife'
+        }
+      }
     },
     services: {
       badge: 'Unsere Dienstleistungen',
@@ -689,7 +1110,7 @@ const getTranslations = () => ({
         },
         noReports: {
           title: 'Keine Berichte',
-          description: 'Niemand verlangt Steuererklärungen oder Einkommensnachweise. Sparen Sie einfach und erhalten Sie Zinsen.',
+          description: 'Niemand verlangt Erklärungen oder Einkommensnachweise. Einfach sparen und Zinsen erhalten.',
           badge: 'Einfach'
         },
         confidentiality: {
@@ -699,7 +1120,7 @@ const getTranslations = () => ({
         },
         transparent: {
           title: 'Transparente Berechnung',
-          description: 'Sie wissen immer, wie viel Sie verdienen werden. Keine versteckten Gebühren oder komplexe Bedingungen.',
+          description: 'Sie wissen immer, wie viel Sie verdienen werden. Keine versteckten Gebühren oder komplexen Bedingungen.',
           badge: 'Klar'
         },
         fastAccess: {
@@ -714,36 +1135,225 @@ const getTranslations = () => ({
         },
         loans: {
           title: 'Kredite zu 14% Zinsen',
-          description: 'Erhalten Sie einen Kredit mit transparenten 14% Jahreszinsen ohne versteckte Gebühren.',
+          description: 'Erhalten Sie einen Kredit mit transparentem 14% Jahreszinssatz ohne versteckte Gebühren.',
           badge: 'Neu'
         }
       },
       cta: {
-        title: 'Starten Sie noch heute',
+        title: 'Heute beginnen',
         description: 'Schließen Sie sich Tausenden von Kunden an, die bereits mit LTB Bank verdienen',
         button: 'Jetzt registrieren'
       }
     },
-    calculators: {
-      title: 'Rechner-Typ wählen',
-      daily: 'Tägliche Zinsen',
-      term: 'Festgeld',
-      loans: 'Kredite'
+    howItWorks: {
+      badge: 'Einfacher Prozess',
+      title: 'Wie funktioniert es?',
+      subtitle: 'Mit LTB Bank zu sparen ist einfach und schnell. So funktioniert es.',
+      steps: {
+        register: {
+          title: 'Registrieren',
+          description: 'Erstellen Sie ein Konto in 3 Minuten. Keine komplexen Dokumente oder Berichte erforderlich.'
+        },
+        deposit: {
+          title: 'Geld einzahlen',
+          description: 'Zahlen Sie Geld von jeder Bank weltweit auf Ihr Konto ein, sicher und schnell.'
+        },
+        earn: {
+          title: 'Zinsen verdienen',
+          description: 'Ihr Geld beginnt sofort zu arbeiten. Zinsen werden täglich berechnet und gezahlt.'
+        },
+        withdraw: {
+          title: 'Geld verwenden',
+          description: 'Geld ist jederzeit verfügbar. Sie können alles oder nur einen Teil abheben - ganz nach Ihrem Bedarf.'
+        }
+      },
+      cta: {
+        title: 'Bereit, mit dem Sparen zu beginnen?',
+        description: 'Schließen Sie sich Tausenden von Kunden an, die bereits mit LTB Bank verdienen',
+        buttonPrimary: 'Jetzt registrieren',
+        buttonSecondary: 'Weiterlesen'
+      }
     },
-    about: {
-      title: 'LTB Bank - Ihr vertrauensvoller Partner',
-      subtitle: 'Wir sind ein innovativer Anbieter von Finanzlösungen, der Kunden hilft, sicher und profitabel zu sparen.',
-      security: {
-        title: 'Sicherheit',
-        description: 'Ihr Geld ist durch modernste Sicherheitslösungen und Versicherung geschützt.'
+    calculator: {
+      badge: 'Zinsrechner',
+      title: 'Berechnen Sie Ihren Gewinn',
+      subtitle: 'Finden Sie heraus, wie viel Sie mit unseren täglichen Zinsen verdienen',
+      amountLabel: 'Sparbetrag',
+      amount: 'Betrag eingeben (LT)',
+      rate: 'Zinssatz:',
+      rateValue: 'pro Jahr',
+      results: {
+        title: 'Ihr Gewinn',
+        daily: 'Pro Tag',
+        monthly: 'Pro Monat',
+        yearly: 'Pro Jahr'
       },
-      profitability: {
-        title: 'Rentabilität',
-        description: 'Wir bieten einen wettbewerbsfähigen Zinssatz von 8% pro Jahr mit täglichen Zinszahlungen.'
+      buttons: {
+        manage: 'Konto verwalten',
+        register: 'Registrieren',
+        login: 'Anmelden'
+      }
+    },
+    termDeposit: {
+      badge: 'Festgeld-Rechner',
+      title: 'Festgeld',
+      subtitle: 'Höhere Zinssätze für größere Einlagen',
+      termSelection: {
+        title: 'Laufzeit wählen',
+        subtitle: 'Verschiedene Laufzeiten - verschiedene Zinssätze',
+        oneYear: {
+          title: '1 Jahr Laufzeit',
+          subtitle: 'Traditionelle Zinssätze',
+          rates: {
+            up10k: 'Bis 10.000 LT:',
+            up100k: '10.000-100.000 LT:',
+            over100k: '100.000+ LT:'
+          }
+        },
+        sixYear: {
+          title: '6 Jahre Laufzeit',
+          subtitle: 'Sonderangebot',
+          rate: '100%',
+          forAnyAmount: 'Für jeden Betrag!',
+          badge: 'HÖCHSTE ZINSEN'
+        }
       },
-      experience: {
-        title: 'Erfahrung',
-        description: 'Wir haben jahrelange Erfahrung im Finanzbereich und Tausende zufriedene Kunden.'
+      form: {
+        enterAmount: 'Einlagenbetrag eingeben',
+        enterInvestment: 'Investitionsbetrag eingeben',
+        sixYearNote: 'Wählen Sie den Betrag, den Sie 6 Jahre lang zu 100% Zinsen investieren möchten',
+        depositAmount: 'Einlagenbetrag (LT)',
+        maxAmount: 'max.',
+        accountBalance: 'Kontostand:',
+        remainingBalance: 'Verbleibt auf dem Konto:',
+        overBalance: 'Betrag übersteigt Kontostand'
+      },
+      categories: {
+        beginner: 'Anfänger',
+        advanced: 'Fortgeschritten',
+        vip: 'VIP',
+        vip6years: 'VIP 6 Jahre',
+        level: 'Stufe',
+        yourRate: 'Ihr Zinssatz'
+      },
+      results: {
+        title: 'Ihr Gewinn',
+        yearlyProfit: 'Gewinn pro Jahr',
+        totalProfit: 'Gesamtgewinn für',
+        oneYear: '1 Jahr',
+        sixYears: '6 Jahre',
+        totalAmount: 'Erhaltener Betrag:'
+      },
+      actions: {
+        createDeposit: 'Festgeld erstellen',
+        login: 'Anmelden zum Erstellen',
+        register: 'Jetzt registrieren',
+        goToDashboard: 'Zum Konto gehen'
+      }
+    },
+    loans: {
+      badge: 'Kreditrechner',
+      title: 'Kreditrechner',
+      subtitle: 'Ermitteln Sie Ihre monatliche Rate mit',
+      interestRate: '14% Jahreszinssatz',
+      form: {
+        loanAmount: 'Kreditsumme:',
+        loanTerm: 'Kreditlaufzeit:',
+        months: 'Monate',
+        exactAmount: 'Genauer Betrag (€)',
+        exactTerm: 'Genaue Laufzeit (Monate)'
+      },
+      results: {
+        monthlyPayment: 'SIE ZAHLEN MONATLICH:',
+        calculating: 'Wird berechnet...',
+        checkInput: 'Eingabedaten prüfen',
+        paymentNote: 'Dieser Betrag wird monatlich für',
+        totalAmount: 'Gesamtbetrag',
+        interest: 'Zinsen'
+      },
+      schedule: {
+        title: 'Tilgungsplan',
+        subtitle: 'Detaillierte Aufschlüsselung jeder monatlichen Zahlung',
+        headers: {
+          month: 'Monat',
+          payment: 'Zahlung',
+          principal: 'Tilgung',
+          interest: 'Zinsen',
+          balance: 'Restschuld'
+        },
+        showingFirst: 'Zeigt nur die ersten 12 Monate. Insgesamt:',
+        totalMonths: 'Monate'
+      },
+      application: {
+        title: 'Zufrieden mit der Berechnung?',
+        subtitle: 'Stellen Sie einen Kreditantrag und erhalten Sie innerhalb von 24 Stunden eine Entscheidung',
+        button: 'Kreditantrag stellen'
+      },
+      modal: {
+        title: 'Kreditantrag',
+        subtitle: 'Füllen Sie das Formular aus und erhalten Sie innerhalb von 24 Stunden eine Entscheidung',
+        loanParams: 'Kreditparameter',
+        amount: 'Betrag',
+        term: 'Laufzeit',
+        monthlyPayment: 'Monatliche Rate',
+        totalAmount: 'Gesamtbetrag',
+        personalInfo: 'Persönliche Daten',
+        fullName: 'Vollständiger Name',
+        email: 'E-Mail-Adresse',
+        phone: 'Telefonnummer',
+        financialInfo: 'Finanzielle Informationen',
+        monthlyIncome: 'Monatliches Einkommen (€)',
+        employment: 'Arbeitsplatz',
+        loanPurpose: 'Kreditzweck',
+        purposeQuestion: 'Wofür benötigen Sie den Kredit?',
+        purposePlaceholder: 'Beschreiben Sie kurz, wofür Sie den Kredit verwenden möchten',
+        terms: {
+          title: 'Ich stimme den Bedingungen zu:',
+          rate: '14% Jahreszinssatz ohne versteckte Gebühren',
+          decision: 'Entscheidung innerhalb von 24 Stunden',
+          privacy: 'Datenverarbeitung gemäß Datenschutzrichtlinie',
+          contact: 'Kontakt für zusätzliche Informationen'
+        },
+        submit: 'Antrag stellen',
+        submitting: 'Antrag wird gestellt...',
+        placeholders: {
+          fullName: 'Ihr vollständiger Name',
+          email: 'ihre@email.com',
+          phone: '+370 600 00000',
+          monthlyIncome: '2000',
+          employment: 'Firmenname'
+        }
+      }
+    },
+    faq: {
+      badge: 'Häufig gestellte Fragen',
+      title: 'Haben Sie Fragen?',
+      subtitle: 'Hier sind Antworten auf die häufigsten Fragen zu LTB Bank Dienstleistungen',
+      notFound: {
+        title: 'Antwort auf Ihre Frage nicht gefunden?',
+        description: 'Kontaktieren Sie unser Expertenteam - wir helfen gerne',
+        button: 'Kontaktieren Sie uns'
+      },
+      form: {
+        name: 'Name',
+        email: 'E-Mail',
+        message: 'Nachricht',
+        send: 'Senden',
+        cancel: 'Abbrechen',
+        sending: 'Wird gesendet...',
+        placeholder: {
+          name: 'Ihr Name',
+          email: 'ihre.email@beispiel.com',
+          message: 'Ihre Frage...'
+        }
+      }
+    },
+    contact: {
+      badge: 'Kontaktieren Sie uns',
+      title: 'Haben Sie Fragen?',
+      subtitle: 'Unser Expertenteam ist immer bereit zu helfen. Kontaktieren Sie uns auf eine für Sie bequeme Weise.',
+      form: {
+        title: 'Schreiben Sie uns'
       }
     },
     footer: {
@@ -754,8 +1364,9 @@ const getTranslations = () => ({
       calculatorIssues: 'Rechner-Probleme:',
       copyright: 'Alle Rechte vorbehalten.',
       licensed: 'Lizenziert von der Bank von Litauen',
-      insured: 'Einlagen bis zu €100,000 versichert',
-      disclaimer: 'LTB Bank ist ein lizenziertes Kreditinstitut unter Aufsicht der Bank von Litauen. Einlagen sind nach EU-Richtlinien bis zu €100,000 pro Kunde versichert. Zinssätze hängen von Marktbedingungen ab und können sich ändern. Konsultieren Sie unsere Experten vor Entscheidungen.'
+      insured: 'Einlagen bis zu €100.000 versichert',
+      disclaimer: 'LTB Bank ist ein lizenziertes Kreditinstitut unter Aufsicht der Bank von Litauen. Einlagen sind gemäß EU-Richtlinien bis zu €100.000 pro Kunde versichert. Zinssätze hängen von Marktbedingungen ab und können sich ändern. Konsultieren Sie unsere Experten vor Entscheidungen.'
     }
   }
 });
+
