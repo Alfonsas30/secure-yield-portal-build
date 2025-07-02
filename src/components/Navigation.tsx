@@ -3,16 +3,20 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, Sparkles } from "lucide-react";
-import { RegistrationModal } from "./RegistrationModal";
-import { DiscountRequestModal } from "./DiscountRequestModal";
+import { Menu, Sparkles, User, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "./auth/AuthModal";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [registrationOpen, setRegistrationOpen] = useState(false);
-  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
+  
+  const { user, profile, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { href: "#paslaugos", label: "Paslaugos" },
@@ -78,20 +82,52 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Button 
-              variant="ghost" 
-              className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
-            >
-              <span className="relative z-10">Prisijungti</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
-            </Button>
-            <Button 
-              onClick={() => setRegistrationOpen(true)}
-              className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
-            >
-              <span className="relative z-10">Registruotis</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/dashboard')}
+                  className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  <span className="relative z-10">
+                    {profile?.display_name || user.email}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
+                </Button>
+                <Button 
+                  variant="ghost"
+                  onClick={signOut}
+                  className="text-slate-600 hover:text-red-600 hover:bg-red-50/50 transition-all duration-300 hover:scale-105 transform"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => {
+                    setAuthModalTab("login");
+                    setAuthModalOpen(true);
+                  }}
+                  className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
+                >
+                  <span className="relative z-10">Prisijungti</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
+                </Button>
+                <Button 
+                  onClick={() => {
+                    setAuthModalTab("signup");
+                    setAuthModalOpen(true);
+                  }}
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
+                >
+                  <span className="relative z-10">Registruotis</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Navigation */}
@@ -126,38 +162,71 @@ const Navigation = () => {
                   </a>
                 ))}
                 <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
-                <Button 
-                  variant="ghost" 
-                  className="justify-start hover:bg-blue-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
-                  style={{ animationDelay: '0.4s' }}
-                >
-                  Prisijungti
-                </Button>
-                <Button 
-                  onClick={() => {
-                    setIsOpen(false);
-                    setRegistrationOpen(true);
-                  }}
-                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
-                  style={{ animationDelay: '0.5s' }}
-                >
-                  <span className="relative z-10">Registruotis</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                </Button>
+                {user ? (
+                  <>
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        setIsOpen(false);
+                        navigate('/dashboard');
+                      }}
+                      className="justify-start hover:bg-blue-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
+                      style={{ animationDelay: '0.4s' }}
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      Mano paskyra
+                    </Button>
+                    <Button 
+                      variant="ghost"
+                      onClick={() => {
+                        setIsOpen(false);
+                        signOut();
+                      }}
+                      className="justify-start hover:bg-red-50 text-red-600 transition-all duration-300 hover:scale-105 transform animate-scale-in"
+                      style={{ animationDelay: '0.5s' }}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Atsijungti
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        setIsOpen(false);
+                        setAuthModalTab("login");
+                        setAuthModalOpen(true);
+                      }}
+                      className="justify-start hover:bg-blue-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
+                      style={{ animationDelay: '0.4s' }}
+                    >
+                      Prisijungti
+                    </Button>
+                    <Button 
+                      onClick={() => {
+                        setIsOpen(false);
+                        setAuthModalTab("signup");
+                        setAuthModalOpen(true);
+                      }}
+                      className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
+                      style={{ animationDelay: '0.5s' }}
+                    >
+                      <span className="relative z-10">Registruotis</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                    </Button>
+                  </>
+                )}
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </nav>
 
-      <RegistrationModal 
-        open={registrationOpen} 
-        onOpenChange={setRegistrationOpen}
-        onRequestDiscount={() => setDiscountRequestOpen(true)}
-      />
-      <DiscountRequestModal 
-        open={discountRequestOpen} 
-        onOpenChange={setDiscountRequestOpen}
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab={authModalTab}
       />
     </>
   );

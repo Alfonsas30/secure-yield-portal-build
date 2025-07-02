@@ -117,6 +117,39 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          account_number: string
+          created_at: string
+          display_name: string | null
+          email: string
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          created_at?: string
+          display_name?: string | null
+          email: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          created_at?: string
+          display_name?: string | null
+          email?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -124,6 +157,10 @@ export type Database = {
     Functions: {
       bytea_to_text: {
         Args: { data: string }
+        Returns: string
+      }
+      generate_account_number: {
+        Args: Record<PropertyKey, never>
         Returns: string
       }
       http: {
