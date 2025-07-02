@@ -41,6 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showWarning, setShowWarning] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [sessionTimeoutActive, setSessionTimeoutActive] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -145,9 +146,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (isLoggingOut) return { error: null };
     
     setIsLoggingOut(true);
+    setSessionTimeoutActive(false);
     console.log('Attempting to sign out...');
     
+    // Clear all timers and state
+    setTimeLeft(IDLE_TIMEOUT);
+    setLastActivity(Date.now());
+    setShowWarning(false);
+    
     try {
+      // Check if we have a valid session before attempting logout
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      
+      if (!currentSession) {
+        console.log('No active session found, clearing state...');
+        // Clear local storage and navigate
+        localStorage.clear();
+        setUser(null);
+        setSession(null);
+        setProfile(null);
+        navigate('/');
+        return { error: null };
+      }
+      
       const { error } = await supabase.auth.signOut();
       
       if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
@@ -159,7 +180,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       } else {
         console.log('Successfully signed out');
-        // Navigate to home page after successful logout
+        // Clear local storage and navigate
+        localStorage.clear();
         navigate('/');
       }
 
@@ -243,14 +265,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Idle timeout timer
   useEffect(() => {
-    if (!user) return;
+    if (!user || isLoggingOut || sessionTimeoutActive) return;
 
-    const timer = setInterval(() => {
+    const timer = setInterval(async () => {
+      // Check if session still exists before proceeding
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      if (!currentSession || isLoggingOut || sessionTimeoutActive) {
+        return;
+      }
+
       const now = Date.now();
       const elapsed = now - lastActivity;
       const remaining = IDLE_TIMEOUT - elapsed;
 
-      if (remaining <= 0) {
+      if (remaining <= 0 && !sessionTimeoutActive) {
+        setSessionTimeoutActive(true);
         toast({
           title: "Sesija baigėsi",
           description: "Atsijungiama dėl neaktyvumo",
@@ -260,7 +289,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      if (remaining <= WARNING_TIME && !showWarning) {
+      if (remaining <= WARNING_TIME && !showWarning && !sessionTimeoutActive) {
         setShowWarning(true);
         toast({
           title: "Sesija baigiasi",
@@ -273,7 +302,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [user, lastActivity, showWarning]);
+  }, [user, lastActivity, showWarning, isLoggingOut, sessionTimeoutActive]);
 
   const value = {
     user,
