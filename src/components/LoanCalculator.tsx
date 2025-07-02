@@ -30,8 +30,16 @@ const LoanCalculator = () => {
     const interestRate = 14; // 14% annual interest rate
     const monthlyRate = interestRate / 100 / 12;
     
+    console.log('Calculation inputs:', {
+      validLoanAmount,
+      validLoanTerm,
+      monthlyRate,
+      interestRate
+    });
+    
     // Calculate monthly payment using loan formula with validation
     if (validLoanAmount <= 0 || validLoanTerm <= 0 || monthlyRate <= 0) {
+      console.log('Invalid inputs detected, returning zeros');
       return {
         monthlyPayment: 0,
         totalPayment: 0,
@@ -44,10 +52,18 @@ const LoanCalculator = () => {
     const monthlyPayment = (validLoanAmount * monthlyRate * Math.pow(1 + monthlyRate, validLoanTerm)) / 
                           (Math.pow(1 + monthlyRate, validLoanTerm) - 1);
     
+    console.log('Raw monthly payment calculation:', monthlyPayment);
+    
     // Validate calculation results
     const validMonthlyPayment = isNaN(monthlyPayment) || !isFinite(monthlyPayment) ? 0 : monthlyPayment;
     const totalPayment = validMonthlyPayment * validLoanTerm;
     const totalInterest = totalPayment - validLoanAmount;
+    
+    console.log('Final calculations:', {
+      validMonthlyPayment,
+      totalPayment,
+      totalInterest
+    });
 
     // Generate payment schedule
     const paymentSchedule = [];
@@ -183,17 +199,21 @@ const LoanCalculator = () => {
 
       {/* Results */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-              <CreditCard className="w-6 h-6 text-white" />
+        <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200">
+          <CardContent className="p-8 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+              <CreditCard className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-lg font-semibold mb-2 text-slate-900">Mėnesinis mokėjimas</h3>
-            <p className="text-3xl font-bold text-blue-600 mb-2">
-              {calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+            <h3 className="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">MOKĖSITE KAS MĖNESĮ:</h3>
+            <p className="text-5xl font-black text-blue-600 mb-4 drop-shadow-lg">
+              {calculations.monthlyPayment > 0 
+                ? `${calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`
+                : 'Skaičiuojama...'}
             </p>
-            <p className="text-sm text-slate-600">
-              Ši suma bus mokama kiekvieną mėnesį {validLoanTerm} mėnesių
+            <p className="text-base text-slate-700 font-medium">
+              {calculations.monthlyPayment > 0 
+                ? `Ši suma bus mokama kiekvieną mėnesį ${validLoanTerm} mėnesių`
+                : 'Patikrinkite įvesties duomenis'}
             </p>
           </CardContent>
         </Card>
@@ -224,8 +244,7 @@ const LoanCalculator = () => {
       </div>
 
       {/* Payment Schedule */}
-      {calculations.monthlyPayment > 0 && (
-        <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50">
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50">
           <CardHeader className="text-center pb-4">
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full">
@@ -281,7 +300,6 @@ const LoanCalculator = () => {
             )}
           </CardContent>
         </Card>
-      )}
 
       {/* Application Button */}
       <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50/80 to-green-50/80">
