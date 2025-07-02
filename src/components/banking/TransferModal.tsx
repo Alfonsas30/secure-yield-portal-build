@@ -37,8 +37,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
       
       if (amount <= 0) {
         toast({
-          title: "Klaida",
-          description: "Suma turi būti teigiama",
+          title: t('forms.error'),
+          description: t('banking.transfer.positiveAmountError'),
           variant: "destructive"
         });
         return;
@@ -60,8 +60,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
       
       if (!result.success) {
         toast({
-          title: "Pervedimo klaida",
-          description: result.error === 'Insufficient funds' ? "Nepakanka lėšų" : "Nepavyko įvykdyti pervedimo",
+          title: t('banking.transfer.transferError'),
+          description: result.error === 'Insufficient funds' ? t('banking.transfer.insufficientFunds') : t('banking.transfer.transferError'),
           variant: "destructive"
         });
         return;
@@ -81,8 +81,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         });
 
       toast({
-        title: "Pervedimas sėkmingas",
-        description: `Pervedėte ${amount} LT į sąskaitą ${formData.toAccount}`,
+        title: t('banking.transfer.success'),
+        description: t('banking.transfer.successDescription').replace('{amount}', amount.toString()).replace('{account}', formData.toAccount),
         variant: "default"
       });
 
@@ -91,8 +91,8 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     } catch (error) {
       console.error('Transfer error:', error);
       toast({
-        title: "Pervedimo klaida",
-        description: "Nepavyko įvykdyti pervedimo",
+        title: t('banking.transfer.transferError'),
+        description: t('banking.transfer.transferError'),
         variant: "destructive"
       });
     } finally {
@@ -104,34 +104,34 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Pinigų pervedimas</DialogTitle>
+          <DialogTitle>{t('banking.transfer.title')}</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="toAccount">Gavėjo sąskaitos numeris</Label>
+            <Label htmlFor="toAccount">{t('banking.transfer.toAccount')}</Label>
             <Input
               id="toAccount"
               value={formData.toAccount}
               onChange={(e) => setFormData(prev => ({ ...prev, toAccount: e.target.value }))}
-              placeholder="LT############"
+              placeholder={t('banking.transfer.toAccountPlaceholder')}
               required
             />
           </div>
 
           <div>
-            <Label htmlFor="toName">Gavėjo vardas, pavardė</Label>
+            <Label htmlFor="toName">{t('banking.transfer.toName')}</Label>
             <Input
               id="toName"
               value={formData.toName}
               onChange={(e) => setFormData(prev => ({ ...prev, toName: e.target.value }))}
-              placeholder="Vardas Pavardė"
+              placeholder={t('banking.transfer.toNamePlaceholder')}
               required
             />
           </div>
 
           <div>
-            <Label htmlFor="amount">Suma (LT)</Label>
+            <Label htmlFor="amount">{t('banking.transfer.amount')}</Label>
             <Input
               id="amount"
               type="number"
@@ -139,7 +139,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               min="0.01"
               value={formData.amount}
               onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
-              placeholder="0.00"
+              placeholder={t('banking.transfer.amountPlaceholder')}
               required
             />
             {formData.amount && parseFloat(formData.amount) > 0 && (
@@ -150,22 +150,22 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           </div>
 
           <div>
-            <Label htmlFor="description">Paskirtis (neprivaloma)</Label>
+            <Label htmlFor="description">{t('banking.transfer.description')}</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Mokėjimo paskirtis..."
+              placeholder={t('banking.transfer.descriptionPlaceholder')}
               rows={3}
             />
           </div>
 
           <div className="flex gap-2 pt-4">
             <Button type="submit" disabled={loading} className="flex-1">
-              {loading ? "Vykdoma..." : "Pervesti"}
+              {loading ? t('banking.transfer.submitting') : t('banking.transfer.submit')}
             </Button>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Atšaukti
+              {t('banking.transfer.cancel')}
             </Button>
           </div>
         </form>
