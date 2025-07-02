@@ -1,10 +1,16 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Shield, Eye, Calculator, Clock, TrendingUp, Sparkles } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const Services = () => {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+
   const services = [
     {
       icon: Calendar,
@@ -156,13 +162,26 @@ const Services = () => {
               <p className="text-slate-600 text-lg mb-6 group-hover:text-slate-700 transition-colors duration-300">
                 Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
               </p>
-              <Button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow">
+              <Button 
+                onClick={() => setRegistrationOpen(true)}
+                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow"
+              >
                 Registruotis dabar
               </Button>
             </div>
           </div>
         </div>
       </div>
+
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+        onRequestDiscount={() => setDiscountRequestOpen(true)}
+      />
+      <DiscountRequestModal 
+        open={discountRequestOpen} 
+        onOpenChange={setDiscountRequestOpen}
+      />
     </section>
   );
 };

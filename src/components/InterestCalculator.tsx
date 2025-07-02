@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const InterestCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");
@@ -13,6 +15,8 @@ const InterestCalculator = () => {
   const [animatedDaily, setAnimatedDaily] = useState<number>(0);
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
   const [animatedYearly, setAnimatedYearly] = useState<number>(0);
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
   
   const calculateInterest = () => {
     const principal = parseFloat(amount) || 0;
@@ -185,6 +189,7 @@ const InterestCalculator = () => {
               </div>
 
               <Button 
+                onClick={() => setRegistrationOpen(true)}
                 className="w-full bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                 size="lg"
               >
@@ -195,6 +200,16 @@ const InterestCalculator = () => {
           </Card>
         </div>
       </div>
+
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+        onRequestDiscount={() => setDiscountRequestOpen(true)}
+      />
+      <DiscountRequestModal 
+        open={discountRequestOpen} 
+        onOpenChange={setDiscountRequestOpen}
+      />
     </section>
   );
 };

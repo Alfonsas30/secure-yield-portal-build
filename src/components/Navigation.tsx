@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Menu, Sparkles } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
 
   const menuItems = [
     { href: "#paslaugos", label: "Paslaugos" },
@@ -81,7 +85,10 @@ const Navigation = () => {
               <span className="relative z-10">Prisijungti</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
             </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group">
+            <Button 
+              onClick={() => setRegistrationOpen(true)}
+              className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
+            >
               <span className="relative z-10">Registruotis</span>
               <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
             </Button>
@@ -127,6 +134,10 @@ const Navigation = () => {
                   Prisijungti
                 </Button>
                 <Button 
+                  onClick={() => {
+                    setIsOpen(false);
+                    setRegistrationOpen(true);
+                  }}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
                   style={{ animationDelay: '0.5s' }}
                 >
@@ -138,6 +149,16 @@ const Navigation = () => {
           </Sheet>
         </div>
       </nav>
+
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+        onRequestDiscount={() => setDiscountRequestOpen(true)}
+      />
+      <DiscountRequestModal 
+        open={discountRequestOpen} 
+        onOpenChange={setDiscountRequestOpen}
+      />
     </>
   );
 };

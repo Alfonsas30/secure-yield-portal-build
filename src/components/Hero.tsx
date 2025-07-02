@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Shield, Zap, Coins, Banknote, Star, Sparkles, Heart, Diamond, Gem, Hexagon, Triangle, Circle } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const Hero = () => {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+
   return (
     <section className="relative py-20 px-4 min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-vibrant-purple via-vibrant-cyan to-vibrant-lime animate-aurora-wave bg-300%">
       {/* Plūduriuojantys pinigų elementai */}
@@ -110,6 +116,7 @@ const Hero = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-scale-in" style={{ animationDelay: '0.4s' }}>
           <Button 
+            onClick={() => setRegistrationOpen(true)}
             size="lg" 
             className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow group"
           >
@@ -176,6 +183,16 @@ const Hero = () => {
           })}
         </div>
       </div>
+
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+        onRequestDiscount={() => setDiscountRequestOpen(true)}
+      />
+      <DiscountRequestModal 
+        open={discountRequestOpen} 
+        onOpenChange={setDiscountRequestOpen}
+      />
     </section>
   );
 };

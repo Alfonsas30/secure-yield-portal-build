@@ -1,9 +1,15 @@
 
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UserPlus, CreditCard, TrendingUp, Banknote, CheckCircle, Sparkles } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const HowItWorks = () => {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+
   const steps = [
     {
       number: "01",
@@ -165,7 +171,10 @@ const HowItWorks = () => {
                 Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn">
+                <button 
+                  onClick={() => setRegistrationOpen(true)}
+                  className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                >
                   <span className="relative z-10">Registruotis dabar</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                 </button>
@@ -177,6 +186,16 @@ const HowItWorks = () => {
           </div>
         </div>
       </div>
+
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+        onRequestDiscount={() => setDiscountRequestOpen(true)}
+      />
+      <DiscountRequestModal 
+        open={discountRequestOpen} 
+        onOpenChange={setDiscountRequestOpen}
+      />
     </section>
   );
 };
