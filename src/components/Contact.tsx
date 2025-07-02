@@ -27,13 +27,40 @@ const Contact = () => {
   
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Žinutė išsiųsta!",
-      description: "Mes susisieksime su jumis per 24 valandas.",
-    });
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setIsLoading(true);
+    
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Žinutė išsiųsta!",
+        description: "Mes susisieksime su jumis per 24 valandas.",
+      });
+      
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Klaida",
+        description: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -196,10 +223,17 @@ const Contact = () => {
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 font-semibold py-3"
+                  disabled={isLoading}
                   size="lg"
                 >
-                  <Send className="w-5 h-5 mr-2" />
-                  Siųsti žinutę
+                  {isLoading ? (
+                    "Siunčiama..."
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Siųsti žinutę
+                    </>
+                  )}
                 </Button>
               </form>
             </CardContent>
