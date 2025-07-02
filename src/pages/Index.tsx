@@ -44,7 +44,7 @@ const Index = () => {
               <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
               <TabsTrigger 
                 value="term" 
-                className="text-sm relative before:absolute before:inset-0 before:rounded-sm before:p-[2px] before:bg-gradient-to-r before:from-blue-500 before:via-purple-500 before:to-pink-500 before:bg-[length:200%_200%] before:animate-rotating-border before:-z-10 before:opacity-70 hover:before:opacity-100 transition-all duration-300"
+                className="text-sm relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1]"
               >
                 Terminuoti indėliai
               </TabsTrigger>

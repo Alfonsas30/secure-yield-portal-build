@@ -291,13 +291,10 @@ export default {
 				},
 				'rotating-border': {
 					'0%': { 
-						backgroundPosition: '0% 50%' 
-					},
-					'50%': { 
-						backgroundPosition: '100% 50%' 
+						transform: 'rotate(0deg)' 
 					},
 					'100%': { 
-						backgroundPosition: '0% 50%' 
+						transform: 'rotate(360deg)' 
 					}
 				}
 			},

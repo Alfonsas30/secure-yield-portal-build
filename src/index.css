@@ -114,3 +114,9 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .bg-conic-gradient {
+    background: conic-gradient(from 0deg, hsl(var(--neon-blue)), hsl(var(--neon-purple)), hsl(var(--neon-pink)), hsl(var(--neon-blue)));
+  }
+}
