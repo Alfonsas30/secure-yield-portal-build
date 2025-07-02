@@ -89,14 +89,14 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a
-              href="/"
+            <button
+              onClick={() => navigate('/')}
               className="relative text-slate-600 hover:text-blue-600 transition-all duration-300 font-medium group py-2"
             >
               Pradžia
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 group-hover:w-full transition-all duration-300 ease-out"></span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
-            </a>
+            </button>
             {menuItems.map((item, index) => (
               <button
                 key={item.href}
@@ -179,13 +179,15 @@ const Navigation = () => {
               </div>
 
               <div className="flex flex-col space-y-6 mt-6 relative z-10">
-                <a
-                  href="/"
-                  className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform"
-                  onClick={() => setIsOpen(false)}
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    navigate('/');
+                  }}
+                  className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform text-left"
                 >
                   Pradžia
-                </a>
+                </button>
                 {menuItems.map((item, index) => (
                   <button
                     key={item.href}
