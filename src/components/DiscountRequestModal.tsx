@@ -33,23 +33,12 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
     }
 
     setLoading(true);
-    console.log("=== STARTING DISCOUNT REQUEST ===");
-    console.log("Form data:", { 
-      name: formData.name.trim(), 
-      email: formData.email.trim(), 
-      account_type: formData.accountType 
-    });
+    console.log("=== TESTING SIMPLE EDGE FUNCTION ===");
     
     try {
-      console.log("=== STARTING DISCOUNT REQUEST ===");
-      
-      // First test if edge functions work at all
-      console.log("Testing edge functions...");
-      const { data: testData, error: testError } = await supabase.functions.invoke('test-function');
-      console.log("Test function result:", { testData, testError });
-      
-      console.log("Calling request-discount function...");
-      const { data, error } = await supabase.functions.invoke('request-discount', {
+      // Test the simplest possible edge function first
+      console.log("Testing simple-test function...");
+      const { data: simpleData, error: simpleError } = await supabase.functions.invoke('simple-test', {
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -57,41 +46,57 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
         }
       });
 
-      console.log("Function response:", { data, error });
+      console.log("Simple test function result:", { simpleData, simpleError });
 
-      if (error) {
-        console.error("Function returned error:", error);
-        throw error;
+      if (simpleError) {
+        console.error("Simple function failed:", simpleError);
+        throw new Error(`Edge funkcijos neveikia: ${simpleError.message}`);
       }
 
-      console.log("Function executed successfully:", data);
-      toast({
-        title: "Sėkmė!",
-        description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
-      });
+      if (simpleData?.success) {
+        console.log("Edge funkcijos veikia! Bandome siųsti el. paštą...");
+        
+        // Now try the discount request function
+        const { data, error } = await supabase.functions.invoke('request-discount', {
+          body: {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            account_type: formData.accountType
+          }
+        });
 
-      // Reset form and close modal
-      setFormData({
-        name: "",
-        email: "",
-        accountType: "personal"
-      });
-      onOpenChange(false);
+        console.log("Request-discount function result:", { data, error });
+
+        if (error) {
+          throw new Error(`El. pašto siuntimas nepavyko: ${error.message}`);
+        }
+
+        toast({
+          title: "Sėkmė!",
+          description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
+        });
+
+        // Reset form and close modal
+        setFormData({
+          name: "",
+          email: "",
+          accountType: "personal"
+        });
+        onOpenChange(false);
+      } else {
+        throw new Error("Edge funkcijos neatsakė teisingai");
+      }
     } catch (error) {
-      console.error("=== ERROR SUBMITTING DISCOUNT REQUEST ===");
-      console.error("Error type:", typeof error);
+      console.error("=== ERROR IN DISCOUNT REQUEST ===");
       console.error("Error details:", error);
-      console.error("Error message:", error?.message);
-      console.error("Error stack:", error?.stack);
       
       toast({
         title: "Klaida",
-        description: "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
+        description: error?.message || "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
         variant: "destructive"
       });
     } finally {
       setLoading(false);
-      console.log("=== DISCOUNT REQUEST COMPLETED ===");
     }
   };
 
