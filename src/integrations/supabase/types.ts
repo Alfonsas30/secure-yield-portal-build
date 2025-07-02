@@ -249,6 +249,48 @@ export type Database = {
         }
         Relationships: []
       }
+      term_deposits: {
+        Row: {
+          account_number: string
+          amount: number
+          contract_signed_at: string
+          created_at: string
+          id: string
+          interest_rate: number
+          maturity_date: string
+          status: string
+          term_months: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          amount: number
+          contract_signed_at?: string
+          created_at?: string
+          id?: string
+          interest_rate: number
+          maturity_date: string
+          status?: string
+          term_months: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          amount?: number
+          contract_signed_at?: string
+          created_at?: string
+          id?: string
+          interest_rate?: number
+          maturity_date?: string
+          status?: string
+          term_months?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           account_number: string
