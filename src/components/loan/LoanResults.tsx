@@ -1,0 +1,57 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { CreditCard, TrendingUp, Calculator } from "lucide-react";
+import { LoanCalculation } from "./types";
+
+interface LoanResultsProps {
+  calculations: LoanCalculation;
+  validLoanTerm: number;
+}
+
+export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200">
+        <CardContent className="p-8 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+            <CreditCard className="w-8 h-8 text-white" />
+          </div>
+          <h3 className="text-xl font-bold mb-4 text-slate-900 uppercase tracking-wide">MOKĖSITE KAS MĖNESĮ:</h3>
+          <p className="text-5xl font-black text-blue-600 mb-4 drop-shadow-lg">
+            {calculations.monthlyPayment > 0 
+              ? `${calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`
+              : 'Skaičiuojama...'}
+          </p>
+          <p className="text-base text-slate-700 font-medium">
+            {calculations.monthlyPayment > 0 
+              ? `Ši suma bus mokama kiekvieną mėnesį ${validLoanTerm} mėnesių`
+              : 'Patikrinkite įvesties duomenis'}
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-green-50 to-green-100">
+        <CardContent className="p-6 text-center">
+          <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
+            <TrendingUp className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2 text-slate-900">Bendra suma</h3>
+          <p className="text-2xl font-bold text-green-600">
+            {calculations.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card className="border-0 shadow-lg bg-gradient-to-br from-orange-50 to-orange-100">
+        <CardContent className="p-6 text-center">
+          <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
+            <Calculator className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2 text-slate-900">Palūkanos</h3>
+          <p className="text-2xl font-bold text-orange-600">
+            {calculations.totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
