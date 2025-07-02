@@ -9,7 +9,114 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      account_registrations: {
+        Row: {
+          account_type: string
+          amount: number
+          created_at: string
+          currency: string
+          discount_code: string | null
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          status: string
+          stripe_session_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          account_type: string
+          amount: number
+          created_at?: string
+          currency?: string
+          discount_code?: string | null
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          account_type?: string
+          amount?: number
+          created_at?: string
+          currency?: string
+          discount_code?: string | null
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          status?: string
+          stripe_session_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      discount_codes: {
+        Row: {
+          code: string
+          created_at: string
+          discount_percent: number
+          email: string
+          expires_at: string
+          id: string
+          used: boolean
+          used_at: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_percent: number
+          email: string
+          expires_at: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_percent?: number
+          email?: string
+          expires_at?: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+        }
+        Relationships: []
+      }
+      discount_requests: {
+        Row: {
+          account_type: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          account_type: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          account_type?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
