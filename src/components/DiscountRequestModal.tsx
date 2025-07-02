@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Loader2, User, Building, Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface DiscountRequestModalProps {
   open: boolean;
@@ -21,6 +22,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleSubmit = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {

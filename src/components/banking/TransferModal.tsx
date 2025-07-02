@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { ltToEur, formatCurrency } from "@/lib/currency";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface TransferModalProps {
   open: boolean;
@@ -17,6 +18,7 @@ interface TransferModalProps {
 export function TransferModal({ open, onOpenChange }: TransferModalProps) {
   const { profile } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     toAccount: "",

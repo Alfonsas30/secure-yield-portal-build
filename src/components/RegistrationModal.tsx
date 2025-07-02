@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Loader2, User, Building, Percent, CreditCard, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface RegistrationModalProps {
   open: boolean;
@@ -25,6 +26,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
   const [loading, setLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   // Campaign end date: 2025-09-01
   const campaignEndDate = new Date('2025-09-01T00:00:00');
@@ -71,8 +73,8 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
   const handlePayment = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
       toast({
-        title: "Klaida",
-        description: "Užpildykite visus privalomatus laukus",
+        title: t('forms.error'),
+        description: t('modals.registration.validationError'),
         variant: "destructive"
       });
       return;
@@ -96,8 +98,8 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
     } catch (error) {
       console.error("Error creating payment:", error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko sukurti mokėjimo",
+        title: t('forms.error'),
+        description: t('modals.registration.paymentError'),
         variant: "destructive"
       });
     } finally {
@@ -110,7 +112,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            Registracija
+            {t('modals.registration.title')}
           </DialogTitle>
         </DialogHeader>
 
@@ -120,14 +122,14 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
             <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 rounded-lg text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <Clock className="w-5 h-5" />
-                <span className="font-bold text-lg">AKCIJA 50% NUOLAIDA!</span>
+                <span className="font-bold text-lg">{t('modals.registration.campaignBanner')}</span>
               </div>
               <div className="text-sm opacity-90">
-                Naujiems klientams iki 2025-09-01
+                {t('modals.registration.campaignDescription')}
               </div>
               {timeLeft && (
                 <div className="text-sm font-medium mt-1">
-                  Liko: {timeLeft}
+                  {t('modals.registration.timeLeft')} {timeLeft}
                 </div>
               )}
             </div>
@@ -136,7 +138,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Account Type Selection */}
           <div>
             <Label className="text-base font-medium mb-3 block">
-              Sąskaitos tipas
+              {t('modals.registration.accountType')}
             </Label>
             <RadioGroup
               value={formData.accountType}
@@ -151,7 +153,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
                 <Label htmlFor="personal" className="flex items-center gap-2 cursor-pointer">
                   <User className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Asmeninė</div>
+                    <div className="font-medium">{t('modals.registration.personal')}</div>
                     <div className="text-sm text-muted-foreground">
                       {isCampaignActive ? (
                         <>
@@ -170,7 +172,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
                 <Label htmlFor="company" className="flex items-center gap-2 cursor-pointer">
                   <Building className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Įmonės</div>
+                    <div className="font-medium">{t('modals.registration.company')}</div>
                     <div className="text-sm text-muted-foreground">
                       {isCampaignActive ? (
                         <>
@@ -190,31 +192,31 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Personal Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="name">Vardas Pavardė *</Label>
+              <Label htmlFor="name">{t('modals.registration.name')} {t('forms.required')}</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Įveskite vardą ir pavardę"
+                placeholder={t('modals.registration.namePlaceholder')}
               />
             </div>
             <div>
-              <Label htmlFor="email">El. paštas *</Label>
+              <Label htmlFor="email">{t('modals.registration.email')} {t('forms.required')}</Label>
               <Input
                 id="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="vardas@example.com"
+                placeholder={t('modals.registration.emailPlaceholder')}
               />
             </div>
             <div>
-              <Label htmlFor="phone">Telefono numeris</Label>
+              <Label htmlFor="phone">{t('modals.registration.phone')}</Label>
               <Input
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="+370..."
+                placeholder={t('modals.registration.phonePlaceholder')}
               />
             </div>
           </div>
@@ -224,17 +226,17 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Price Summary */}
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span>Pradinė kaina:</span>
+              <span>{t('modals.registration.originalPrice')}</span>
               <span>{originalPrice} €</span>
             </div>
             {totalDiscount > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Nuolaida ({totalDiscount}%):</span>
+                <span>{t('modals.registration.discount')} ({totalDiscount}%):</span>
                 <span>-{discountAmount.toFixed(0)} €</span>
               </div>
             )}
             <div className="flex justify-between font-semibold text-lg border-t pt-2">
-              <span>Galutinė kaina:</span>
+              <span>{t('modals.registration.finalPrice')}</span>
               <span>{finalPrice} €</span>
             </div>
           </div>
@@ -250,7 +252,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
             ) : (
               <CreditCard className="w-4 h-4 mr-2" />
             )}
-            Mokėti su Stripe
+            {t('modals.registration.payButton')}
           </Button>
         </div>
       </DialogContent>
