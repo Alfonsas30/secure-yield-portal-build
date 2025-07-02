@@ -20,9 +20,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Crown, Loader2 } from "lucide-react";
+import { Crown, Loader2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const formSchema = z.object({
   name: z.string().min(2, "Vardas turi būti bent 2 simbolių"),
@@ -98,6 +99,13 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
             Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.
           </DialogDescription>
         </DialogHeader>
+
+        <Alert variant="destructive" className="mb-4 border-red-200 bg-red-50">
+          <AlertTriangle className="h-4 w-4 text-red-600" />
+          <AlertDescription className="text-red-700 font-bold text-base">
+            ⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.
+          </AlertDescription>
+        </Alert>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
