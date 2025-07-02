@@ -106,13 +106,13 @@ const FAQ = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-blue-50 text-blue-700 border-blue-200">
             <HelpCircle className="w-4 h-4 mr-2" />
-            Dažniausiai užduodami klausimai
+            {t('faq.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            Turite klausimų?
+            {t('faq.title')}
           </h2>
           <p className="text-xl text-slate-600">
-            Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas
+            {t('faq.subtitle')}
           </p>
         </div>
 
@@ -134,10 +134,10 @@ const FAQ = () => {
         <div className="mt-12 text-center">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200">
             <h3 className="text-xl font-semibold mb-4 text-slate-900">
-              Neradote atsakymo į savo klausimą?
+              {t('faq.notFound.title')}
             </h3>
             <p className="text-slate-600 mb-6">
-              Susisiekite su mūsų ekspertų komanda - mes mielai padėsime
+              {t('faq.notFound.description')}
             </p>
             
             {!showContactForm ? (
@@ -145,13 +145,13 @@ const FAQ = () => {
                 onClick={() => setShowContactForm(true)}
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
               >
-                Susisiekti
+                {t('faq.notFound.button')}
               </Button>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4 text-left">
                 <div>
                   <Label htmlFor="quick-name" className="text-sm font-medium text-slate-700">
-                    Vardas *
+                    {t('faq.form.name')} *
                   </Label>
                   <Input
                     id="quick-name"
@@ -160,13 +160,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder="Jūsų vardas"
+                    placeholder={t('faq.form.placeholder.name')}
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-email" className="text-sm font-medium text-slate-700">
-                    El. paštas *
+                    {t('faq.form.email')} *
                   </Label>
                   <Input
                     id="quick-email"
@@ -176,13 +176,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder="jusu.pastas@example.com"
+                    placeholder={t('faq.form.placeholder.email')}
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-message" className="text-sm font-medium text-slate-700">
-                    Žinutė *
+                    {t('faq.form.message')} *
                   </Label>
                   <Textarea
                     id="quick-message"
@@ -192,7 +192,7 @@ const FAQ = () => {
                     required
                     rows={3}
                     className="mt-1"
-                    placeholder="Jūsų klausimas..."
+                    placeholder={t('faq.form.placeholder.message')}
                   />
                 </div>
                 
@@ -203,11 +203,11 @@ const FAQ = () => {
                     className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
                   >
                     {isLoading ? (
-                      "Siunčiama..."
+                      t('faq.form.sending')
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
-                        Siųsti
+                        {t('faq.form.send')}
                       </>
                     )}
                   </Button>
@@ -220,7 +220,7 @@ const FAQ = () => {
                     }}
                     disabled={isLoading}
                   >
-                    Atšaukti
+                    {t('faq.form.cancel')}
                   </Button>
                 </div>
               </form>

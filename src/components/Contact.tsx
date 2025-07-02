@@ -27,6 +27,7 @@ const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,13 +140,13 @@ const Contact = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-green-50 text-green-700 border-green-200">
             <Mail className="w-4 h-4 mr-2" />
-            Susisiekite su mumis
+            {t('contact.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            Turime klausimų?
+            {t('contact.title')}
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -154,7 +155,7 @@ const Contact = () => {
           <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-slate-50">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900">
-                Parašykite mums
+                {t('contact.form.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
