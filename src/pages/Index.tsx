@@ -13,6 +13,7 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import HowItWorks from "@/components/HowItWorks";
 import InterestCalculator from "@/components/InterestCalculator";
+import TermDepositCalculator from "@/components/TermDepositCalculator";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -23,7 +24,35 @@ const Index = () => {
       <Navigation />
       <Hero />
       <Services />
-      <InterestCalculator />
+      
+      {/* Calculator Section with Tabs */}
+      <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 bg-slate-50/80 backdrop-blur-sm text-slate-700 border-slate-200">
+              <Calculator className="w-4 h-4 mr-2" />
+              Skaičiuoklės
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
+              Pasirinkite skaičiuoklės tipą
+            </h2>
+          </div>
+          
+          <Tabs defaultValue="daily" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+              <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
+              <TabsTrigger value="term" className="text-sm">Terminuoti indėliai</TabsTrigger>
+            </TabsList>
+            <TabsContent value="daily" className="w-full">
+              <InterestCalculator />
+            </TabsContent>
+            <TabsContent value="term" className="w-full">
+              <TermDepositCalculator />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+      
       <HowItWorks />
       <FAQ />
       <Contact />
