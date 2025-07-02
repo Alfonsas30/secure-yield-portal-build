@@ -9,7 +9,7 @@ import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles } from "lucide-reac
 
 const InterestCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");
-  const [rate] = useState<number>(8); // 8% per year
+  const [rate] = useState<number>(2); // 2% per year
   const [animatedDaily, setAnimatedDaily] = useState<number>(0);
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
   const [animatedYearly, setAnimatedYearly] = useState<number>(0);
