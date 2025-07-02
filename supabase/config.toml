@@ -2,8 +2,8 @@ project_id = "latwptcvghypdopbpxfr"
 
 [auth]
 enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = ["https://localhost:3000"]
+site_url = "https://viltb.com"
+additional_redirect_urls = ["https://viltb.com"]
 
 [functions.simple-test]
 verify_jwt = false
