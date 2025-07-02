@@ -42,8 +42,31 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         return;
       }
 
-      // Create transfer request
-      const { error: transferError } = await supabase
+      // Use atomic balance update function for security
+      const { data, error } = await supabase.rpc('atomic_balance_update', {
+        p_user_id: profile.user_id,
+        p_amount: -amount, // Negative for outgoing transfer
+        p_transaction_type: 'transfer_out',
+        p_description: formData.description || `Pervedimas į ${formData.toAccount}`,
+        p_recipient_account: formData.toAccount,
+        p_recipient_name: formData.toName
+      });
+
+      if (error) throw error;
+
+      const result = data as { success: boolean; error?: string; new_balance?: number };
+      
+      if (!result.success) {
+        toast({
+          title: "Pervedimo klaida",
+          description: result.error === 'Insufficient funds' ? "Nepakanka lėšų" : "Nepavyko įvykdyti pervedimo",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Create transfer request record
+      await supabase
         .from('transfer_requests')
         .insert({
           from_user_id: profile.user_id,
@@ -51,41 +74,9 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           to_account: formData.toAccount,
           to_name: formData.toName,
           amount: amount,
-          description: formData.description || null
+          description: formData.description || null,
+          status: 'completed'
         });
-
-      if (transferError) throw transferError;
-
-      // Create outgoing transaction
-      const { error: transactionError } = await supabase
-        .from('transactions')
-        .insert({
-          user_id: profile.user_id,
-          account_number: profile.account_number,
-          transaction_type: 'transfer_out',
-          amount: -amount, // Negative for outgoing
-          recipient_account: formData.toAccount,
-          recipient_name: formData.toName,
-          description: formData.description || null
-        });
-
-      if (transactionError) throw transactionError;
-
-      // Update balance (subtract amount)
-      const { data: currentBalance } = await supabase
-        .from('account_balances')
-        .select('balance')
-        .eq('user_id', profile.user_id)
-        .single();
-
-      if (currentBalance) {
-        const { error: updateError } = await supabase
-          .from('account_balances')
-          .update({ balance: currentBalance.balance - amount })
-          .eq('user_id', profile.user_id);
-
-        if (updateError) throw updateError;
-      }
 
       toast({
         title: "Pervedimas sėkmingas",

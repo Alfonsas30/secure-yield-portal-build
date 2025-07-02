@@ -163,8 +163,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       if (!currentSession) {
         console.log('No active session found, clearing state...');
-        // Clear local storage and navigate
-        localStorage.clear();
+        // Clear only authentication-related data
+        localStorage.removeItem('supabase.auth.token');
+        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
         setUser(null);
         setSession(null);
         setProfile(null);
@@ -183,8 +184,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       } else {
         console.log('Successfully signed out');
-        // Clear local storage and navigate
-        localStorage.clear();
+        // Clear only authentication-related data
+        localStorage.removeItem('supabase.auth.token');
+        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
         navigate('/');
       }
 

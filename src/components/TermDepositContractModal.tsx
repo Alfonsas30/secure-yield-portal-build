@@ -63,37 +63,26 @@ export function TermDepositContractModal({
 
       if (depositError) throw depositError;
 
-      // Update account balance (subtract invested amount)
-      const { data: currentBalance } = await supabase
-        .from('account_balances')
-        .select('balance')
-        .eq('user_id', profile.user_id)
-        .single();
+      // Use atomic balance update function for security
+      const { data: balanceResult, error: balanceError } = await supabase.rpc('atomic_balance_update', {
+        p_user_id: profile.user_id,
+        p_amount: -amount, // Negative for investment
+        p_transaction_type: 'term_deposit',
+        p_description: `Terminuotas indėlis ${termMonths} mėn. su ${interestRate}% palūkanomis`
+      });
 
-      if (currentBalance) {
-        const { error: balanceError } = await supabase
-          .from('account_balances')
-          .update({ 
-            balance: currentBalance.balance - amount,
-            updated_at: new Date().toISOString()
-          })
-          .eq('user_id', profile.user_id);
+      if (balanceError) throw balanceError;
 
-        if (balanceError) throw balanceError;
-      }
-
-      // Create transaction record
-      await supabase
-        .from('transactions')
-        .insert({
-          user_id: profile.user_id,
-          account_number: profile.account_number,
-          amount: -amount,
-          transaction_type: 'term_deposit',
-          description: `Terminuotas indėlis ${termMonths} mėn. su ${interestRate}% palūkanomis`,
-          status: 'completed',
-          currency: 'LT'
+      const result = balanceResult as { success: boolean; error?: string };
+      
+      if (!result.success) {
+        toast({
+          title: "Klaida",
+          description: result.error === 'Insufficient funds' ? "Nepakanka lėšų terminuotam indėliui" : "Nepavyko sukurti terminuoto indėlio",
+          variant: "destructive"
         });
+        return;
+      }
 
       toast({
         title: "Sutartis sėkmingai pasirašyta!",

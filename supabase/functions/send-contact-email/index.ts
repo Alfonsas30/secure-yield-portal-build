@@ -36,24 +36,41 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Input validation and sanitization
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(
+        JSON.stringify({ error: "Netinkamas el. pašto formatas" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Sanitize inputs to prevent XSS
+    const sanitizedName = name.replace(/[<>]/g, '').trim();
+    const sanitizedMessage = message.replace(/[<>]/g, '').trim();
+    const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
+
     const emailResponse = await resend.emails.send({
-      from: "LTB Bankas <onboarding@resend.dev>",
-      to: ["gmbhinvest333@gmail.com"],
-      subject: `Nauja žinutė iš LTB Bankas svetainės - ${name}`,
+      from: "LTB Bankas <info@viltb.com>",
+      to: [Deno.env.get("ADMIN_EMAIL") || "info@viltb.com"],
+      subject: `Nauja žinutė iš LTB Bankas svetainės - ${sanitizedName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #2563eb; margin-bottom: 20px;">Nauja kontaktų forma</h2>
           
           <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <h3 style="color: #1e293b; margin-top: 0;">Kontaktinė informacija:</h3>
-            <p><strong>Vardas:</strong> ${name}</p>
+            <p><strong>Vardas:</strong> ${sanitizedName}</p>
             <p><strong>El. paštas:</strong> <a href="mailto:${email}">${email}</a></p>
-            ${phone ? `<p><strong>Telefonas:</strong> ${phone}</p>` : ''}
+            ${sanitizedPhone ? `<p><strong>Telefonas:</strong> ${sanitizedPhone}</p>` : ''}
           </div>
           
           <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <h3 style="color: #1e293b; margin-top: 0;">Žinutė:</h3>
-            <p style="white-space: pre-line; line-height: 1.6;">${message}</p>
+            <p style="white-space: pre-line; line-height: 1.6;">${sanitizedMessage}</p>
           </div>
           
           <div style="margin-top: 20px; padding: 15px; background-color: #dbeafe; border-radius: 8px;">

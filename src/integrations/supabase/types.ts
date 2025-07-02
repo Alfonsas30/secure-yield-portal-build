@@ -416,6 +416,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      atomic_balance_update: {
+        Args: {
+          p_user_id: string
+          p_amount: number
+          p_transaction_type: string
+          p_description?: string
+          p_recipient_account?: string
+          p_recipient_name?: string
+        }
+        Returns: Json
+      }
       bytea_to_text: {
         Args: { data: string }
         Returns: string
@@ -474,6 +485,10 @@ export type Database = {
       http_set_curlopt: {
         Args: { curlopt: string; value: string }
         Returns: boolean
+      }
+      sanitize_html_input: {
+        Args: { input_text: string }
+        Returns: string
       }
       text_to_bytea: {
         Args: { data: string }
