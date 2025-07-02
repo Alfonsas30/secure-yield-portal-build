@@ -6,8 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,13 @@ const Contact = () => {
     phone: "",
     message: ""
   });
+  
+  // Newsletter state
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterName, setNewsletterName] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,6 +41,68 @@ const Contact = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail || !consent) {
+      toast({
+        title: "Klaida",
+        description: "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert([
+          {
+            email: newsletterEmail.toLowerCase().trim(),
+            name: newsletterName.trim() || null,
+          }
+        ]);
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "El. paštas jau prenumeruoja",
+            description: "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
+        return;
+      }
+
+      // Send welcome email
+      await supabase.functions.invoke('subscribe-newsletter', {
+        body: { email: newsletterEmail.toLowerCase().trim(), name: newsletterName.trim() || null }
+      });
+
+      toast({
+        title: "Sėkmingai prenumeruojate!",
+        description: "Ačiū! Netrukus gausite patvirtinimo laišką",
+      });
+
+      setNewsletterEmail("");
+      setNewsletterName("");
+      setConsent(false);
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Klaida",
+        description: "Nepavyko prenumeruoti. Pabandykite dar kartą",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -134,73 +205,74 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-600 to-green-600 text-white">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold mb-6">Kontaktinė informacija</h3>
+          {/* Newsletter Subscription */}
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-600 to-green-600 text-white">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold mb-6">Prenumeruoti naujienas</h3>
+              <p className="opacity-90 mb-6">
+                Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus
+              </p>
+              
+              <form onSubmit={handleNewsletterSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="newsletter-email" className="text-white">
+                    El. pašto adresas *
+                  </Label>
+                  <Input
+                    id="newsletter-email"
+                    type="email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    placeholder="jusu.pastas@example.com"
+                    required
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
+                  />
+                </div>
                 
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <Mail className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">El. paštas</h4>
-                      <p className="opacity-90">info@ltb.lt</p>
-                      <p className="opacity-90">support@ltb.lt</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <Phone className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Telefonas</h4>
-                      <p className="opacity-90">+370 5XXX XXXX</p>
-                      <p className="text-sm opacity-75">Nemokamas skambutis</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <MapPin className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Adresas</h4>
-                      <p className="opacity-90">Konstitucijos pr. XX</p>
-                      <p className="opacity-90">Vilnius, Lietuva</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <Clock className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Darbo laikas</h4>
-                      <p className="opacity-90">Pirmadienį - Penktadienį</p>
-                      <p className="opacity-90">9:00 - 18:00</p>
-                    </div>
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="newsletter-name" className="text-white">
+                    Vardas (neprivaloma)
+                  </Label>
+                  <Input
+                    id="newsletter-name"
+                    type="text"
+                    value={newsletterName}
+                    onChange={(e) => setNewsletterName(e.target.value)}
+                    placeholder="Jūsų vardas"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
+                  />
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-slate-50">
-              <CardContent className="p-8">
-                <h3 className="text-xl font-semibold mb-4 text-slate-900">Greitas atsakymas</h3>
-                <p className="text-slate-600 mb-4">
-                  Mes stengiamės atsakyti į visus užklausamus per 24 valandas. Skubiais atvejais skambinkite telefonu.
-                </p>
-                <div className="flex items-center space-x-2 text-sm text-green-600">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span>Ekspertai prieinami dabar</span>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="newsletter-consent"
+                    checked={consent}
+                    onCheckedChange={(checked) => setConsent(checked as boolean)}
+                    className="border-white/20 data-[state=checked]:bg-white data-[state=checked]:text-blue-600"
+                  />
+                  <Label htmlFor="newsletter-consent" className="text-sm text-white">
+                    Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui *
+                  </Label>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full bg-white text-blue-600 hover:bg-white/90 font-semibold py-3" 
+                  disabled={isLoading}
+                  size="lg"
+                >
+                  {isLoading ? (
+                    "Prenumeruojama..."
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Prenumeruoti
+                    </>
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
