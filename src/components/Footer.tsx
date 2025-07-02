@@ -79,7 +79,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-slate-400 text-sm">
-            © {currentYear} LTB Bankas. Visos teisės šzasaugotos.
+            © {currentYear} LTB Bankas. Visos teisės saugomos.
           </div>
           
           <div className="flex items-center space-x-6 text-sm text-slate-400">
