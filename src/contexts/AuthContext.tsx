@@ -57,10 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             } else {
               setProfile(profileData);
               
-              // Auto-redirect to dashboard after successful login (not on initial load)
-              if (event === 'SIGNED_IN' && window.location.pathname === '/') {
-                navigate('/dashboard');
-              }
+              // No automatic redirect - let users choose where to go
             }
           }, 0);
         } else {
