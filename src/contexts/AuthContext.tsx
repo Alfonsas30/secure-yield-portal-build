@@ -40,6 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [timeLeft, setTimeLeft] = useState(IDLE_TIMEOUT);
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showWarning, setShowWarning] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -141,20 +142,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    if (isLoggingOut) return { error: null };
     
-    if (error) {
-      toast({
-        title: "Atsijungimo klaida",
-        description: "Nepavyko atsijungti",
-        variant: "destructive"
-      });
-    } else {
-      // Navigate to home page after successful logout
-      navigate('/');
-    }
+    setIsLoggingOut(true);
+    console.log('Attempting to sign out...');
+    
+    try {
+      const { error } = await supabase.auth.signOut();
+      
+      if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
+        console.error('Logout error:', error);
+        toast({
+          title: "Atsijungimo klaida",
+          description: "Nepavyko atsijungti",
+          variant: "destructive"
+        });
+      } else {
+        console.log('Successfully signed out');
+        // Navigate to home page after successful logout
+        navigate('/');
+      }
 
-    return { error };
+      return { error };
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   const resendConfirmation = async (email: string) => {
@@ -219,28 +231,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       document.addEventListener(event, handleActivity, true);
     });
 
-    // Handle page visibility change
-    const handleVisibilityChange = () => {
-      if (document.hidden && user) {
-        signOut();
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Handle beforeunload
-    const handleBeforeUnload = () => {
-      if (user) {
-        signOut();
-      }
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    // Removed aggressive page visibility and beforeunload handlers
+    // These were causing premature logouts
 
     return () => {
       events.forEach(event => {
         document.removeEventListener(event, handleActivity, true);
       });
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [user]);
 
