@@ -4,18 +4,10 @@ import { LoanCalculation } from "@/components/loan/types";
 export const useLoanCalculations = (validLoanAmount: number, validLoanTerm: number): LoanCalculation => {
   return useMemo(() => {
     const interestRate = 14; // 14% annual interest rate
-    const monthlyRate = interestRate / 100 / 12;
+    const monthlyRate = interestRate / 100 / 12; // Convert to monthly decimal
     
-    console.log('Calculation inputs:', {
-      validLoanAmount,
-      validLoanTerm,
-      monthlyRate,
-      interestRate
-    });
-    
-    // Calculate monthly payment using loan formula with validation
-    if (validLoanAmount <= 0 || validLoanTerm <= 0 || monthlyRate <= 0) {
-      console.log('Invalid inputs detected, returning zeros');
+    // Input validation
+    if (validLoanAmount <= 0 || validLoanTerm <= 0) {
       return {
         monthlyPayment: 0,
         totalPayment: 0,
@@ -25,18 +17,30 @@ export const useLoanCalculations = (validLoanAmount: number, validLoanTerm: numb
       };
     }
 
-    const monthlyPayment = (validLoanAmount * monthlyRate * Math.pow(1 + monthlyRate, validLoanTerm)) / 
-                          (Math.pow(1 + monthlyRate, validLoanTerm) - 1);
+    // Simplified PMT calculation - standard loan formula
+    // PMT = P * [r(1+r)^n] / [(1+r)^n - 1]
+    const P = validLoanAmount;
+    const r = monthlyRate;
+    const n = validLoanTerm;
     
-    console.log('Raw monthly payment calculation:', monthlyPayment);
+    // Calculate (1+r)^n once
+    const powerFactor = Math.pow(1 + r, n);
     
-    // Validate calculation results
-    const validMonthlyPayment = isNaN(monthlyPayment) || !isFinite(monthlyPayment) ? 0 : monthlyPayment;
-    const totalPayment = validMonthlyPayment * validLoanTerm;
-    const totalInterest = totalPayment - validLoanAmount;
+    // PMT formula
+    const monthlyPayment = P * (r * powerFactor) / (powerFactor - 1);
     
-    console.log('Final calculations:', {
-      validMonthlyPayment,
+    // Round to 2 decimal places
+    const roundedMonthlyPayment = Math.round(monthlyPayment * 100) / 100;
+    const totalPayment = Math.round(roundedMonthlyPayment * validLoanTerm * 100) / 100;
+    const totalInterest = Math.round((totalPayment - validLoanAmount) * 100) / 100;
+    
+    // Debug logging
+    console.log('Loan Calculation Debug:', {
+      principal: P,
+      monthlyRate: r,
+      termMonths: n,
+      powerFactor,
+      monthlyPayment: roundedMonthlyPayment,
       totalPayment,
       totalInterest
     });
@@ -46,13 +50,13 @@ export const useLoanCalculations = (validLoanAmount: number, validLoanTerm: numb
     let remainingBalance = validLoanAmount;
     
     for (let month = 1; month <= validLoanTerm; month++) {
-      const interestPayment = remainingBalance * monthlyRate;
-      const principalPayment = validMonthlyPayment - interestPayment;
-      remainingBalance = Math.max(0, remainingBalance - principalPayment);
+      const interestPayment = Math.round(remainingBalance * r * 100) / 100;
+      const principalPayment = Math.round((roundedMonthlyPayment - interestPayment) * 100) / 100;
+      remainingBalance = Math.max(0, Math.round((remainingBalance - principalPayment) * 100) / 100);
       
       paymentSchedule.push({
         month,
-        payment: validMonthlyPayment,
+        payment: roundedMonthlyPayment,
         principal: principalPayment,
         interest: interestPayment,
         balance: remainingBalance
@@ -60,7 +64,7 @@ export const useLoanCalculations = (validLoanAmount: number, validLoanTerm: numb
     }
 
     return {
-      monthlyPayment: validMonthlyPayment,
+      monthlyPayment: roundedMonthlyPayment,
       totalPayment,
       totalInterest,
       interestRate,
