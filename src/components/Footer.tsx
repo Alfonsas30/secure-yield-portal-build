@@ -60,6 +60,18 @@ const Footer = () => {
               <li><a href="#" className="hover:text-white transition-colors">Privatumo politika</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Teisinė informacija</a></li>
             </ul>
+            
+            {/* Techninė pagalba */}
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">Techninė pagalba</h4>
+              <p className="text-sm text-slate-300 mb-2">Skaičiuoklių problemos:</p>
+              <a 
+                href="mailto:gmbhinvest333@gmail.com?subject=Skaičiuoklės problema&body=Sveiki, turiu problemą su skaičiuokle:"
+                className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+              >
+                gmbhinvest333@gmail.com
+              </a>
+            </div>
           </div>
         </div>
 
