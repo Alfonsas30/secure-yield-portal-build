@@ -44,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile
+          // Fetch user profile and redirect to dashboard after successful login
           setTimeout(async () => {
             const { data: profileData, error } = await supabase
               .from('profiles')
@@ -56,6 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               console.error('Error fetching profile:', error);
             } else {
               setProfile(profileData);
+              
+              // Auto-redirect to dashboard after successful login (not on initial load)
+              if (event === 'SIGNED_IN' && window.location.pathname === '/') {
+                navigate('/dashboard');
+              }
             }
           }, 0);
         } else {
@@ -125,8 +130,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: "Nukreipiame į asmeninį kabinetą",
         variant: "default"
       });
-      // Redirect to dashboard after successful login
-      navigate('/dashboard');
+      // Navigation will be handled by the auth state change listener
     }
 
     return { error };

@@ -35,8 +35,11 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
     const { error } = await signIn(loginData.email, loginData.password);
     
     if (!error) {
-      onOpenChange(false);
-      setLoginData({ email: "", password: "" });
+      // Small delay to show success message before closing modal
+      setTimeout(() => {
+        onOpenChange(false);
+        setLoginData({ email: "", password: "" });
+      }, 500);
     }
     
     setLoading(false);
