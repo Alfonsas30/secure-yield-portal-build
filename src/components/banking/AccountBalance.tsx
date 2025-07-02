@@ -54,7 +54,7 @@ export function AccountBalance() {
           .insert({
             user_id: profile.user_id,
             account_number: profile.account_number,
-            balance: 1000.00,
+            balance: 0.00,
             currency: 'EUR'
           })
           .select()
