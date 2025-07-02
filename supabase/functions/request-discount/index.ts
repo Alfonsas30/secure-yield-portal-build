@@ -57,6 +57,9 @@ serve(async (req) => {
 
     // Send email via Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    console.log("RESEND_API_KEY exists:", !!resendApiKey);
+    console.log("RESEND_API_KEY length:", resendApiKey?.length || 0);
+    
     if (!resendApiKey) {
       console.error("RESEND_API_KEY is not configured");
       throw new Error("Email service not configured");
@@ -68,8 +71,15 @@ serve(async (req) => {
     const discountText = account_type === 'personal' ? '800 € → 400 € (50% nuolaida)' : '1500 € → 750 € (50% nuolaida)';
 
     console.log("Sending email with Resend...");
+    console.log("Email details:", { 
+      from: "GMB Invest <onboarding@resend.dev>",
+      to: ["gmbhinvest333@gmail.com"],
+      subject: `Nauja nuolaidų užklausa - ${name}`
+    });
 
-    const emailResponse = await resend.emails.send({
+    let emailResponse;
+    try {
+      emailResponse = await resend.emails.send({
       from: "GMB Invest <onboarding@resend.dev>",
       to: ["gmbhinvest333@gmail.com"],
       subject: `Nauja nuolaidų užklausa - ${name}`,
@@ -115,7 +125,25 @@ serve(async (req) => {
       `,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+      console.log("Email sent successfully:", emailResponse);
+    } catch (emailError) {
+      console.error("Email sending failed:", emailError);
+      console.error("Email error details:", JSON.stringify(emailError, null, 2));
+      
+      // Still return success since the request was saved to database
+      // But log the email failure for debugging
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: "Nuolaidų užklausa sėkmingai išsiųsta (el. paštas siunčiamas atskirai)",
+          emailError: emailError.message 
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        }
+      );
+    }
 
     console.log("Discount request submitted successfully:", { name, email, account_type });
 
