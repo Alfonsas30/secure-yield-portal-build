@@ -63,17 +63,23 @@ const Services = () => {
   ];
 
   return (
-    <section id="paslaugos" className="relative py-20 px-4 bg-gradient-to-br from-white via-slate-50 to-blue-50 overflow-hidden">
+    <section id="paslaugos" className="relative py-20 px-4 bg-gradient-to-br from-vibrant-orange/20 via-vibrant-pink/20 to-vibrant-cyan/20 animate-aurora-wave overflow-hidden">
       {/* Fono efektai */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 right-10 animate-float">
-          <Sparkles className="w-6 h-6 text-blue-300 opacity-50" />
+          <Sparkles className="w-6 h-6 text-neon-purple opacity-70 animate-neon-glow" />
         </div>
         <div className="absolute bottom-20 left-10 animate-float-delayed">
-          <Sparkles className="w-8 h-8 text-green-300 opacity-40" />
+          <Sparkles className="w-8 h-8 text-neon-pink opacity-60 animate-wobble" />
         </div>
         <div className="absolute top-1/2 left-1/4 animate-float-slow">
-          <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-green-400 rounded-full opacity-30"></div>
+          <div className="w-4 h-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full opacity-50 animate-rainbow-shift"></div>
+        </div>
+        <div className="absolute top-1/3 right-1/3 animate-float">
+          <div className="w-3 h-3 bg-gradient-to-r from-vibrant-orange to-vibrant-pink rounded-full opacity-40 animate-pulse"></div>
+        </div>
+        <div className="absolute bottom-1/3 left-1/3 animate-float-delayed">
+          <div className="w-5 h-5 bg-gradient-to-r from-vibrant-cyan to-vibrant-lime rounded-full opacity-45 animate-wobble"></div>
         </div>
       </div>
 

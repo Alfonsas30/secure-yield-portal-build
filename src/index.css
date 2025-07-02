@@ -29,6 +29,17 @@ All colors MUST be HSL.
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
+    /* Vibrant color palette */
+    --vibrant-purple: 280 100% 85%;
+    --vibrant-pink: 320 100% 85%;
+    --vibrant-cyan: 180 100% 85%;
+    --vibrant-orange: 30 100% 85%;
+    --vibrant-lime: 120 100% 85%;
+    --vibrant-yellow: 60 100% 85%;
+    --neon-blue: 220 100% 70%;
+    --neon-purple: 280 100% 70%;
+    --neon-pink: 320 100% 70%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
