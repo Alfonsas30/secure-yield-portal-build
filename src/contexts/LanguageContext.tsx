@@ -351,6 +351,40 @@ const getTranslations = () => ({
       badge: 'Dažniausiai užduodami klausimai',
       title: 'Turite klausimų?',
       subtitle: 'Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas',
+      questions: {
+        q1: {
+          question: 'Kaip veikia dienos palūkanos?',
+          answer: 'Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje.'
+        },
+        q2: {
+          question: 'Ar tikrai nereikia teikti jokių ataskaičių?',
+          answer: 'Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems.'
+        },
+        q3: {
+          question: 'Kiek saugūs mano pinigai?',
+          answer: 'Jūsų indėliai yra apdrausti pagal ES direktyvas iki 100,000 € per klientą. Mes naudojame aukščiausio lygio šifravimo technologijas ir laikome griežtus saugumo protokolus. Jūsų duomenys yra konfidencialūs ir niekam neatskleidžiami.'
+        },
+        q4: {
+          question: 'Ar galiu išsiimti pinigus bet kada?',
+          answer: 'Taip, jūsų pinigai yra prieinami bet kada. Nėra jokių užšaldymo terminų ar baudų už ankstyvas išėmimas. Galite išsiimti visą sumą arba tik dalį - sprendžiate patys.'
+        },
+        q5: {
+          question: 'Kokie yra mokesčiai?',
+          answer: 'Mes neimame jokių mokesčių už sąskaitos tvarkymą, pervedimu ar saugojimą. Vienintelis mokestis, kurį mokate, yra standartinis valstybės pajamų mokestis nuo užvaldytų palūkanų.'
+        },
+        q6: {
+          question: 'Kokia minimuma suma reikalinga pradėti?',
+          answer: 'Minimalus indėlio dydis yra tik 100 €. Maksimalaus dydžio apribojimų nėra, tačiau indėliai viršijantys 100,000 € nėra apdrausti pagal ES direktyvas.'
+        },
+        q7: {
+          question: 'Kaip greitai gaunu palūkanas?',
+          answer: 'Palūkanos skaičiuojamos ir prijungiamos prie jūsų sąskaitos kasdien. Galite matyti, kaip jūsų balansas auga kiekvieną dieną mūsų mobilejeje aplikacijoje arba internetinėje bankininkystėje.'
+        },
+        q8: {
+          question: 'Kas nutiks, jei bankrotuosite?',
+          answer: 'LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs.'
+        }
+      },
       notFound: {
         title: 'Neradote atsakymo į savo klausimą?',
         description: 'Susisiekite su mūsų ekspertų komanda - mes mielai padėsime',
@@ -368,6 +402,111 @@ const getTranslations = () => ({
           email: 'jusu.pastas@example.com',
           message: 'Jūsų klausimas...'
         }
+      }
+    },
+    auth: {
+      modal: {
+        title: 'Banko sistema',
+        login: 'Prisijungimas',
+        signup: 'Registracija',
+        email: 'El. paštas',
+        password: 'Slaptažodis',
+        name: 'Vardas Pavardė',
+        confirmPassword: 'Pakartokite slaptažodį',
+        loginButton: 'Prisijungti',
+        signupButton: 'Registruotis',
+        loading: 'Vykdoma...',
+        emailPlaceholder: 'vardas@example.com',
+        passwordPlaceholder: '••••••••',
+        namePlaceholder: 'Vardas Pavardė',
+        confirmPlaceholder: 'Pakartokite slaptažodį',
+        passwordMinLength: 'Bent 6 simboliai',
+        passwordMismatch: 'Slaptažodžiai nesutampa',
+        accountCreation: 'Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris',
+        resendTitle: 'Nepatvirtintas el. paštas?',
+        resendButton: 'Siųsti',
+        resendPlaceholder: 'El. paštas'
+      },
+      protected: {
+        loginRequired: 'Prašome prisijungti',
+        loginDescription: 'Turite būti prisijungę, kad galėtumėte matyti šį turinį'
+      }
+    },
+    forms: {
+      required: '*',
+      name: 'Vardas',
+      email: 'El. paštas',
+      phone: 'Telefonas',
+      message: 'Žinutė',
+      submit: 'Siųsti',
+      sending: 'Siunčiama...',
+      cancel: 'Atšaukti',
+      success: 'Sėkmingai išsiųsta!',
+      error: 'Klaida',
+      placeholder: {
+        name: 'Jūsų vardas',
+        email: 'jusu.pastas@example.com',
+        phone: '+370 XXX XXXXX',
+        message: 'Jūsų žinutė...'
+      }
+    },
+    modals: {
+      registration: {
+        title: 'Registracija',
+        accountType: 'Sąskaitos tipas',
+        personal: 'Asmeninė',
+        company: 'Įmonės',
+        campaign: {
+          title: 'AKCIJA 50% NUOLAIDA!',
+          subtitle: 'Naujiems klientams iki 2025-09-01',
+          timeLeft: 'Liko:'
+        },
+        pricing: {
+          originalPrice: 'Pradinė kaina:',
+          discount: 'Nuolaida',
+          finalPrice: 'Galutinė kaina:'
+        },
+        payment: 'Mokėti su Stripe',
+        fillRequired: 'Užpildykite visus privalomatus laukus',
+        paymentError: 'Nepavyko sukurti mokėjimo'
+      },
+      discount: {
+        title: 'Prašyti nuolaidos kodo',
+        subtitle: 'Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas',
+        howItWorks: 'Kaip tai veikia?',
+        steps: {
+          submit: 'Jūsų užklausa bus išsiųsta administratoriui',
+          response: 'Per 24 val. gausite atsakymą el. paštu',
+          code: 'Patvirtinus - gausite 50% nuolaidos kodą',
+          validity: 'Kodas galioja 30 dienų'
+        },
+        submitButton: 'Siųsti užklausą'
+      },
+      board: {
+        title: 'Tapti valdybos nariu',
+        subtitle: 'Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes',
+        warning: '⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.',
+        experience: 'Patirtis ir motyvacija',
+        experiencePlaceholder: 'Aprašykite savo patirtį finansų srityje, vadyboje ar susijusiose srityse, taip pat savo motyvaciją tapti valdybos nariu...',
+        submitButton: 'Pateikti paraišką',
+        submitting: 'Siunčiama...'
+      },
+      transfer: {
+        title: 'Pinigų pervedimas',
+        recipientAccount: 'Gavėjo sąskaitos numeris',
+        recipientName: 'Gavėjo vardas, pavardė',
+        amount: 'Suma (LT)',
+        purpose: 'Paskirtis (neprivaloma)',
+        purposePlaceholder: 'Mokėjimo paskirtis...',
+        transfer: 'Pervesti',
+        transferring: 'Vykdoma...',
+        cancel: 'Atšaukti',
+        errors: {
+          positiveAmount: 'Suma turi būti teigiama',
+          insufficientFunds: 'Nepakanka lėšų',
+          transferFailed: 'Nepavyko įvykdyti pervedimo'
+        },
+        success: 'Pervedimas sėkmingas'
       }
     },
     contact: {
@@ -715,8 +854,8 @@ const getTranslations = () => ({
       subtitle: 'Our expert team is always ready to help. Contact us in any way convenient for you.',
       form: {
         title: 'Write to Us'
-      }
-    },
+    }
+  },
     footer: {
       services: 'Services',
       information: 'Information',
@@ -727,6 +866,164 @@ const getTranslations = () => ({
       licensed: 'Licensed by Bank of Lithuania',
       insured: 'Deposits insured up to €100,000',
       disclaimer: 'LTB Bank is a licensed credit institution supervised by the Bank of Lithuania. Deposits are insured under EU directives up to €100,000 per customer. Interest rates depend on market conditions and may change. Consult with our experts before making decisions.'
+    }
+      questions: {
+        q1: {
+          question: 'How do daily interest payments work?',
+          answer: 'Interest is calculated daily based on your account balance. Instead of paying interest once a year, we pay it daily. This means your money grows every day, not just at year-end.'
+        },
+        q2: {
+          question: 'Do I really need to provide any reports?',
+          answer: 'No, we don\'t need income declarations, employment certificates, or other documents. Just open an account and start saving. We believe saving should be simple and accessible to everyone.'
+        },
+        q3: {
+          question: 'How safe is my money?',
+          answer: 'Your deposits are insured according to EU directives up to €100,000 per client. We use the highest level encryption technologies and maintain strict security protocols. Your data is confidential and not disclosed to anyone.'
+        },
+        q4: {
+          question: 'Can I withdraw money anytime?',
+          answer: 'Yes, your money is available anytime. There are no freeze periods or penalties for early withdrawal. You can withdraw the full amount or just part - you decide.'
+        },
+        q5: {
+          question: 'What are the fees?',
+          answer: 'We don\'t charge any fees for account management, transfers, or storage. The only fee you pay is the standard state income tax on earned interest.'
+        },
+        q6: {
+          question: 'What\'s the minimum amount to start?',
+          answer: 'The minimum deposit size is only €100. There are no maximum size restrictions, but deposits exceeding €100,000 are not insured under EU directives.'
+        },
+        q7: {
+          question: 'How quickly do I get interest?',
+          answer: 'Interest is calculated and added to your account daily. You can see your balance grow every day in our mobile app or online banking.'
+        },
+        q8: {
+          question: 'What if you go bankrupt?',
+          answer: 'LTB Bank is a licensed bank supervised by the Bank of Lithuania. Our operations are regulated according to EU directives, and deposits are insured up to €100,000 per client. Your money is safe.'
+        }
+      },
+      notFound: {
+        title: 'Didn\'t find the answer?',
+        description: 'Contact our expert team - we\'re happy to help',
+        button: 'Contact Us'
+      },
+      form: {
+        name: 'Name',
+        email: 'Email',
+        message: 'Message',
+        send: 'Send',
+        cancel: 'Cancel',
+        sending: 'Sending...',
+        placeholder: {
+          name: 'Your name',
+          email: 'your.email@example.com',
+          message: 'Your question...'
+        }
+      }
+    },
+    auth: {
+      modal: {
+        title: 'Banking System',
+        login: 'Login',
+        signup: 'Register',
+        email: 'Email',
+        password: 'Password',
+        name: 'Full Name',
+        confirmPassword: 'Confirm Password',
+        loginButton: 'Login',
+        signupButton: 'Register',
+        loading: 'Processing...',
+        emailPlaceholder: 'name@example.com',
+        passwordPlaceholder: '••••••••',
+        namePlaceholder: 'Full Name',
+        confirmPlaceholder: 'Confirm Password',
+        passwordMinLength: 'At least 6 characters',
+        passwordMismatch: 'Passwords don\'t match',
+        accountCreation: 'A unique account number will be automatically created during registration',
+        resendTitle: 'Unconfirmed email?',
+        resendButton: 'Send',
+        resendPlaceholder: 'Email'
+      },
+      protected: {
+        loginRequired: 'Please log in',
+        loginDescription: 'You must be logged in to view this content'
+      }
+    },
+    forms: {
+      required: '*',
+      name: 'Name',
+      email: 'Email',
+      phone: 'Phone',
+      message: 'Message',
+      submit: 'Send',
+      sending: 'Sending...',
+      cancel: 'Cancel',
+      success: 'Successfully sent!',
+      error: 'Error',
+      placeholder: {
+        name: 'Your name',
+        email: 'your.email@example.com',
+        phone: '+370 XXX XXXXX',
+        message: 'Your message...'
+      }
+    },
+    modals: {
+      registration: {
+        title: 'Registration',
+        accountType: 'Account Type',
+        personal: 'Personal',
+        company: 'Company',
+        campaign: {
+          title: '50% DISCOUNT CAMPAIGN!',
+          subtitle: 'For new clients until 2025-09-01',
+          timeLeft: 'Time left:'
+        },
+        pricing: {
+          originalPrice: 'Original price:',
+          discount: 'Discount',
+          finalPrice: 'Final price:'
+        },
+        payment: 'Pay with Stripe',
+        fillRequired: 'Fill in all required fields',
+        paymentError: 'Failed to create payment'
+      },
+      discount: {
+        title: 'Request Discount Code',
+        subtitle: 'Fill out the form and we\'ll send you a discount code within 24 hours',
+        howItWorks: 'How it works?',
+        steps: {
+          submit: 'Your request will be sent to administrator',
+          response: 'You\'ll receive response via email within 24 hours',
+          code: 'Upon approval - you\'ll receive 50% discount code',
+          validity: 'Code is valid for 30 days'
+        },
+        submitButton: 'Send Request'
+      },
+      board: {
+        title: 'Become Board Member',
+        subtitle: 'Fill out the form and we\'ll contact you soon to discuss opportunities',
+        warning: '⚠️ ATTENTION: To become a board member, a contribution is required - no less than 100,000 litas.',
+        experience: 'Experience and motivation',
+        experiencePlaceholder: 'Describe your experience in finance, management or related fields, as well as your motivation to become a board member...',
+        submitButton: 'Submit Application',
+        submitting: 'Submitting...'
+      },
+      transfer: {
+        title: 'Money Transfer',
+        recipientAccount: 'Recipient\'s account number',
+        recipientName: 'Recipient\'s name',
+        amount: 'Amount (LT)',
+        purpose: 'Purpose (optional)',
+        purposePlaceholder: 'Payment purpose...',
+        transfer: 'Transfer',
+        transferring: 'Processing...',
+        cancel: 'Cancel',
+        errors: {
+          positiveAmount: 'Amount must be positive',
+          insufficientFunds: 'Insufficient funds',
+          transferFailed: 'Failed to complete transfer'
+        },
+        success: 'Transfer successful'
+      }
     }
   },
   ru: {
