@@ -20,6 +20,7 @@ interface AuthContextType {
   session: Session | null;
   profile: Profile | null;
   loading: boolean;
+  timeLeft: number;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
@@ -28,11 +29,17 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const IDLE_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
+const WARNING_TIME = 30 * 1000; // 30 seconds warning
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(IDLE_TIMEOUT);
+  const [lastActivity, setLastActivity] = useState(Date.now());
+  const [showWarning, setShowWarning] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -194,11 +201,89 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return message;
   };
 
+  // Activity tracking and idle timeout logic
+  const resetActivity = () => {
+    setLastActivity(Date.now());
+    setTimeLeft(IDLE_TIMEOUT);
+    setShowWarning(false);
+  };
+
+  // Activity tracking useEffect
+  useEffect(() => {
+    if (!user) return;
+
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    const handleActivity = () => resetActivity();
+
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    // Handle page visibility change
+    const handleVisibilityChange = () => {
+      if (document.hidden && user) {
+        signOut();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Handle beforeunload
+    const handleBeforeUnload = () => {
+      if (user) {
+        signOut();
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [user]);
+
+  // Idle timeout timer
+  useEffect(() => {
+    if (!user) return;
+
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const elapsed = now - lastActivity;
+      const remaining = IDLE_TIMEOUT - elapsed;
+
+      if (remaining <= 0) {
+        toast({
+          title: "Sesija baigėsi",
+          description: "Atsijungiama dėl neaktyvumo",
+          variant: "destructive"
+        });
+        signOut();
+        return;
+      }
+
+      if (remaining <= WARNING_TIME && !showWarning) {
+        setShowWarning(true);
+        toast({
+          title: "Sesija baigiasi",
+          description: `Sesija baigsis po ${Math.ceil(remaining / 1000)} sekundžių`,
+          variant: "destructive"
+        });
+      }
+
+      setTimeLeft(remaining);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [user, lastActivity, showWarning]);
+
   const value = {
     user,
     session,
     profile,
     loading,
+    timeLeft,
     signUp,
     signIn,
     signOut,

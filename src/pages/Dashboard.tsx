@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UserProfile } from "@/components/auth/UserProfile";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { SessionTimer } from "@/components/auth/SessionTimer";
 import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
@@ -19,12 +20,20 @@ export default function Dashboard() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
-              Banko valdymo sistema
-            </h1>
-            <p className="text-slate-600">
-              Valdykite savo banko sąskaitą ir operacijas
-            </p>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex-1" />
+              <div className="flex-1 text-center">
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                  Banko valdymo sistema
+                </h1>
+                <p className="text-slate-600">
+                  Valdykite savo banko sąskaitą ir operacijas
+                </p>
+              </div>
+              <div className="flex-1 flex justify-end">
+                <SessionTimer />
+              </div>
+            </div>
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
