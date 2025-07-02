@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Shield, Eye, Calculator, Clock, TrendingUp, Sparkles } from "lucide-react";
 import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Services = () => {
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+  const { t } = useLanguage();
 
   const services = [
     {
@@ -101,13 +103,13 @@ const Services = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center mb-16 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-green-50/80 backdrop-blur-sm text-green-700 border-green-200 px-4 py-2 animate-pulse-glow">
-            Mūsų paslaugos
+            {t('services.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-slate-900 via-blue-900 to-green-800 bg-clip-text text-transparent">
-            Kodėl rinktis LTB Bankas?
+            {t('services.title')}
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.
+            {t('services.subtitle')}
           </p>
         </div>
 

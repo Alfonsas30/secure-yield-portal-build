@@ -76,27 +76,6 @@ const getTranslations = () => ({
       dashboard: 'Mano paskyra',
       logout: 'Atsijungti'
     },
-    hero: {
-      title: 'Pirmasis bankas pasaulyje, mokantis palūkanas kasdien',
-      subtitle: 'Gaukite 8% metinę palūkanų normą su kasdieniu palūkanų mokėjimu. Skaidru, saugu, be paslėptų mokesčių.',
-      cta: 'Pradėti taupyti',
-      learnMore: 'Sužinoti daugiau'
-    },
-    services: {
-      title: 'Mūsų paslaugos',
-      dailyInterest: {
-        title: 'Kasdienės palūkanos',
-        description: 'Gaukite palūkanas kiekvieną dieną, o ne kartą per metus'
-      },
-      highReturn: {
-        title: 'Aukšta grąža',
-        description: '8% metinė palūkanų norma - viena iš aukščiausių rinkoje'
-      },
-      security: {
-        title: 'Saugumas',
-        description: 'Jūsų pinigai apsaugoti iki 100,000 € pagal ES direktyvas'
-      }
-    },
     calculators: {
       title: 'Pasirinkite skaičiuoklės tipą',
       daily: 'Dienos palūkanos',
@@ -117,6 +96,208 @@ const getTranslations = () => ({
       experience: {
         title: 'Patirtis',
         description: 'Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų.'
+      }
+    },
+    hero: {
+      title: 'Taupyk protingai',
+      subtitle: 'su dienos palūkanomis',
+      description: 'Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.',
+      ctaPrimary: 'Pradėti taupyti dabar',
+      ctaSecondary: 'Sužinoti daugiau',
+      newSolutions: 'Naujoviški taupymo sprendimai',
+      features: {
+        daily: {
+          title: 'Dienos palūkanos',
+          description: 'Gaukite palūkanas kiekvieną dieną, ne kartą per metus'
+        },
+        security: {
+          title: '100% saugumas',
+          description: 'Jūsų pinigai apsaugoti bankine licencija ir draudimu'
+        },
+        noFees: {
+          title: 'Jokių mokesčių',
+          description: 'Nėra slepiamų mokesčių ar mėnesinių tarifų'
+        }
+      }
+    },
+    services: {
+      badge: 'Mūsų paslaugos',
+      title: 'Kodėl rinktis LTB Bankas?',
+      subtitle: 'Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.',
+      items: {
+        dailyInterest: {
+          title: 'Dienos palūkanos',
+          description: 'Gaukite palūkanas kasdien, o ne tik metų pabaigoje. Jūsų pinigai dirba kiekvieną dieną.',
+          badge: 'Populiariausia'
+        },
+        noReports: {
+          title: 'Jokių ataskaičių',
+          description: 'Niekas neprašys deklaracijų ar pajamų paaiškinimų. Tiesiog taupykite ir gaukite palūkanas.',
+          badge: 'Paprasta'
+        },
+        confidentiality: {
+          title: 'Konfidencialumas',
+          description: 'Jūsų finansinė informacija yra griežtai konfidenciali. Niekam neatskleidžiame duomenų.',
+          badge: 'Saugus'
+        },
+        transparent: {
+          title: 'Skaidrus skaičiavimas',
+          description: 'Visada žinote, kiek uždirbsite. Jokių slepiamų mokesčių ar sudėtingų sąlygų.',
+          badge: 'Aiškus'
+        },
+        fastAccess: {
+          title: 'Greitas priėjimas',
+          description: 'Pinigai prieinami bet kada. Nėra užšaldymo periodų ar išėmimo apribojimų.',
+          badge: 'Greitas'
+        },
+        competitive: {
+          title: 'Konkurencingos palūkanos',
+          description: 'Siūlome vieną iš aukščiausių palūkanų normų rinkoje - iki 8% per metus.',
+          badge: 'Pelningas'
+        },
+        loans: {
+          title: 'Paskolos 14% palūkanomis',
+          description: 'Gaukite paskolą su skaidria 14% metine palūkanų norma be jokių paslėptų mokesčių.',
+          badge: 'Naujas'
+        }
+      },
+      cta: {
+        title: 'Pradėkite jau šiandien',
+        description: 'Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas',
+        button: 'Registruotis dabar'
+      }
+    },
+    howItWorks: {
+      badge: 'Paprastas procesas',
+      title: 'Kaip tai veikia?',
+      subtitle: 'Pradėti taupyti su LTB Bankas yra paprasta ir greita. Štai kaip tai veikia.',
+      steps: {
+        register: {
+          title: 'Registruokitės',
+          description: 'Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar ataskaičių nereikia.'
+        },
+        deposit: {
+          title: 'Įneškite pinigus',
+          description: 'Įneškite pinigus į savo sąskaitą iš betkurio pasaulio banko, įnešimas saugus ir greitas.'
+        },
+        earn: {
+          title: 'Gaukite palūkanas',
+          description: 'Jūsų pinigai pradės dirbti iš karto. Palūkanos skaičiuojamos ir mokai kasdien.'
+        },
+        withdraw: {
+          title: 'Naudokitės pinigais',
+          description: 'Pinigai prieinami bet kada. Galite išsiimti visą sumą ar tik dalį - kaip jums patogu.'
+        }
+      },
+      cta: {
+        title: 'Pasiruošę pradėti taupyti?',
+        description: 'Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas',
+        buttonPrimary: 'Registruotis dabar',
+        buttonSecondary: 'Skaityti daugiau'
+      }
+    },
+    calculator: {
+      badge: 'Palūkanų skaičiuoklė',
+      title: 'Apskaičiuokite savo pelną',
+      subtitle: 'Sužinokite, kiek uždirbsite su mūsų dienos palūkanomis',
+      form: {
+        amountLabel: 'Taupoma suma (LT)',
+        amountPlaceholder: '10000',
+        rateLabel: 'Palūkanų norma:',
+        rateValue: 'per metus'
+      },
+      results: {
+        title: 'Jūsų pelnas',
+        daily: 'Per dieną',
+        monthly: 'Per mėnesį',
+        yearly: 'Per metus',
+        manageDashboard: 'Valdyti sąskaitą',
+        register: 'Registruotis',
+        login: 'Prisijungti'
+      }
+    },
+    faq: {
+      badge: 'Dažniausiai užduodami klausimai',
+      title: 'Turite klausimų?',
+      subtitle: 'Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas',
+      questions: {
+        dailyInterest: {
+          question: 'Kaip veikia dienos palūkanos?',
+          answer: 'Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje.'
+        },
+        noReports: {
+          question: 'Ar tikrai nereikia teikti jokių ataskaičių?',
+          answer: 'Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems.'
+        },
+        security: {
+          question: 'Kiek saugūs mano pinigai?',
+          answer: 'Jūsų indėliai yra apdrausti pagal ES direktyvas iki 100,000 € per klientą. Mes naudojame aukščiausio lygio šifravimo technologijas ir laikome griežtus saugumo protokolus. Jūsų duomenys yra konfidencialūs ir niekam neatskleidžiami.'
+        },
+        withdrawal: {
+          question: 'Ar galiu išsiimti pinigus bet kada?',
+          answer: 'Taip, jūsų pinigai yra prieinami bet kada. Nėra jokių užšaldymo terminų ar baudų už ankstyvas išėmimas. Galite išsiimti visą sumą arba tik dalį - sprendžiate patys.'
+        },
+        fees: {
+          question: 'Kokie yra mokesčiai?',
+          answer: 'Mes neimame jokių mokesčių už sąskaitos tvarkymą, pervedimu ar saugojimą. Vienintelis mokestis, kurį mokate, yra standartinis valstybės pajamų mokestis nuo užvaldytų palūkanų.'
+        },
+        minimum: {
+          question: 'Kokia minimuma suma reikalinga pradėti?',
+          answer: 'Minimalus indėlio dydis yra tik 100 €. Maksimalaus dydžio apribojimų nėra, tačiau indėliai viršijantys 100,000 € nėra apdrausti pagal ES direktyvas.'
+        },
+        speed: {
+          question: 'Kaip greitai gaunu palūkanas?',
+          answer: 'Palūkanos skaičiuojamos ir prijungiamos prie jūsų sąskaitos kasdien. Galite matyti, kaip jūsų balansas auga kiekvieną dieną mūsų mobilejeje aplikacijoje arba internetinėje bankininkystėje.'
+        },
+        bankruptcy: {
+          question: 'Kas nutiks, jei bankrotuosite?',
+          answer: 'LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs.'
+        }
+      },
+      contact: {
+        title: 'Neradote atsakymo į savo klausimą?',
+        subtitle: 'Susisiekite su mūsų ekspertų komanda - mes mielai padėsime',
+        button: 'Susisiekti',
+        form: {
+          name: 'Vardas',
+          email: 'El. paštas',
+          message: 'Žinutė',
+          send: 'Siųsti',
+          cancel: 'Atšaukti',
+          sending: 'Siunčiama...',
+          namePlaceholder: 'Jūsų vardas',
+          emailPlaceholder: 'jusu.pastas@example.com',
+          messagePlaceholder: 'Jūsų klausimas...'
+        }
+      }
+    },
+    contact: {
+      badge: 'Susisiekite su mumis',
+      title: 'Turime klausimų?',
+      subtitle: 'Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.',
+      form: {
+        title: 'Parašykite mums',
+        name: 'Vardas',
+        phone: 'Telefonas',
+        email: 'El. paštas',
+        message: 'Žinutė',
+        send: 'Siųsti žinutę',
+        sending: 'Siunčiama...',
+        namePlaceholder: 'Jūsų vardas',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'jusu.paštas@example.com',
+        messagePlaceholder: 'Parašykite savo klausimą arba komentarą...'
+      },
+      newsletter: {
+        title: 'Prenumeruoti naujienas',
+        description: 'Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus',
+        email: 'El. pašto adresas',
+        name: 'Vardas (neprivaloma)',
+        consent: 'Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui',
+        subscribe: 'Prenumeruoti',
+        subscribing: 'Prenumeruojama...',
+        emailPlaceholder: 'jusu.pastas@example.com',
+        namePlaceholder: 'Jūsų vardas'
       }
     },
     footer: {
@@ -143,27 +324,6 @@ const getTranslations = () => ({
       dashboard: 'My Account',
       logout: 'Logout'
     },
-    hero: {
-      title: 'World\'s first bank paying daily interest',
-      subtitle: 'Get 8% annual interest rate with daily interest payments. Transparent, secure, no hidden fees.',
-      cta: 'Start Saving',
-      learnMore: 'Learn More'
-    },
-    services: {
-      title: 'Our Services',
-      dailyInterest: {
-        title: 'Daily Interest',
-        description: 'Receive interest every day, not once a year'
-      },
-      highReturn: {
-        title: 'High Returns',
-        description: '8% annual interest rate - one of the highest in the market'
-      },
-      security: {
-        title: 'Security',
-        description: 'Your money is protected up to €100,000 under EU directives'
-      }
-    },
     calculators: {
       title: 'Choose Calculator Type',
       daily: 'Daily Interest',
@@ -184,6 +344,208 @@ const getTranslations = () => ({
       experience: {
         title: 'Experience',
         description: 'We have years of experience in finance and thousands of satisfied customers.'
+      }
+    },
+    hero: {
+      title: 'Save smartly',
+      subtitle: 'with daily interest',
+      description: 'World\'s first bank paying daily interest. Transparent, secure, no hidden fees – this is modern saving.',
+      ctaPrimary: 'Start Saving Now',
+      ctaSecondary: 'Learn More',
+      newSolutions: 'Innovative Saving Solutions',
+      features: {
+        daily: {
+          title: 'Daily Interest',
+          description: 'Get interest every day, not once a year'
+        },
+        security: {
+          title: '100% Security',
+          description: 'Your money is protected by banking license and insurance'
+        },
+        noFees: {
+          title: 'No Fees',
+          description: 'No hidden fees or monthly charges'
+        }
+      }
+    },
+    services: {
+      badge: 'Our Services',
+      title: 'Why Choose LTB Bank?',
+      subtitle: 'We offer innovative solutions that help you save more efficiently and safely than ever before.',
+      items: {
+        dailyInterest: {
+          title: 'Daily Interest',
+          description: 'Get interest every day, not just at year-end. Your money works every day.',
+          badge: 'Most Popular'
+        },
+        noReports: {
+          title: 'No Reports',
+          description: 'No one asks for declarations or income explanations. Just save and get interest.',
+          badge: 'Simple'
+        },
+        confidentiality: {
+          title: 'Confidentiality',
+          description: 'Your financial information is strictly confidential. We don\'t disclose data to anyone.',
+          badge: 'Secure'
+        },
+        transparent: {
+          title: 'Transparent Calculation',
+          description: 'You always know how much you\'ll earn. No hidden fees or complex conditions.',
+          badge: 'Clear'
+        },
+        fastAccess: {
+          title: 'Fast Access',
+          description: 'Money available anytime. No freeze periods or withdrawal restrictions.',
+          badge: 'Fast'
+        },
+        competitive: {
+          title: 'Competitive Interest',
+          description: 'We offer one of the highest interest rates in the market - up to 8% per year.',
+          badge: 'Profitable'
+        },
+        loans: {
+          title: 'Loans at 14% Interest',
+          description: 'Get a loan with transparent 14% annual interest rate without any hidden fees.',
+          badge: 'New'
+        }
+      },
+      cta: {
+        title: 'Start Today',
+        description: 'Join thousands of clients already earning with LTB Bank',
+        button: 'Register Now'
+      }
+    },
+    howItWorks: {
+      badge: 'Simple Process',
+      title: 'How It Works?',
+      subtitle: 'Starting to save with LTB Bank is simple and fast. Here\'s how it works.',
+      steps: {
+        register: {
+          title: 'Register',
+          description: 'Create an account in 3 minutes. No complex documents or reports needed.'
+        },
+        deposit: {
+          title: 'Deposit Money',
+          description: 'Deposit money to your account from any bank worldwide, safe and fast deposit.'
+        },
+        earn: {
+          title: 'Earn Interest',
+          description: 'Your money starts working immediately. Interest calculated and paid daily.'
+        },
+        withdraw: {
+          title: 'Use Your Money',
+          description: 'Money available anytime. You can withdraw all or part - as convenient for you.'
+        }
+      },
+      cta: {
+        title: 'Ready to Start Saving?',
+        description: 'Join thousands of clients already earning with LTB Bank',
+        buttonPrimary: 'Register Now',
+        buttonSecondary: 'Read More'
+      }
+    },
+    calculator: {
+      badge: 'Interest Calculator',
+      title: 'Calculate Your Profit',
+      subtitle: 'Find out how much you\'ll earn with our daily interest',
+      form: {
+        amountLabel: 'Savings Amount (LT)',
+        amountPlaceholder: '10000',
+        rateLabel: 'Interest Rate:',
+        rateValue: 'per year'
+      },
+      results: {
+        title: 'Your Profit',
+        daily: 'Per Day',
+        monthly: 'Per Month',
+        yearly: 'Per Year',
+        manageDashboard: 'Manage Account',
+        register: 'Register',
+        login: 'Login'
+      }
+    },
+    faq: {
+      badge: 'Frequently Asked Questions',
+      title: 'Have Questions?',
+      subtitle: 'Here are answers to the most frequently asked questions about LTB Bank services',
+      questions: {
+        dailyInterest: {
+          question: 'How do daily interest payments work?',
+          answer: 'Interest is calculated daily based on your account balance. Instead of paying interest once a year, we pay it daily. This means your money grows every day, not just at year-end.'
+        },
+        noReports: {
+          question: 'Do I really not need to provide any reports?',
+          answer: 'Yes, we don\'t need income declarations, employment certificates or other documents. Just open an account and start saving. We believe saving should be simple and accessible to everyone.'
+        },
+        security: {
+          question: 'How safe is my money?',
+          answer: 'Your deposits are insured under EU directives up to €100,000 per customer. We use highest-level encryption technologies and maintain strict security protocols. Your data is confidential and not disclosed to anyone.'
+        },
+        withdrawal: {
+          question: 'Can I withdraw money anytime?',
+          answer: 'Yes, your money is available anytime. There are no freeze periods or penalties for early withdrawals. You can withdraw all or part - you decide.'
+        },
+        fees: {
+          question: 'What are the fees?',
+          answer: 'We don\'t charge any fees for account management, transfers or storage. The only fee you pay is the standard state income tax on earned interest.'
+        },
+        minimum: {
+          question: 'What\'s the minimum amount needed to start?',
+          answer: 'The minimum deposit is just 100 €. There are no maximum limits, but deposits exceeding €100,000 are not insured under EU directives.'
+        },
+        speed: {
+          question: 'How quickly do I get interest?',
+          answer: 'Interest is calculated and added to your account daily. You can see your balance grow every day in our mobile app or online banking.'
+        },
+        bankruptcy: {
+          question: 'What happens if you go bankrupt?',
+          answer: 'LTB Bank is a licensed bank supervised by the Bank of Lithuania. Our operations are regulated under EU directives, and deposits are insured up to €100,000 per customer. Your money is safe.'
+        }
+      },
+      contact: {
+        title: 'Didn\'t find the answer to your question?',
+        subtitle: 'Contact our expert team - we\'re happy to help',
+        button: 'Contact Us',
+        form: {
+          name: 'Name',
+          email: 'Email',
+          message: 'Message',
+          send: 'Send',
+          cancel: 'Cancel',
+          sending: 'Sending...',
+          namePlaceholder: 'Your name',
+          emailPlaceholder: 'your.email@example.com',
+          messagePlaceholder: 'Your question...'
+        }
+      }
+    },
+    contact: {
+      badge: 'Contact Us',
+      title: 'Have Questions?',
+      subtitle: 'Our expert team is always ready to help. Contact us in any way convenient for you.',
+      form: {
+        title: 'Write to Us',
+        name: 'Name',
+        phone: 'Phone',
+        email: 'Email',
+        message: 'Message',
+        send: 'Send Message',
+        sending: 'Sending...',
+        namePlaceholder: 'Your name',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'your.email@example.com',
+        messagePlaceholder: 'Write your question or comment...'
+      },
+      newsletter: {
+        title: 'Subscribe to Newsletter',
+        description: 'Get the latest information about interest rate changes, new services and financial advice',
+        email: 'Email Address',
+        name: 'Name (optional)',
+        consent: 'I agree that my data will be processed for newsletter delivery',
+        subscribe: 'Subscribe',
+        subscribing: 'Subscribing...',
+        emailPlaceholder: 'your.email@example.com',
+        namePlaceholder: 'Your name'
       }
     },
     footer: {
