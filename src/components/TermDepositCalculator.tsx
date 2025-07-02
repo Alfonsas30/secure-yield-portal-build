@@ -215,8 +215,13 @@ const TermDepositCalculator = () => {
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-amber-800 transition-colors duration-300">
-                Įveskite indėlio sumą
+                {selectedTerm === 12 ? 'Įveskite indėlio sumą' : 'Įveskite investuojamą sumą'}
               </CardTitle>
+              {selectedTerm === 72 && (
+                <p className="text-sm text-slate-600 mt-2">
+                  Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis
+                </p>
+              )}
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Account Balance Display for logged-in users */}
