@@ -14,18 +14,29 @@ interface DiscountRequest {
 }
 
 serve(async (req) => {
+  console.log("=== REQUEST-DISCOUNT FUNCTION STARTED ===");
+  console.log("Request method:", req.method);
+  console.log("Request headers:", Object.fromEntries(req.headers.entries()));
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { name, email, account_type }: DiscountRequest = await req.json();
+    const requestBody = await req.json();
+    console.log("Request body received:", requestBody);
+    
+    const { name, email, account_type }: DiscountRequest = requestBody;
+
+    console.log("Processing discount request for:", { name, email, account_type });
 
     // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
+
+    console.log("Storing request in database...");
 
     // Store the discount request in database
     const { error: dbError } = await supabaseClient
@@ -42,14 +53,24 @@ serve(async (req) => {
       throw new Error("Failed to store discount request");
     }
 
+    console.log("Database insert successful, preparing email...");
+
     // Send email via Resend
-    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY is not configured");
+      throw new Error("Email service not configured");
+    }
+    
+    const resend = new Resend(resendApiKey);
     
     const accountTypeText = account_type === 'personal' ? 'Asmeninė sąskaita' : 'Įmonės sąskaita';
     const discountText = account_type === 'personal' ? '800 € → 400 € (50% nuolaida)' : '1500 € → 750 € (50% nuolaida)';
 
+    console.log("Sending email with Resend...");
+
     const emailResponse = await resend.emails.send({
-      from: "GMB Invest <gmbhinvest333@gmail.com>",
+      from: "GMB Invest <onboarding@resend.dev>",
       to: ["gmbhinvest333@gmail.com"],
       subject: `Nauja nuolaidų užklausa - ${name}`,
       html: `
