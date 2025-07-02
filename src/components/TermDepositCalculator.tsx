@@ -84,10 +84,22 @@ const TermDepositCalculator = () => {
     const principal = parseFloat(amount) || 0;
     const rate = getInterestRate(principal, selectedTerm);
     const years = selectedTerm / 12;
-    const totalReturn = principal * Math.pow(1 + rate / 100, years);
-    const totalProfit = totalReturn - principal;
-    const yearlyProfit = totalProfit / years;
-    const monthlyProfit = yearlyProfit / 12;
+    
+    let totalReturn, totalProfit, yearlyProfit, monthlyProfit;
+    
+    if (selectedTerm === 72) {
+      // 6 metų terminas: paprasta 100% palūkana (padvigubina sumą)
+      totalReturn = principal * 2;
+      totalProfit = principal; // 100% pelnas
+      yearlyProfit = totalProfit / years;
+      monthlyProfit = yearlyProfit / 12;
+    } else {
+      // 1 metų terminas: sudėtinė palūkana
+      totalReturn = principal * Math.pow(1 + rate / 100, years);
+      totalProfit = totalReturn - principal;
+      yearlyProfit = totalProfit / years;
+      monthlyProfit = yearlyProfit / 12;
+    }
     
     return {
       rate,
