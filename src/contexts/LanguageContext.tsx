@@ -579,18 +579,50 @@ const getTranslations = () => ({
       learnMore: 'Узнать больше'
     },
     services: {
-      title: 'Наши услуги',
-      dailyInterest: {
-        title: 'Ежедневные проценты',
-        description: 'Получайте проценты каждый день, а не раз в год'
+      badge: 'Наши услуги',
+      title: 'Почему выбрать LTB Банк?',
+      subtitle: 'Мы предлагаем инновационные решения, которые помогут вам сберегать более эффективно и безопасно, чем когда-либо прежде.',
+      items: {
+        dailyInterest: {
+          title: 'Ежедневные проценты',
+          description: 'Получайте проценты каждый день, а не только в конце года. Ваши деньги работают каждый день.',
+          badge: 'Самая популярная'
+        },
+        noReports: {
+          title: 'Никаких отчетов',
+          description: 'Никто не будет просить декларации или объяснения доходов. Просто сберегайте и получайте проценты.',
+          badge: 'Просто'
+        },
+        confidentiality: {
+          title: 'Конфиденциальность',
+          description: 'Ваша финансовая информация строго конфиденциальна. Мы никому не раскрываем данные.',
+          badge: 'Безопасно'
+        },
+        transparent: {
+          title: 'Прозрачный расчет',
+          description: 'Вы всегда знаете, сколько заработаете. Никаких скрытых комиссий или сложных условий.',
+          badge: 'Ясно'
+        },
+        fastAccess: {
+          title: 'Быстрый доступ',
+          description: 'Деньги доступны в любое время. Нет периодов заморозки или ограничений на снятие.',
+          badge: 'Быстро'
+        },
+        competitive: {
+          title: 'Конкурентные проценты',
+          description: 'Мы предлагаем одну из самых высоких процентных ставок на рынке - до 8% в год.',
+          badge: 'Выгодно'
+        },
+        loans: {
+          title: 'Кредиты под 14% годовых',
+          description: 'Получите кредит с прозрачной ставкой 14% годовых без скрытых комиссий.',
+          badge: 'Новинка'
+        }
       },
-      highReturn: {
-        title: 'Высокая доходность',
-        description: '8% годовых - одна из самых высоких на рынке'
-      },
-      security: {
-        title: 'Безопасность',
-        description: 'Ваши деньги защищены до €100,000 согласно директивам ЕС'
+      cta: {
+        title: 'Начните уже сегодня',
+        description: 'Присоединяйтесь к тысячам клиентов, которые уже зарабатывают с LTB Банк',
+        button: 'Зарегистрироваться сейчас'
       }
     },
     calculators: {
@@ -646,18 +678,50 @@ const getTranslations = () => ({
       learnMore: 'Mehr erfahren'
     },
     services: {
-      title: 'Unsere Dienstleistungen',
-      dailyInterest: {
-        title: 'Tägliche Zinsen',
-        description: 'Erhalten Sie Zinsen jeden Tag, nicht einmal im Jahr'
+      badge: 'Unsere Dienstleistungen',
+      title: 'Warum LTB Bank wählen?',
+      subtitle: 'Wir bieten innovative Lösungen, die Ihnen helfen, effizienter und sicherer zu sparen als je zuvor.',
+      items: {
+        dailyInterest: {
+          title: 'Tägliche Zinsen',
+          description: 'Erhalten Sie täglich Zinsen, nicht nur am Jahresende. Ihr Geld arbeitet jeden Tag.',
+          badge: 'Beliebteste'
+        },
+        noReports: {
+          title: 'Keine Berichte',
+          description: 'Niemand verlangt Steuererklärungen oder Einkommensnachweise. Sparen Sie einfach und erhalten Sie Zinsen.',
+          badge: 'Einfach'
+        },
+        confidentiality: {
+          title: 'Vertraulichkeit',
+          description: 'Ihre Finanzinformationen sind streng vertraulich. Wir geben keine Daten an Dritte weiter.',
+          badge: 'Sicher'
+        },
+        transparent: {
+          title: 'Transparente Berechnung',
+          description: 'Sie wissen immer, wie viel Sie verdienen werden. Keine versteckten Gebühren oder komplexe Bedingungen.',
+          badge: 'Klar'
+        },
+        fastAccess: {
+          title: 'Schneller Zugang',
+          description: 'Geld ist jederzeit verfügbar. Keine Sperrfristen oder Abhebungsbeschränkungen.',
+          badge: 'Schnell'
+        },
+        competitive: {
+          title: 'Wettbewerbsfähige Zinsen',
+          description: 'Wir bieten einen der höchsten Zinssätze am Markt - bis zu 8% pro Jahr.',
+          badge: 'Profitabel'
+        },
+        loans: {
+          title: 'Kredite zu 14% Zinsen',
+          description: 'Erhalten Sie einen Kredit mit transparenten 14% Jahreszinsen ohne versteckte Gebühren.',
+          badge: 'Neu'
+        }
       },
-      highReturn: {
-        title: 'Hohe Rendite',
-        description: '8% Jahreszins - einer der höchsten am Markt'
-      },
-      security: {
-        title: 'Sicherheit',
-        description: 'Ihr Geld ist bis zu €100,000 nach EU-Richtlinien geschützt'
+      cta: {
+        title: 'Starten Sie noch heute',
+        description: 'Schließen Sie sich Tausenden von Kunden an, die bereits mit LTB Bank verdienen',
+        button: 'Jetzt registrieren'
       }
     },
     calculators: {
