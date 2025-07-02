@@ -18,7 +18,7 @@ const HowItWorks = () => {
       number: "02", 
       icon: CreditCard,
       title: "Įneškite pinigus",
-      description: "Perveskite pinigus iš bet kurio Lietuvos banko. Pervedimai yra greiti ir saugūs.",
+      description: "Įneškite pinigus į savo sąskaitą iš betkurio pasaulio banko, įnešimas saugus ir greitas.",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50",
       delay: "0.2s"
