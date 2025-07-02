@@ -65,6 +65,15 @@ const Services = () => {
       color: "bg-cyan-100 text-cyan-600",
       hoverColor: "hover:bg-cyan-200 hover:text-cyan-700",
       delay: "0.6s"
+    },
+    {
+      icon: Calculator,
+      title: "Paskolos 14% palūkanomis",
+      description: "Gaukite paskolą su skaidria 14% metine palūkanų norma be jokių paslėptų mokesčių.",
+      badge: "Naujas",
+      color: "bg-orange-100 text-orange-600",
+      hoverColor: "hover:bg-orange-200 hover:text-orange-700",
+      delay: "0.7s"
     }
   ];
 

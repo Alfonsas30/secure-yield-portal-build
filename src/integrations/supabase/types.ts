@@ -180,6 +180,60 @@ export type Database = {
         }
         Relationships: []
       }
+      loan_applications: {
+        Row: {
+          created_at: string
+          email: string
+          employment_info: string | null
+          id: string
+          interest_rate: number
+          loan_amount: number
+          loan_purpose: string | null
+          loan_term_months: number
+          monthly_income: number | null
+          monthly_payment: number
+          name: string
+          phone: string | null
+          status: string
+          total_payment: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          employment_info?: string | null
+          id?: string
+          interest_rate?: number
+          loan_amount: number
+          loan_purpose?: string | null
+          loan_term_months: number
+          monthly_income?: number | null
+          monthly_payment: number
+          name: string
+          phone?: string | null
+          status?: string
+          total_payment: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          employment_info?: string | null
+          id?: string
+          interest_rate?: number
+          loan_amount?: number
+          loan_purpose?: string | null
+          loan_term_months?: number
+          monthly_income?: number | null
+          monthly_payment?: number
+          name?: string
+          phone?: string | null
+          status?: string
+          total_payment?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       newsletter_campaigns: {
         Row: {
           content: string

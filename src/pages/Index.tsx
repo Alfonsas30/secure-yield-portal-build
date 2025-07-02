@@ -14,6 +14,7 @@ import Services from "@/components/Services";
 import HowItWorks from "@/components/HowItWorks";
 import InterestCalculator from "@/components/InterestCalculator";
 import TermDepositCalculator from "@/components/TermDepositCalculator";
+import LoanCalculator from "@/components/LoanCalculator";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -40,13 +41,19 @@ const Index = () => {
           </div>
           
           <Tabs defaultValue="daily" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-3 mb-8">
               <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
               <TabsTrigger 
                 value="term" 
-                className="text-base font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1]"
+                className="text-sm font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1]"
               >
                 Terminuoti indėliai
+              </TabsTrigger>
+              <TabsTrigger 
+                value="loans" 
+                className="text-sm font-semibold text-slate-900 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 border border-orange-200"
+              >
+                Paskolos
               </TabsTrigger>
             </TabsList>
             <TabsContent value="daily" className="w-full">
@@ -54,6 +61,9 @@ const Index = () => {
             </TabsContent>
             <TabsContent value="term" className="w-full">
               <TermDepositCalculator />
+            </TabsContent>
+            <TabsContent value="loans" className="w-full">
+              <LoanCalculator />
             </TabsContent>
           </Tabs>
         </div>
