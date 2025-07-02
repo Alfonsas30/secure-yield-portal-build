@@ -13,10 +13,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <span className="font-bold text-xl">LTB Bankas</span>
+              <span className="font-bold text-xl">{t('footer.brand')}</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
-              Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.
+              {t('footer.brandDescription')}
             </p>
             <div className="flex space-x-4">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
@@ -32,11 +32,11 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">{t('footer.services')}</h3>
             <ul className="space-y-3 text-slate-400">
-              <li><a href="#" className="hover:text-white transition-colors">Dienos palūkanos</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Taupymo sąskaitā</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Mokėjimų kortelės</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Pervedimai</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Mobilėje aplikacija</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.dailyInterest')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.termDeposits')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.loans')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('nav.services')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('nav.dashboard')}</a></li>
             </ul>
           </div>
 
@@ -44,11 +44,11 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">{t('footer.information')}</h3>
             <ul className="space-y-3 text-slate-400">
-              <li><a href="#apie-mus" className="hover:text-white transition-colors">Apie mus</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Saugumas</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Licencijos</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Karjera</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Naujienos</a></li>
+              <li><a href="#apie-mus" className="hover:text-white transition-colors">{t('footer.about')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.howItWorks')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('nav.contact')}</a></li>
             </ul>
           </div>
 
@@ -56,11 +56,11 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">{t('footer.help')}</h3>
             <ul className="space-y-3 text-slate-400">
-              <li><a href="#kontaktai" className="hover:text-white transition-colors">Kontaktai</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">D.U.K.</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Gairės</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privatumo politika</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Teisinė informacija</a></li>
+              <li><a href="#kontaktai" className="hover:text-white transition-colors">{t('footer.contact')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.faq')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.howItWorks')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a></li>
             </ul>
             
             {/* Techninė pagalba */}
@@ -71,7 +71,7 @@ const Footer = () => {
                 href="mailto:gmbhinvest333@gmail.com?subject=Skaičiuoklės problema&body=Sveiki, turiu problemą su skaičiuokle:"
                 className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
               >
-                gmbhinvest333@gmail.com
+                {t('footer.email')}
               </a>
             </div>
           </div>
@@ -81,7 +81,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-slate-400 text-sm">
-            © {currentYear} LTB Bankas. {t('footer.copyright')}
+            © {currentYear} {t('footer.brand')}. {t('footer.copyright')}
           </div>
           
           <div className="flex items-center space-x-6 text-sm text-slate-400">
