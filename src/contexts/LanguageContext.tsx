@@ -98,83 +98,73 @@ const translations = {
           description: 'Užpildykite paprastą registracijos formą'
         },
         deposit: {
-          title: 'Įmokėkite pinigus',
-          description: 'Perveskite norimą sumą į savo sąskaitą'
+          title: 'Įnešite lėšas',
+          description: 'Perveskite pinigus į savo naują sąskaitą'
         },
         earn: {
           title: 'Uždirbkite',
-          description: 'Stebėkite, kaip jūsų pinigai auga kiekvieną dieną'
+          description: 'Palūkanos skaičiuojamos ir mokamos kiekvieną dieną'
         }
       }
     },
-    calculator: {
-      title: 'Palūkanų skaičiuoklė',
-      subtitle: 'Sužinokite, kiek uždirbsite su dienos palūkanomis',
-      amount: 'Suma (€)',
-      result: {
-        daily: 'Dienos pajamos',
-        monthly: 'Mėnesio pajamos',
-        yearly: 'Metų pajamos'
-      },
-      note: 'Skaičiavimas atliekamas su 12% metine palūkanų norma'
-    },
-    termDeposits: {
-      title: 'Terminuotųjų indėlių skaičiuoklė',
-      subtitle: 'Apskaičiuokite savo indėlio pelningumą',
-      form: {
-        amount: 'Indėlio suma',
-        term: 'Indėlio terminas',
-        exactAmount: 'Tiksli suma (€)',
-        exactTerm: 'Tikslus terminas (mėn.)',
-        months: 'mėn.'
+    daily: {
+      title: 'Dienos palūkanų skaičiuoklė',
+      subtitle: 'Apskaičiuokite, kiek galite uždirbti su dienos palūkanomis',
+      inputs: {
+        amount: 'Suma (€)',
+        rate: 'Palūkanų norma (%)',
+        days: 'Dienų skaičius'
       },
       results: {
-        monthlyInterest: 'Mėnesio palūkanos',
+        dailyInterest: 'Dienos palūkanos',
+        totalEarned: 'Iš viso uždirbta',
+        finalAmount: 'Galutinė suma'
+      },
+      example: 'Pavyzdys: 1000 € su 12% palūkanomis per 30 dienų'
+    },
+    term: {
+      title: 'Terminuotų indėlių skaičiuoklė',
+      subtitle: 'Apskaičiuokite savo pelną su terminuotaisiais indėliais',
+      inputs: {
+        amount: 'Indėlio suma (€)',
+        rate: 'Palūkanų norma (%)',
+        term: 'Terminas (mėnesiai)'
+      },
+      results: {
+        monthlyInterest: 'Mėnesinės palūkanos',
         totalInterest: 'Bendros palūkanos',
-        finalAmount: 'Galutinė suma',
-        interestRate: 'Palūkanų norma'
+        finalAmount: 'Galutinė suma'
       },
       cta: {
-        title: 'Norite sukurti terminuotąjį indėlį?',
-        subtitle: 'Fiksuokite palūkanų normą šiandien ir užtikrinkite stabilų pelningumą',
-        button: 'Sudaryti sutartį'
+        title: 'Norite sukurti terminuotą indėlį?',
+        subtitle: 'Susisiekite su mumis ir gaukite geriausias sąlygas',
+        button: 'Sukurti indėlį'
       }
     },
     loans: {
       title: 'Paskolų skaičiuoklė',
-      subtitle: 'Apskaičiuokite mėnesio įmoką ir bendras sąnaudas. Palūkanų norma',
-      interestRate: '14% metinių',
-      form: {
-        loanAmount: 'Paskolos suma',
-        loanTerm: 'Paskolos terminas',
-        exactAmount: 'Tiksli suma (€)',
-        exactTerm: 'Tikslus terminas (mėn.)',
-        months: 'mėn.'
+      subtitle: 'Apskaičiuokite mėnesinius mokėjimus ir bendrą paskolos kainą',
+      inputs: {
+        amount: 'Paskolos suma (€)',
+        rate: 'Palūkanų norma (%)',
+        term: 'Terminas (mėnesiai)'
       },
       results: {
-        monthlyPayment: 'Mėnesio įmoka',
-        totalAmount: 'Bendra suma',
-        interest: 'Palūkanos',
-        paymentNote: 'Mėnesio įmoka',
-        calculating: 'Skaičiuojama...',
-        checkInput: 'Patikrinkite duomenis'
+        monthlyPayment: 'Mėnesinis mokėjimas',
+        totalPayment: 'Iš viso mokėsite',
+        totalInterest: 'Bendros palūkanos'
       },
       schedule: {
         title: 'Mokėjimų grafikas',
-        subtitle: 'Pirmųjų 12 mėnesių mokėjimų detalus planas',
-        headers: {
-          month: 'Mėnuo',
-          payment: 'Įmoka',
-          principal: 'Pagrindinė dalis',
-          interest: 'Palūkanos',
-          balance: 'Likutis'
-        },
-        showingFirst: 'Rodomi pirmieji 12 iš',
-        totalMonths: 'mėnesių'
+        month: 'Mėnuo',
+        payment: 'Mokėjimas',
+        principal: 'Pagrindinė suma',
+        interest: 'Palūkanos',
+        balance: 'Likutis'
       },
       application: {
-        title: 'Paruošta pateikti paraišką?',
-        subtitle: 'Užpildykite paraišką ir gaukite sprendimą per 24 valandas',
+        title: 'Norite gauti šią paskolą?',
+        subtitle: 'Pateikite paraišką ir gaukite sprendimą per 24 valandas',
         button: 'Pateikti paraišką'
       }
     },
@@ -183,83 +173,61 @@ const translations = {
       title: 'Turite klausimų?',
       subtitle: 'Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.',
       form: {
-        title: 'Parašykite mums',
+        title: 'Rašyti mums',
         name: 'Vardas',
+        phone: 'Telefonas',
         email: 'El. paštas',
         message: 'Žinutė',
-        send: 'Siųsti',
-        cancel: 'Atšaukti',
-        sending: 'Siunčiama...',
-        placeholder: {
-          name: 'Jūsų vardas',
-          email: 'jusu.elpastas@example.com',
-          message: 'Jūsų klausimas...'
-        }
+        namePlaceholder: 'Jūsų vardas',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'jusu.paštas@example.com',
+        messagePlaceholder: 'Parašykite savo klausimą arba komentarą...',
+        submit: 'Siųsti žinutę',
+        submitting: 'Siunčiama...',
+        success: 'Žinutė išsiųsta!',
+        successDescription: 'Mes susisieksime su jumis per 24 valandas.',
+        error: 'Klaida',
+        errorDescription: 'Nepavyko išsiųsti žinutės. Pabandykite dar kartą.'
+      },
+      newsletter: {
+        title: 'Prenumeruoti naujienas',
+        description: 'Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus',
+        email: 'El. pašto adresas',
+        name: 'Vardas (neprivaloma)',
+        emailPlaceholder: 'jusu.pastas@example.com',
+        namePlaceholder: 'Jūsų vardas',
+        consent: 'Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui',
+        submit: 'Prenumeruoti',
+        submitting: 'Prenumeruojama...',
+        success: 'Sėkmingai prenumeruojate!',
+        successDescription: 'Ačiū! Netrukus gausite patvirtinimo laišką',
+        alreadySubscribed: 'El. paštas jau prenumeruoja',
+        alreadySubscribedDescription: 'Šis el. pašto adresas jau prenumeruoja mūsų naujienas',
+        subscriptionError: 'Nepavyko prenumeruoti. Pabandykite dar kartą',
+        validationError: 'Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu'
       }
     },
     faq: {
-      badge: 'Dažniausiai užduodami klausimai',
-      title: 'Turite klausimų?',
-      subtitle: 'Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas',
+      badge: 'Dažnai užduodami klausimai',
+      title: 'DUK',
+      subtitle: 'Čia rasite atsakymus į dažniausiai užduodamus klausimus apie LTB banko paslaugas',
       notFound: {
         title: 'Neradote atsakymo į savo klausimą?',
         description: 'Susisiekite su mūsų ekspertų komanda - mielai padėsime',
-        button: 'Susisiekti'
-      },
-      form: {
-        name: 'Vardas',
-        email: 'El. paštas',
-        message: 'Žinutė',
-        send: 'Siųsti',
-        cancel: 'Atšaukti',
-        sending: 'Siunčiama...',
-        placeholder: {
-          name: 'Jūsų vardas',
-          email: 'jusu.elpastas@example.com',
-          message: 'Jūsų klausimas...'
-        }
-      },
-      questions: {
-        q1: {
-          question: 'Kaip veikia dienos palūkanos?',
-          answer: 'Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje.'
-        },
-        q2: {
-          question: 'Ar tikrai nereikia pateikti jokių pažymų?',
-          answer: 'Taip, mums nereikia pajamų deklaracijų, darbo pažymų ar kitų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Tikime, kad taupymas turi būti paprastas ir prieinamas visiems.'
-        },
-        q3: {
-          question: 'Kiek saugūs mano pinigai?',
-          answer: 'Jūsų indėliai apdrausti pagal ES direktyvas iki 100 000 € vienam klientui. Naudojame aukščiausio lygio šifravimo technologijas ir laikomės griežtų saugumo protokolų. Jūsų duomenys konfidencialūs ir niekam neatskleisti.'
-        },
-        q4: {
-          question: 'Ar galiu bet kada išsiimti pinigus?',
-          answer: 'Taip, jūsų pinigai prieinami bet kada. Nėra jokių užšaldymo periodų ar baudų už anksčiau laiko išėmimą. Galite išsiimti visą sumą ar tik dalį - sprendžiate patys.'
-        },
-        q5: {
-          question: 'Kokie mokesčiai?',
-          answer: 'Mes neimsime jokių mokesčių už sąskaitos tvarkymą, pavedimus ar saugojimą. Vienintelis mokestis, kurį mokate - tai įprastas valstybės pajamų mokestis nuo uždirbtos palūkanų.'
-        },
-        q6: {
-          question: 'Kaip greitai galiu pradėti taupyti?',
-          answer: 'Sąskaitą galite atidaryti per kelias minutes. Po registracijos iš karto galite pradėti pervesti pinigus ir uždirbti palūkanas. Palūkanos pradedamos skaičiuoti nuo pat pirmos dienos.'
-        },
-        q7: {
-          question: 'Ar yra minimalus indėlio dydis?',
-          answer: 'Minimalus indėlio dydis yra tik 10 €. Maksimalus - 100 000 € (indėlių draudimo limitas). Galite pradėti su bet kokia suma ir papildyti sąskaitą bet kada.'
-        },
-        q8: {
-          question: 'Kaip kontroliuojama banko veikla?',
-          answer: 'LTB Bankas yra licencijuota kredito įstaiga, kurią kontroliuoja Lietuvos bankas. Laikemės visų ES bankų reguliavimo reikalavimų ir reguliariai teikiame ataskaitas reguliuotojui.'
-        }
+        button: 'Susisiekti su mumis'
       }
     },
     footer: {
+      bank: 'LTB Bankas',
+      description: 'Inovatyvus bankas, kuris keičia taupymo kultūrą Lietuvoje.',
       services: 'Paslaugos',
-      loans: 'Paskolos',
-      information: 'Informacija',
+      company: 'Įmonė',
+      support: 'Pagalba',
+      legal: 'Teisinė informacija',
       about: 'Apie mus',
-      howItWorks: 'Kaip veikia',
+      careers: 'Karjera',
+      blog: 'Tinklaraštis',
+      news: 'Naujienos',
       privacy: 'Privatumo politika',
       terms: 'Naudojimosi sąlygos',
       help: 'Pagalba',
@@ -268,60 +236,171 @@ const translations = {
       techSupport: 'Techninė pagalba',
       calculatorIssues: 'Skaičiuoklių problemos:',
       email: 'info@ltbbankas.lt',
-      phone: '+370 700 12345',
-      copyright: 'Visos teisės saugomos.',
-      licensed: 'Licencijuotas Lietuvos banko',
-      insured: 'Indėliai apdrausti iki 100 000 €',
-      disclaimer: 'LTB Bankas yra licencijuota kredito įstaiga, kurią prižiūri Lietuvos bankas. Indėliai apdrausti pagal ES direktyvas iki 100 000 € vienam klientui. Palūkanų normos priklauso nuo rinkos sąlygų ir gali keistis. Konsultuokitės su mūsų ekspertais prieš priimdami sprendimus.'
+      rights: 'Visos teisės saugomos',
+      license: 'Licencijuojama LB'
     },
     auth: {
-      login: 'Prisijungti',
-      register: 'Registruotis',
-      logout: 'Atsijungti',
+      title: 'Banko sistema',
+      login: 'Prisijungimas',
+      signup: 'Registracija',
       email: 'El. paštas',
       password: 'Slaptažodis',
-      confirmPassword: 'Patvirtinkite slaptažodį',
-      forgotPassword: 'Pamiršote slaptažodį?',
-      noAccount: 'Neturite paskyros?',
-      hasAccount: 'Jau turite paskyrą?',
-      signUp: 'Registruotis',
-      signIn: 'Prisijungti'
-    },
-    forms: {
-      required: 'Privalomas laukas',
-      invalidEmail: 'Neteisingas el. pašto formatas',
-      submit: 'Pateikti',
-      cancel: 'Atšaukti',
-      save: 'Išsaugoti',
-      loading: 'Kraunama...',
-      success: 'Sėkmingai išsaugota',
-      error: 'Įvyko klaida'
+      confirmPassword: 'Pakartokite slaptažodį',
+      displayName: 'Vardas Pavardė',
+      emailPlaceholder: 'vardas@example.com',
+      passwordPlaceholder: '••••••••',
+      confirmPasswordPlaceholder: 'Pakartokite slaptažodį',
+      displayNamePlaceholder: 'Vardas Pavardė',
+      loginButton: 'Prisijungti',
+      signupButton: 'Registruotis',
+      passwordMismatch: 'Slaptažodžiai nesutampa',
+      signupNote: 'Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris',
+      resendConfirmation: 'Nepatvirtintas el. paštas?',
+      resendButton: 'Siųsti',
+      resendPlaceholder: 'El. paštas',
+      minPasswordLength: 'Bent 6 simboliai'
     },
     modals: {
-      close: 'Uždaryti',
-      confirm: 'Patvirtinti',
-      loanApplication: {
-        title: 'Paraiška paskolai',
-        personalInfo: 'Asmeninė informacija',
-        loanDetails: 'Paskolos duomenys',
+      registration: {
+        title: 'Registracija',
+        accountType: 'Sąskaitos tipas',
+        personal: 'Asmeninė',
+        company: 'Įmonės',
+        name: 'Vardas Pavardė',
+        email: 'El. paštas',
+        phone: 'Telefono numeris',
+        namePlaceholder: 'Įveskite vardą ir pavardę',
+        emailPlaceholder: 'vardas@example.com',
+        phonePlaceholder: '+370...',
+        originalPrice: 'Pradinė kaina:',
+        discount: 'Nuolaida',
+        finalPrice: 'Galutinė kaina:',
+        payButton: 'Mokėti su Stripe',
+        campaignBanner: 'AKCIJA 50% NUOLAIDA!',
+        campaignDescription: 'Naujiems klientams iki 2025-09-01',
+        timeLeft: 'Liko:',
+        validationError: 'Užpildykite visus privalomaus laukus',
+        paymentError: 'Nepavyko sukurti mokėjimo'
+      },
+      discount: {
+        title: 'Prašyti nuolaidos kodo',
+        description: 'Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas',
+        accountType: 'Sąskaitos tipas',
+        personal: 'Asmeninė',
+        company: 'Įmonės',
+        name: 'Vardas Pavardė',
+        email: 'El. paštas',
+        namePlaceholder: 'Įveskite vardą ir pavardę',
+        emailPlaceholder: 'vardas@example.com',
+        submitButton: 'Siųsti užklausą',
+        howItWorks: 'Kaip tai veikia?',
+        howItWorksList: [
+          'Jūsų užklausa bus išsiųsta administratoriui',
+          'Per 24 val. gausite atsakymą el. paštu',
+          'Patvirtinus - gausite 50% nuolaidos kodą',
+          'Kodas galioja 30 dienų'
+        ],
+        validationError: 'Užpildykite visus laukus',
+        success: 'Sėkmė!',
+        successDescription: 'Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.',
+        submitError: 'Nepavyko išsiųsti užklausos. Bandykite dar kartą.'
+      },
+      board: {
+        title: 'Tapti valdybos nariu',
+        description: 'Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.',
+        warning: '⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.',
+        name: 'Vardas ir pavardė',
+        email: 'El. paštas',
+        phone: 'Telefono numeris',
+        experience: 'Patirtis ir motyvacija',
+        namePlaceholder: 'Įveskite vardą ir pavardę',
+        emailPlaceholder: 'Įveskite el. paštą',
+        phonePlaceholder: 'Įveskite telefono numerį',
+        experiencePlaceholder: 'Aprašykite savo patirtį finansų srityje, vadyboje ar susijusiose srityse, taip pat savo motyvaciją tapti valdybos nariu...',
+        cancel: 'Atšaukti',
         submit: 'Pateikti paraišką',
-        submitting: 'Pateikiama...',
-        fields: {
+        submitting: 'Siunčiama...',
+        success: 'Paraiška sėkmingai pateikta!',
+        successDescription: 'Mes su jumis susisieksime artimiausiu metu.',
+        submitError: 'Nepavyko pateikti paraiškos. Bandykite dar kartą.'
+      },
+      loan: {
+        title: 'Paraiška paskolai',
+        description: 'Užpildykite formą ir gaukite sprendimą per 24 valandas',
+        summary: {
+          title: 'Paskolos parametrai',
+          amount: 'Suma',
+          term: 'Terminas',
+          monthlyPayment: 'Mėnesinis mokėjimas',
+          totalPayment: 'Bendra suma',
+          months: 'mėn.'
+        },
+        personal: {
+          title: 'Asmens duomenys',
           name: 'Vardas, pavardė',
           email: 'El. pašto adresas',
           phone: 'Telefono numeris',
-          monthlyIncome: 'Mėnesio pajamos (€)',
-          employment: 'Darbovietė',
-          loanPurpose: 'Paskolos paskirtis'
+          namePlaceholder: 'Jūsų vardas ir pavardė',
+          emailPlaceholder: 'jusu@elpastas.lt',
+          phonePlaceholder: '+370 600 00000'
         },
-        placeholders: {
-          name: 'Vardas Pavardė',
-          email: 'jusu@elpastas.lt',
-          phone: '+370 600 00000',
-          monthlyIncome: '2000',
-          employment: 'UAB Pavyzdys'
-        }
+        financial: {
+          title: 'Finansinė informacija',
+          monthlyIncome: 'Mėnesinės pajamos (€)',
+          employment: 'Darbo vieta',
+          incomePlaceholder: '2000',
+          employmentPlaceholder: 'UAB Pavyzdys'
+        },
+        purpose: {
+          title: 'Paskolos paskirtis',
+          label: 'Kam reikalinga paskola?',
+          placeholder: 'Trumpai aprašykite, kam planuojate panaudoti paskolą'
+        },
+        terms: {
+          title: 'Sutinku su sąlygomis:',
+          items: [
+            '14% metinė palūkanų norma be paslėptų mokesčių',
+            'Sprendimas per 24 valandas',
+            'Duomenų tvarkymas pagal privatumo politiką',
+            'Susisiekimas dėl papildomos informacijos'
+          ]
+        },
+        submit: 'Pateikti paraišką',
+        submitting: 'Pateikiama paraiška...',
+        success: 'Paraiška sėkmingai pateikta!',
+        successDescription: 'Susisieksime su jumis per 24 valandas.',
+        submitError: 'Nepavyko pateikti paraiškos. Pabandykite dar kartą.'
       }
+    },
+    banking: {
+      transfer: {
+        title: 'Pinigų pervedimas',
+        toAccount: 'Gavėjo sąskaitos numeris',
+        toName: 'Gavėjo vardas, pavardė',
+        amount: 'Suma (LT)',
+        description: 'Paskirtis (neprivaloma)',
+        toAccountPlaceholder: 'LT############',
+        toNamePlaceholder: 'Vardas Pavardė',
+        amountPlaceholder: '0.00',
+        descriptionPlaceholder: 'Mokėjimo paskirtis...',
+        submit: 'Pervesti',
+        submitting: 'Vykdoma...',
+        cancel: 'Atšaukti',
+        success: 'Pervedimas sėkmingas',
+        successDescription: 'Pervedėte {amount} LT į sąskaitą {account}',
+        insufficientFunds: 'Nepakanka lėšų',
+        transferError: 'Nepavyko įvykdyti pervedimo',
+        positiveAmountError: 'Suma turi būti teigiama'
+      }
+    },
+    forms: {
+      required: '*',
+      loading: 'Kraunama...',
+      error: 'Klaida',
+      success: 'Sėkmė',
+      cancel: 'Atšaukti',
+      submit: 'Pateikti',
+      save: 'Išsaugoti'
     }
   },
   en: {
@@ -337,7 +416,7 @@ const translations = {
       logout: 'Logout'
     },
     calculators: {
-      title: 'Choose Calculator Type',
+      title: 'Choose calculator type',
       daily: 'Daily Interest',
       term: 'Term Deposits',
       loans: 'Loans'
@@ -347,7 +426,7 @@ const translations = {
       subtitle: 'We are an innovative financial solutions provider that helps clients save money safely and profitably.',
       security: {
         title: 'Your Security',
-        description: 'We use the highest level encryption technologies and strict security protocols.',
+        description: 'We use the highest level of encryption technologies and strict security protocols.',
         insurance: 'Deposits insured up to €100,000'
       },
       innovation: {
@@ -357,14 +436,14 @@ const translations = {
       },
       transparency: {
         title: 'Transparency',
-        description: 'No hidden fees or complex conditions. Everything is clear and understandable.',
+        description: 'No hidden fees or complicated conditions. Everything is clear and understandable.',
         guarantee: 'No Hidden Fees'
       }
     },
     hero: {
-      badge: 'Bank for the Future',
+      badge: 'Bank of the Future',
       title: 'Your money grows every day',
-      description: 'The first bank in Lithuania that pays interest daily. No complex conditions, no hidden fees. Just open an account and start saving.',
+      description: 'The first bank in Lithuania that pays interest daily. No complicated conditions, no hidden fees. Just open an account and start saving.',
       cta: 'Calculate Interest',
       features: {
         daily: 'Daily Interest',
@@ -390,7 +469,7 @@ const translations = {
       },
       loans: {
         title: 'Loans',
-        description: 'Fast and convenient loans without complex procedures.',
+        description: 'Fast and convenient loans without complicated procedures.',
         rate: 'From 14% annual',
         cta: 'Calculate Loan'
       }
@@ -405,83 +484,73 @@ const translations = {
           description: 'Fill out a simple registration form'
         },
         deposit: {
-          title: 'Deposit Money',
-          description: 'Transfer the desired amount to your account'
+          title: 'Deposit Funds',
+          description: 'Transfer money to your new account'
         },
         earn: {
           title: 'Earn',
-          description: 'Watch your money grow every day'
+          description: 'Interest is calculated and paid every day'
         }
       }
     },
-    calculator: {
-      title: 'Interest Calculator',
-      subtitle: 'Find out how much you will earn with daily interest',
-      amount: 'Amount (€)',
-      result: {
-        daily: 'Daily Income',
-        monthly: 'Monthly Income',
-        yearly: 'Yearly Income'
+    daily: {
+      title: 'Daily Interest Calculator',
+      subtitle: 'Calculate how much you can earn with daily interest',
+      inputs: {
+        amount: 'Amount (€)',
+        rate: 'Interest Rate (%)',
+        days: 'Number of Days'
       },
-      note: 'Calculation is performed with 12% annual interest rate'
+      results: {
+        dailyInterest: 'Daily Interest',
+        totalEarned: 'Total Earned',
+        finalAmount: 'Final Amount'
+      },
+      example: 'Example: €1000 at 12% interest for 30 days'
     },
-    termDeposits: {
-      title: 'Term Deposit Calculator',
-      subtitle: 'Calculate your deposit profitability',
-      form: {
-        amount: 'Deposit Amount',
-        term: 'Deposit Term',
-        exactAmount: 'Exact Amount (€)',
-        exactTerm: 'Exact Term (months)',
-        months: 'months'
+    term: {
+      title: 'Term Deposits Calculator',
+      subtitle: 'Calculate your profit with term deposits',
+      inputs: {
+        amount: 'Deposit Amount (€)',
+        rate: 'Interest Rate (%)',
+        term: 'Term (months)'
       },
       results: {
         monthlyInterest: 'Monthly Interest',
         totalInterest: 'Total Interest',
-        finalAmount: 'Final Amount',
-        interestRate: 'Interest Rate'
+        finalAmount: 'Final Amount'
       },
       cta: {
         title: 'Want to create a term deposit?',
-        subtitle: 'Lock in the interest rate today and ensure stable profitability',
-        button: 'Create Contract'
+        subtitle: 'Contact us and get the best conditions',
+        button: 'Create Deposit'
       }
     },
     loans: {
       title: 'Loan Calculator',
-      subtitle: 'Calculate monthly payment and total costs. Interest rate',
-      interestRate: '14% annual',
-      form: {
-        loanAmount: 'Loan Amount',
-        loanTerm: 'Loan Term',
-        exactAmount: 'Exact Amount (€)',
-        exactTerm: 'Exact Term (months)',
-        months: 'months'
+      subtitle: 'Calculate monthly payments and total loan cost',
+      inputs: {
+        amount: 'Loan Amount (€)',
+        rate: 'Interest Rate (%)',
+        term: 'Term (months)'
       },
       results: {
         monthlyPayment: 'Monthly Payment',
-        totalAmount: 'Total Amount',
-        interest: 'Interest',
-        paymentNote: 'Monthly payment for',
-        calculating: 'Calculating...',
-        checkInput: 'Check input data'
+        totalPayment: 'Total Payment',
+        totalInterest: 'Total Interest'
       },
       schedule: {
         title: 'Payment Schedule',
-        subtitle: 'Detailed plan for the first 12 months of payments',
-        headers: {
-          month: 'Month',
-          payment: 'Payment',
-          principal: 'Principal',
-          interest: 'Interest',
-          balance: 'Balance'
-        },
-        showingFirst: 'Showing first 12 of',
-        totalMonths: 'total months'
+        month: 'Month',
+        payment: 'Payment',
+        principal: 'Principal',
+        interest: 'Interest',
+        balance: 'Balance'
       },
       application: {
-        title: 'Ready to submit application?',
-        subtitle: 'Fill out the application and get a decision within 24 hours',
+        title: 'Want to get this loan?',
+        subtitle: 'Submit an application and get a decision within 24 hours',
         button: 'Submit Application'
       }
     },
@@ -492,81 +561,59 @@ const translations = {
       form: {
         title: 'Write to Us',
         name: 'Name',
+        phone: 'Phone',
         email: 'Email',
         message: 'Message',
-        send: 'Send',
-        cancel: 'Cancel',
-        sending: 'Sending...',
-        placeholder: {
-          name: 'Your name',
-          email: 'your.email@example.com',
-          message: 'Your question...'
-        }
+        namePlaceholder: 'Your name',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'your.email@example.com',
+        messagePlaceholder: 'Write your question or comment...',
+        submit: 'Send Message',
+        submitting: 'Sending...',
+        success: 'Message sent!',
+        successDescription: 'We will contact you within 24 hours.',
+        error: 'Error',
+        errorDescription: 'Failed to send message. Please try again.'
+      },
+      newsletter: {
+        title: 'Subscribe to Newsletter',
+        description: 'Get the latest information about interest rate changes, new services and financial advice',
+        email: 'Email address',
+        name: 'Name (optional)',
+        emailPlaceholder: 'your.email@example.com',
+        namePlaceholder: 'Your name',
+        consent: 'I agree that my data will be processed for newsletter delivery',
+        submit: 'Subscribe',
+        submitting: 'Subscribing...',
+        success: 'Successfully subscribed!',
+        successDescription: 'Thank you! You will receive a confirmation email shortly',
+        alreadySubscribed: 'Email already subscribed',
+        alreadySubscribedDescription: 'This email address is already subscribed to our newsletter',
+        subscriptionError: 'Failed to subscribe. Please try again',
+        validationError: 'Please fill in the email field and agree to data processing'
       }
     },
     faq: {
       badge: 'Frequently Asked Questions',
-      title: 'Have Questions?',
+      title: 'FAQ',
       subtitle: 'Here are answers to the most frequently asked questions about LTB Bank services',
       notFound: {
         title: 'Didn\'t find answer to your question?',
         description: 'Contact our expert team - we\'re happy to help',
         button: 'Contact Us'
-      },
-      form: {
-        name: 'Name',
-        email: 'Email',
-        message: 'Message',
-        send: 'Send',
-        cancel: 'Cancel',
-        sending: 'Sending...',
-        placeholder: {
-          name: 'Your name',
-          email: 'your.email@example.com',
-          message: 'Your question...'
-        }
-      },
-      questions: {
-        q1: {
-          question: 'How do daily interest payments work?',
-          answer: 'Interest is calculated daily based on your account balance. Instead of paying interest once a year, we pay it daily. This means your money grows every day, not just at year-end.'
-        },
-        q2: {
-          question: 'Do I really need to provide any reports?',
-          answer: 'No, we don\'t need income declarations, employment certificates, or other documents. Just open an account and start saving. We believe saving should be simple and accessible to everyone.'
-        },
-        q3: {
-          question: 'How safe is my money?',
-          answer: 'Your deposits are insured according to EU directives up to €100,000 per client. We use the highest level encryption technologies and maintain strict security protocols. Your data is confidential and not disclosed to anyone.'
-        },
-        q4: {
-          question: 'Can I withdraw money anytime?',
-          answer: 'Yes, your money is available anytime. There are no freeze periods or penalties for early withdrawal. You can withdraw the full amount or just part - you decide.'
-        },
-        q5: {
-          question: 'What are the fees?',
-          answer: 'We don\'t charge any fees for account management, transfers, or storage. The only fee you pay is the standard state income tax on earned interest.'
-        },
-        q6: {
-          question: 'How quickly can I start saving?',
-          answer: 'You can open an account in just a few minutes. After registration, you can immediately start transferring money and earning interest. Interest starts calculating from the very first day.'
-        },
-        q7: {
-          question: 'Is there a minimum deposit size?',
-          answer: 'The minimum deposit size is only €10. Maximum - €100,000 (deposit insurance limit). You can start with any amount and top up your account anytime.'
-        },
-        q8: {
-          question: 'How is the bank\'s activity controlled?',
-          answer: 'LTB Bank is a licensed credit institution supervised by the Bank of Lithuania. We comply with all EU banking regulation requirements and regularly report to the regulator.'
-        }
       }
     },
     footer: {
+      bank: 'LTB Bank',
+      description: 'An innovative bank that is changing the savings culture in Lithuania.',
       services: 'Services',
-      loans: 'Loans',
-      information: 'Information',
-      about: 'About',
-      howItWorks: 'How It Works',
+      company: 'Company',
+      support: 'Support',
+      legal: 'Legal Information',
+      about: 'About Us',
+      careers: 'Careers',
+      blog: 'Blog',
+      news: 'News',
       privacy: 'Privacy Policy',
       terms: 'Terms of Use',
       help: 'Help',
@@ -575,60 +622,171 @@ const translations = {
       techSupport: 'Technical Support',
       calculatorIssues: 'Calculator Issues:',
       email: 'info@ltbbank.com',
-      phone: '+370 700 12345',
-      copyright: 'All rights reserved.',
-      licensed: 'Licensed by Bank of Lithuania',
-      insured: 'Deposits insured up to €100,000',
-      disclaimer: 'LTB Bank is a licensed credit institution supervised by the Bank of Lithuania. Deposits are insured under EU directives up to €100,000 per customer. Interest rates depend on market conditions and may change. Consult with our experts before making decisions.'
+      rights: 'All rights reserved',
+      license: 'Licensed by LB'
     },
     auth: {
+      title: 'Banking System',
       login: 'Login',
-      register: 'Register',
-      logout: 'Logout',
+      signup: 'Sign Up',
       email: 'Email',
       password: 'Password',
       confirmPassword: 'Confirm Password',
-      forgotPassword: 'Forgot Password?',
-      noAccount: 'Don\'t have an account?',
-      hasAccount: 'Already have an account?',
-      signUp: 'Sign Up',
-      signIn: 'Sign In'
-    },
-    forms: {
-      required: 'Required field',
-      invalidEmail: 'Invalid email format',
-      submit: 'Submit',
-      cancel: 'Cancel',
-      save: 'Save',
-      loading: 'Loading...',
-      success: 'Successfully saved',
-      error: 'An error occurred'
+      displayName: 'Full Name',
+      emailPlaceholder: 'name@example.com',
+      passwordPlaceholder: '••••••••',
+      confirmPasswordPlaceholder: 'Confirm password',
+      displayNamePlaceholder: 'Full Name',
+      loginButton: 'Sign In',
+      signupButton: 'Sign Up',
+      passwordMismatch: 'Passwords do not match',
+      signupNote: 'A unique account number will be automatically created during registration',
+      resendConfirmation: 'Unconfirmed email?',
+      resendButton: 'Send',
+      resendPlaceholder: 'Email',
+      minPasswordLength: 'At least 6 characters'
     },
     modals: {
-      close: 'Close',
-      confirm: 'Confirm',
-      loanApplication: {
-        title: 'Loan Application',
-        personalInfo: 'Personal Information',
-        loanDetails: 'Loan Details',
+      registration: {
+        title: 'Registration',
+        accountType: 'Account Type',
+        personal: 'Personal',
+        company: 'Business',
+        name: 'Full Name',
+        email: 'Email',
+        phone: 'Phone Number',
+        namePlaceholder: 'Enter your full name',
+        emailPlaceholder: 'name@example.com',
+        phonePlaceholder: '+370...',
+        originalPrice: 'Original price:',
+        discount: 'Discount',
+        finalPrice: 'Final price:',
+        payButton: 'Pay with Stripe',
+        campaignBanner: 'SPECIAL OFFER 50% DISCOUNT!',
+        campaignDescription: 'For new customers until 2025-09-01',
+        timeLeft: 'Time left:',
+        validationError: 'Please fill in all required fields',
+        paymentError: 'Failed to create payment'
+      },
+      discount: {
+        title: 'Request Discount Code',
+        description: 'Fill out the form and we will send you a discount code within 24 hours',
+        accountType: 'Account Type',
+        personal: 'Personal',
+        company: 'Business',
+        name: 'Full Name',
+        email: 'Email',
+        namePlaceholder: 'Enter your full name',
+        emailPlaceholder: 'name@example.com',
+        submitButton: 'Send Request',
+        howItWorks: 'How does it work?',
+        howItWorksList: [
+          'Your request will be sent to the administrator',
+          'You will receive a response via email within 24 hours',
+          'Upon approval - you will receive a 50% discount code',
+          'The code is valid for 30 days'
+        ],
+        validationError: 'Please fill in all fields',
+        success: 'Success!',
+        successDescription: 'Your discount request has been successfully sent. We will contact you within 24 hours.',
+        submitError: 'Failed to send request. Please try again.'
+      },
+      board: {
+        title: 'Become a Board Member',
+        description: 'Fill out the form and we will contact you soon to discuss opportunities.',
+        warning: '⚠️ ATTENTION: To become a board member, a contribution of at least 100,000 litas is required.',
+        name: 'Full Name',
+        email: 'Email',
+        phone: 'Phone Number',
+        experience: 'Experience and Motivation',
+        namePlaceholder: 'Enter your full name',
+        emailPlaceholder: 'Enter your email',
+        phonePlaceholder: 'Enter your phone number',
+        experiencePlaceholder: 'Describe your experience in finance, management or related fields, as well as your motivation to become a board member...',
+        cancel: 'Cancel',
         submit: 'Submit Application',
-        submitting: 'Submitting...',
-        fields: {
+        submitting: 'Sending...',
+        success: 'Application successfully submitted!',
+        successDescription: 'We will contact you soon.',
+        submitError: 'Failed to submit application. Please try again.'
+      },
+      loan: {
+        title: 'Loan Application',
+        description: 'Fill out the form and get a decision within 24 hours',
+        summary: {
+          title: 'Loan Parameters',
+          amount: 'Amount',
+          term: 'Term',
+          monthlyPayment: 'Monthly Payment',
+          totalPayment: 'Total Payment',
+          months: 'mo.'
+        },
+        personal: {
+          title: 'Personal Information',
           name: 'Full Name',
           email: 'Email Address',
           phone: 'Phone Number',
-          monthlyIncome: 'Monthly Income (€)',
-          employment: 'Employment',
-          loanPurpose: 'Loan Purpose'
+          namePlaceholder: 'Your full name',
+          emailPlaceholder: 'your@email.com',
+          phonePlaceholder: '+370 600 00000'
         },
-        placeholders: {
-          name: 'John Doe',
-          email: 'your@email.com',
-          phone: '+370 600 00000',
-          monthlyIncome: '2000',
-          employment: 'Company Name'
-        }
+        financial: {
+          title: 'Financial Information',
+          monthlyIncome: 'Monthly Income (€)',
+          employment: 'Employer',
+          incomePlaceholder: '2000',
+          employmentPlaceholder: 'Company Ltd'
+        },
+        purpose: {
+          title: 'Loan Purpose',
+          label: 'What do you need the loan for?',
+          placeholder: 'Briefly describe how you plan to use the loan'
+        },
+        terms: {
+          title: 'I agree to the terms:',
+          items: [
+            '14% annual interest rate with no hidden fees',
+            'Decision within 24 hours',
+            'Data processing according to privacy policy',
+            'Contact for additional information'
+          ]
+        },
+        submit: 'Submit Application',
+        submitting: 'Submitting application...',
+        success: 'Application successfully submitted!',
+        successDescription: 'We will contact you within 24 hours.',
+        submitError: 'Failed to submit application. Please try again.'
       }
+    },
+    banking: {
+      transfer: {
+        title: 'Money Transfer',
+        toAccount: 'Recipient Account Number',
+        toName: 'Recipient Name',
+        amount: 'Amount (LT)',
+        description: 'Purpose (optional)',
+        toAccountPlaceholder: 'LT############',
+        toNamePlaceholder: 'Full Name',
+        amountPlaceholder: '0.00',
+        descriptionPlaceholder: 'Payment purpose...',
+        submit: 'Transfer',
+        submitting: 'Processing...',
+        cancel: 'Cancel',
+        success: 'Transfer successful',
+        successDescription: 'You transferred {amount} LT to account {account}',
+        insufficientFunds: 'Insufficient funds',
+        transferError: 'Failed to process transfer',
+        positiveAmountError: 'Amount must be positive'
+      }
+    },
+    forms: {
+      required: '*',
+      loading: 'Loading...',
+      error: 'Error',
+      success: 'Success',
+      cancel: 'Cancel',
+      submit: 'Submit',
+      save: 'Save'
     }
   },
   ru: {
@@ -651,15 +809,15 @@ const translations = {
     },
     about: {
       title: 'LTB Банк - Ваш надёжный партнёр',
-      subtitle: 'Мы являемся инновационным поставщиком финансовых решений, который помогает клиентам безопасно и выгодно сберегать деньги.',
+      subtitle: 'Мы - инновационный поставщик финансовых решений, который помогает клиентам безопасно и выгодно сберегать деньги.',
       security: {
         title: 'Ваша безопасность',
-        description: 'Мы используем технологии шифрования высочайшего уровня и строгие протоколы безопасности.',
-        insurance: 'Депозиты застрахованы до €100,000'
+        description: 'Мы используем технологии шифрования высшего уровня и строгие протоколы безопасности.',
+        insurance: 'Депозиты застрахованы до 100 000 €'
       },
       innovation: {
         title: 'Инновации',
-        description: 'Первые в Литве внедрили систему ежедневных процентов - ваши деньги растут каждый день.',
+        description: 'Первыми в Литве внедрили систему ежедневных процентов - ваши деньги растут каждый день.',
         benefit: 'Ежедневные проценты'
       },
       transparency: {
@@ -671,7 +829,7 @@ const translations = {
     hero: {
       badge: 'Банк будущего',
       title: 'Ваши деньги растут каждый день',
-      description: 'Первый банк в Литве, который выплачивает проценты ежедневно. Никаких сложных условий, никаких скрытых комиссий. Просто откройте счёт и начните сберегать.',
+      description: 'Первый банк в Литве, который платит проценты ежедневно. Никаких сложных условий, никаких скрытых комиссий. Просто откройте счёт и начните копить.',
       cta: 'Рассчитать проценты',
       features: {
         daily: 'Ежедневные проценты',
@@ -681,7 +839,7 @@ const translations = {
     },
     services: {
       badge: 'Наши услуги',
-      title: 'Финансовые решения для любой ситуации',
+      title: 'Финансовые решения для каждой ситуации',
       subtitle: 'Мы предлагаем широкий спектр финансовых услуг, адаптированных под ваши потребности',
       daily: {
         title: 'Ежедневные проценты',
@@ -705,90 +863,80 @@ const translations = {
     howItWorks: {
       badge: 'Как это работает',
       title: 'Простой процесс',
-      subtitle: 'Вы можете начать сберегать всего за несколько минут',
+      subtitle: 'Вы можете начать копить всего за несколько минут',
       steps: {
         register: {
           title: 'Зарегистрируйтесь',
           description: 'Заполните простую форму регистрации'
         },
         deposit: {
-          title: 'Внесите деньги',
-          description: 'Переведите желаемую сумму на свой счёт'
+          title: 'Внесите средства',
+          description: 'Переведите деньги на ваш новый счёт'
         },
         earn: {
           title: 'Зарабатывайте',
-          description: 'Наблюдайте, как ваши деньги растут каждый день'
+          description: 'Проценты рассчитываются и выплачиваются каждый день'
         }
       }
     },
-    calculator: {
-      title: 'Калькулятор процентов',
-      subtitle: 'Узнайте, сколько вы заработаете с ежедневными процентами',
-      amount: 'Сумма (€)',
-      result: {
-        daily: 'Ежедневный доход',
-        monthly: 'Месячный доход',
-        yearly: 'Годовой доход'
-      },
-      note: 'Расчёт выполняется с годовой процентной ставкой 12%'
-    },
-    termDeposits: {
-      title: 'Калькулятор срочных депозитов',
-      subtitle: 'Рассчитайте доходность вашего депозита',
-      form: {
-        amount: 'Сумма депозита',
-        term: 'Срок депозита',
-        exactAmount: 'Точная сумма (€)',
-        exactTerm: 'Точный срок (мес.)',
-        months: 'мес.'
+    daily: {
+      title: 'Калькулятор ежедневных процентов',
+      subtitle: 'Рассчитайте, сколько вы можете заработать с ежедневными процентами',
+      inputs: {
+        amount: 'Сумма (€)',
+        rate: 'Процентная ставка (%)',
+        days: 'Количество дней'
       },
       results: {
-        monthlyInterest: 'Месячные проценты',
+        dailyInterest: 'Ежедневные проценты',
+        totalEarned: 'Всего заработано',
+        finalAmount: 'Итоговая сумма'
+      },
+      example: 'Пример: 1000 € под 12% в течение 30 дней'
+    },
+    term: {
+      title: 'Калькулятор срочных депозитов',
+      subtitle: 'Рассчитайте вашу прибыль со срочными депозитами',
+      inputs: {
+        amount: 'Сумма депозита (€)',
+        rate: 'Процентная ставка (%)',
+        term: 'Срок (месяцы)'
+      },
+      results: {
+        monthlyInterest: 'Ежемесячные проценты',
         totalInterest: 'Общие проценты',
-        finalAmount: 'Итоговая сумма',
-        interestRate: 'Процентная ставка'
+        finalAmount: 'Итоговая сумма'
       },
       cta: {
         title: 'Хотите создать срочный депозит?',
-        subtitle: 'Зафиксируйте процентную ставку сегодня и обеспечьте стабильную доходность',
-        button: 'Заключить договор'
+        subtitle: 'Свяжитесь с нами и получите лучшие условия',
+        button: 'Создать депозит'
       }
     },
     loans: {
       title: 'Калькулятор кредитов',
-      subtitle: 'Рассчитайте ежемесячный платёж и общие расходы. Процентная ставка',
-      interestRate: '14% годовых',
-      form: {
-        loanAmount: 'Сумма кредита',
-        loanTerm: 'Срок кредита',
-        exactAmount: 'Точная сумма (€)',
-        exactTerm: 'Точный срок (мес.)',
-        months: 'мес.'
+      subtitle: 'Рассчитайте ежемесячные платежи и общую стоимость кредита',
+      inputs: {
+        amount: 'Сумма кредита (€)',
+        rate: 'Процентная ставка (%)',
+        term: 'Срок (месяцы)'
       },
       results: {
         monthlyPayment: 'Ежемесячный платёж',
-        totalAmount: 'Общая сумма',
-        interest: 'Проценты',
-        paymentNote: 'Ежемесячный платёж на',
-        calculating: 'Рассчитывается...',
-        checkInput: 'Проверьте данные'
+        totalPayment: 'Общий платёж',
+        totalInterest: 'Общие проценты'
       },
       schedule: {
         title: 'График платежей',
-        subtitle: 'Подробный план первых 12 месяцев платежей',
-        headers: {
-          month: 'Месяц',
-          payment: 'Платёж',
-          principal: 'Основная часть',
-          interest: 'Проценты',
-          balance: 'Остаток'
-        },
-        showingFirst: 'Показаны первые 12 из',
-        totalMonths: 'общих месяцев'
+        month: 'Месяц',
+        payment: 'Платёж',
+        principal: 'Основной долг',
+        interest: 'Проценты',
+        balance: 'Остаток'
       },
       application: {
-        title: 'Готовы подать заявку?',
-        subtitle: 'Заполните заявку и получите решение в течение 24 часов',
+        title: 'Хотите получить этот кредит?',
+        subtitle: 'Подайте заявку и получите решение в течение 24 часов',
         button: 'Подать заявку'
       }
     },
@@ -797,83 +945,61 @@ const translations = {
       title: 'Есть вопросы?',
       subtitle: 'Наша команда экспертов всегда готова помочь. Свяжитесь с нами любым удобным для вас способом.',
       form: {
-        title: 'Напишите нам',
+        title: 'Написать нам',
         name: 'Имя',
+        phone: 'Телефон',
         email: 'Email',
         message: 'Сообщение',
-        send: 'Отправить',
-        cancel: 'Отменить',
-        sending: 'Отправляется...',
-        placeholder: {
-          name: 'Ваше имя',
-          email: 'ваш.email@example.com',
-          message: 'Ваш вопрос...'
-        }
+        namePlaceholder: 'Ваше имя',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'your.email@example.com',
+        messagePlaceholder: 'Напишите ваш вопрос или комментарий...',
+        submit: 'Отправить сообщение',
+        submitting: 'Отправка...',
+        success: 'Сообщение отправлено!',
+        successDescription: 'Мы свяжемся с вами в течение 24 часов.',
+        error: 'Ошибка',
+        errorDescription: 'Не удалось отправить сообщение. Попробуйте ещё раз.'
+      },
+      newsletter: {
+        title: 'Подписаться на новости',
+        description: 'Получайте последнюю информацию об изменениях процентных ставок, новых услугах и финансовых советах',
+        email: 'Email адрес',
+        name: 'Имя (необязательно)',
+        emailPlaceholder: 'your.email@example.com',
+        namePlaceholder: 'Ваше имя',
+        consent: 'Я согласен на обработку моих данных для рассылки новостей',
+        submit: 'Подписаться',
+        submitting: 'Подписка...',
+        success: 'Успешно подписались!',
+        successDescription: 'Спасибо! Вскоре вы получите письмо с подтверждением',
+        alreadySubscribed: 'Email уже подписан',
+        alreadySubscribedDescription: 'Этот email адрес уже подписан на нашу рассылку',
+        subscriptionError: 'Не удалось подписаться. Попробуйте ещё раз',
+        validationError: 'Пожалуйста, заполните поле email и согласитесь на обработку данных'
       }
     },
     faq: {
       badge: 'Часто задаваемые вопросы',
-      title: 'Есть вопросы?',
-      subtitle: 'Вот ответы на самые частые вопросы об услугах LTB Банк',
+      title: 'FAQ',
+      subtitle: 'Здесь вы найдёте ответы на самые часто задаваемые вопросы об услугах LTB Банка',
       notFound: {
         title: 'Не нашли ответ на свой вопрос?',
         description: 'Свяжитесь с нашей командой экспертов - мы будем рады помочь',
         button: 'Связаться с нами'
-      },
-      form: {
-        name: 'Имя',
-        email: 'Email',
-        message: 'Сообщение',
-        send: 'Отправить',
-        cancel: 'Отменить',
-        sending: 'Отправляется...',
-        placeholder: {
-          name: 'Ваше имя',
-          email: 'ваш.email@example.com',
-          message: 'Ваш вопрос...'
-        }
-      },
-      questions: {
-        q1: {
-          question: 'Как работают ежедневные выплаты процентов?',
-          answer: 'Проценты рассчитываются ежедневно на основе остатка на вашем счёте. Вместо выплаты процентов один раз в год, мы выплачиваем их ежедневно. Это означает, что ваши деньги растут каждый день, а не только в конце года.'
-        },
-        q2: {
-          question: 'Действительно ли не нужно предоставлять никаких справок?',
-          answer: 'Нет, нам не нужны декларации о доходах, справки с места работы или другие документы. Просто откройте счёт и начните сберегать. Мы считаем, что сбережения должны быть простыми и доступными всем.'
-        },
-        q3: {
-          question: 'Насколько безопасны мои деньги?',
-          answer: 'Ваши депозиты застрахованы согласно директивам ЕС до €100,000 на одного клиента. Мы используем технологии шифрования высочайшего уровня и соблюдаем строгие протоколы безопасности. Ваши данные конфиденциальны и никому не раскрываются.'
-        },
-        q4: {
-          question: 'Могу ли я снять деньги в любое время?',
-          answer: 'Да, ваши деньги доступны в любое время. Нет никаких периодов заморозки или штрафов за досрочное снятие. Вы можете снять всю сумму или только часть - решаете вы.'
-        },
-        q5: {
-          question: 'Какие комиссии?',
-          answer: 'Мы не взимаем никаких комиссий за ведение счёта, переводы или хранение. Единственная комиссия, которую вы платите - это стандартный государственный подоходный налог с заработанных процентов.'
-        },
-        q6: {
-          question: 'Как быстро я могу начать сберегать?',
-          answer: 'Вы можете открыть счёт всего за несколько минут. После регистрации можете сразу начать переводить деньги и зарабатывать проценты. Проценты начинают рассчитываться с самого первого дня.'
-        },
-        q7: {
-          question: 'Есть ли минимальный размер депозита?',
-          answer: 'Минимальный размер депозита составляет всего €10. Максимальный - €100,000 (лимит страхования депозитов). Вы можете начать с любой суммы и пополнять счёт в любое время.'
-        },
-        q8: {
-          question: 'Как контролируется деятельность банка?',
-          answer: 'LTB Банк является лицензированным кредитным учреждением под надзором Банка Литвы. Мы соблюдаем все требования банковского регулирования ЕС и регулярно отчитываемся перед регулятором.'
-        }
       }
     },
     footer: {
+      bank: 'LTB Банк',
+      description: 'Инновационный банк, который меняет культуру сбережений в Литве.',
       services: 'Услуги',
-      loans: 'Кредиты',
-      information: 'Информация',
+      company: 'Компания',
+      support: 'Поддержка',
+      legal: 'Правовая информация',
       about: 'О нас',
-      howItWorks: 'Как это работает',
+      careers: 'Карьера',
+      blog: 'Блог',
+      news: 'Новости',
       privacy: 'Политика конфиденциальности',
       terms: 'Условия использования',
       help: 'Помощь',
@@ -882,60 +1008,171 @@ const translations = {
       techSupport: 'Техническая поддержка',
       calculatorIssues: 'Проблемы с калькуляторами:',
       email: 'info@ltbbank.ru',
-      phone: '+370 700 12345',
-      copyright: 'Все права защищены.',
-      licensed: 'Лицензирован Банком Литвы',
-      insured: 'Депозиты застрахованы до €100,000',
-      disclaimer: 'LTB Банк является лицензированным кредитным учреждением под надзором Банка Литвы. Депозиты застрахованы согласно директивам ЕС до €100,000 на одного клиента. Процентные ставки зависят от рыночных условий и могут изменяться. Консультируйтесь с нашими экспертами перед принятием решений.'
+      rights: 'Все права защищены',
+      license: 'Лицензировано LB'
     },
     auth: {
-      login: 'Войти',
-      register: 'Регистрация',
-      logout: 'Выйти',
+      title: 'Банковская система',
+      login: 'Вход',
+      signup: 'Регистрация',
       email: 'Email',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
-      forgotPassword: 'Забыли пароль?',
-      noAccount: 'Нет аккаунта?',
-      hasAccount: 'Уже есть аккаунт?',
-      signUp: 'Зарегистрироваться',
-      signIn: 'Войти'
-    },
-    forms: {
-      required: 'Обязательное поле',
-      invalidEmail: 'Неверный формат email',
-      submit: 'Отправить',
-      cancel: 'Отменить',
-      save: 'Сохранить',
-      loading: 'Загрузка...',
-      success: 'Успешно сохранено',
-      error: 'Произошла ошибка'
+      displayName: 'Полное имя',
+      emailPlaceholder: 'name@example.com',
+      passwordPlaceholder: '••••••••',
+      confirmPasswordPlaceholder: 'Подтвердите пароль',
+      displayNamePlaceholder: 'Полное имя',
+      loginButton: 'Войти',
+      signupButton: 'Зарегистрироваться',
+      passwordMismatch: 'Пароли не совпадают',
+      signupNote: 'Уникальный номер счёта будет автоматически создан при регистрации',
+      resendConfirmation: 'Неподтверждённый email?',
+      resendButton: 'Отправить',
+      resendPlaceholder: 'Email',
+      minPasswordLength: 'Минимум 6 символов'
     },
     modals: {
-      close: 'Закрыть',
-      confirm: 'Подтвердить',
-      loanApplication: {
-        title: 'Заявка на кредит',
-        personalInfo: 'Личная информация',
-        loanDetails: 'Детали кредита',
+      registration: {
+        title: 'Регистрация',
+        accountType: 'Тип счёта',
+        personal: 'Личный',
+        company: 'Корпоративный',
+        name: 'Полное имя',
+        email: 'Email',
+        phone: 'Номер телефона',
+        namePlaceholder: 'Введите полное имя',
+        emailPlaceholder: 'name@example.com',
+        phonePlaceholder: '+370...',
+        originalPrice: 'Первоначальная цена:',
+        discount: 'Скидка',
+        finalPrice: 'Итоговая цена:',
+        payButton: 'Оплатить через Stripe',
+        campaignBanner: 'АКЦИЯ СКИДКА 50%!',
+        campaignDescription: 'Для новых клиентов до 2025-09-01',
+        timeLeft: 'Осталось:',
+        validationError: 'Пожалуйста, заполните все обязательные поля',
+        paymentError: 'Не удалось создать платёж'
+      },
+      discount: {
+        title: 'Запросить код скидки',
+        description: 'Заполните форму и мы отправим вам код скидки в течение 24 часов',
+        accountType: 'Тип счёта',
+        personal: 'Личный',
+        company: 'Корпоративный',
+        name: 'Полное имя',
+        email: 'Email',
+        namePlaceholder: 'Введите полное имя',
+        emailPlaceholder: 'name@example.com',
+        submitButton: 'Отправить запрос',
+        howItWorks: 'Как это работает?',
+        howItWorksList: [
+          'Ваш запрос будет отправлен администратору',
+          'В течение 24 часов вы получите ответ по email',
+          'После подтверждения - получите код скидки 50%',
+          'Код действителен 30 дней'
+        ],
+        validationError: 'Пожалуйста, заполните все поля',
+        success: 'Успешно!',
+        successDescription: 'Ваш запрос на скидку успешно отправлен. Мы свяжемся с вами в течение 24 часов.',
+        submitError: 'Не удалось отправить запрос. Попробуйте ещё раз.'
+      },
+      board: {
+        title: 'Стать членом правления',
+        description: 'Заполните форму и мы свяжемся с вами в ближайшее время для обсуждения возможностей.',
+        warning: '⚠️ ВНИМАНИЕ: Для того чтобы стать членом правления, требуется взнос не менее 100,000 литов.',
+        name: 'Полное имя',
+        email: 'Email',
+        phone: 'Номер телефона',
+        experience: 'Опыт и мотивация',
+        namePlaceholder: 'Введите полное имя',
+        emailPlaceholder: 'Введите ваш email',
+        phonePlaceholder: 'Введите номер телефона',
+        experiencePlaceholder: 'Опишите ваш опыт в сфере финансов, управления или смежных областях, а также вашу мотивацию стать членом правления...',
+        cancel: 'Отменить',
         submit: 'Подать заявку',
-        submitting: 'Подача заявки...',
-        fields: {
-          name: 'ФИО',
+        submitting: 'Отправка...',
+        success: 'Заявка успешно подана!',
+        successDescription: 'Мы свяжемся с вами в ближайшее время.',
+        submitError: 'Не удалось подать заявку. Попробуйте ещё раз.'
+      },
+      loan: {
+        title: 'Заявка на кредит',
+        description: 'Заполните форму и получите решение в течение 24 часов',
+        summary: {
+          title: 'Параметры кредита',
+          amount: 'Сумма',
+          term: 'Срок',
+          monthlyPayment: 'Ежемесячный платёж',
+          totalPayment: 'Общий платёж',
+          months: 'мес.'
+        },
+        personal: {
+          title: 'Личные данные',
+          name: 'Полное имя',
           email: 'Email адрес',
           phone: 'Номер телефона',
-          monthlyIncome: 'Ежемесячный доход (€)',
-          employment: 'Место работы',
-          loanPurpose: 'Цель кредита'
+          namePlaceholder: 'Ваше полное имя',
+          emailPlaceholder: 'your@email.com',
+          phonePlaceholder: '+370 600 00000'
         },
-        placeholders: {
-          name: 'Иван Иванов',
-          email: 'ваш@email.com',
-          phone: '+370 600 00000',
-          monthlyIncome: '2000',
-          employment: 'Название компании'
-        }
+        financial: {
+          title: 'Финансовая информация',
+          monthlyIncome: 'Ежемесячный доход (€)',
+          employment: 'Работодатель',
+          incomePlaceholder: '2000',
+          employmentPlaceholder: 'ООО Пример'
+        },
+        purpose: {
+          title: 'Цель кредита',
+          label: 'Для чего вам нужен кредит?',
+          placeholder: 'Кратко опишите, как планируете использовать кредит'
+        },
+        terms: {
+          title: 'Я согласен с условиями:',
+          items: [
+            '14% годовая процентная ставка без скрытых комиссий',
+            'Решение в течение 24 часов',
+            'Обработка данных согласно политике конфиденциальности',
+            'Связь для получения дополнительной информации'
+          ]
+        },
+        submit: 'Подать заявку',
+        submitting: 'Подача заявки...',
+        success: 'Заявка успешно подана!',
+        successDescription: 'Мы свяжемся с вами в течение 24 часов.',
+        submitError: 'Не удалось подать заявку. Попробуйте ещё раз.'
       }
+    },
+    banking: {
+      transfer: {
+        title: 'Денежный перевод',
+        toAccount: 'Номер счёта получателя',
+        toName: 'Имя получателя',
+        amount: 'Сумма (LT)',
+        description: 'Назначение (необязательно)',
+        toAccountPlaceholder: 'LT############',
+        toNamePlaceholder: 'Полное имя',
+        amountPlaceholder: '0.00',
+        descriptionPlaceholder: 'Назначение платежа...',
+        submit: 'Перевести',
+        submitting: 'Обработка...',
+        cancel: 'Отменить',
+        success: 'Перевод успешен',
+        successDescription: 'Вы перевели {amount} LT на счёт {account}',
+        insufficientFunds: 'Недостаточно средств',
+        transferError: 'Не удалось выполнить перевод',
+        positiveAmountError: 'Сумма должна быть положительной'
+      }
+    },
+    forms: {
+      required: '*',
+      loading: 'Загрузка...',
+      error: 'Ошибка',
+      success: 'Успешно',
+      cancel: 'Отменить',
+      submit: 'Отправить',
+      save: 'Сохранить'
     }
   },
   de: {
@@ -951,37 +1188,37 @@ const translations = {
       logout: 'Abmelden'
     },
     calculators: {
-      title: 'Rechner-Typ wählen',
-      daily: 'Tägliche Zinsen',
-      term: 'Termineinlagen',
+      title: 'Wählen Sie den Rechnertyp',
+      daily: 'Tageszinsen',
+      term: 'Festgeld',
       loans: 'Kredite'
     },
     about: {
       title: 'LTB Bank - Ihr vertrauensvoller Partner',
-      subtitle: 'Wir sind ein innovativer Anbieter von Finanzlösungen, der Kunden dabei hilft, Geld sicher und profitabel zu sparen.',
+      subtitle: 'Wir sind ein innovativer Anbieter von Finanzlösungen, der Kunden dabei hilft, sicher und profitabel Geld zu sparen.',
       security: {
         title: 'Ihre Sicherheit',
         description: 'Wir verwenden Verschlüsselungstechnologien höchster Stufe und strenge Sicherheitsprotokolle.',
-        insurance: 'Einlagen bis zu €100.000 versichert'
+        insurance: 'Einlagen bis zu 100.000 € versichert'
       },
       innovation: {
         title: 'Innovation',
-        description: 'Als erste in Litauen haben wir das System der täglichen Zinsen eingeführt - Ihr Geld wächst jeden Tag.',
-        benefit: 'Tägliche Zinsen'
+        description: 'Als erste in Litauen haben wir das Tageszinssystem eingeführt - Ihr Geld wächst jeden Tag.',
+        benefit: 'Tageszinsen'
       },
       transparency: {
         title: 'Transparenz',
-        description: 'Keine versteckten Gebühren oder komplexen Bedingungen. Alles ist klar und verständlich.',
+        description: 'Keine versteckten Gebühren oder komplizierten Bedingungen. Alles ist klar und verständlich.',
         guarantee: 'Keine versteckten Gebühren'
       }
     },
     hero: {
       badge: 'Bank der Zukunft',
       title: 'Ihr Geld wächst jeden Tag',
-      description: 'Die erste Bank in Litauen, die täglich Zinsen zahlt. Keine komplexen Bedingungen, keine versteckten Gebühren. Einfach ein Konto eröffnen und mit dem Sparen beginnen.',
+      description: 'Die erste Bank in Litauen, die täglich Zinsen zahlt. Keine komplizierten Bedingungen, keine versteckten Gebühren. Einfach ein Konto eröffnen und sparen.',
       cta: 'Zinsen berechnen',
       features: {
-        daily: 'Tägliche Zinsen',
+        daily: 'Tageszinsen',
         noFees: 'Keine Gebühren',
         safe: 'Sicher und zuverlässig'
       }
@@ -991,21 +1228,21 @@ const translations = {
       title: 'Finanzlösungen für jede Situation',
       subtitle: 'Wir bieten eine breite Palette von Finanzdienstleistungen, die auf Ihre Bedürfnisse zugeschnitten sind',
       daily: {
-        title: 'Tägliche Zinsen',
+        title: 'Tageszinsen',
         description: 'Ihr Geld wächst jeden Tag. Zinsen werden täglich berechnet und ausgezahlt.',
-        rate: 'Bis zu 12% jährlich',
+        rate: 'Bis zu 12% p.a.',
         cta: 'Zinsen berechnen'
       },
       term: {
-        title: 'Termineinlagen',
+        title: 'Festgeld',
         description: 'Feste Zinsen für die gesamte Laufzeit. Garantierte Rentabilität.',
-        rate: 'Bis zu 15% jährlich',
-        cta: 'Einlage berechnen'
+        rate: 'Bis zu 15% p.a.',
+        cta: 'Festgeld berechnen'
       },
       loans: {
         title: 'Kredite',
-        description: 'Schnelle und bequeme Kredite ohne komplexe Verfahren.',
-        rate: 'Ab 14% jährlich',
+        description: 'Schnelle und bequeme Kredite ohne komplizierte Verfahren.',
+        rate: 'Ab 14% p.a.',
         cta: 'Kredit berechnen'
       }
     },
@@ -1020,82 +1257,72 @@ const translations = {
         },
         deposit: {
           title: 'Geld einzahlen',
-          description: 'Überweisen Sie den gewünschten Betrag auf Ihr Konto'
+          description: 'Überweisen Sie Geld auf Ihr neues Konto'
         },
         earn: {
           title: 'Verdienen',
-          description: 'Beobachten Sie, wie Ihr Geld jeden Tag wächst'
+          description: 'Zinsen werden täglich berechnet und ausgezahlt'
         }
       }
     },
-    calculator: {
-      title: 'Zinsrechner',
-      subtitle: 'Finden Sie heraus, wie viel Sie mit täglichen Zinsen verdienen werden',
-      amount: 'Betrag (€)',
-      result: {
-        daily: 'Tägliches Einkommen',
-        monthly: 'Monatliches Einkommen',
-        yearly: 'Jährliches Einkommen'
+    daily: {
+      title: 'Tageszinsenrechner',
+      subtitle: 'Berechnen Sie, wie viel Sie mit Tageszinsen verdienen können',
+      inputs: {
+        amount: 'Betrag (€)',
+        rate: 'Zinssatz (%)',
+        days: 'Anzahl der Tage'
       },
-      note: 'Berechnung erfolgt mit 12% jährlichem Zinssatz'
+      results: {
+        dailyInterest: 'Tageszinsen',
+        totalEarned: 'Insgesamt verdient',
+        finalAmount: 'Endbetrag'
+      },
+      example: 'Beispiel: 1000 € bei 12% Zinsen für 30 Tage'
     },
-    termDeposits: {
-      title: 'Termineinlagen-Rechner',
-      subtitle: 'Berechnen Sie die Rentabilität Ihrer Einlage',
-      form: {
-        amount: 'Einlagenbetrag',
-        term: 'Einlagenlaufzeit',
-        exactAmount: 'Genauer Betrag (€)',
-        exactTerm: 'Genaue Laufzeit (Monate)',
-        months: 'Monate'
+    term: {
+      title: 'Festgeldrechner',
+      subtitle: 'Berechnen Sie Ihren Gewinn mit Festgeld',
+      inputs: {
+        amount: 'Einlagebetrag (€)',
+        rate: 'Zinssatz (%)',
+        term: 'Laufzeit (Monate)'
       },
       results: {
         monthlyInterest: 'Monatliche Zinsen',
         totalInterest: 'Gesamtzinsen',
-        finalAmount: 'Endbetrag',
-        interestRate: 'Zinssatz'
+        finalAmount: 'Endbetrag'
       },
       cta: {
-        title: 'Möchten Sie eine Termineinlage erstellen?',
-        subtitle: 'Sichern Sie sich heute den Zinssatz und gewährleisten Sie stabile Rentabilität',
-        button: 'Vertrag erstellen'
+        title: 'Möchten Sie ein Festgeld anlegen?',
+        subtitle: 'Kontaktieren Sie uns und erhalten Sie die besten Konditionen',
+        button: 'Festgeld anlegen'
       }
     },
     loans: {
       title: 'Kreditrechner',
-      subtitle: 'Berechnen Sie monatliche Zahlung und Gesamtkosten. Zinssatz',
-      interestRate: '14% jährlich',
-      form: {
-        loanAmount: 'Kreditbetrag',
-        loanTerm: 'Kreditlaufzeit',
-        exactAmount: 'Genauer Betrag (€)',
-        exactTerm: 'Genaue Laufzeit (Monate)',
-        months: 'Monate'
+      subtitle: 'Berechnen Sie monatliche Raten und Gesamtkreditkosten',
+      inputs: {
+        amount: 'Kreditsumme (€)',
+        rate: 'Zinssatz (%)',
+        term: 'Laufzeit (Monate)'
       },
       results: {
-        monthlyPayment: 'Monatliche Zahlung',
-        totalAmount: 'Gesamtbetrag',
-        interest: 'Zinsen',
-        paymentNote: 'Monatliche Zahlung für',
-        calculating: 'Berechnung...',
-        checkInput: 'Eingabedaten prüfen'
+        monthlyPayment: 'Monatliche Rate',
+        totalPayment: 'Gesamtzahlung',
+        totalInterest: 'Gesamtzinsen'
       },
       schedule: {
         title: 'Zahlungsplan',
-        subtitle: 'Detaillierter Plan für die ersten 12 Monate der Zahlungen',
-        headers: {
-          month: 'Monat',
-          payment: 'Zahlung',
-          principal: 'Hauptbetrag',
-          interest: 'Zinsen',
-          balance: 'Saldo'
-        },
-        showingFirst: 'Zeigt erste 12 von',
-        totalMonths: 'Gesamtmonaten'
+        month: 'Monat',
+        payment: 'Zahlung',
+        principal: 'Tilgung',
+        interest: 'Zinsen',
+        balance: 'Restschuld'
       },
       application: {
-        title: 'Bereit, Antrag zu stellen?',
-        subtitle: 'Füllen Sie den Antrag aus und erhalten Sie eine Entscheidung innerhalb von 24 Stunden',
+        title: 'Möchten Sie diesen Kredit erhalten?',
+        subtitle: 'Stellen Sie einen Antrag und erhalten Sie eine Entscheidung innerhalb von 24 Stunden',
         button: 'Antrag stellen'
       }
     },
@@ -1106,81 +1333,59 @@ const translations = {
       form: {
         title: 'Schreiben Sie uns',
         name: 'Name',
+        phone: 'Telefon',
         email: 'E-Mail',
         message: 'Nachricht',
-        send: 'Senden',
-        cancel: 'Abbrechen',
-        sending: 'Wird gesendet...',
-        placeholder: {
-          name: 'Ihr Name',
-          email: 'ihre.email@example.com',
-          message: 'Ihre Frage...'
-        }
+        namePlaceholder: 'Ihr Name',
+        phonePlaceholder: '+370 XXX XXXXX',
+        emailPlaceholder: 'ihre.email@example.com',
+        messagePlaceholder: 'Schreiben Sie Ihre Frage oder Ihren Kommentar...',
+        submit: 'Nachricht senden',
+        submitting: 'Senden...',
+        success: 'Nachricht gesendet!',
+        successDescription: 'Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.',
+        error: 'Fehler',
+        errorDescription: 'Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut.'
+      },
+      newsletter: {
+        title: 'Newsletter abonnieren',
+        description: 'Erhalten Sie die neuesten Informationen über Zinsänderungen, neue Dienstleistungen und Finanzberatung',
+        email: 'E-Mail-Adresse',
+        name: 'Name (optional)',
+        emailPlaceholder: 'ihre.email@example.com',
+        namePlaceholder: 'Ihr Name',
+        consent: 'Ich stimme zu, dass meine Daten für den Newsletter-Versand verarbeitet werden',
+        submit: 'Abonnieren',
+        submitting: 'Abonnieren...',
+        success: 'Erfolgreich abonniert!',
+        successDescription: 'Danke! Sie erhalten in Kürze eine Bestätigungs-E-Mail',
+        alreadySubscribed: 'E-Mail bereits abonniert',
+        alreadySubscribedDescription: 'Diese E-Mail-Adresse hat unseren Newsletter bereits abonniert',
+        subscriptionError: 'Abonnement fehlgeschlagen. Bitte versuchen Sie es erneut',
+        validationError: 'Bitte füllen Sie das E-Mail-Feld aus und stimmen Sie der Datenverarbeitung zu'
       }
     },
     faq: {
       badge: 'Häufig gestellte Fragen',
-      title: 'Haben Sie Fragen?',
-      subtitle: 'Hier sind Antworten auf die häufigsten Fragen zu LTB Bank Dienstleistungen',
+      title: 'FAQ',
+      subtitle: 'Hier finden Sie Antworten auf die häufigsten Fragen zu den Dienstleistungen der LTB Bank',
       notFound: {
-        title: 'Antwort auf Ihre Frage nicht gefunden?',
+        title: 'Keine Antwort auf Ihre Frage gefunden?',
         description: 'Kontaktieren Sie unser Expertenteam - wir helfen gerne',
         button: 'Kontaktieren Sie uns'
-      },
-      form: {
-        name: 'Name',
-        email: 'E-Mail',
-        message: 'Nachricht',
-        send: 'Senden',
-        cancel: 'Abbrechen',
-        sending: 'Wird gesendet...',
-        placeholder: {
-          name: 'Ihr Name',
-          email: 'ihre.email@example.com',
-          message: 'Ihre Frage...'
-        }
-      },
-      questions: {
-        q1: {
-          question: 'Wie funktionieren tägliche Zinszahlungen?',
-          answer: 'Zinsen werden täglich basierend auf Ihrem Kontostand berechnet. Anstatt Zinsen einmal im Jahr zu zahlen, zahlen wir sie täglich. Das bedeutet, dass Ihr Geld jeden Tag wächst, nicht nur am Jahresende.'
-        },
-        q2: {
-          question: 'Muss ich wirklich keine Bescheinigungen vorlegen?',
-          answer: 'Nein, wir benötigen keine Einkommenserklärungen, Arbeitsbescheinigungen oder andere Dokumente. Eröffnen Sie einfach ein Konto und beginnen Sie zu sparen. Wir glauben, dass Sparen einfach und für jeden zugänglich sein sollte.'
-        },
-        q3: {
-          question: 'Wie sicher ist mein Geld?',
-          answer: 'Ihre Einlagen sind gemäß EU-Richtlinien bis zu €100.000 pro Kunde versichert. Wir verwenden Verschlüsselungstechnologien höchster Stufe und befolgen strenge Sicherheitsprotokolle. Ihre Daten sind vertraulich und werden niemandem offengelegt.'
-        },
-        q4: {
-          question: 'Kann ich jederzeit Geld abheben?',
-          answer: 'Ja, Ihr Geld ist jederzeit verfügbar. Es gibt keine Sperrfristen oder Strafen für vorzeitige Abhebungen. Sie können den ganzen Betrag oder nur einen Teil abheben - Sie entscheiden.'
-        },
-        q5: {
-          question: 'Welche Gebühren fallen an?',
-          answer: 'Wir erheben keine Gebühren für Kontoführung, Überweisungen oder Aufbewahrung. Die einzige Gebühr, die Sie zahlen, ist die standardmäßige staatliche Einkommensteuer auf verdiente Zinsen.'
-        },
-        q6: {
-          question: 'Wie schnell kann ich mit dem Sparen beginnen?',
-          answer: 'Sie können ein Konto in nur wenigen Minuten eröffnen. Nach der Registrierung können Sie sofort Geld überweisen und Zinsen verdienen. Die Zinsen werden ab dem ersten Tag berechnet.'
-        },
-        q7: {
-          question: 'Gibt es eine Mindesteinlagenhöhe?',
-          answer: 'Die Mindesteinlagenhöhe beträgt nur €10. Maximum - €100.000 (Einlagenversicherungsgrenze). Sie können mit jedem Betrag beginnen und Ihr Konto jederzeit aufstocken.'
-        },
-        q8: {
-          question: 'Wie wird die Banktätigkeit kontrolliert?',
-          answer: 'LTB Bank ist ein lizenziertes Kreditinstitut unter Aufsicht der Bank von Litauen. Wir erfüllen alle EU-Bankenregulierungsanforderungen und berichten regelmäßig an die Aufsichtsbehörde.'
-        }
       }
     },
     footer: {
+      bank: 'LTB Bank',
+      description: 'Eine innovative Bank, die die Sparkultur in Litauen verändert.',
       services: 'Dienstleistungen',
-      loans: 'Kredite',
-      information: 'Information',
+      company: 'Unternehmen',
+      support: 'Support',
+      legal: 'Rechtliche Informationen',
       about: 'Über uns',
-      howItWorks: 'Wie es funktioniert',
+      careers: 'Karriere',
+      blog: 'Blog',
+      news: 'Nachrichten',
       privacy: 'Datenschutzrichtlinie',
       terms: 'Nutzungsbedingungen',
       help: 'Hilfe',
@@ -1189,60 +1394,171 @@ const translations = {
       techSupport: 'Technischer Support',
       calculatorIssues: 'Rechner-Probleme:',
       email: 'info@ltbbank.de',
-      phone: '+370 700 12345',
-      copyright: 'Alle Rechte vorbehalten.',
-      licensed: 'Lizenziert von der Bank von Litauen',
-      insured: 'Einlagen bis zu €100.000 versichert',
-      disclaimer: 'LTB Bank ist ein lizenziertes Kreditinstitut unter Aufsicht der Bank von Litauen. Einlagen sind gemäß EU-Richtlinien bis zu €100.000 pro Kunde versichert. Zinssätze hängen von Marktbedingungen ab und können sich ändern. Konsultieren Sie unsere Experten vor Entscheidungen.'
+      rights: 'Alle Rechte vorbehalten',
+      license: 'Lizenziert von LB'
     },
     auth: {
-      login: 'Anmelden',
-      register: 'Registrieren',
-      logout: 'Abmelden',
+      title: 'Banksystem',
+      login: 'Anmeldung',
+      signup: 'Registrierung',
       email: 'E-Mail',
       password: 'Passwort',
       confirmPassword: 'Passwort bestätigen',
-      forgotPassword: 'Passwort vergessen?',
-      noAccount: 'Haben Sie kein Konto?',
-      hasAccount: 'Haben Sie bereits ein Konto?',
-      signUp: 'Registrieren',
-      signIn: 'Anmelden'
-    },
-    forms: {
-      required: 'Pflichtfeld',
-      invalidEmail: 'Ungültiges E-Mail-Format',
-      submit: 'Absenden',
-      cancel: 'Abbrechen',
-      save: 'Speichern',
-      loading: 'Wird geladen...',
-      success: 'Erfolgreich gespeichert',
-      error: 'Ein Fehler ist aufgetreten'
+      displayName: 'Vollständiger Name',
+      emailPlaceholder: 'name@example.com',
+      passwordPlaceholder: '••••••••',
+      confirmPasswordPlaceholder: 'Passwort bestätigen',
+      displayNamePlaceholder: 'Vollständiger Name',
+      loginButton: 'Anmelden',
+      signupButton: 'Registrieren',
+      passwordMismatch: 'Passwörter stimmen nicht überein',
+      signupNote: 'Eine eindeutige Kontonummer wird bei der Registrierung automatisch erstellt',
+      resendConfirmation: 'Unbestätigte E-Mail?',
+      resendButton: 'Senden',
+      resendPlaceholder: 'E-Mail',
+      minPasswordLength: 'Mindestens 6 Zeichen'
     },
     modals: {
-      close: 'Schließen',
-      confirm: 'Bestätigen',
-      loanApplication: {
+      registration: {
+        title: 'Registrierung',
+        accountType: 'Kontotyp',
+        personal: 'Privat',
+        company: 'Geschäftlich',
+        name: 'Vollständiger Name',
+        email: 'E-Mail',
+        phone: 'Telefonnummer',
+        namePlaceholder: 'Geben Sie Ihren vollständigen Namen ein',
+        emailPlaceholder: 'name@example.com',
+        phonePlaceholder: '+370...',
+        originalPrice: 'Ursprünglicher Preis:',
+        discount: 'Rabatt',
+        finalPrice: 'Endpreis:',
+        payButton: 'Mit Stripe bezahlen',
+        campaignBanner: 'AKTION 50% RABATT!',
+        campaignDescription: 'Für Neukunden bis 2025-09-01',
+        timeLeft: 'Verbleibende Zeit:',
+        validationError: 'Bitte füllen Sie alle Pflichtfelder aus',
+        paymentError: 'Zahlung konnte nicht erstellt werden'
+      },
+      discount: {
+        title: 'Rabattcode anfordern',
+        description: 'Füllen Sie das Formular aus und wir senden Ihnen innerhalb von 24 Stunden einen Rabattcode',
+        accountType: 'Kontotyp',
+        personal: 'Privat',
+        company: 'Geschäftlich',
+        name: 'Vollständiger Name',
+        email: 'E-Mail',
+        namePlaceholder: 'Geben Sie Ihren vollständigen Namen ein',
+        emailPlaceholder: 'name@example.com',
+        submitButton: 'Anfrage senden',
+        howItWorks: 'Wie funktioniert es?',
+        howItWorksList: [
+          'Ihre Anfrage wird an den Administrator gesendet',
+          'Innerhalb von 24 Stunden erhalten Sie eine Antwort per E-Mail',
+          'Nach Bestätigung - erhalten Sie einen 50% Rabattcode',
+          'Der Code ist 30 Tage gültig'
+        ],
+        validationError: 'Bitte füllen Sie alle Felder aus',
+        success: 'Erfolgreich!',
+        successDescription: 'Ihre Rabattanfrage wurde erfolgreich gesendet. Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.',
+        submitError: 'Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.'
+      },
+      board: {
+        title: 'Vorstandsmitglied werden',
+        description: 'Füllen Sie das Formular aus und wir werden uns bald mit Ihnen in Verbindung setzen, um Möglichkeiten zu besprechen.',
+        warning: '⚠️ ACHTUNG: Um Vorstandsmitglied zu werden, ist ein Beitrag von mindestens 100.000 Litas erforderlich.',
+        name: 'Vollständiger Name',
+        email: 'E-Mail',
+        phone: 'Telefonnummer',
+        experience: 'Erfahrung und Motivation',
+        namePlaceholder: 'Geben Sie Ihren vollständigen Namen ein',
+        emailPlaceholder: 'Geben Sie Ihre E-Mail ein',
+        phonePlaceholder: 'Geben Sie Ihre Telefonnummer ein',
+        experiencePlaceholder: 'Beschreiben Sie Ihre Erfahrung in Finanzen, Management oder verwandten Bereichen sowie Ihre Motivation, Vorstandsmitglied zu werden...',
+        cancel: 'Abbrechen',
+        submit: 'Antrag einreichen',
+        submitting: 'Senden...',
+        success: 'Antrag erfolgreich eingereicht!',
+        successDescription: 'Wir werden uns bald bei Ihnen melden.',
+        submitError: 'Antrag konnte nicht eingereicht werden. Bitte versuchen Sie es erneut.'
+      },
+      loan: {
         title: 'Kreditantrag',
-        personalInfo: 'Persönliche Informationen',
-        loanDetails: 'Kreditdetails',
-        submit: 'Antrag stellen',
-        submitting: 'Wird eingereicht...',
-        fields: {
+        description: 'Füllen Sie das Formular aus und erhalten Sie eine Entscheidung innerhalb von 24 Stunden',
+        summary: {
+          title: 'Kreditparameter',
+          amount: 'Betrag',
+          term: 'Laufzeit',
+          monthlyPayment: 'Monatliche Rate',
+          totalPayment: 'Gesamtzahlung',
+          months: 'Mon.'
+        },
+        personal: {
+          title: 'Persönliche Informationen',
           name: 'Vollständiger Name',
           email: 'E-Mail-Adresse',
           phone: 'Telefonnummer',
-          monthlyIncome: 'Monatliches Einkommen (€)',
-          employment: 'Beschäftigung',
-          loanPurpose: 'Kreditzweck'
+          namePlaceholder: 'Ihr vollständiger Name',
+          emailPlaceholder: 'ihre@email.com',
+          phonePlaceholder: '+370 600 00000'
         },
-        placeholders: {
-          name: 'Max Mustermann',
-          email: 'ihre@email.com',
-          phone: '+370 600 00000',
-          monthlyIncome: '2000',
-          employment: 'Firmenname'
-        }
+        financial: {
+          title: 'Finanzielle Informationen',
+          monthlyIncome: 'Monatliches Einkommen (€)',
+          employment: 'Arbeitgeber',
+          incomePlaceholder: '2000',
+          employmentPlaceholder: 'Firma GmbH'
+        },
+        purpose: {
+          title: 'Kreditzweck',
+          label: 'Wofür benötigen Sie den Kredit?',
+          placeholder: 'Beschreiben Sie kurz, wie Sie den Kredit verwenden möchten'
+        },
+        terms: {
+          title: 'Ich stimme den Bedingungen zu:',
+          items: [
+            '14% jährlicher Zinssatz ohne versteckte Gebühren',
+            'Entscheidung innerhalb von 24 Stunden',
+            'Datenverarbeitung gemäß Datenschutzrichtlinie',
+            'Kontakt für zusätzliche Informationen'
+          ]
+        },
+        submit: 'Antrag einreichen',
+        submitting: 'Antrag wird eingereicht...',
+        success: 'Antrag erfolgreich eingereicht!',
+        successDescription: 'Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.',
+        submitError: 'Antrag konnte nicht eingereicht werden. Bitte versuchen Sie es erneut.'
       }
+    },
+    banking: {
+      transfer: {
+        title: 'Geldtransfer',
+        toAccount: 'Empfänger-Kontonummer',
+        toName: 'Empfängername',
+        amount: 'Betrag (LT)',
+        description: 'Verwendungszweck (optional)',
+        toAccountPlaceholder: 'LT############',
+        toNamePlaceholder: 'Vollständiger Name',
+        amountPlaceholder: '0.00',
+        descriptionPlaceholder: 'Zahlungszweck...',
+        submit: 'Überweisen',
+        submitting: 'Verarbeitung...',
+        cancel: 'Abbrechen',
+        success: 'Transfer erfolgreich',
+        successDescription: 'Sie haben {amount} LT auf das Konto {account} überwiesen',
+        insufficientFunds: 'Unzureichende Mittel',
+        transferError: 'Transfer konnte nicht verarbeitet werden',
+        positiveAmountError: 'Betrag muss positiv sein'
+      }
+    },
+    forms: {
+      required: '*',
+      loading: 'Laden...',
+      error: 'Fehler',
+      success: 'Erfolgreich',
+      cancel: 'Abbrechen',
+      submit: 'Einreichen',
+      save: 'Speichern'
     }
   }
 };

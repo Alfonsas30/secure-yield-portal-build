@@ -47,19 +47,19 @@ const Contact = () => {
         throw error;
       }
 
-      toast({
-        title: "Žinutė išsiųsta!",
-        description: "Mes susisieksime su jumis per 24 valandas.",
-      });
+        toast({
+          title: t('contact.form.success'),
+          description: t('contact.form.successDescription'),
+        });
       
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       console.error('Contact form error:', error);
-      toast({
-        title: "Klaida",
-        description: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
-        variant: "destructive",
-      });
+        toast({
+          title: t('contact.form.error'),
+          description: t('contact.form.errorDescription'),
+          variant: "destructive",
+        });
     } finally {
       setIsLoading(false);
     }
@@ -163,7 +163,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name" className="text-sm font-medium text-slate-700">
-                      Vardas *
+                      {t('contact.form.name')} {t('forms.required')}
                     </Label>
                     <Input
                       id="name"
@@ -172,7 +172,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       className="mt-1 border-2 focus:border-blue-500"
-                      placeholder="Jūsų vardas"
+                      placeholder={t('contact.form.namePlaceholder')}
                     />
                   </div>
                   <div>
