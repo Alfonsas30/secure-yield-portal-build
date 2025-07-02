@@ -145,6 +145,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: "Nepavyko atsijungti",
         variant: "destructive"
       });
+    } else {
+      // Navigate to home page after successful logout
+      navigate('/');
     }
 
     return { error };
