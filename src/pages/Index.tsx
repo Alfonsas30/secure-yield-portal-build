@@ -42,7 +42,12 @@ const Index = () => {
           <Tabs defaultValue="daily" className="w-full">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
               <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
-              <TabsTrigger value="term" className="text-sm">Terminuoti indėliai</TabsTrigger>
+              <TabsTrigger 
+                value="term" 
+                className="text-sm relative before:absolute before:inset-0 before:rounded-sm before:p-[2px] before:bg-gradient-to-r before:from-blue-500 before:via-purple-500 before:to-pink-500 before:bg-[length:200%_200%] before:animate-rotating-border before:-z-10 before:opacity-70 hover:before:opacity-100 transition-all duration-300"
+              >
+                Terminuoti indėliai
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="daily" className="w-full">
               <InterestCalculator />

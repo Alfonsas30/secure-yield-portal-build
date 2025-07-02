@@ -288,6 +288,17 @@ export default {
 				'rainbow-shift': {
 					'0%': { filter: 'hue-rotate(0deg)' },
 					'100%': { filter: 'hue-rotate(360deg)' }
+				},
+				'rotating-border': {
+					'0%': { 
+						backgroundPosition: '0% 50%' 
+					},
+					'50%': { 
+						backgroundPosition: '100% 50%' 
+					},
+					'100%': { 
+						backgroundPosition: '0% 50%' 
+					}
 				}
 			},
 			animation: {
@@ -325,7 +336,8 @@ export default {
 				'bubble-rise': 'bubble-rise 12s linear infinite',
 				'wobble': 'wobble 2s ease-in-out infinite',
 				'matrix-rain': 'matrix-rain 10s linear infinite',
-				'rainbow-shift': 'rainbow-shift 4s linear infinite'
+				'rainbow-shift': 'rainbow-shift 4s linear infinite',
+				'rotating-border': 'rotating-border 3s ease-in-out infinite'
 			},
 			backgroundSize: {
 				'300%': '300%'
