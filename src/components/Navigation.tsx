@@ -24,11 +24,25 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { href: "#paslaugos", label: "Paslaugos" },
-    { href: "#kaip-veikia", label: "Kaip veikia" },
-    { href: "#apie-mus", label: "Apie mus" },
-    { href: "#kontaktai", label: "Kontaktai" },
+    { href: "/#paslaugos", label: "Paslaugos" },
+    { href: "/#kaip-veikia", label: "Kaip veikia" },
+    { href: "/#apie-mus", label: "Apie mus" },
+    { href: "/#kontaktai", label: "Kontaktai" },
   ];
+
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('/#')) {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      navigate(href);
+    }
+  };
 
   // Scroll progress ir blur efektas
   useEffect(() => {
@@ -84,9 +98,9 @@ const Navigation = () => {
               <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
             </a>
             {menuItems.map((item, index) => (
-              <a
+              <button
                 key={item.href}
-                href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className="relative text-slate-600 hover:text-blue-600 transition-all duration-300 font-medium group py-2 animate-slide-in-left"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -95,7 +109,7 @@ const Navigation = () => {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 group-hover:w-full transition-all duration-300 ease-out"></span>
                 {/* Hover glow efektas */}
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
-              </a>
+              </button>
             ))}
           </div>
 
@@ -173,15 +187,17 @@ const Navigation = () => {
                   Pradžia
                 </a>
                 {menuItems.map((item, index) => (
-                  <a
+                  <button
                     key={item.href}
-                    href={item.href}
-                    className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform animate-slide-in-right"
+                    onClick={() => {
+                      setIsOpen(false);
+                      handleNavClick(item.href);
+                    }}
+                    className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform animate-slide-in-right text-left"
                     style={{ animationDelay: `${index * 0.1}s` }}
-                    onClick={() => setIsOpen(false)}
                   >
                     {item.label}
-                  </a>
+                  </button>
                 ))}
                 <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
                 {user ? (
