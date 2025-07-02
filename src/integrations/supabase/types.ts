@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      account_balances: {
+        Row: {
+          account_number: string
+          balance: number
+          created_at: string
+          currency: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          balance?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          balance?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       account_registrations: {
         Row: {
           account_type: string
@@ -147,6 +177,93 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          account_number: string
+          amount: number
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          recipient_account: string | null
+          recipient_name: string | null
+          status: string
+          transaction_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          amount: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          recipient_account?: string | null
+          recipient_name?: string | null
+          status?: string
+          transaction_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          amount?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          recipient_account?: string | null
+          recipient_name?: string | null
+          status?: string
+          transaction_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      transfer_requests: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          description: string | null
+          from_account: string
+          from_user_id: string
+          id: string
+          status: string
+          to_account: string
+          to_name: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          from_account: string
+          from_user_id: string
+          id?: string
+          status?: string
+          to_account: string
+          to_name: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          description?: string | null
+          from_account?: string
+          from_user_id?: string
+          id?: string
+          status?: string
+          to_account?: string
+          to_name?: string
+          updated_at?: string
         }
         Relationships: []
       }
