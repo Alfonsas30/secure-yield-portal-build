@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { Menu, Sparkles, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 import { useNavigate } from "react-router-dom";
 import { getExchangeRateDisplay } from "@/lib/currency";
 
@@ -15,6 +17,8 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
+  const [registrationModalOpen, setRegistrationModalOpen] = useState(false);
+  const [discountRequestModalOpen, setDiscountRequestModalOpen] = useState(false);
   
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
@@ -123,10 +127,7 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
-                  onClick={() => {
-                    setAuthModalTab("signup");
-                    setAuthModalOpen(true);
-                  }}
+                  onClick={() => setRegistrationModalOpen(true)}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
                 >
                   <span className="relative z-10">Registruotis</span>
@@ -209,18 +210,17 @@ const Navigation = () => {
                     >
                       Prisijungti
                     </Button>
-                    <Button 
-                      onClick={() => {
-                        setIsOpen(false);
-                        setAuthModalTab("signup");
-                        setAuthModalOpen(true);
-                      }}
-                      className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
-                      style={{ animationDelay: '0.5s' }}
-                    >
-                      <span className="relative z-10">Registruotis</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                    </Button>
+                     <Button 
+                       onClick={() => {
+                         setIsOpen(false);
+                         setRegistrationModalOpen(true);
+                       }}
+                       className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
+                       style={{ animationDelay: '0.5s' }}
+                     >
+                       <span className="relative z-10">Registruotis</span>
+                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                     </Button>
                   </>
                 )}
               </div>
@@ -233,6 +233,20 @@ const Navigation = () => {
         open={authModalOpen} 
         onOpenChange={setAuthModalOpen}
         defaultTab={authModalTab}
+      />
+      
+      <RegistrationModal
+        open={registrationModalOpen}
+        onOpenChange={setRegistrationModalOpen}
+        onRequestDiscount={() => {
+          setRegistrationModalOpen(false);
+          setDiscountRequestModalOpen(true);
+        }}
+      />
+      
+      <DiscountRequestModal
+        open={discountRequestModalOpen}
+        onOpenChange={setDiscountRequestModalOpen}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Loader2, User, Building, Percent, CreditCard } from "lucide-react";
+import { Loader2, User, Building, Percent, CreditCard, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -31,7 +31,38 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
   } | null>(null);
   const [loading, setLoading] = useState(false);
   const [validatingCode, setValidatingCode] = useState(false);
+  const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
+
+  // Campaign end date: 2025-09-01
+  const campaignEndDate = new Date('2025-09-01T00:00:00');
+  const isCampaignActive = new Date() < campaignEndDate;
+
+  // Update countdown timer
+  useEffect(() => {
+    if (!isCampaignActive) return;
+
+    const updateTimer = () => {
+      const now = new Date();
+      const diff = campaignEndDate.getTime() - now.getTime();
+      
+      if (diff <= 0) {
+        setTimeLeft("");
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      setTimeLeft(`${days}d ${hours}h ${minutes}m`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 60000); // Update every minute
+    
+    return () => clearInterval(interval);
+  }, [isCampaignActive]);
 
   const prices = {
     personal: 800,
@@ -39,7 +70,13 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
   };
 
   const originalPrice = prices[formData.accountType];
-  const discountAmount = discountInfo?.valid ? (originalPrice * discountInfo.discount_percent / 100) : 0;
+  
+  // Apply automatic 50% campaign discount if active and no manual discount code
+  const automaticDiscount = isCampaignActive && !discountInfo?.valid ? 50 : 0;
+  const manualDiscount = discountInfo?.valid ? discountInfo.discount_percent : 0;
+  const totalDiscount = Math.max(automaticDiscount, manualDiscount);
+  
+  const discountAmount = (originalPrice * totalDiscount / 100);
   const finalPrice = originalPrice - discountAmount;
 
   const validateDiscountCode = async () => {
@@ -129,6 +166,24 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
         </DialogHeader>
 
         <div className="space-y-6">
+          {/* Campaign Banner */}
+          {isCampaignActive && (
+            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 rounded-lg text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="w-5 h-5" />
+                <span className="font-bold text-lg">AKCIJA 50% NUOLAIDA!</span>
+              </div>
+              <div className="text-sm opacity-90">
+                Naujiems klientams iki 2025-09-01
+              </div>
+              {timeLeft && (
+                <div className="text-sm font-medium mt-1">
+                  Liko: {timeLeft}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Account Type Selection */}
           <div>
             <Label className="text-base font-medium mb-3 block">
@@ -148,7 +203,16 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
                   <User className="w-4 h-4" />
                   <div>
                     <div className="font-medium">Asmeninė</div>
-                    <div className="text-sm text-muted-foreground">800 €</div>
+                    <div className="text-sm text-muted-foreground">
+                      {isCampaignActive ? (
+                        <>
+                          <span className="line-through text-gray-400">800 €</span>
+                          <span className="ml-2 text-green-600 font-semibold">400 €</span>
+                        </>
+                      ) : (
+                        "800 €"
+                      )}
+                    </div>
                   </div>
                 </Label>
               </div>
@@ -158,7 +222,16 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
                   <Building className="w-4 h-4" />
                   <div>
                     <div className="font-medium">Įmonės</div>
-                    <div className="text-sm text-muted-foreground">1500 €</div>
+                    <div className="text-sm text-muted-foreground">
+                      {isCampaignActive ? (
+                        <>
+                          <span className="line-through text-gray-400">1500 €</span>
+                          <span className="ml-2 text-green-600 font-semibold">750 €</span>
+                        </>
+                      ) : (
+                        "1500 €"
+                      )}
+                    </div>
                   </div>
                 </Label>
               </div>
@@ -243,10 +316,10 @@ export function RegistrationModal({ open, onOpenChange, onRequestDiscount }: Reg
               <span>Pradinė kaina:</span>
               <span>{originalPrice} €</span>
             </div>
-            {discountInfo?.valid && (
+            {totalDiscount > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Nuolaida ({discountInfo.discount_percent}%):</span>
-                <span>-{discountAmount} €</span>
+                <span>Nuolaida ({totalDiscount}%):</span>
+                <span>-{discountAmount.toFixed(0)} €</span>
               </div>
             )}
             <div className="flex justify-between font-semibold text-lg border-t pt-2">
