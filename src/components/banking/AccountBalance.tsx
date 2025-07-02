@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { formatDualCurrency } from "@/lib/currency";
 
 interface AccountBalance {
   id: string;
@@ -125,11 +126,18 @@ export function AccountBalance() {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <div className="text-3xl font-bold text-primary">
-            {showBalance && balance 
-              ? formatCurrency(balance.balance, balance.currency)
-              : "••••••"
-            }
+          <div className="space-y-1">
+            <div className="text-3xl font-bold text-primary">
+              {showBalance && balance 
+                ? formatCurrency(balance.balance, balance.currency)
+                : "••••••"
+              }
+            </div>
+            {showBalance && balance && (
+              <div className="text-sm text-muted-foreground">
+                ≈ {formatDualCurrency(balance.balance).split('(≈')[1]?.replace(')', '')}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Badge variant="outline" className="text-green-600 border-green-600">

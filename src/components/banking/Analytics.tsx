@@ -5,6 +5,7 @@ import { BarChart3, PieChart, TrendingUp, TrendingDown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { formatDualCurrency } from "@/lib/currency";
 
 interface AnalyticsData {
   totalIncome: number;
@@ -172,8 +173,13 @@ export function Analytics() {
                   <TrendingUp className="w-4 h-4" />
                   <span className="text-sm font-medium">Pajamos</span>
                 </div>
-                <div className="text-2xl font-bold">
-                  {formatCurrency(analytics.totalIncome)}
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(analytics.totalIncome)}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {formatDualCurrency(analytics.totalIncome).split('(')[1]?.replace(')', '')}
+                  </div>
                 </div>
               </div>
 
@@ -182,8 +188,13 @@ export function Analytics() {
                   <TrendingDown className="w-4 h-4" />
                   <span className="text-sm font-medium">Išlaidos</span>
                 </div>
-                <div className="text-2xl font-bold">
-                  {formatCurrency(analytics.totalExpenses)}
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold">
+                    {formatCurrency(analytics.totalExpenses)}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {formatDualCurrency(analytics.totalExpenses).split('(')[1]?.replace(')', '')}
+                  </div>
                 </div>
               </div>
 
@@ -192,12 +203,17 @@ export function Analytics() {
                   <PieChart className="w-4 h-4" />
                   <span className="text-sm font-medium">Balansas</span>
                 </div>
-                <div className={`text-2xl font-bold ${
-                  analytics.totalIncome - analytics.totalExpenses >= 0 
-                    ? 'text-green-600' 
-                    : 'text-red-600'
-                }`}>
-                  {formatCurrency(analytics.totalIncome - analytics.totalExpenses)}
+                <div className="space-y-1">
+                  <div className={`text-2xl font-bold ${
+                    analytics.totalIncome - analytics.totalExpenses >= 0 
+                      ? 'text-green-600' 
+                      : 'text-red-600'
+                  }`}>
+                    {formatCurrency(analytics.totalIncome - analytics.totalExpenses)}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {formatDualCurrency(analytics.totalIncome - analytics.totalExpenses).split('(')[1]?.replace(')', '')}
+                  </div>
                 </div>
               </div>
 

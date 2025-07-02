@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { ltToEur, formatCurrency } from "@/lib/currency";
 
 interface TransferModalProps {
   open: boolean;
@@ -148,6 +149,11 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               placeholder="0.00"
               required
             />
+            {formData.amount && parseFloat(formData.amount) > 0 && (
+              <div className="text-xs text-muted-foreground mt-1">
+                ≈ {formatCurrency(ltToEur(parseFloat(formData.amount)), 'EUR')}
+              </div>
+            )}
           </div>
 
           <div>

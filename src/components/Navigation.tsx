@@ -7,6 +7,7 @@ import { Menu, Sparkles, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
 import { useNavigate } from "react-router-dom";
+import { getExchangeRateDisplay } from "@/lib/currency";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,11 +57,16 @@ const Navigation = () => {
           : 'bg-white/80 backdrop-blur-sm border-b border-slate-100'
       }`}>
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-3 group cursor-pointer">
-            <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
-              LTB Bankas
-            </span>
-            <Sparkles className="w-4 h-4 text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 group cursor-pointer">
+              <span className="font-bold text-xl text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
+                LTB Bankas
+              </span>
+              <Sparkles className="w-4 h-4 text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
+            </div>
+            <div className="hidden lg:block text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+              {getExchangeRateDisplay()}
+            </div>
           </div>
 
           {/* Desktop Navigation */}
