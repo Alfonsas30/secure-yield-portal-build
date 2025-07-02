@@ -17,6 +17,7 @@ import TermDepositCalculator from "@/components/TermDepositCalculator";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BoardInvitation from "@/components/BoardInvitation";
 
 const Index = () => {
   return (
@@ -102,6 +103,7 @@ const Index = () => {
         </div>
       </section>
       
+      <BoardInvitation />
       <HowItWorks />
       <FAQ />
       <Contact />
