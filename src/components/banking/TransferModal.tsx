@@ -88,7 +88,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
 
       toast({
         title: "Pervedimas sėkmingas",
-        description: `Pervedėte ${amount} EUR į sąskaitą ${formData.toAccount}`,
+        description: `Pervedėte ${amount} LT į sąskaitą ${formData.toAccount}`,
         variant: "default"
       });
 
@@ -137,7 +137,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
           </div>
 
           <div>
-            <Label htmlFor="amount">Suma (EUR)</Label>
+            <Label htmlFor="amount">Suma (LT)</Label>
             <Input
               id="amount"
               type="number"

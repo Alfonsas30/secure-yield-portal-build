@@ -90,9 +90,10 @@ export function TransactionHistory() {
 
   const formatCurrency = (amount: number, currency: string) => {
     return new Intl.NumberFormat('lt-LT', {
-      style: 'currency',
-      currency: currency,
-    }).format(Math.abs(amount));
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(Math.abs(amount)) + ' LT';
   };
 
   const getTransactionIcon = (type: string, amount: number) => {

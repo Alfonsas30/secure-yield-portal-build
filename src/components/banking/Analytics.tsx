@@ -102,9 +102,10 @@ export function Analytics() {
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('lt-LT', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount) + ' LT';
   };
 
   const getPeriodLabel = () => {

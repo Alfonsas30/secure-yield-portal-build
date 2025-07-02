@@ -55,7 +55,7 @@ export function AccountBalance() {
             user_id: profile.user_id,
             account_number: profile.account_number,
             balance: 0.00,
-            currency: 'EUR'
+            currency: 'LT'
           })
           .select()
           .single();
@@ -80,9 +80,10 @@ export function AccountBalance() {
 
   const formatCurrency = (amount: number, currency: string) => {
     return new Intl.NumberFormat('lt-LT', {
-      style: 'currency',
-      currency: currency,
-    }).format(amount);
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount) + ' LT';
   };
 
   if (loading) {
