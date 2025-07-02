@@ -5,6 +5,7 @@ import { Resend } from "npm:resend@2.0.0";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface DiscountRequest {
@@ -19,7 +20,37 @@ serve(async (req) => {
   console.log("Request headers:", Object.fromEntries(req.headers.entries()));
 
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { 
+      headers: corsHeaders,
+      status: 200 
+    });
+  }
+
+  if (req.method === "GET") {
+    return new Response(
+      JSON.stringify({ 
+        status: "Request-discount function is running",
+        timestamp: new Date().toISOString(),
+        environment: {
+          supabaseUrl: !!Deno.env.get("SUPABASE_URL"),
+          resendKey: !!Deno.env.get("RESEND_API_KEY")
+        }
+      }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      }
+    );
+  }
+
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 405,
+      }
+    );
   }
 
   try {

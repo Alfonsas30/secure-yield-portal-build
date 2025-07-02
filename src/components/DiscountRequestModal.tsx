@@ -42,6 +42,21 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
     
     try {
       console.log("Invoking request-discount function...");
+      
+      // Test if function is available first
+      try {
+        const testResponse = await fetch('https://latwptcvghypdopbpxfr.supabase.co/functions/v1/request-discount', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdHdwdGN2Z2h5cGRvcGJweGZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU0NTMsImV4cCI6MjA2NjYwMTQ1M30.O6TbhAN5nWrEl89gdiCWkIiVPmptpJo10QSTpOL9ciE',
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdHdwdGN2Z2h5cGRvcGJweGZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU0NTMsImV4cCI6MjA2NjYwMTQ1M30.O6TbhAN5nWrEl89gdiCWkIiVPmptpJo10QSTpOL9ciE'
+          }
+        });
+        console.log("Function test response:", testResponse.status, await testResponse.text());
+      } catch (testError) {
+        console.log("Function test failed:", testError);
+      }
+      
       const { data, error } = await supabase.functions.invoke('request-discount', {
         body: {
           name: formData.name.trim(),
