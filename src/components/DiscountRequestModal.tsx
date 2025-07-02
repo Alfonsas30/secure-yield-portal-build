@@ -35,7 +35,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
     setLoading(true);
     
     try {
-      // Directly save to database (email will be sent via database trigger)
+      // Step 1: Save to Supabase database
       const { error } = await supabase
         .from('discount_requests')
         .insert({
@@ -49,6 +49,26 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
         console.error("Database error:", error);
         throw new Error("Nepavyko išsaugoti užklausos");
       }
+
+      // Step 2: Send email via FormSubmit
+      const accountTypeText = formData.accountType === 'personal' 
+        ? 'Asmeninė sąskaita' 
+        : 'Įmonės sąskaita';
+      const discountText = formData.accountType === 'personal' 
+        ? '800 € → 400 € (50% nuolaida)' 
+        : '1500 € → 750 € (50% nuolaida)';
+
+      const formSubmitData = new FormData();
+      formSubmitData.append('name', formData.name.trim());
+      formSubmitData.append('email', formData.email.trim());
+      formSubmitData.append('account_type', accountTypeText);
+      formSubmitData.append('discount_info', discountText);
+      formSubmitData.append('_subject', 'Nauja nuolaidų užklausa');
+
+      await fetch('https://formsubmit.co/el/fuwaci', {
+        method: 'POST',
+        body: formSubmitData
+      });
 
       toast({
         title: "Sėkmė!",
