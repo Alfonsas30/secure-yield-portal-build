@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,15 +13,61 @@ const LoanCalculator = () => {
   const [loanTerm, setLoanTerm] = useState(24);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const interestRate = 14; // 14% annual interest rate
-  const monthlyRate = interestRate / 100 / 12;
-  
-  // Calculate monthly payment using loan formula
-  const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) / 
-                        (Math.pow(1 + monthlyRate, loanTerm) - 1);
-  
-  const totalPayment = monthlyPayment * loanTerm;
-  const totalInterest = totalPayment - loanAmount;
+  // Validate and sanitize inputs
+  const validLoanAmount = useMemo(() => {
+    const amount = Number(loanAmount);
+    return isNaN(amount) || amount < 1000 ? 1000 : amount > 50000 ? 50000 : amount;
+  }, [loanAmount]);
+
+  const validLoanTerm = useMemo(() => {
+    const term = Number(loanTerm);
+    return isNaN(term) || term < 6 ? 6 : term > 60 ? 60 : term;
+  }, [loanTerm]);
+
+  // Calculate loan values with memoization
+  const calculations = useMemo(() => {
+    const interestRate = 14; // 14% annual interest rate
+    const monthlyRate = interestRate / 100 / 12;
+    
+    // Calculate monthly payment using loan formula with validation
+    if (validLoanAmount <= 0 || validLoanTerm <= 0 || monthlyRate <= 0) {
+      return {
+        monthlyPayment: 0,
+        totalPayment: 0,
+        totalInterest: 0,
+        interestRate
+      };
+    }
+
+    const monthlyPayment = (validLoanAmount * monthlyRate * Math.pow(1 + monthlyRate, validLoanTerm)) / 
+                          (Math.pow(1 + monthlyRate, validLoanTerm) - 1);
+    
+    // Validate calculation results
+    const validMonthlyPayment = isNaN(monthlyPayment) || !isFinite(monthlyPayment) ? 0 : monthlyPayment;
+    const totalPayment = validMonthlyPayment * validLoanTerm;
+    const totalInterest = totalPayment - validLoanAmount;
+
+    return {
+      monthlyPayment: validMonthlyPayment,
+      totalPayment,
+      totalInterest,
+      interestRate
+    };
+  }, [validLoanAmount, validLoanTerm]);
+
+  const handleAmountChange = (value: number | string) => {
+    const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
+    if (!isNaN(numValue)) {
+      setLoanAmount(numValue);
+    }
+  };
+
+  const handleTermChange = (value: number | string) => {
+    const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
+    if (!isNaN(numValue)) {
+      setLoanTerm(numValue);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -51,7 +97,7 @@ const LoanCalculator = () => {
               max={50000}
               step={500}
               value={[loanAmount]}
-              onValueChange={(value) => setLoanAmount(value[0])}
+              onValueChange={(value) => handleAmountChange(value[0])}
               className="w-full"
             />
             <div className="flex justify-between text-sm text-slate-500">
@@ -71,7 +117,7 @@ const LoanCalculator = () => {
               max={60}
               step={1}
               value={[loanTerm]}
-              onValueChange={(value) => setLoanTerm(value[0])}
+              onValueChange={(value) => handleTermChange(value[0])}
               className="w-full"
             />
             <div className="flex justify-between text-sm text-slate-500">
@@ -92,7 +138,7 @@ const LoanCalculator = () => {
                 min="1000"
                 max="50000"
                 value={loanAmount}
-                onChange={(e) => setLoanAmount(Number(e.target.value))}
+                onChange={(e) => handleAmountChange(e.target.value)}
                 className="w-full"
               />
             </div>
@@ -106,7 +152,7 @@ const LoanCalculator = () => {
                 min="6"
                 max="60"
                 value={loanTerm}
-                onChange={(e) => setLoanTerm(Number(e.target.value))}
+                onChange={(e) => handleTermChange(e.target.value)}
                 className="w-full"
               />
             </div>
@@ -123,7 +169,7 @@ const LoanCalculator = () => {
             </div>
             <h3 className="text-lg font-semibold mb-2 text-slate-900">Mėnesinis mokėjimas</h3>
             <p className="text-2xl font-bold text-blue-600">
-              {monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+              {calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
             </p>
           </CardContent>
         </Card>
@@ -135,7 +181,7 @@ const LoanCalculator = () => {
             </div>
             <h3 className="text-lg font-semibold mb-2 text-slate-900">Bendra suma</h3>
             <p className="text-2xl font-bold text-green-600">
-              {totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+              {calculations.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
             </p>
           </CardContent>
         </Card>
@@ -147,7 +193,7 @@ const LoanCalculator = () => {
             </div>
             <h3 className="text-lg font-semibold mb-2 text-slate-900">Palūkanos</h3>
             <p className="text-2xl font-bold text-orange-600">
-              {totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+              {calculations.totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
             </p>
           </CardContent>
         </Card>
@@ -175,11 +221,11 @@ const LoanCalculator = () => {
         open={modalOpen} 
         onOpenChange={setModalOpen}
         calculatedData={{
-          loanAmount,
-          loanTerm,
-          monthlyPayment,
-          totalPayment,
-          interestRate
+          loanAmount: validLoanAmount,
+          loanTerm: validLoanTerm,
+          monthlyPayment: calculations.monthlyPayment,
+          totalPayment: calculations.totalPayment,
+          interestRate: calculations.interestRate
         }}
       />
     </div>
