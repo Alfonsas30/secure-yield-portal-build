@@ -33,7 +33,15 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
     }
 
     setLoading(true);
+    console.log("=== STARTING DISCOUNT REQUEST ===");
+    console.log("Form data:", { 
+      name: formData.name.trim(), 
+      email: formData.email.trim(), 
+      account_type: formData.accountType 
+    });
+    
     try {
+      console.log("Invoking request-discount function...");
       const { data, error } = await supabase.functions.invoke('request-discount', {
         body: {
           name: formData.name.trim(),
@@ -42,8 +50,14 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
         }
       });
 
-      if (error) throw error;
+      console.log("Function response:", { data, error });
 
+      if (error) {
+        console.error("Function returned error:", error);
+        throw error;
+      }
+
+      console.log("Function executed successfully:", data);
       toast({
         title: "Sėkmė!",
         description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
@@ -57,7 +71,12 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       });
       onOpenChange(false);
     } catch (error) {
-      console.error("Error submitting discount request:", error);
+      console.error("=== ERROR SUBMITTING DISCOUNT REQUEST ===");
+      console.error("Error type:", typeof error);
+      console.error("Error details:", error);
+      console.error("Error message:", error?.message);
+      console.error("Error stack:", error?.stack);
+      
       toast({
         title: "Klaida",
         description: "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
@@ -65,6 +84,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       });
     } finally {
       setLoading(false);
+      console.log("=== DISCOUNT REQUEST COMPLETED ===");
     }
   };
 
