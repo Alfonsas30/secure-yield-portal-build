@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Set up auth state listener first
@@ -117,6 +119,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
+    } else {
+      toast({
+        title: "Prisijungimas sėkmingas",
+        description: "Nukreipiame į asmeninį kabinetą",
+        variant: "default"
+      });
+      // Redirect to dashboard after successful login
+      navigate('/dashboard');
     }
 
     return { error };
