@@ -180,7 +180,7 @@ const translations = {
         message: 'Žinutė',
         namePlaceholder: 'Jūsų vardas',
         phonePlaceholder: '+370 XXX XXXXX',
-        emailPlaceholder: 'jusu.paštas@example.com',
+        emailPlaceholder: 'jusu.pastas@example.com',
         messagePlaceholder: 'Parašykite savo klausimą arba komentarą...',
         submit: 'Siųsti žinutę',
         submitting: 'Siunčiama...',
@@ -264,8 +264,8 @@ const translations = {
       registration: {
         title: 'Registracija',
         accountType: 'Sąskaitos tipas',
-        personal: 'Asmeninė',
-        company: 'Įmonės',
+        personal: 'Asmens',
+        company: 'Verslo',
         name: 'Vardas Pavardė',
         email: 'El. paštas',
         phone: 'Telefono numeris',
@@ -286,8 +286,8 @@ const translations = {
         title: 'Prašyti nuolaidos kodo',
         description: 'Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas',
         accountType: 'Sąskaitos tipas',
-        personal: 'Asmeninė',
-        company: 'Įmonės',
+        personal: 'Asmens',
+        company: 'Verslo',
         name: 'Vardas Pavardė',
         email: 'El. paštas',
         namePlaceholder: 'Įveskite vardą ir pavardę',
@@ -308,7 +308,7 @@ const translations = {
       board: {
         title: 'Tapti valdybos nariu',
         description: 'Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.',
-        warning: '⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.',
+        warning: '⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 €.',
         name: 'Vardas ir pavardė',
         email: 'El. paštas',
         phone: 'Telefono numeris',
@@ -374,22 +374,22 @@ const translations = {
     },
     banking: {
       transfer: {
-        title: 'Pinigų pervedimas',
+        title: 'Lėšų pervedimas',
         toAccount: 'Gavėjo sąskaitos numeris',
         toName: 'Gavėjo vardas, pavardė',
-        amount: 'Suma (LT)',
-        description: 'Paskirtis (neprivaloma)',
+        amount: 'Suma (€)',
+        description: 'Pervedimo paskirtis (neprivaloma)',
         toAccountPlaceholder: 'LT############',
         toNamePlaceholder: 'Vardas Pavardė',
         amountPlaceholder: '0.00',
-        descriptionPlaceholder: 'Mokėjimo paskirtis...',
+        descriptionPlaceholder: 'Pervedimo paskirtis...',
         submit: 'Pervesti',
         submitting: 'Vykdoma...',
         cancel: 'Atšaukti',
         success: 'Pervedimas sėkmingas',
-        successDescription: 'Pervedėte {amount} LT į sąskaitą {account}',
-        insufficientFunds: 'Nepakanka lėšų',
-        transferError: 'Nepavyko įvykdyti pervedimo',
+        successDescription: 'Pervedėte {amount} € į sąskaitą {account}',
+        insufficientFunds: 'Nepakanka pinigų sąskaitoje',
+        transferError: 'Pervedimas nepavyko',
         positiveAmountError: 'Suma turi būti teigiama'
       }
     },
@@ -401,6 +401,10 @@ const translations = {
       cancel: 'Atšaukti',
       submit: 'Pateikti',
       save: 'Išsaugoti'
+    },
+    messages: {
+      loginRequired: 'Prašome prisijungti',
+      loginRequiredDescription: 'Turite būti prisijungę, kad galėtumėte matyti šį turinį'
     }
   },
   en: {
@@ -763,7 +767,7 @@ const translations = {
         title: 'Money Transfer',
         toAccount: 'Recipient Account Number',
         toName: 'Recipient Name',
-        amount: 'Amount (LT)',
+        amount: 'Amount (€)',
         description: 'Purpose (optional)',
         toAccountPlaceholder: 'LT############',
         toNamePlaceholder: 'Full Name',
@@ -773,7 +777,7 @@ const translations = {
         submitting: 'Processing...',
         cancel: 'Cancel',
         success: 'Transfer successful',
-        successDescription: 'You transferred {amount} LT to account {account}',
+        successDescription: 'You transferred {amount} € to account {account}',
         insufficientFunds: 'Insufficient funds',
         transferError: 'Failed to process transfer',
         positiveAmountError: 'Amount must be positive'
@@ -787,6 +791,10 @@ const translations = {
       cancel: 'Cancel',
       submit: 'Submit',
       save: 'Save'
+    },
+    messages: {
+      loginRequired: 'Please log in',
+      loginRequiredDescription: 'You must be logged in to view this content'
     }
   },
   ru: {
@@ -1149,7 +1157,7 @@ const translations = {
         title: 'Денежный перевод',
         toAccount: 'Номер счёта получателя',
         toName: 'Имя получателя',
-        amount: 'Сумма (LT)',
+        amount: 'Сумма (€)',
         description: 'Назначение (необязательно)',
         toAccountPlaceholder: 'LT############',
         toNamePlaceholder: 'Полное имя',
@@ -1159,7 +1167,7 @@ const translations = {
         submitting: 'Обработка...',
         cancel: 'Отменить',
         success: 'Перевод успешен',
-        successDescription: 'Вы перевели {amount} LT на счёт {account}',
+        successDescription: 'Вы перевели {amount} € на счёт {account}',
         insufficientFunds: 'Недостаточно средств',
         transferError: 'Не удалось выполнить перевод',
         positiveAmountError: 'Сумма должна быть положительной'
@@ -1173,6 +1181,10 @@ const translations = {
       cancel: 'Отменить',
       submit: 'Отправить',
       save: 'Сохранить'
+    },
+    messages: {
+      loginRequired: 'Пожалуйста, войдите в систему',
+      loginRequiredDescription: 'Вы должны войти в систему, чтобы просматривать этот контент'
     }
   },
   de: {
@@ -1535,7 +1547,7 @@ const translations = {
         title: 'Geldtransfer',
         toAccount: 'Empfänger-Kontonummer',
         toName: 'Empfängername',
-        amount: 'Betrag (LT)',
+        amount: 'Betrag (€)',
         description: 'Verwendungszweck (optional)',
         toAccountPlaceholder: 'LT############',
         toNamePlaceholder: 'Vollständiger Name',
@@ -1545,7 +1557,7 @@ const translations = {
         submitting: 'Verarbeitung...',
         cancel: 'Abbrechen',
         success: 'Transfer erfolgreich',
-        successDescription: 'Sie haben {amount} LT auf das Konto {account} überwiesen',
+        successDescription: 'Sie haben {amount} € auf das Konto {account} überwiesen',
         insufficientFunds: 'Unzureichende Mittel',
         transferError: 'Transfer konnte nicht verarbeitet werden',
         positiveAmountError: 'Betrag muss positiv sein'
@@ -1559,6 +1571,10 @@ const translations = {
       cancel: 'Abbrechen',
       submit: 'Einreichen',
       save: 'Speichern'
+    },
+    messages: {
+      loginRequired: 'Bitte melden Sie sich an',
+      loginRequiredDescription: 'Sie müssen angemeldet sein, um diesen Inhalt zu sehen'
     }
   }
 };
