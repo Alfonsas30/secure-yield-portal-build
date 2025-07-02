@@ -36,7 +36,7 @@ export function AccountBalance() {
         .from('account_balances')
         .select('*')
         .eq('user_id', profile.user_id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching balance:', error);
@@ -45,8 +45,31 @@ export function AccountBalance() {
           description: "Nepavyko įkelti sąskaitos likučio",
           variant: "destructive"
         });
-      } else {
+      } else if (data) {
         setBalance(data);
+      } else {
+        // No balance found, create one with default amount
+        const { data: newBalance, error: createError } = await supabase
+          .from('account_balances')
+          .insert({
+            user_id: profile.user_id,
+            account_number: profile.account_number,
+            balance: 1000.00,
+            currency: 'EUR'
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Error creating balance:', createError);
+          toast({
+            title: "Klaida",
+            description: "Nepavyko sukurti sąskaitos likučio",
+            variant: "destructive"
+          });
+        } else {
+          setBalance(newBalance);
+        }
       }
     } catch (error) {
       console.error('Error:', error);
