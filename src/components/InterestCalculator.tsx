@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles } from "lucide-react";
 import { RegistrationModal } from "./RegistrationModal";
-import { DiscountRequestModal } from "./DiscountRequestModal";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "./auth/AuthModal";
+import { useNavigate } from "react-router-dom";
 
 const InterestCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");
@@ -16,7 +18,10 @@ const InterestCalculator = () => {
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
   const [animatedYearly, setAnimatedYearly] = useState<number>(0);
   const [registrationOpen, setRegistrationOpen] = useState(false);
-  const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  
+  const { user } = useAuth();
+  const navigate = useNavigate();
   
   const calculateInterest = () => {
     const principal = parseFloat(amount) || 0;
@@ -188,14 +193,35 @@ const InterestCalculator = () => {
                 </div>
               </div>
 
-              <Button 
-                onClick={() => setRegistrationOpen(true)}
-                className="w-full bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
-                size="lg"
-              >
-                <span className="relative z-10">Pradėti taupyti</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
-              </Button>
+              {user ? (
+                <Button 
+                  onClick={() => navigate('/dashboard')}
+                  className="w-full bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                  size="lg"
+                >
+                  <span className="relative z-10">Valdyti sąskaitą</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
+                </Button>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    onClick={() => setRegistrationOpen(true)}
+                    className="bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                    size="lg"
+                  >
+                    <span className="relative z-10">Registruotis</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
+                  </Button>
+                  <Button 
+                    onClick={() => setShowAuthModal(true)}
+                    variant="outline"
+                    className="border-white text-white hover:bg-white/20 font-semibold py-3 transition-all duration-300"
+                    size="lg"
+                  >
+                    Prisijungti
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -205,9 +231,10 @@ const InterestCalculator = () => {
         open={registrationOpen} 
         onOpenChange={setRegistrationOpen}
       />
-      <DiscountRequestModal 
-        open={discountRequestOpen} 
-        onOpenChange={setDiscountRequestOpen}
+      <AuthModal
+        open={showAuthModal}
+        onOpenChange={setShowAuthModal}
+        defaultTab="login"
       />
     </section>
   );

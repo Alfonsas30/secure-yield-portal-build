@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles, Crown, Star, Diamond } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
+import { RegistrationModal } from "./RegistrationModal";
 import { useNavigate } from "react-router-dom";
 
 const TermDepositCalculator = () => {
@@ -14,6 +15,7 @@ const TermDepositCalculator = () => {
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
   const [animatedYearly, setAnimatedYearly] = useState<number>(0);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [registrationOpen, setRegistrationOpen] = useState(false);
   
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -222,22 +224,35 @@ const TermDepositCalculator = () => {
                 </div>
               </div>
 
-              <Button 
-                onClick={() => {
-                  if (user) {
-                    navigate('/dashboard');
-                  } else {
-                    setShowAuthModal(true);
-                  }
-                }}
-                className="w-full bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
-                size="lg"
-              >
-                <span className="relative z-10">
-                  {user ? 'Valdyti sąskaitą' : 'Atidaryti terminuotą indėlį'}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
-              </Button>
+              {user ? (
+                <Button 
+                  onClick={() => navigate('/dashboard')}
+                  className="w-full bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                  size="lg"
+                >
+                  <span className="relative z-10">Valdyti sąskaitą</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
+                </Button>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    onClick={() => setRegistrationOpen(true)}
+                    className="bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                    size="lg"
+                  >
+                    <span className="relative z-10">Registruotis</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
+                  </Button>
+                  <Button 
+                    onClick={() => setShowAuthModal(true)}
+                    variant="outline"
+                    className="border-white/50 text-slate-800 hover:bg-white/20 font-semibold py-3 transition-all duration-300"
+                    size="lg"
+                  >
+                    Prisijungti
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -246,7 +261,11 @@ const TermDepositCalculator = () => {
       <AuthModal
         open={showAuthModal}
         onOpenChange={setShowAuthModal}
-        defaultTab="signup"
+        defaultTab="login"
+      />
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
       />
     </section>
   );
