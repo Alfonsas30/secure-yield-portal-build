@@ -5,11 +5,15 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles, Crown, Star, Diamond } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
+import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const TermDepositCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
   const [animatedYearly, setAnimatedYearly] = useState<number>(0);
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showDiscountModal, setShowDiscountModal] = useState(false);
   
   const getInterestRate = (depositAmount: number) => {
     if (depositAmount < 10000) return 8;
@@ -216,6 +220,7 @@ const TermDepositCalculator = () => {
               </div>
 
               <Button 
+                onClick={() => setShowRegistrationModal(true)}
                 className="w-full bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                 size="lg"
               >
@@ -226,6 +231,20 @@ const TermDepositCalculator = () => {
           </Card>
         </div>
       </div>
+
+      <RegistrationModal
+        open={showRegistrationModal}
+        onOpenChange={setShowRegistrationModal}
+        onRequestDiscount={() => {
+          setShowRegistrationModal(false);
+          setShowDiscountModal(true);
+        }}
+      />
+
+      <DiscountRequestModal
+        open={showDiscountModal}
+        onOpenChange={setShowDiscountModal}
+      />
     </section>
   );
 };
