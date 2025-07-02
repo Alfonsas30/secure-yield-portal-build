@@ -5,6 +5,9 @@ enabled = true
 site_url = "http://localhost:3000"
 additional_redirect_urls = ["https://localhost:3000"]
 
+[functions.test-function]
+verify_jwt = false
+
 [functions.request-discount]
 verify_jwt = false
 
