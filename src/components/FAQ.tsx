@@ -79,9 +79,12 @@ const FAQ = () => {
             <p className="text-slate-600 mb-6">
               Susisiekite su mūsų ekspertų komanda - mes mielai padėsime
             </p>
-            <button className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
-              Susisiekti su mumis
-            </button>
+            <a 
+              href="mailto:gmbhinvest333@gmail.com"
+              className="inline-block bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+            >
+              Susisiekti
+            </a>
           </div>
         </div>
       </div>
