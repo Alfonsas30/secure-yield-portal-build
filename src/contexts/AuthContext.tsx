@@ -65,8 +65,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               console.error('Error fetching profile:', error);
             } else {
               setProfile(profileData);
-              
-              // No automatic redirect - let users choose where to go
+            }
+            
+            // Auto redirect to dashboard after login
+            if (event === 'SIGNED_IN') {
+              navigate('/dashboard');
             }
           }, 0);
         } else {
