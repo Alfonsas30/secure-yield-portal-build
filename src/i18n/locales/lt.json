@@ -106,5 +106,146 @@
       "button": "Registruotis dabar",
       "readMore": "Skaityti daugiau"
     }
+  },
+  "footer": {
+    "description": "Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.",
+    "services": {
+      "title": "Paslaugos",
+      "dailyInterest": "Dienos palūkanos",
+      "savingsAccount": "Taupymo sąskaita",
+      "paymentCards": "Mokėjimų kortelės",
+      "transfers": "Pervedimai",
+      "mobileApp": "Mobilioji aplikacija"
+    },
+    "information": {
+      "title": "Informacija",
+      "aboutUs": "Apie mus",
+      "security": "Saugumas",
+      "licenses": "Licencijos",
+      "careers": "Karjera",
+      "news": "Naujienos"
+    },
+    "help": {
+      "title": "Pagalba",
+      "contact": "Kontaktai",
+      "faq": "D.U.K.",
+      "guidelines": "Gairės",
+      "privacy": "Privatumo politika",
+      "legal": "Teisinė informacija"
+    },
+    "techSupport": {
+      "title": "Techninė pagalba",
+      "calculatorIssues": "Skaičiuoklių problemos:",
+      "email": "gmbhinvest333@gmail.com"
+    },
+    "copyright": "LTB Bankas. Visos teisės saugomos.",
+    "license": "Licencijuotas Lietuvos banko",
+    "insurance": "Indėliai apdrausti iki 100,000 €",
+    "disclaimer": {
+      "title": "Svarbi informacija:",
+      "text": "LTB Bankas yra licencijuotas kredito institucijos bankas, prižiūrimas Lietuvos banko. Indėliai apdrausti pagal ES direktyvas iki 100,000 € per klientą. Palūkanų dydis priklauso nuo rinkos sąlygų ir gali keistis. Prieš priimant sprendimus konsultuokitės su mūsų ekspertais."
+    }
+  },
+  "faq": {
+    "badge": "Dažniausiai užduodami klausimai",
+    "title": "Turite klausimų?",
+    "description": "Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas",
+    "questions": [
+      {
+        "question": "Kaip veikia dienos palūkanos?",
+        "answer": "Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje."
+      },
+      {
+        "question": "Ar tikrai nereikia teikti jokių ataskaitų?",
+        "answer": "Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų sudėtingų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems."
+      },
+      {
+        "question": "Kiek saugūs mano pinigai?",
+        "answer": "Jūsų indėliai yra apdrausti pagal ES direktyvas iki 100,000 € per klientą. Mes naudojame aukščiausio lygio šifravimo technologijas ir laikome griežtus saugumo protokolus. Jūsų duomenys yra konfidencialūs ir niekam neatskleidžiami."
+      },
+      {
+        "question": "Ar galiu išsiimti pinigus bet kada?",
+        "answer": "Taip, jūsų pinigai yra prieinami bet kada. Nėra jokių užšaldymo terminų ar baudų už ankstyvas išėmimas. Galite išsiimti visą sumą arba tik dalį - sprendžiate patys."
+      },
+      {
+        "question": "Kokie yra mokesčiai?",
+        "answer": "Mes neimame jokių mokesčių už sąskaitos tvarkymą, pervedimu ar saugojimą. Vienintelis mokestis, kurį mokate, yra standartinis valstybės pajamų mokestis nuo užvaldytų palūkanų."
+      },
+      {
+        "question": "Kokia minimuma suma reikalinga pradėti?",
+        "answer": "Minimalus indėlio dydis yra tik 100 €. Maksimalaus dydžio apribojimų nėra, tačiau indėliai viršijantys 100,000 € nėra apdrausti pagal ES direktyvas."
+      },
+      {
+        "question": "Kaip greitai gaunu palūkanas?",
+        "answer": "Palūkanos skaičiuojamos ir prijungiamos prie jūsų sąskaitos kasdien. Galite matyti, kaip jūsų balansas auga kiekvieną dieną mūsų mobilejeje aplikacijoje arba internetinėje bankininkystėje."
+      },
+      {
+        "question": "Kas nutiks, jei bankrotuosite?",
+        "answer": "LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs."
+      }
+    ],
+    "contact": {
+      "notFound": "Neradote atsakymo į savo klausimą?",
+      "description": "Susisiekite su mūsų ekspertų komanda - mes mielai padėsime",
+      "button": "Susisiekti",
+      "form": {
+        "name": "Vardas",
+        "email": "El. paštas",
+        "message": "Žinutė",
+        "namePlaceholder": "Jūsų vardas",
+        "emailPlaceholder": "jusu.pastas@example.com",
+        "messagePlaceholder": "Jūsų klausimas...",
+        "send": "Siųsti",
+        "sending": "Siunčiama...",
+        "cancel": "Atšaukti"
+      }
+    },
+    "toast": {
+      "success": "Žinutė išsiųsta!",
+      "successDescription": "Mes susisieksime su jumis per 24 valandas.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą."
+    }
+  },
+  "contact": {
+    "badge": "Susisiekite su mumis",
+    "title": "Turime klausimų?",
+    "description": "Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.",
+    "form": {
+      "title": "Parašykite mums",
+      "name": "Vardas",
+      "phone": "Telefonas",
+      "email": "El. paštas",
+      "message": "Žinutė",
+      "namePlaceholder": "Jūsų vardas",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "jusu.paštas@example.com",
+      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
+      "send": "Siųsti žinutę",
+      "sending": "Siunčiama..."
+    },
+    "newsletter": {
+      "title": "Prenumeruoti naujienas",
+      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
+      "email": "El. pašto adresas",
+      "name": "Vardas (neprivaloma)",
+      "emailPlaceholder": "jusu.pastas@example.com",
+      "namePlaceholder": "Jūsų vardas",
+      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
+      "subscribe": "Prenumeruoti",
+      "subscribing": "Prenumeruojama..."
+    },
+    "toast": {
+      "messageSent": "Žinutė išsiųsta!",
+      "messageDescription": "Mes susisieksime su jumis per 24 valandas.",
+      "subscribeSuccess": "Sėkmingai prenumeruojate!",
+      "subscribeDescription": "Ačiū! Netrukus gausite patvirtinimo laišką",
+      "alreadySubscribed": "El. paštas jau prenumeruoja",
+      "alreadyDescription": "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+      "error": "Klaida",
+      "contactError": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+      "newsletterError": "Nepavyko prenumeruoti. Pabandykite dar kartą",
+      "newsletterValidation": "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu"
+    }
   }
 }

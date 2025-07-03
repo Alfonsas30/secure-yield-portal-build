@@ -106,5 +106,146 @@
       "button": "Register now",
       "readMore": "Read more"
     }
+  },
+  "footer": {
+    "description": "The world's first bank that pays interest daily. Transparent, secure, with no hidden fees – this is what modern savings look like.",
+    "services": {
+      "title": "Services",
+      "dailyInterest": "Daily interest",
+      "savingsAccount": "Savings account",
+      "paymentCards": "Payment cards",
+      "transfers": "Transfers",
+      "mobileApp": "Mobile app"
+    },
+    "information": {
+      "title": "Information",
+      "aboutUs": "About us",
+      "security": "Security",
+      "licenses": "Licenses",
+      "careers": "Careers",
+      "news": "News"
+    },
+    "help": {
+      "title": "Help",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "guidelines": "Guidelines",
+      "privacy": "Privacy policy",
+      "legal": "Legal information"
+    },
+    "techSupport": {
+      "title": "Technical support",
+      "calculatorIssues": "Calculator issues:",
+      "email": "gmbhinvest333@gmail.com"
+    },
+    "copyright": "LTB Bank. All rights reserved.",
+    "license": "Licensed by Bank of Lithuania",
+    "insurance": "Deposits insured up to €100,000",
+    "disclaimer": {
+      "title": "Important information:",
+      "text": "LTB Bank is a licensed credit institution bank, supervised by the Bank of Lithuania. Deposits are insured according to EU directives up to €100,000 per client. Interest rates depend on market conditions and may change. Please consult with our experts before making decisions."
+    }
+  },
+  "faq": {
+    "badge": "Frequently asked questions",
+    "title": "Have questions?",
+    "description": "Here are answers to the most frequently asked questions about LTB Bank services",
+    "questions": [
+      {
+        "question": "How do daily interest rates work?",
+        "answer": "Interest is calculated daily based on your account balance. Instead of paying interest once a year, we pay it daily. This means your money grows every day, not just at the end of the year."
+      },
+      {
+        "question": "Do I really not need to provide any reports?",
+        "answer": "Yes, we don't need income declarations, employment certificates or other complex documents. Simply open an account and start saving. We believe that saving should be simple and accessible to everyone."
+      },
+      {
+        "question": "How safe is my money?",
+        "answer": "Your deposits are insured according to EU directives up to €100,000 per client. We use the highest level encryption technologies and maintain strict security protocols. Your data is confidential and not disclosed to anyone."
+      },
+      {
+        "question": "Can I withdraw money anytime?",
+        "answer": "Yes, your money is available anytime. There are no lock-up periods or penalties for early withdrawals. You can withdraw the full amount or just a part - you decide."
+      },
+      {
+        "question": "What are the fees?",
+        "answer": "We don't charge any fees for account management, transfers or storage. The only fee you pay is the standard state income tax on earned interest."
+      },
+      {
+        "question": "What's the minimum amount needed to start?",
+        "answer": "The minimum deposit amount is only €100. There are no maximum limits, however deposits exceeding €100,000 are not insured under EU directives."
+      },
+      {
+        "question": "How quickly do I receive interest?",
+        "answer": "Interest is calculated and added to your account daily. You can see your balance grow every day in our mobile app or online banking."
+      },
+      {
+        "question": "What happens if you go bankrupt?",
+        "answer": "LTB Bank is a licensed bank, supervised by the Bank of Lithuania. Our operations are regulated according to EU directives, and deposits are insured up to €100,000 per client. Your money is safe."
+      }
+    ],
+    "contact": {
+      "notFound": "Didn't find an answer to your question?",
+      "description": "Contact our team of experts - we're happy to help",
+      "button": "Contact us",
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "namePlaceholder": "Your name",
+        "emailPlaceholder": "your.email@example.com",
+        "messagePlaceholder": "Your question...",
+        "send": "Send",
+        "sending": "Sending...",
+        "cancel": "Cancel"
+      }
+    },
+    "toast": {
+      "success": "Message sent!",
+      "successDescription": "We will contact you within 24 hours.",
+      "error": "Error",
+      "errorDescription": "Failed to send message. Please try again."
+    }
+  },
+  "contact": {
+    "badge": "Contact us",
+    "title": "Have questions?",
+    "description": "Our team of experts is always ready to help. Contact us in any way convenient for you.",
+    "form": {
+      "title": "Write to us",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "namePlaceholder": "Your name",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Write your question or comment...",
+      "send": "Send message",
+      "sending": "Sending..."
+    },
+    "newsletter": {
+      "title": "Subscribe to newsletter",
+      "description": "Get the latest information about interest rate changes, new services and financial advice",
+      "email": "Email address",
+      "name": "Name (optional)",
+      "emailPlaceholder": "your.email@example.com",
+      "namePlaceholder": "Your name",
+      "consent": "I agree that my data will be processed for newsletter sending",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing..."
+    },
+    "toast": {
+      "messageSent": "Message sent!",
+      "messageDescription": "We will contact you within 24 hours.",
+      "subscribeSuccess": "Successfully subscribed!",
+      "subscribeDescription": "Thank you! You will receive a confirmation email shortly",
+      "alreadySubscribed": "Email already subscribed",
+      "alreadyDescription": "This email address is already subscribed to our newsletter",
+      "error": "Error",
+      "contactError": "Failed to send message. Please try again.",
+      "newsletterError": "Failed to subscribe. Please try again",
+      "newsletterValidation": "Please fill in the email field and agree to data processing"
+    }
   }
 }

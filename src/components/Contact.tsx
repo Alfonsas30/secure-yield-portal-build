@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -138,13 +140,13 @@ const Contact = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-green-50 text-green-700 border-green-200">
             <Mail className="w-4 h-4 mr-2" />
-            Susisiekite su mumis
+            {t('contact.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            Turime klausimų?
+            {t('contact.title')}
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.
+            {t('contact.description')}
           </p>
         </div>
 

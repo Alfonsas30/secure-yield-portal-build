@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const FAQ = () => {
+  const { t } = useTranslation();
   const [showContactForm, setShowContactForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,8 +47,8 @@ const FAQ = () => {
       }
 
       toast({
-        title: "Žinutė išsiųsta!",
-        description: "Mes susisieksime su jumis per 24 valandas.",
+        title: t('faq.toast.success'),
+        description: t('faq.toast.successDescription'),
       });
       
       setFormData({ name: "", email: "", message: "" });
@@ -54,8 +56,8 @@ const FAQ = () => {
     } catch (error) {
       console.error('Contact form error:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+        title: t('faq.toast.error'),
+        description: t('faq.toast.errorDescription'),
         variant: "destructive",
       });
     } finally {
@@ -63,40 +65,10 @@ const FAQ = () => {
     }
   };
 
-  const faqs = [
-    {
-      question: "Kaip veikia dienos palūkanos?",
-      answer: "Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje."
-    },
-    {
-      question: "Ar tikrai nereikia teikti jokių ataskaitų?",
-      answer: "Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų sudėtingų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems."
-    },
-    {
-      question: "Kiek saugūs mano pinigai?",
-      answer: "Jūsų indėliai yra apdrausti pagal ES direktyvas iki 100,000 € per klientą. Mes naudojame aukščiausio lygio šifravimo technologijas ir laikome griežtus saugumo protokolus. Jūsų duomenys yra konfidencialūs ir niekam neatskleidžiami."
-    },
-    {
-      question: "Ar galiu išsiimti pinigus bet kada?",
-      answer: "Taip, jūsų pinigai yra prieinami bet kada. Nėra jokių užšaldymo terminų ar baudų už ankstyvas išėmimas. Galite išsiimti visą sumą arba tik dalį - sprendžiate patys."
-    },
-    {
-      question: "Kokie yra mokesčiai?",
-      answer: "Mes neimame jokių mokesčių už sąskaitos tvarkymą, pervedimu ar saugojimą. Vienintelis mokestis, kurį mokate, yra standartinis valstybės pajamų mokestis nuo užvaldytų palūkanų."
-    },
-    {
-      question: "Kokia minimuma suma reikalinga pradėti?",
-      answer: "Minimalus indėlio dydis yra tik 100 €. Maksimalaus dydžio apribojimų nėra, tačiau indėliai viršijantys 100,000 € nėra apdrausti pagal ES direktyvas."
-    },
-    {
-      question: "Kaip greitai gaunu palūkanas?",
-      answer: "Palūkanos skaičiuojamos ir prijungiamos prie jūsų sąskaitos kasdien. Galite matyti, kaip jūsų balansas auga kiekvieną dieną mūsų mobilejeje aplikacijoje arba internetinėje bankininkystėje."
-    },
-    {
-      question: "Kas nutiks, jei bankrotuosite?",
-      answer: "LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs."
-    }
-  ];
+  const faqs = t('faq.questions', { returnObjects: true }) as Array<{
+    question: string;
+    answer: string;
+  }>;
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
@@ -104,13 +76,13 @@ const FAQ = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-blue-50 text-blue-700 border-blue-200">
             <HelpCircle className="w-4 h-4 mr-2" />
-            Dažniausiai užduodami klausimai
+            {t('faq.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            Turite klausimų?
+            {t('faq.title')}
           </h2>
           <p className="text-xl text-slate-600">
-            Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas
+            {t('faq.description')}
           </p>
         </div>
 
@@ -132,10 +104,10 @@ const FAQ = () => {
         <div className="mt-12 text-center">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200">
             <h3 className="text-xl font-semibold mb-4 text-slate-900">
-              Neradote atsakymo į savo klausimą?
+              {t('faq.contact.notFound')}
             </h3>
             <p className="text-slate-600 mb-6">
-              Susisiekite su mūsų ekspertų komanda - mes mielai padėsime
+              {t('faq.contact.description')}
             </p>
             
             {!showContactForm ? (
@@ -143,13 +115,13 @@ const FAQ = () => {
                 onClick={() => setShowContactForm(true)}
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
               >
-                Susisiekti
+                {t('faq.contact.button')}
               </Button>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4 text-left">
                 <div>
                   <Label htmlFor="quick-name" className="text-sm font-medium text-slate-700">
-                    Vardas *
+                    {t('faq.contact.form.name')} *
                   </Label>
                   <Input
                     id="quick-name"
@@ -158,13 +130,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder="Jūsų vardas"
+                    placeholder={t('faq.contact.form.namePlaceholder')}
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-email" className="text-sm font-medium text-slate-700">
-                    El. paštas *
+                    {t('faq.contact.form.email')} *
                   </Label>
                   <Input
                     id="quick-email"
@@ -174,13 +146,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder="jusu.pastas@example.com"
+                    placeholder={t('faq.contact.form.emailPlaceholder')}
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-message" className="text-sm font-medium text-slate-700">
-                    Žinutė *
+                    {t('faq.contact.form.message')} *
                   </Label>
                   <Textarea
                     id="quick-message"
@@ -190,7 +162,7 @@ const FAQ = () => {
                     required
                     rows={3}
                     className="mt-1"
-                    placeholder="Jūsų klausimas..."
+                    placeholder={t('faq.contact.form.messagePlaceholder')}
                   />
                 </div>
                 
@@ -201,11 +173,11 @@ const FAQ = () => {
                     className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
                   >
                     {isLoading ? (
-                      "Siunčiama..."
+                      t('faq.contact.form.sending')
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
-                        Siųsti
+                        {t('faq.contact.form.send')}
                       </>
                     )}
                   </Button>
@@ -218,7 +190,7 @@ const FAQ = () => {
                     }}
                     disabled={isLoading}
                   >
-                    Atšaukti
+                    {t('faq.contact.form.cancel')}
                   </Button>
                 </div>
               </form>
