@@ -3,6 +3,7 @@ import { User, Session } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Profile {
   id: string;
@@ -29,10 +30,13 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const IDLE_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
-const WARNING_TIME = 30 * 1000; // 30 seconds warning
-
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const isMobile = useIsMobile();
+  
+  // Mobile-optimized timeouts for better security
+  const IDLE_TIMEOUT = isMobile ? 2 * 60 * 1000 : 5 * 60 * 1000; // 2 min mobile, 5 min desktop
+  const WARNING_TIME = 30 * 1000; // 30 seconds warning
+  const VISIBILITY_TIMEOUT = isMobile ? 10 * 1000 : 30 * 1000; // 10 sec mobile, 30 sec desktop
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -44,6 +48,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [sessionTimeoutActive, setSessionTimeoutActive] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Comprehensive auth data cleanup function
+  const clearAllAuthData = () => {
+    try {
+      // Clear all possible Supabase auth tokens
+      const supabaseProjectRef = 'latwptcvghypdopbpxfr';
+      localStorage.removeItem('supabase.auth.token');
+      localStorage.removeItem(`sb-${supabaseProjectRef}-auth-token`);
+      sessionStorage.removeItem(`sb-${supabaseProjectRef}-auth-token`);
+      
+      // Clear any other auth-related storage
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('supabase') || key.includes('auth')) {
+          localStorage.removeItem(key);
+        }
+      });
+      
+      console.log(`Mobile logout cleanup completed. Mobile: ${isMobile}`);
+    } catch (error) {
+      console.error('Error clearing auth data:', error);
+    }
+  };
 
   useEffect(() => {
     // Set up auth state listener first
@@ -163,9 +189,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       if (!currentSession) {
         console.log('No active session found, clearing state...');
-        // Clear only authentication-related data
-        localStorage.removeItem('supabase.auth.token');
-        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
+        // Clear all Supabase authentication data thoroughly
+        clearAllAuthData();
         setUser(null);
         setSession(null);
         setProfile(null);
@@ -184,9 +209,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       } else {
         console.log('Successfully signed out');
-        // Clear only authentication-related data
-        localStorage.removeItem('supabase.auth.token');
-        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
+        // Use comprehensive cleanup
+        clearAllAuthData();
         navigate('/');
       }
 
@@ -281,13 +305,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const handleUnload = () => {
       // Quick signout on page unload - clear session immediately
       try {
-        // Clear authentication data immediately
-        localStorage.removeItem('supabase.auth.token');
-        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
+        // Use comprehensive cleanup
+        clearAllAuthData();
         
-        // Attempt to notify server with keepalive
+        // Attempt to notify server with keepalive (mobile-friendly)
         if (navigator.sendBeacon) {
           navigator.sendBeacon('/logout');
+        } else if (isMobile) {
+          // For mobile browsers, use sync XHR as last resort
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/logout', false); // synchronous
+          xhr.send();
         } else {
           // Fallback for browsers without sendBeacon
           fetch('/logout', { 
@@ -303,17 +331,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const handlePageHide = () => {
       // Alternative to unload for better mobile support
+      console.log(`Page hidden on ${isMobile ? 'mobile' : 'desktop'}`);
       handleUnload();
     };
 
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        // Start timeout when page becomes hidden
+        console.log(`Document hidden, starting ${VISIBILITY_TIMEOUT}ms timeout (Mobile: ${isMobile})`);
+        // Use mobile-optimized timeout when page becomes hidden
         setTimeout(() => {
           if (document.hidden) {
+            console.log('Signing out due to visibility timeout');
             signOut();
           }
-        }, 30000); // 30 seconds
+        }, VISIBILITY_TIMEOUT);
+      } else {
+        console.log('Document visible again');
+        resetActivity(); // Reset activity when user returns
       }
     };
 
