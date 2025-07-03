@@ -284,29 +284,7 @@
         "question": "Kas nutiks, jei bankrotuosite?",
         "answer": "LTB Bankas yra licencijuotas bankas, prižiūrimas Lietuvos banko. Mūsų veikla yra reguliuojama pagal ES direktyvas, o indėliai apdrausti iki 100,000 € per klientą. Jūsų pinigai yra saugūs."
       }
-    ],
-    "contact": {
-      "notFound": "Neradote atsakymo į savo klausimą?",
-      "description": "Susisiekite su mūsų ekspertų komanda - mes mielai padėsime",
-      "button": "Susisiekti",
-      "form": {
-        "name": "Vardas",
-        "email": "El. paštas",
-        "message": "Žinutė",
-        "namePlaceholder": "Jūsų vardas",
-        "emailPlaceholder": "jusu.pastas@example.com",
-        "messagePlaceholder": "Jūsų klausimas...",
-        "send": "Siųsti",
-        "sending": "Siunčiama...",
-        "cancel": "Atšaukti"
-      }
-    },
-    "toast": {
-      "success": "Žinutė išsiųsta!",
-      "successDescription": "Mes susisieksime su jumis per 24 valandas.",
-      "error": "Klaida",
-      "errorDescription": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą."
-    }
+    ]
   },
   "loanApplication": {
     "loanSummary": {
@@ -703,32 +681,6 @@
     "register": "Registruotis investavimui",
     "login": "Prisijungti",
     "signContract": "Pasirašyti sutartį"
-  },
-  "contact": {
-    "form": {
-      "title": "Parašykite mums",
-      "name": "Vardas",
-      "phone": "Telefonas",
-      "email": "El. paštas",
-      "message": "Žinutė",
-      "namePlaceholder": "Jūsų vardas",
-      "phonePlaceholder": "+370 XXX XXXXX",
-      "emailPlaceholder": "jusu.paštas@example.com",
-      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
-      "submit": "Siųsti žinutę",
-      "submitting": "Siunčiama..."
-    },
-    "newsletter": {
-      "title": "Prenumeruoti naujienas",
-      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
-      "emailLabel": "El. pašto adresas",
-      "nameLabel": "Vardas (neprivaloma)",
-      "emailPlaceholder": "jusu.pastas@example.com",
-      "namePlaceholder": "Jūsų vardas",
-      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
-      "submit": "Prenumeruoti",
-      "submitting": "Prenumeruojama..."
-    }
   },
   "dashboard": {
     "title": "Banko valdymo sistema",
