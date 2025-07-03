@@ -24,6 +24,8 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
   const [loading, setLoading] = useState(false);
   const [telegramId, setTelegramId] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [viberNumber, setViberNumber] = useState("");
+  const [signalNumber, setSignalNumber] = useState("");
   const [activeTab, setActiveTab] = useState("telegram");
 
   const setupTelegram = async () => {
@@ -80,16 +82,113 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
 
     setLoading(true);
     try {
-      // WhatsApp setup logic will be implemented later
-      toast({
-        title: "WhatsApp 2FA",
-        description: "WhatsApp integracija bus pridėta netrukus",
+      const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
+        body: { 
+          action: 'setup',
+          phone_number: whatsappNumber,
+          display_name: `WhatsApp (${whatsappNumber})`
+        }
       });
+
+      if (error) throw error;
+
+      toast({
+        title: "WhatsApp 2FA sukonfigūruotas",
+        description: "WhatsApp 2FA sėkmingai įjungtas jūsų paskyroje",
+      });
+      
+      onSetupComplete();
+      onOpenChange(false);
+      setWhatsappNumber("");
     } catch (error) {
       console.error('WhatsApp setup error:', error);
       toast({
         title: t('discount.error'),
-        description: "Nepavyko nustatyti WhatsApp 2FA",
+        description: error?.message || "Nepavyko nustatyti WhatsApp 2FA",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setupViber = async () => {
+    if (!viberNumber) {
+      toast({
+        title: t('discount.error'),
+        description: "Įveskite Viber numerį",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-viber-2fa', {
+        body: { 
+          action: 'setup',
+          phone_number: viberNumber,
+          display_name: `Viber (${viberNumber})`
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Viber 2FA sukonfigūruotas",
+        description: "Viber 2FA sėkmingai įjungtas jūsų paskyroje",
+      });
+      
+      onSetupComplete();
+      onOpenChange(false);
+      setViberNumber("");
+    } catch (error) {
+      console.error('Viber setup error:', error);
+      toast({
+        title: t('discount.error'),
+        description: error?.message || "Nepavyko nustatyti Viber 2FA",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setupSignal = async () => {
+    if (!signalNumber) {
+      toast({
+        title: t('discount.error'),
+        description: "Įveskite Signal numerį",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-signal-2fa', {
+        body: { 
+          action: 'setup',
+          phone_number: signalNumber,
+          display_name: `Signal (${signalNumber})`
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Signal 2FA sukonfigūruotas",
+        description: "Signal 2FA sėkmingai įjungtas jūsų paskyroje",
+      });
+      
+      onSetupComplete();
+      onOpenChange(false);
+      setSignalNumber("");
+    } catch (error) {
+      console.error('Signal setup error:', error);
+      toast({
+        title: t('discount.error'),
+        description: error?.message || "Nepavyko nustatyti Signal 2FA",
         variant: "destructive"
       });
     } finally {
@@ -108,7 +207,7 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="telegram" className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4" />
               Telegram
@@ -116,6 +215,14 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
             <TabsTrigger value="whatsapp" className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
               WhatsApp
+            </TabsTrigger>
+            <TabsTrigger value="viber" className="flex items-center gap-2">
+              <MessageCircle className="w-4 h-4" />
+              Viber
+            </TabsTrigger>
+            <TabsTrigger value="signal" className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              Signal
             </TabsTrigger>
           </TabsList>
 
@@ -184,7 +291,7 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
             <Alert>
               <Info className="h-4 w-4" />
               <AlertDescription>
-                WhatsApp integracija bus pridėta ateityje. Kol kas naudokite Telegram arba TOTP.
+                WhatsApp integracija naudoja Twilio API patvirtinimo kodų siuntimui.
               </AlertDescription>
             </Alert>
 
@@ -193,12 +300,16 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
                 <CardTitle className="text-sm">WhatsApp Business API</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="text-xs space-y-1 text-muted-foreground">
-                  <p>• SMS patvirtinimo kodai per WhatsApp</p>
-                  <p>• Automatinis kodų nuskaitymas</p>
-                  <p>• Palaikymas visose šalyse</p>
+                <div className="text-xs space-y-1">
+                  <p>1. Įveskite savo WhatsApp numerį žemiau</p>
+                  <p>2. Numeris bus susietas su jūsų paskyra</p>
+                  <p>3. Gausite patvirtinimo kodus per WhatsApp</p>
                 </div>
-                <Badge variant="secondary" className="text-xs">Greitai</Badge>
+                <div className="flex flex-wrap gap-1">
+                  <Badge variant="outline" className="text-xs">✓ Greitas gavimas</Badge>
+                  <Badge variant="outline" className="text-xs">✓ Patogus naudojimas</Badge>
+                  <Badge variant="outline" className="text-xs">✓ Pasaulinis</Badge>
+                </div>
               </CardContent>
             </Card>
 
@@ -211,17 +322,111 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
                   value={whatsappNumber}
                   onChange={(e) => setWhatsappNumber(e.target.value)}
                   placeholder="+37060000000"
-                  disabled
                 />
               </div>
 
               <Button 
                 onClick={setupWhatsApp}
-                disabled={true}
+                disabled={loading || !whatsappNumber}
                 className="w-full"
-                variant="secondary"
               >
-                Greitai prieinamas
+                {loading ? "Konfigūruojama..." : "Įjungti WhatsApp 2FA"}
+              </Button>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="viber" className="space-y-4">
+            <Alert>
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Viber integracija naudoja Viber Bot API patvirtinimo kodų siuntimui.
+              </AlertDescription>
+            </Alert>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm">Viber Bot API</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="text-xs space-y-1">
+                  <p>1. Įveskite savo Viber numerį žemiau</p>
+                  <p>2. Numeris bus susietas su jūsų paskyra</p>
+                  <p>3. Gausite patvirtinimo kodus per Viber</p>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  <Badge variant="outline" className="text-xs">✓ Populiarus Europoje</Badge>
+                  <Badge variant="outline" className="text-xs">✓ Saugus šifravimas</Badge>
+                  <Badge variant="outline" className="text-xs">✓ Greitas</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="viberNumber">Viber numeris</Label>
+                <Input
+                  id="viberNumber"
+                  type="tel"
+                  value={viberNumber}
+                  onChange={(e) => setViberNumber(e.target.value)}
+                  placeholder="+37060000000"
+                />
+              </div>
+
+              <Button 
+                onClick={setupViber}
+                disabled={loading || !viberNumber}
+                className="w-full"
+              >
+                {loading ? "Konfigūruojama..." : "Įjungti Viber 2FA"}
+              </Button>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="signal" className="space-y-4">
+            <Alert>
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                Signal integracija naudoja Signal CLI patvirtinimo kodų siuntimui.
+              </AlertDescription>
+            </Alert>
+
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm">Signal Private Messenger</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="text-xs space-y-1">
+                  <p>1. Įveskite savo Signal numerį žemiau</p>
+                  <p>2. Numeris bus susietas su jūsų paskyra</p>
+                  <p>3. Gausite patvirtinimo kodus per Signal</p>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  <Badge variant="outline" className="text-xs">✓ Aukščiausias saugumas</Badge>
+                  <Badge variant="outline" className="text-xs">✓ End-to-end šifravimas</Badge>
+                  <Badge variant="outline" className="text-xs">✓ Open source</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <Label htmlFor="signalNumber">Signal numeris</Label>
+                <Input
+                  id="signalNumber"
+                  type="tel"
+                  value={signalNumber}
+                  onChange={(e) => setSignalNumber(e.target.value)}
+                  placeholder="+37060000000"
+                />
+              </div>
+
+              <Button 
+                onClick={setupSignal}
+                disabled={loading || !signalNumber}
+                className="w-full"
+              >
+                {loading ? "Konfigūruojama..." : "Įjungti Signal 2FA"}
               </Button>
             </div>
           </TabsContent>

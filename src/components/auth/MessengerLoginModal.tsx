@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Phone, Clock, RefreshCw } from "lucide-react";
+import { MessageCircle, Phone, Clock, RefreshCw, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -76,14 +76,41 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
         });
 
         if (error) throw error;
-
-        setCodeSent(true);
-        setTimeLeft(300);
-        toast({
-          title: "Kodas išsiųstas",
-          description: `Patvirtinimo kodas išsiųstas į ${selectedMethod.display_name}`,
+      } else if (selectedMethod.messenger_type === 'whatsapp') {
+        const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
+          body: { 
+            action: 'send_code',
+            phone_number: selectedMethod.messenger_id
+          }
         });
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'viber') {
+        const { data, error } = await supabase.functions.invoke('send-viber-2fa', {
+          body: { 
+            action: 'send_code',
+            phone_number: selectedMethod.messenger_id
+          }
+        });
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'signal') {
+        const { data, error } = await supabase.functions.invoke('send-signal-2fa', {
+          body: { 
+            action: 'send_code',
+            phone_number: selectedMethod.messenger_id
+          }
+        });
+
+        if (error) throw error;
       }
+
+      setCodeSent(true);
+      setTimeLeft(300);
+      toast({
+        title: "Kodas išsiųstas",
+        description: `Patvirtinimo kodas išsiųstas į ${selectedMethod.display_name}`,
+      });
     } catch (error) {
       console.error('Error sending code:', error);
       toast({
@@ -111,15 +138,45 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
         });
 
         if (error) throw error;
-
-        toast({
-          title: "Patvirtinimas sėkmingas",
-          description: "Prisijungimas sėkmingas",
+      } else if (selectedMethod.messenger_type === 'whatsapp') {
+        const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
+          body: { 
+            action: 'verify_code',
+            phone_number: selectedMethod.messenger_id,
+            code: code
+          }
         });
-        
-        onVerified();
-        onOpenChange(false);
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'viber') {
+        const { data, error } = await supabase.functions.invoke('send-viber-2fa', {
+          body: { 
+            action: 'verify_code',
+            phone_number: selectedMethod.messenger_id,
+            code: code
+          }
+        });
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'signal') {
+        const { data, error } = await supabase.functions.invoke('send-signal-2fa', {
+          body: { 
+            action: 'verify_code',
+            phone_number: selectedMethod.messenger_id,
+            code: code
+          }
+        });
+
+        if (error) throw error;
       }
+
+      toast({
+        title: "Patvirtinimas sėkmingas",
+        description: "Prisijungimas sėkmingas",
+      });
+      
+      onVerified();
+      onOpenChange(false);
     } catch (error) {
       console.error('Error verifying code:', error);
       toast({
@@ -186,6 +243,8 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
                   <CardContent className="p-3 flex items-center gap-3">
                     {method.messenger_type === 'telegram' && <MessageCircle className="w-4 h-4" />}
                     {method.messenger_type === 'whatsapp' && <Phone className="w-4 h-4" />}
+                    {method.messenger_type === 'viber' && <MessageCircle className="w-4 h-4" />}
+                    {method.messenger_type === 'signal' && <Shield className="w-4 h-4" />}
                     <div className="flex-1">
                       <div className="font-medium">{method.display_name}</div>
                       <div className="text-xs text-muted-foreground capitalize">
