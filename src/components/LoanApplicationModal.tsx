@@ -162,26 +162,26 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
         <Card className="bg-gradient-to-r from-blue-50 to-green-50">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-slate-900">Paskolos parametrai</h3>
-              <Badge variant="secondary">{calculatedData.interestRate}% metinė palūkanų norma</Badge>
+              <h3 className="font-semibold text-slate-900">{t('loanApplication.loanSummary.title')}</h3>
+              <Badge variant="secondary">{calculatedData.interestRate}% {t('loanApplication.loanSummary.annualRate')}</Badge>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <p className="text-slate-600">Suma</p>
+                <p className="text-slate-600">{t('loanApplication.loanSummary.amount')}</p>
                 <p className="font-semibold">{calculatedData.loanAmount.toLocaleString('lt-LT')} €</p>
               </div>
               <div>
-                <p className="text-slate-600">Terminas</p>
-                <p className="font-semibold">{calculatedData.loanTerm} mėn.</p>
+                <p className="text-slate-600">{t('loanApplication.loanSummary.term')}</p>
+                <p className="font-semibold">{calculatedData.loanTerm} {t('loanApplication.loanSummary.months')}</p>
               </div>
               <div>
-                <p className="text-slate-600">Mėnesinis mokėjimas</p>
+                <p className="text-slate-600">{t('loanApplication.loanSummary.monthlyPayment')}</p>
                 <p className="font-semibold text-blue-600">
                   {calculatedData.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
                 </p>
               </div>
               <div>
-                <p className="text-slate-600">Bendra suma</p>
+                <p className="text-slate-600">{t('loanApplication.loanSummary.totalAmount')}</p>
                 <p className="font-semibold">
                   {calculatedData.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
                 </p>
@@ -193,66 +193,66 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Personal Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-900">Asmens duomenys</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t('loanApplication.personalInfo.title')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Vardas, pavardė *</Label>
+                <Label htmlFor="name">{t('loanApplication.personalInfo.nameLabel')}</Label>
                 <Input
                   id="name"
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   required
-                  placeholder="Jūsų vardas ir pavardė"
+                  placeholder={t('loanApplication.personalInfo.namePlaceholder')}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">El. pašto adresas *</Label>
+                <Label htmlFor="email">{t('loanApplication.personalInfo.emailLabel')}</Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   required
-                  placeholder="jusu@elpastas.lt"
+                  placeholder={t('loanApplication.personalInfo.emailPlaceholder')}
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefono numeris</Label>
+              <Label htmlFor="phone">{t('loanApplication.personalInfo.phoneLabel')}</Label>
               <Input
                 id="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                placeholder="+370 600 00000"
+                placeholder={t('loanApplication.personalInfo.phonePlaceholder')}
               />
             </div>
           </div>
 
           {/* Financial Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-900">Finansinė informacija</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t('loanApplication.financialInfo.title')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="monthlyIncome">Mėnesinės pajamos (€)</Label>
+                <Label htmlFor="monthlyIncome">{t('loanApplication.financialInfo.incomeLabel')}</Label>
                 <Input
                   id="monthlyIncome"
                   type="number"
                   value={formData.monthlyIncome}
                   onChange={(e) => handleInputChange('monthlyIncome', e.target.value)}
-                  placeholder="2000"
+                  placeholder={t('loanApplication.financialInfo.incomePlaceholder')}
                   min="0"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="employmentInfo">Darbo vieta</Label>
+                <Label htmlFor="employmentInfo">{t('loanApplication.financialInfo.employmentLabel')}</Label>
                 <Input
                   id="employmentInfo"
                   type="text"
                   value={formData.employmentInfo}
                   onChange={(e) => handleInputChange('employmentInfo', e.target.value)}
-                  placeholder="UAB Pavyzdys"
+                  placeholder={t('loanApplication.financialInfo.employmentPlaceholder')}
                 />
               </div>
             </div>
@@ -260,14 +260,14 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
 
           {/* Loan Purpose */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-slate-900">Paskolos paskirtis</h3>
+            <h3 className="text-lg font-semibold text-slate-900">{t('loanApplication.loanPurpose.title')}</h3>
             <div className="space-y-2">
-              <Label htmlFor="loanPurpose">Kam reikalinga paskola?</Label>
+              <Label htmlFor="loanPurpose">{t('loanApplication.loanPurpose.label')}</Label>
               <Textarea
                 id="loanPurpose"
                 value={formData.loanPurpose}
                 onChange={(e) => handleInputChange('loanPurpose', e.target.value)}
-                placeholder="Trumpai aprašykite, kam planuojate panaudoti paskolą"
+                placeholder={t('loanApplication.loanPurpose.placeholder')}
                 rows={3}
               />
             </div>
@@ -278,13 +278,13 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
             <div className="flex items-start gap-2">
               <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
               <div className="text-sm text-slate-700">
-                <p className="font-medium mb-1">Sutinku su sąlygomis:</p>
+                <p className="font-medium mb-1">{t('loanApplication.terms.title')}</p>
                 <ul className="list-disc list-inside space-y-1 text-slate-600">
-                  <li>10€ mokestis už paraiškos pateikimą</li>
-                  <li>14% metinė palūkanų norma be paslėptų mokesčių</li>
-                  <li>Sprendimas per 24 valandas</li>
-                  <li>Duomenų tvarkymas pagal privatumo politiką</li>
-                  <li>Susisiekimas dėl papildomos informacijos</li>
+                  <li>• {t('loanApplication.terms.applicationFee')}</li>
+                  <li>• {t('loanApplication.terms.interestRate')}</li>
+                  <li>• {t('loanApplication.terms.decision')}</li>
+                  <li>• {t('loanApplication.terms.dataProcessing')}</li>
+                  <li>• {t('loanApplication.terms.contact')}</li>
                 </ul>
               </div>
             </div>
@@ -299,10 +299,10 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
             {isSubmitting ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Pateikiama paraiška...
+                {t('loanApplication.buttons.submitting')}
               </>
             ) : (
-              'Pateikti paraišką'
+              t('loanApplication.buttons.submit')
             )}
           </Button>
         </form>

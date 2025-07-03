@@ -278,6 +278,48 @@
     "title": "Loan Application",
     "description": "Fill out the application and start receiving money today",
     "applicationFee": "€10 application fee",
+    "loanSummary": {
+      "title": "Loan Parameters",
+      "amount": "Amount",
+      "term": "Term",
+      "monthlyPayment": "Monthly payment",
+      "totalAmount": "Total amount",
+      "months": "months",
+      "annualRate": "annual interest rate"
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "nameLabel": "Full Name *",
+      "namePlaceholder": "Your first and last name",
+      "emailLabel": "Email address *",
+      "emailPlaceholder": "your@email.com",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "+370 600 00000"
+    },
+    "financialInfo": {
+      "title": "Financial Information",
+      "incomeLabel": "Monthly income (€)",
+      "incomePlaceholder": "2000",
+      "employmentLabel": "Workplace",
+      "employmentPlaceholder": "Company Ltd"
+    },
+    "loanPurpose": {
+      "title": "Loan Purpose",
+      "label": "What do you need the loan for?",
+      "placeholder": "Briefly describe what you plan to use the loan for"
+    },
+    "terms": {
+      "title": "I agree to the terms:",
+      "applicationFee": "€10 fee for application submission",
+      "interestRate": "14% annual interest rate with no hidden fees",
+      "decision": "Decision within 24 hours",
+      "dataProcessing": "Data processing according to privacy policy",
+      "contact": "Contact for additional information"
+    },
+    "buttons": {
+      "submit": "Submit Application",
+      "submitting": "Submitting application..."
+    },
     "loginRequired": {
       "title": "Login Required",
       "description": "You must be logged in to submit a loan application",
