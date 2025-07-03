@@ -81,7 +81,7 @@ export function DepositModal({ open, onOpenChange }: DepositModalProps) {
                 className="pr-12"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                LT
+                EUR
               </span>
             </div>
             <p className="text-sm text-muted-foreground">

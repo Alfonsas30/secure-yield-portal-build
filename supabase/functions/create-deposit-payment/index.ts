@@ -16,7 +16,7 @@ serve(async (req) => {
     const { amount } = await req.json();
     
     if (!amount || amount < 1 || amount > 10000) {
-      throw new Error("Invalid amount. Must be between 1 and 10000 LT.");
+      throw new Error("Invalid amount. Must be between 1 and 10000 EUR.");
     }
 
     const supabaseClient = createClient(
@@ -53,12 +53,12 @@ serve(async (req) => {
       line_items: [
         {
           price_data: {
-            currency: "eur", // Stripe requires EUR for LT
+            currency: "eur",
             product_data: { 
-              name: `Sąskaitos papildymas - ${amount} LT`,
+              name: `Sąskaitos papildymas - ${amount} EUR`,
               description: "Banko sąskaitos balanso papildymas"
             },
-            unit_amount: Math.round(amount * 100 / 3.4528), // Convert LT to EUR cents
+            unit_amount: Math.round(amount * 100), // EUR amount in cents
           },
           quantity: 1,
         },
@@ -68,7 +68,7 @@ serve(async (req) => {
       cancel_url: `${req.headers.get("origin")}/dashboard`,
       metadata: {
         user_id: user.id,
-        amount_lt: amount.toString(),
+        amount_eur: amount.toString(),
         type: "deposit"
       }
     });

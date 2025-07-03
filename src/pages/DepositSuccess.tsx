@@ -15,7 +15,8 @@ export default function DepositSuccess() {
   const { toast } = useToast();
   const [processing, setProcessing] = useState(true);
   const [success, setSuccess] = useState(false);
-  const [amount, setAmount] = useState("");
+  const [eurAmount, setEurAmount] = useState("");
+  const [ltAmount, setLtAmount] = useState("");
 
   useEffect(() => {
     const processPayment = async () => {
@@ -41,10 +42,14 @@ export default function DepositSuccess() {
 
         if (data?.success) {
           setSuccess(true);
-          setAmount(depositAmount);
+          setEurAmount(data.amount_eur.toString());
+          setLtAmount(data.amount_lt.toString());
           toast({
             title: t('deposit.successTitle'),
-            description: t('deposit.successMessage', { amount: depositAmount }),
+            description: t('deposit.successMessage', { 
+              eurAmount: data.amount_eur,
+              ltAmount: data.amount_lt 
+            }),
           });
         }
       } catch (error) {
@@ -92,7 +97,7 @@ export default function DepositSuccess() {
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-lg">
-              {t('deposit.successMessage', { amount: amount })}
+              {t('deposit.successMessage', { eurAmount: eurAmount, ltAmount: ltAmount })}
             </p>
             <p className="text-sm text-muted-foreground">
               {t('deposit.balanceUpdated')}

@@ -30,11 +30,14 @@ serve(async (req) => {
     }
 
     const userId = session.metadata?.user_id;
-    const amountLT = parseFloat(session.metadata?.amount_lt || "0");
+    const amountEUR = parseFloat(session.metadata?.amount_eur || "0");
     
-    if (!userId || !amountLT) {
+    if (!userId || !amountEUR) {
       throw new Error("Invalid session metadata");
     }
+
+    // Convert EUR to LT using exchange rate: 1 EUR = 3.5 LT
+    const amountLT = amountEUR * 3.5;
 
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -57,7 +60,8 @@ serve(async (req) => {
     return new Response(JSON.stringify({ 
       success: true, 
       new_balance: data.new_balance,
-      amount: amountLT 
+      amount_lt: amountLT,
+      amount_eur: amountEUR
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
