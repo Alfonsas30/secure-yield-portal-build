@@ -60,7 +60,7 @@ const Services = () => {
     {
       icon: TrendingUp,
       title: "Konkurencingos palūkanos",
-      description: "Siūlome vieną iš aukščiausių palūkanų normų rinkoje - iki 8% per metus.",
+      description: "Siūlome vieną iš aukščiausių palūkanų normų rinkoje - iki 2% per metus.",
       badge: "Pelningas",
       color: "bg-cyan-100 text-cyan-600",
       hoverColor: "hover:bg-cyan-200 hover:text-cyan-700",

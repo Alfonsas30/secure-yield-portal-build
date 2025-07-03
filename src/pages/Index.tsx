@@ -130,7 +130,7 @@ const Index = () => {
                   <TrendingUp className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-slate-900">Pelningumo</h3>
-                <p className="text-slate-600">Siūlome konkurencingą 8% metinę palūkanų normą su kasdieniu palūkanų mokėjimu.</p>
+                <p className="text-slate-600">Siūlome konkurencingą 2% metinę palūkanų normą su kasdieniu palūkanų mokėjimu.</p>
               </CardContent>
             </Card>
             
