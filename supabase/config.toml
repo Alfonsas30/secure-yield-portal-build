@@ -16,3 +16,6 @@ verify_jwt = false
 
 [functions.calculate-daily-interest]
 verify_jwt = false
+
+[functions.connect-binance-account]
+verify_jwt = true
