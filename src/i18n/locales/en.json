@@ -400,44 +400,6 @@
     "register": "Register",
     "login": "Login"
   },
-  "termDepositCalculator": {
-    "badge": "Term deposit calculator",
-    "title": "Term deposits",
-    "description": "Higher interest rates for larger deposit amounts",
-    "selectTerm": "Select term",
-    "termDescription": "Different terms - different interest rates",
-    "oneYear": "1 year term",
-    "oneYearDescription": "With traditional interest rates",
-    "sixYears": "6 year term",
-    "sixYearsDescription": "Special offer",
-    "anyAmount": "For any amount!",
-    "highestInterest": "HIGHEST INTEREST",
-    "enterDepositAmount": "Enter deposit amount",
-    "enterInvestmentAmount": "Enter investment amount",
-    "investmentDescription": "Choose the amount you want to invest for 6 years with 100% interest",
-    "accountBalance": "Account balance:",
-    "depositAmount": "Deposit amount (LT)",
-    "max": "max.",
-    "category": {
-      "beginner": "Beginner",
-      "advanced": "Advanced",
-      "vip": "VIP",
-      "vip6Years": "VIP 6 years",
-      "level": "level",
-      "yourRate": "Your interest rate"
-    },
-    "yearlyProfit": "Profit per year",
-    "totalProfit": "Total profit for",
-    "totalReturn": "Total amount:",
-    "remainingBalance": "Remaining in account:",
-    "overBalance": "Amount exceeds account balance",
-    "oneYearTerm": "1 year",
-    "sixYearsTerm": "6 years",
-    "investNow": "Invest now",
-    "createContract": "Create contract",
-    "notEnoughBalance": "Insufficient funds",
-    "minimumAmount": "Minimum amount: 1,000 LT"
-  },
   "loanCalculator": {
     "title": "Loan calculator",
     "description": "Find out your monthly payment amount with",
@@ -464,47 +426,6 @@
       "strategic": "Strategic vision",
       "financial": "Financial expertise", 
       "vision": "Future vision"
-    }
-  },
-  "contact": {
-    "badge": "Contact us",
-    "title": "Have questions?",
-    "description": "Our team of experts is always ready to help. Contact us in any way convenient for you.",
-    "form": {
-      "title": "Write to us",
-      "name": "Name",
-      "phone": "Phone",
-      "email": "Email",
-      "message": "Message",
-      "namePlaceholder": "Your name",
-      "phonePlaceholder": "+370 XXX XXXXX",
-      "emailPlaceholder": "your.email@example.com",
-      "messagePlaceholder": "Write your question or comment...",
-      "send": "Send message",
-      "sending": "Sending..."
-    },
-    "newsletter": {
-      "title": "Subscribe to newsletter",
-      "description": "Get the latest information about interest rate changes, new services and financial advice",
-      "email": "Email address",
-      "name": "Name (optional)",
-      "emailPlaceholder": "your.email@example.com",
-      "namePlaceholder": "Your name",
-      "consent": "I agree that my data will be processed for newsletter sending",
-      "subscribe": "Subscribe",
-      "subscribing": "Subscribing..."
-    },
-    "toast": {
-      "messageSent": "Message sent!",
-      "messageDescription": "We will contact you within 24 hours.",
-      "subscribeSuccess": "Successfully subscribed!",
-      "subscribeDescription": "Thank you! You will receive a confirmation email shortly",
-      "alreadySubscribed": "Email already subscribed",
-      "alreadyDescription": "This email address is already subscribed to our newsletter",
-      "error": "Error",
-      "contactError": "Failed to send message. Please try again.",
-      "newsletterError": "Failed to subscribe. Please try again",
-      "newsletterValidation": "Please fill in the email field and agree to data processing"
     }
   },
   "registrationModal": {
@@ -664,6 +585,9 @@
     }
   },
   "termDepositCalculator": {
+    "badge": "Term deposit calculator",
+    "title": "Term deposits",
+    "description": "Higher interest rates for larger deposit amounts",
     "selectTerm": "Choose Deposit Term",
     "termDescription": "Choose between different terms with different interest rates",
     "term1Year": {
@@ -690,6 +614,12 @@
     "maxAmount": "max.",
     "overBalance": "Amount exceeds account balance",
     "remainingBalance": "Remaining in account:",
+    "category": {
+      "beginner": "Beginner",
+      "advanced": "Advanced", 
+      "vip": "VIP",
+      "vip6Years": "VIP 6 years"
+    },
     "categoryLevel": "level",
     "rateDescription": "Your interest rate",
     "profit": "Your Profit",
@@ -705,6 +635,9 @@
     "signContract": "Sign contract"
   },
   "contact": {
+    "badge": "Contact",
+    "title": "Get in touch",
+    "description": "Have questions? We're here to help. Contact us and we'll get back to you within 24 hours.",
     "form": {
       "title": "Contact Us",
       "name": "Name",
@@ -715,19 +648,31 @@
       "phonePlaceholder": "+370 XXX XXXXX",
       "emailPlaceholder": "your.email@example.com",
       "messagePlaceholder": "Write your question or comment...",
-      "submit": "Send Message",
-      "submitting": "Sending..."
+      "send": "Send Message",
+      "sending": "Sending..."
     },
     "newsletter": {
       "title": "Subscribe to Newsletter",
       "description": "Get the latest information about interest rate changes, new services and financial advice",
-      "emailLabel": "Email Address",
-      "nameLabel": "Name (optional)",
+      "email": "Email Address",
+      "name": "Name (optional)",
       "emailPlaceholder": "your.email@example.com",
       "namePlaceholder": "Your name",
       "consent": "I agree that my data will be processed for newsletter purposes",
-      "submit": "Subscribe",
-      "submitting": "Subscribing..."
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing..."
+    },
+    "toast": {
+      "messageSent": "Message sent!",
+      "messageDescription": "We will contact you within 24 hours.",
+      "subscribeSuccess": "Successfully subscribed!",
+      "subscribeDescription": "You will receive our newsletter",
+      "alreadySubscribed": "Already subscribed",
+      "alreadyDescription": "This email is already subscribed to our newsletter",
+      "error": "Error",
+      "contactError": "Failed to send message. Please try again.",
+      "newsletterError": "Failed to subscribe to newsletter. Please try again.",
+      "newsletterValidation": "Please enter email and agree to terms"
     }
   },
   "dashboard": {
