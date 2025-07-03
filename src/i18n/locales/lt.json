@@ -247,5 +247,123 @@
       "newsletterError": "Nepavyko prenumeruoti. Pabandykite dar kartą",
       "newsletterValidation": "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu"
     }
+  },
+  "calculators": {
+    "badge": "Skaičiuoklės",
+    "title": "Pasirinkite skaičiuoklės tipą",
+    "tabs": {
+      "daily": "Dienos palūkanos",
+      "term": "Terminuoti indėliai",
+      "loans": "Paskolos"
+    }
+  },
+  "interestCalculator": {
+    "badge": "Palūkanų skaičiuoklė",
+    "title": "Apskaičiuokite savo pelną",
+    "description": "Sužinokite, kiek uždirbsite su mūsų dienos palūkanomis",
+    "enterAmount": "Įveskite sumą",
+    "savingsAmount": "Taupoma suma (LT)",
+    "interestRate": "Palūkanų norma:",
+    "perYear": "per metus",
+    "yourProfit": "Jūsų pelnas",
+    "perDay": "Per dieną",
+    "perMonth": "Per mėnesį",
+    "manageAccount": "Valdyti sąskaitą",
+    "register": "Registruotis",
+    "login": "Prisijungti"
+  },
+  "termDepositCalculator": {
+    "badge": "Terminuotų indėlių skaičiuoklė",
+    "title": "Terminuoti indėliai",
+    "description": "Aukštesnės palūkanos už didesnės sumos indėlius",
+    "selectTerm": "Pasirinkite terminą",
+    "termDescription": "Skirtingi terminai - skirtingos palūkanos",
+    "oneYear": "1 metų terminas",
+    "oneYearDescription": "Tradiciniu palūkanų normu",
+    "sixYears": "6 metų terminas",
+    "sixYearsDescription": "Ypatingas pasiūlymas",
+    "anyAmount": "Bet kokiai sumai!",
+    "highestInterest": "AUKŠČIAUSIOS PALŪKANOS",
+    "enterDepositAmount": "Įveskite indėlio sumą",
+    "enterInvestmentAmount": "Įveskite investuojamą sumą",
+    "investmentDescription": "Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis",
+    "accountBalance": "Sąskaitos likutis:",
+    "depositAmount": "Indėlio suma (LT)",
+    "max": "maks.",
+    "category": {
+      "beginner": "Pradedantis",
+      "advanced": "Pažengęs",
+      "vip": "VIP",
+      "vip6Years": "VIP 6 metai",
+      "level": "lygis",
+      "yourRate": "Jūsų palūkanų norma"
+    },
+    "yearlyProfit": "Pelnas per metus",
+    "totalProfit": "Bendras pelnas už",
+    "totalReturn": "Gaunama suma:",
+    "remainingBalance": "Liks sąskaitoje:",
+    "overBalance": "Suma viršija sąskaitos likutį",
+    "oneYearTerm": "1 metus",
+    "sixYearsTerm": "6 metus",
+    "investNow": "Investuoti dabar",
+    "createContract": "Sudaryti sutartį",
+    "notEnoughBalance": "Nepakanka lėšų",
+    "minimumAmount": "Minimali suma: 1,000 LT"
+  },
+  "loanCalculator": {
+    "title": "Paskolos skaičiuoklė",
+    "description": "Sužinokite savo mėnesinio mokėjimo dydį su",
+    "annualRate": "14% metine palūkanų norma",
+    "applicationFee": "Paraiškos pateikimo mokestis:",
+    "monthlyPayment": "Mėnesinis mokėjimas",
+    "totalPayment": "Viso mokėti",
+    "interestAmount": "Palūkanų suma",
+    "paymentSchedule": "Mokėjimų grafikas",
+    "month": "Mėnuo",
+    "payment": "Mokėjimas",
+    "principal": "Pagrindinė suma",
+    "interest": "Palūkanos",
+    "balance": "Likutis",
+    "applyForLoan": "Pateikti paraišką",
+    "loginToApply": "Prisijunkite, kad galėtumėte pateikti paraišką"
+  },
+  "registrationModal": {
+    "title": "Registracija",
+    "campaign": "AKCIJA 50% NUOLAIDA!",
+    "campaignDescription": "Naujiems klientams iki 2025-09-01",
+    "timeLeft": "Liko:",
+    "accountType": "Sąskaitos tipas",
+    "personal": "Asmeninė",
+    "company": "Įmonės",
+    "fullName": "Vardas Pavardė",
+    "email": "El. paštas",
+    "phone": "Telefono numeris",
+    "fullNamePlaceholder": "Įveskite vardą ir pavardę",
+    "emailPlaceholder": "vardas@example.com",
+    "phonePlaceholder": "+370...",
+    "initialPrice": "Pradinė kaina:",
+    "discount": "Nuolaida",
+    "finalPrice": "Galutinė kaina:",
+    "payWithStripe": "Mokėti su Stripe",
+    "error": "Klaida",
+    "fillRequiredFields": "Užpildykite visus privalomatus laukus",
+    "paymentError": "Nepavyko sukurti mokėjimo"
+  },
+  "aboutUs": {
+    "badge": "Apie mus",
+    "title": "LTB Bankas - Jūsų patikimas partneris",
+    "description": "Esame inovatyvus finansų sprendimų teikėjas, kuris padeda klientams saugiai ir pelningai taupyti pinigus.",
+    "security": {
+      "title": "Saugumas",
+      "description": "Jūsų pinigai apsaugoti moderniausiais saugumo sprendimais ir draudimu."
+    },
+    "profitability": {
+      "title": "Pelningumo",
+      "description": "Siūlome konkurencingą 2% metinę palūkanų normą su kasdieniu palūkanų mokėjimu."
+    },
+    "experience": {
+      "title": "Patirtis",
+      "description": "Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų."
+    }
   }
 }

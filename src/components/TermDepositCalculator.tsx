@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { formatDualCurrency } from "@/lib/currency";
 
 const TermDepositCalculator = () => {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState<string>("10000");
   const [selectedTerm, setSelectedTerm] = useState<12 | 72>(12); // 12 months or 72 months (6 years)
   const [animatedMonthly, setAnimatedMonthly] = useState<number>(0);
@@ -72,12 +74,12 @@ const TermDepositCalculator = () => {
 
   const getRateCategory = (depositAmount: number, termMonths: number) => {
     if (termMonths === 72) {
-      return { category: "VIP 6 metai", icon: Diamond, color: "from-purple-500 to-pink-500" };
+      return { category: t('termDepositCalculator.category.vip6Years'), icon: Diamond, color: "from-purple-500 to-pink-500" };
     }
     
-    if (depositAmount < 10000) return { category: "Pradedantis", icon: Star, color: "from-amber-500 to-orange-500" };
-    if (depositAmount < 100000) return { category: "Pažengęs", icon: Crown, color: "from-blue-500 to-purple-500" };
-    return { category: "VIP", icon: Diamond, color: "from-purple-500 to-pink-500" };
+    if (depositAmount < 10000) return { category: t('termDepositCalculator.category.beginner'), icon: Star, color: "from-amber-500 to-orange-500" };
+    if (depositAmount < 100000) return { category: t('termDepositCalculator.category.advanced'), icon: Crown, color: "from-blue-500 to-purple-500" };
+    return { category: t('termDepositCalculator.category.vip'), icon: Diamond, color: "from-purple-500 to-pink-500" };
   };
   
   const calculateInterest = () => {
@@ -162,21 +164,21 @@ const TermDepositCalculator = () => {
         <div className="text-center mb-12 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-amber-50/80 backdrop-blur-sm text-amber-700 border-amber-200 animate-pulse-glow">
             <Calculator className="w-4 h-4 mr-2" />
-            Terminuotų indėlių skaičiuoklė
+            {t('termDepositCalculator.badge')}
           </Badge>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-slate-900 bg-gradient-to-r from-amber-900 to-orange-800 bg-clip-text text-transparent">
-            Terminuoti indėliai
+            {t('termDepositCalculator.title')}
           </h2>
           <p className="text-lg md:text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            Aukštesnės palūkanos už didesnės sumos indėlius
+            {t('termDepositCalculator.description')}
           </p>
         </div>
 
         {/* Term Selection */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Pasirinkite terminą</h3>
-            <p className="text-slate-600">Skirtingi terminai - skirtingos palūkanos</p>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">{t('termDepositCalculator.selectTerm')}</h3>
+            <p className="text-slate-600">{t('termDepositCalculator.termDescription')}</p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
             <Card 

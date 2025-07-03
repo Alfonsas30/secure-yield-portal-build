@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calculator } from "lucide-react";
@@ -11,6 +12,7 @@ import { PaymentSchedule } from "./loan/PaymentSchedule";
 import { LoanApplicationCTA } from "./loan/LoanApplicationCTA";
 
 const LoanCalculator = () => {
+  const { t } = useTranslation();
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanTerm, setLoanTerm] = useState(24);
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,13 +55,13 @@ const LoanCalculator = () => {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-slate-900">
-            Paskolos skaičiuoklė
+            {t('loanCalculator.title')}
           </CardTitle>
           <CardDescription className="text-lg text-slate-600">
-            Sužinokite savo mėnesinio mokėjimo dydį su <Badge variant="secondary" className="mx-1">14% metine palūkanų norma</Badge>
+            {t('loanCalculator.description')} <Badge variant="secondary" className="mx-1">{t('loanCalculator.annualRate')}</Badge>
             <br />
             <span className="text-sm text-slate-500 mt-2 block">
-              💡 Paraiškos pateikimo mokestis: <Badge variant="outline" className="text-orange-600 border-orange-200">10€</Badge>
+              💡 {t('loanCalculator.applicationFee')} <Badge variant="outline" className="text-orange-600 border-orange-200">10€</Badge>
             </span>
           </CardDescription>
         </CardHeader>

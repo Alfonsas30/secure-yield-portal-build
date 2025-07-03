@@ -247,5 +247,124 @@
       "newsletterError": "Failed to subscribe. Please try again",
       "newsletterValidation": "Please fill in the email field and agree to data processing"
     }
+  },
+  "calculators": {
+    "badge": "Calculators",
+    "title": "Choose calculator type",
+    "tabs": {
+      "daily": "Daily interest",
+      "term": "Term deposits",
+      "loans": "Loans"
+    }
+  },
+  "interestCalculator": {
+    "badge": "Interest calculator",
+    "title": "Calculate your profit",
+    "description": "Find out how much you will earn with our daily interest",
+    "enterAmount": "Enter amount",
+    "savingsAmount": "Savings amount (LT)",
+    "interestRate": "Interest rate:",
+    "perYear": "per year",
+    "yourProfit": "Your profit",
+    "perDay": "Per day",
+    "perMonth": "Per month",
+    "perYear": "Per year",
+    "manageAccount": "Manage account",
+    "register": "Register",
+    "login": "Login"
+  },
+  "termDepositCalculator": {
+    "badge": "Term deposit calculator",
+    "title": "Term deposits",
+    "description": "Higher interest rates for larger deposit amounts",
+    "selectTerm": "Select term",
+    "termDescription": "Different terms - different interest rates",
+    "oneYear": "1 year term",
+    "oneYearDescription": "With traditional interest rates",
+    "sixYears": "6 year term",
+    "sixYearsDescription": "Special offer",
+    "anyAmount": "For any amount!",
+    "highestInterest": "HIGHEST INTEREST",
+    "enterDepositAmount": "Enter deposit amount",
+    "enterInvestmentAmount": "Enter investment amount",
+    "investmentDescription": "Choose the amount you want to invest for 6 years with 100% interest",
+    "accountBalance": "Account balance:",
+    "depositAmount": "Deposit amount (LT)",
+    "max": "max.",
+    "category": {
+      "beginner": "Beginner",
+      "advanced": "Advanced",
+      "vip": "VIP",
+      "vip6Years": "VIP 6 years",
+      "level": "level",
+      "yourRate": "Your interest rate"
+    },
+    "yearlyProfit": "Profit per year",
+    "totalProfit": "Total profit for",
+    "totalReturn": "Total amount:",
+    "remainingBalance": "Remaining in account:",
+    "overBalance": "Amount exceeds account balance",
+    "oneYearTerm": "1 year",
+    "sixYearsTerm": "6 years",
+    "investNow": "Invest now",
+    "createContract": "Create contract",
+    "notEnoughBalance": "Insufficient funds",
+    "minimumAmount": "Minimum amount: 1,000 LT"
+  },
+  "loanCalculator": {
+    "title": "Loan calculator",
+    "description": "Find out your monthly payment amount with",
+    "annualRate": "14% annual interest rate",
+    "applicationFee": "Application fee:",
+    "monthlyPayment": "Monthly payment",
+    "totalPayment": "Total to pay",
+    "interestAmount": "Interest amount",
+    "paymentSchedule": "Payment schedule",
+    "month": "Month",
+    "payment": "Payment",
+    "principal": "Principal",
+    "interest": "Interest",
+    "balance": "Balance",
+    "applyForLoan": "Apply for loan",
+    "loginToApply": "Login to apply for a loan"
+  },
+  "registrationModal": {
+    "title": "Registration",
+    "campaign": "50% DISCOUNT CAMPAIGN!",
+    "campaignDescription": "For new clients until 2025-09-01",
+    "timeLeft": "Time left:",
+    "accountType": "Account type",
+    "personal": "Personal",
+    "company": "Company",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone number",
+    "fullNamePlaceholder": "Enter your full name",
+    "emailPlaceholder": "name@example.com",
+    "phonePlaceholder": "+370...",
+    "initialPrice": "Initial price:",
+    "discount": "Discount",
+    "finalPrice": "Final price:",
+    "payWithStripe": "Pay with Stripe",
+    "error": "Error",
+    "fillRequiredFields": "Fill in all required fields",
+    "paymentError": "Failed to create payment"
+  },
+  "aboutUs": {
+    "badge": "About us",
+    "title": "LTB Bank - Your trusted partner",
+    "description": "We are an innovative financial solutions provider that helps clients save money safely and profitably.",
+    "security": {
+      "title": "Security",
+      "description": "Your money is protected by the most modern security solutions and insurance."
+    },
+    "profitability": {
+      "title": "Profitability",
+      "description": "We offer a competitive 2% annual interest rate with daily interest payments."
+    },
+    "experience": {
+      "title": "Experience",
+      "description": "We have many years of experience in the financial sector and thousands of satisfied clients."
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,8 @@ interface LoanInputsProps {
 }
 
 export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange }: LoanInputsProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="space-y-6">
       {/* Loan Amount */}

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ import BoardInvitation from "@/components/BoardInvitation";
 import { LoanPaymentSuccess } from "@/components/LoanPaymentSuccess";
 
 const Index = () => {
+  const { t } = useTranslation();
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [sessionId, setSessionId] = useState<string>("");
 
@@ -62,10 +64,10 @@ const Index = () => {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 bg-slate-50/80 backdrop-blur-sm text-slate-700 border-slate-200">
               <Calculator className="w-4 h-4 mr-2" />
-              Skaičiuoklės
+              {t('calculators.badge')}
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-              Pasirinkite skaičiuoklės tipą
+              {t('calculators.title')}
             </h2>
           </div>
           
@@ -75,19 +77,19 @@ const Index = () => {
                 value="daily" 
                 className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-medium whitespace-nowrap"
               >
-                Dienos palūkanos
+                {t('calculators.tabs.daily')}
               </TabsTrigger>
               <TabsTrigger 
                 value="term" 
                 className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1] whitespace-nowrap"
               >
-                Terminuoti indėliai
+                {t('calculators.tabs.term')}
               </TabsTrigger>
               <TabsTrigger 
                 value="loans" 
                 className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-semibold text-slate-900 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 border border-orange-200 whitespace-nowrap"
               >
-                Paskolos
+                {t('calculators.tabs.loans')}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="daily" className="w-full">
@@ -108,13 +110,13 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 bg-blue-50/80 backdrop-blur-sm text-blue-700 border-blue-200">
-              Apie mus
+              {t('aboutUs.badge')}
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-              LTB Bankas - Jūsų patikimas partneris
+              {t('aboutUs.title')}
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Esame inovatyvus finansų sprendimų teikėjas, kuris padeda klientams saugiai ir pelningai taupyti pinigus.
+              {t('aboutUs.description')}
             </p>
           </div>
           
@@ -124,8 +126,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">Saugumas</h3>
-                <p className="text-slate-600">Jūsų pinigai apsaugoti moderniausiais saugumo sprendimais ir draudimu.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('aboutUs.security.title')}</h3>
+                <p className="text-slate-600">{t('aboutUs.security.description')}</p>
               </CardContent>
             </Card>
             
@@ -134,8 +136,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
                   <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">Pelningumo</h3>
-                <p className="text-slate-600">Siūlome konkurencingą 2% metinę palūkanų normą su kasdieniu palūkanų mokėjimu.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('aboutUs.profitability.title')}</h3>
+                <p className="text-slate-600">{t('aboutUs.profitability.description')}</p>
               </CardContent>
             </Card>
             
@@ -144,8 +146,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">Patirtis</h3>
-                <p className="text-slate-600">Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų.</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('aboutUs.experience.title')}</h3>
+                <p className="text-slate-600">{t('aboutUs.experience.description')}</p>
               </CardContent>
             </Card>
           </div>
