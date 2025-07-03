@@ -286,6 +286,47 @@
       }
     ]
   },
+  "contact": {
+    "badge": "Susisiekite su mumis",
+    "title": "Turite klausimų?",
+    "description": "Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.",
+    "form": {
+      "title": "Parašykite mums",
+      "name": "Vardas",
+      "phone": "Telefonas",
+      "email": "El. paštas",
+      "message": "Žinutė",
+      "namePlaceholder": "Jūsų vardas",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "jusu.paštas@example.com",
+      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
+      "send": "Siųsti žinutę",
+      "sending": "Siunčiama..."
+    },
+    "newsletter": {
+      "title": "Prenumeruoti naujienas",
+      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
+      "email": "El. pašto adresas",
+      "name": "Vardas (neprivaloma)",
+      "emailPlaceholder": "jusu.pastas@example.com",
+      "namePlaceholder": "Jūsų vardas",
+      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
+      "subscribe": "Prenumeruoti",
+      "subscribing": "Prenumeruojama..."
+    },
+    "toast": {
+      "messageSent": "Žinutė išsiųsta!",
+      "messageDescription": "Mes susisieksime su jumis per 24 valandas.",
+      "subscribeSuccess": "Sėkmingai prenumeruojate!",
+      "subscribeDescription": "Ačiū! Netrukus gausite patvirtinimo laišką",
+      "alreadySubscribed": "El. paštas jau prenumeruoja",
+      "alreadyDescription": "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+      "error": "Klaida",
+      "contactError": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+      "newsletterError": "Nepavyko prenumeruoti. Pabandykite dar kartą",
+      "newsletterValidation": "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu"
+    }
+  },
   "loanApplication": {
     "loanSummary": {
       "title": "Paskolos parametrai",
