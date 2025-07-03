@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UserPlus, CreditCard, TrendingUp, Banknote, CheckCircle, Sparkles } from "lucide-react";
@@ -7,6 +8,7 @@ import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const HowItWorks = () => {
+  const { t } = useTranslation();
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
 
@@ -14,8 +16,8 @@ const HowItWorks = () => {
     {
       number: "01",
       icon: UserPlus,
-      title: "Registruokitės",
-      description: "Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar perteklinių ataskaitų nereikia.",
+      title: t('howItWorks.steps.register.title'),
+      description: t('howItWorks.steps.register.description'),
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       delay: "0.1s"
@@ -23,8 +25,8 @@ const HowItWorks = () => {
     {
       number: "02", 
       icon: CreditCard,
-      title: "Įneškite pinigus",
-      description: "Įneškite pinigus į savo sąskaitą iš betkurio pasaulio banko, įnešimas saugus ir greitas.",
+      title: t('howItWorks.steps.deposit.title'),
+      description: t('howItWorks.steps.deposit.description'),
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50",
       delay: "0.2s"
@@ -32,8 +34,8 @@ const HowItWorks = () => {
     {
       number: "03",
       icon: TrendingUp,
-      title: "Gaukite palūkanas",
-      description: "Palūkanos pradedamos skaičiuoti iš karto – jos mokamos kasdien.",
+      title: t('howItWorks.steps.earn.title'),
+      description: t('howItWorks.steps.earn.description'),
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       delay: "0.3s"
@@ -41,8 +43,8 @@ const HowItWorks = () => {
     {
       number: "04",
       icon: Banknote,
-      title: "Naudokitės pinigais",
-      description: "Pinigai prieinami bet kada. Galite išsiimti visą sumą ar tik dalį - kaip jums patogu.",
+      title: t('howItWorks.steps.use.title'),
+      description: t('howItWorks.steps.use.description'),
       color: "from-orange-500 to-orange-600",
       bgColor: "bg-orange-50",
       delay: "0.4s"
@@ -67,13 +69,13 @@ const HowItWorks = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center mb-16 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-purple-50/80 backdrop-blur-sm text-purple-700 border-purple-200 animate-pulse-glow">
-            Paprastas procesas
+            {t('howItWorks.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-slate-900 via-purple-800 to-blue-800 bg-clip-text text-transparent">
-            Kaip tai veikia?
+            {t('howItWorks.title')}
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            Pradėti taupyti su LTB Bankas yra paprasta ir greita. Štai kaip tai veikia.
+            {t('howItWorks.description')}
           </p>
         </div>
 
@@ -165,21 +167,21 @@ const HowItWorks = () => {
                 </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
-                Pasiruošę pradėti taupyti?
+                {t('howItWorks.cta.title')}
               </h3>
               <p className="text-slate-600 text-lg mb-6 group-hover:text-slate-700 transition-colors duration-300">
-                Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
+                {t('howItWorks.cta.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                   onClick={() => setRegistrationOpen(true)}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                 >
-                  <span className="relative z-10">Registruotis dabar</span>
+                  <span className="relative z-10">{t('howItWorks.cta.button')}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                 </button>
                 <button className="border-2 border-slate-300 hover:border-slate-400 text-slate-700 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-slate-50 hover:scale-105 transform backdrop-blur-sm bg-white/80">
-                  Skaityti daugiau
+                  {t('howItWorks.cta.learnMore')}
                 </button>
               </div>
             </div>

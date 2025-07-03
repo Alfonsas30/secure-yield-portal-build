@@ -546,5 +546,100 @@
       "date": "Data"
     },
     "error": "Nepavyko įkelti analitikos duomenų"
+  },
+  "howItWorks": {
+    "badge": "Paprastas procesas",
+    "title": "Kaip tai veikia?",
+    "description": "Pradėti taupyti su LTB Bankas yra paprasta ir greita. Štai kaip tai veikia.",
+    "steps": {
+      "register": {
+        "title": "Registruokitės",
+        "description": "Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar perteklinių ataskaitų nereikia."
+      },
+      "deposit": {
+        "title": "Įneškite pinigus",
+        "description": "Įneškite pinigus į savo sąskaitą iš betkurio pasaulio banko, įnešimas saugus ir greitas."
+      },
+      "earn": {
+        "title": "Gaukite palūkanas",
+        "description": "Palūkanos pradedamos skaičiuoti iš karto – jos mokamos kasdien."
+      },
+      "use": {
+        "title": "Naudokitės pinigais",
+        "description": "Pinigai prieinami bet kada. Galite išsiimti visą sumą ar tik dalį - kaip jums patogu."
+      }
+    },
+    "cta": {
+      "title": "Pasiruošę pradėti taupyti?",
+      "description": "Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas",
+      "button": "Registruotis dabar",
+      "learnMore": "Skaityti daugiau"
+    }
+  },
+  "termDepositCalculator": {
+    "selectTerm": "Pasirinkite indėlio terminą",
+    "termDescription": "Pasirinkite tarp skirtingų terminų su skirtingomis palūkanų normomis",
+    "term1Year": {
+      "title": "1 metų terminas",
+      "description": "Tradiciniu palūkanų normu",
+      "rates": {
+        "up10k": "Iki 10,000 LT:",
+        "up100k": "10,000-100,000 LT:",
+        "over100k": "100,000+ LT:"
+      }
+    },
+    "term6Years": {
+      "title": "6 metų terminas",
+      "description": "Ypatingas pasiūlymas",
+      "rate": "100%",
+      "subtitle": "Bet kokiai sumai!",
+      "badge": "AUKŠČIAUSIOS PALŪKANOS"
+    },
+    "enterAmount": "Įveskite indėlio sumą",
+    "enterInvestAmount": "Įveskite investuojamą sumą",
+    "investDescription": "Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis",
+    "accountBalance": "Sąskaitos likutis:",
+    "amountLabel": "Indėlio suma (LT)",
+    "maxAmount": "maks.",
+    "overBalance": "Suma viršija sąskaitos likutį",
+    "remainingBalance": "Liks sąskaitoje:",
+    "categoryLevel": "lygis",
+    "rateDescription": "Jūsų palūkanų norma",
+    "profit": "Jūsų pelnas",
+    "yearlyProfit": "Pelnas per metus",
+    "totalProfit": "Bendras pelnas už",
+    "years1": "1 metus",
+    "years6": "6 metus",
+    "totalAmount": "Gaunama suma:",
+    "dailyProfit": "Vidutinis pelnas per dieną",
+    "invest": "Investuoti dabar",
+    "register": "Registruotis investavimui",
+    "login": "Prisijungti"
+  },
+  "contact": {
+    "form": {
+      "title": "Parašykite mums",
+      "name": "Vardas",
+      "phone": "Telefonas",
+      "email": "El. paštas",
+      "message": "Žinutė",
+      "namePlaceholder": "Jūsų vardas",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "jusu.paštas@example.com",
+      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
+      "submit": "Siųsti žinutę",
+      "submitting": "Siunčiama..."
+    },
+    "newsletter": {
+      "title": "Prenumeruoti naujienas",
+      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
+      "emailLabel": "El. pašto adresas",
+      "nameLabel": "Vardas (neprivaloma)",
+      "emailPlaceholder": "jusu.pastas@example.com",
+      "namePlaceholder": "Jūsų vardas",
+      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
+      "submit": "Prenumeruoti",
+      "submitting": "Prenumeruojama..."
+    }
   }
 }

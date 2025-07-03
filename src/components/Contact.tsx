@@ -155,7 +155,7 @@ const Contact = () => {
           <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-slate-50">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900">
-                Parašykite mums
+                {t('contact.form.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -244,9 +244,9 @@ const Contact = () => {
           {/* Newsletter Subscription */}
           <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-600 to-green-600 text-white">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-semibold mb-6">Prenumeruoti naujienas</h3>
+              <h3 className="text-2xl font-semibold mb-6">{t('contact.newsletter.title')}</h3>
               <p className="opacity-90 mb-6">
-                Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus
+                {t('contact.newsletter.description')}
               </p>
               
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">

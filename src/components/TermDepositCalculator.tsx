@@ -193,12 +193,12 @@ const TermDepositCalculator = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
                   <Crown className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-slate-900">1 metų terminas</h3>
-                <p className="text-sm text-slate-600 mb-3">Tradiciniu palūkanų normu</p>
+                <h3 className="text-xl font-semibold mb-2 text-slate-900">{t('termDepositCalculator.term1Year.title')}</h3>
+                <p className="text-sm text-slate-600 mb-3">{t('termDepositCalculator.term1Year.description')}</p>
                 <div className="space-y-1 text-sm">
-                  <div>Iki 10,000 LT: <span className="font-bold text-blue-600">8%</span></div>
-                  <div>10,000-100,000 LT: <span className="font-bold text-blue-600">10%</span></div>
-                  <div>100,000+ LT: <span className="font-bold text-blue-600">12%</span></div>
+                  <div>{t('termDepositCalculator.term1Year.rates.up10k')} <span className="font-bold text-blue-600">8%</span></div>
+                  <div>{t('termDepositCalculator.term1Year.rates.up100k')} <span className="font-bold text-blue-600">10%</span></div>
+                  <div>{t('termDepositCalculator.term1Year.rates.over100k')} <span className="font-bold text-blue-600">12%</span></div>
                 </div>
               </CardContent>
             </Card>
@@ -215,11 +215,11 @@ const TermDepositCalculator = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   <Diamond className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-slate-900">6 metų terminas</h3>
-                <p className="text-sm text-slate-600 mb-3">Ypatingas pasiūlymas</p>
-                <div className="text-3xl font-bold text-purple-600 mb-2">100%</div>
-                <p className="text-sm text-slate-600">Bet kokiai sumai!</p>
-                <Badge className="mt-2 bg-purple-600 text-white">AUKŠČIAUSIOS PALŪKANOS</Badge>
+                <h3 className="text-xl font-semibold mb-2 text-slate-900">{t('termDepositCalculator.term6Years.title')}</h3>
+                <p className="text-sm text-slate-600 mb-3">{t('termDepositCalculator.term6Years.description')}</p>
+                <div className="text-3xl font-bold text-purple-600 mb-2">{t('termDepositCalculator.term6Years.rate')}</div>
+                <p className="text-sm text-slate-600">{t('termDepositCalculator.term6Years.subtitle')}</p>
+                <Badge className="mt-2 bg-purple-600 text-white">{t('termDepositCalculator.term6Years.badge')}</Badge>
               </CardContent>
             </Card>
           </div>
@@ -229,11 +229,11 @@ const TermDepositCalculator = () => {
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-amber-800 transition-colors duration-300">
-                {selectedTerm === 12 ? 'Įveskite indėlio sumą' : 'Įveskite investuojamą sumą'}
+                {selectedTerm === 12 ? t('termDepositCalculator.enterAmount') : t('termDepositCalculator.enterInvestAmount')}
               </CardTitle>
               {selectedTerm === 72 && (
                 <p className="text-sm text-slate-600 mt-2">
-                  Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis
+                  {t('termDepositCalculator.investDescription')}
                 </p>
               )}
             </CardHeader>
@@ -244,7 +244,7 @@ const TermDepositCalculator = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Wallet className="w-4 h-4 text-slate-600" />
-                      <span className="text-sm text-slate-600">Sąskaitos likutis:</span>
+                      <span className="text-sm text-slate-600">{t('termDepositCalculator.accountBalance')}</span>
                     </div>
                     <div className="text-lg font-semibold text-slate-900">
                       {loadingBalance ? (
@@ -259,7 +259,7 @@ const TermDepositCalculator = () => {
 
               <div>
                 <Label htmlFor="amount" className="text-base font-medium text-slate-700 mb-2 block">
-                  Indėlio suma (LT) {user && balance && `(maks. ${formatDualCurrency(balance)})`}
+                  {t('termDepositCalculator.amountLabel')} {user && balance && `(${t('termDepositCalculator.maxAmount')} ${formatDualCurrency(balance)})`}
                 </Label>
                 <div className="relative">
                   <Input
@@ -289,12 +289,12 @@ const TermDepositCalculator = () => {
                 {isOverBalance && (
                   <div className="flex items-center gap-2 mt-2 text-red-600 text-sm">
                     <AlertCircle className="w-4 h-4" />
-                    <span>Suma viršija sąskaitos likutį</span>
+                    <span>{t('termDepositCalculator.overBalance')}</span>
                   </div>
                 )}
                 {user && balance && amountValue > 0 && !isOverBalance && (
                   <div className="mt-2 text-sm text-slate-600">
-                    Liks sąskaitoje: {formatDualCurrency(balance - amountValue)}
+                    {t('termDepositCalculator.remainingBalance')} {formatDualCurrency(balance - amountValue)}
                   </div>
                 )}
               </div>
@@ -307,8 +307,8 @@ const TermDepositCalculator = () => {
                   <div className="flex items-center space-x-3">
                     <rateCategory.icon className="w-6 h-6 animate-pulse" />
                     <div>
-                      <div className="font-medium">{rateCategory.category} lygis</div>
-                      <div className="text-sm opacity-90">Jūsų palūkanų norma</div>
+                      <div className="font-medium">{rateCategory.category} {t('termDepositCalculator.categoryLevel')}</div>
+                      <div className="text-sm opacity-90">{t('termDepositCalculator.rateDescription')}</div>
                     </div>
                   </div>
                   <Badge className="bg-white/20 hover:bg-white/30 transition-colors duration-300 text-white border-white/30">
@@ -342,13 +342,13 @@ const TermDepositCalculator = () => {
             <CardHeader className="relative z-10">
               <CardTitle className="text-2xl font-semibold flex items-center">
                 <Sparkles className="w-6 h-6 mr-2 animate-pulse" />
-                Jūsų pelnas
+                {t('termDepositCalculator.profit')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 relative z-10">
               <div className="space-y-4">
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
-                  <div className="text-sm opacity-90 mb-1">Pelnas per metus</div>
+                  <div className="text-sm opacity-90 mb-1">{t('termDepositCalculator.yearlyProfit')}</div>
                   <div className="text-xl sm:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedYearly.toFixed(2)} LT
                   </div>
@@ -359,13 +359,13 @@ const TermDepositCalculator = () => {
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
                   <div className="text-sm opacity-90 mb-1">
-                    Bendras pelnas už {selectedTerm === 12 ? '1 metus' : '6 metus'}
+                    {t('termDepositCalculator.totalProfit')} {selectedTerm === 12 ? t('termDepositCalculator.years1') : t('termDepositCalculator.years6')}
                   </div>
                   <div className="text-xl sm:text-2xl lg:text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{formatDualCurrency(interest.totalProfit)}
                   </div>
                   <div className="text-sm opacity-90 mt-1">
-                    Gaunama suma: {formatDualCurrency(interest.totalReturn)}
+                    {t('termDepositCalculator.totalAmount')} {formatDualCurrency(interest.totalReturn)}
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-shimmer" style={{ width: '100%', animationDelay: '0.5s' }}></div>

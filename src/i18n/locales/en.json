@@ -546,5 +546,100 @@
       "date": "Date"
     },
     "error": "Failed to load analytics data"
+  },
+  "howItWorks": {
+    "badge": "Simple Process",
+    "title": "How It Works?",
+    "description": "Starting to save with LTB Bank is simple and fast. Here's how it works.",
+    "steps": {
+      "register": {
+        "title": "Register",
+        "description": "Create an account in 3 minutes. No complex documents or excessive reports needed."
+      },
+      "deposit": {
+        "title": "Deposit Money",
+        "description": "Deposit money to your account from any bank worldwide, safe and fast."
+      },
+      "earn": {
+        "title": "Earn Interest",
+        "description": "Interest starts calculating immediately – paid daily."
+      },
+      "use": {
+        "title": "Use Your Money",
+        "description": "Money is available anytime. You can withdraw the full amount or just part of it - as you prefer."
+      }
+    },
+    "cta": {
+      "title": "Ready to Start Saving?",
+      "description": "Join thousands of clients who are already earning with LTB Bank",
+      "button": "Register Now",
+      "learnMore": "Read More"
+    }
+  },
+  "termDepositCalculator": {
+    "selectTerm": "Choose Deposit Term",
+    "termDescription": "Choose between different terms with different interest rates",
+    "term1Year": {
+      "title": "1 Year Term",
+      "description": "Traditional interest rates",
+      "rates": {
+        "up10k": "Up to 10,000 LT:",
+        "up100k": "10,000-100,000 LT:",
+        "over100k": "100,000+ LT:"
+      }
+    },
+    "term6Years": {
+      "title": "6 Years Term",
+      "description": "Special offer",
+      "rate": "100%",
+      "subtitle": "For any amount!",
+      "badge": "HIGHEST INTEREST"
+    },
+    "enterAmount": "Enter Deposit Amount",
+    "enterInvestAmount": "Enter Investment Amount",
+    "investDescription": "Choose the amount you want to invest for 6 years with 100% interest",
+    "accountBalance": "Account Balance:",
+    "amountLabel": "Deposit Amount (LT)",
+    "maxAmount": "max.",
+    "overBalance": "Amount exceeds account balance",
+    "remainingBalance": "Remaining in account:",
+    "categoryLevel": "level",
+    "rateDescription": "Your interest rate",
+    "profit": "Your Profit",
+    "yearlyProfit": "Profit per year",
+    "totalProfit": "Total profit for",
+    "years1": "1 year",
+    "years6": "6 years",
+    "totalAmount": "Total amount:",
+    "dailyProfit": "Average daily profit",
+    "invest": "Invest Now",
+    "register": "Register for Investment",
+    "login": "Log In"
+  },
+  "contact": {
+    "form": {
+      "title": "Contact Us",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "namePlaceholder": "Your name",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Write your question or comment...",
+      "submit": "Send Message",
+      "submitting": "Sending..."
+    },
+    "newsletter": {
+      "title": "Subscribe to Newsletter",
+      "description": "Get the latest information about interest rate changes, new services and financial advice",
+      "emailLabel": "Email Address",
+      "nameLabel": "Name (optional)",
+      "emailPlaceholder": "your.email@example.com",
+      "namePlaceholder": "Your name",
+      "consent": "I agree that my data will be processed for newsletter purposes",
+      "submit": "Subscribe",
+      "submitting": "Subscribing..."
+    }
   }
 }
