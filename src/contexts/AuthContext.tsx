@@ -153,6 +153,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
+      // Laikinai išjungtas 2FA - tiesioginis prisijungimas
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (signInError) {
+        toast({
+          title: "Prisijungimo klaida",
+          description: getErrorMessage(signInError.message),
+          variant: "destructive"
+        });
+        return { error: signInError };
+      }
+
+      // Sėkmingas prisijungimas
+      toast({
+        title: "Prisijungimas sėkmingas",
+        description: "Nukreipiame į asmeninį kabinetą",
+        variant: "default"
+      });
+
+      return { error: null };
+
+      /* 2FA KODAS - LAIKINAI IŠJUNGTAS
       // First check if credentials are valid (without creating session)
       const { data: signInData, error: preCheckError } = await supabase.auth.signInWithPassword({
         email,
@@ -180,6 +205,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return { error: null };
+      */
     } catch (error: any) {
       toast({
         title: "Prisijungimo klaida",

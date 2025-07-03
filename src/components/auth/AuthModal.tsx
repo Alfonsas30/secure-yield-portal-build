@@ -37,6 +37,19 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
 
     const { error } = await signIn(loginData.email, loginData.password);
     
+    // Laikinai išjungtas 2FA - tiesioginis prisijungimas
+    if (!error) {
+      setTimeout(() => {
+        onOpenChange(false);
+        setLoginData({ email: "", password: "" });
+        setOtpCode("");
+        setShowOtpStep(false);
+      }, 500);
+    }
+    
+    setLoading(false);
+
+    /* 2FA KODAS - LAIKINAI IŠJUNGTAS
     if (!error && pendingMFAEmail) {
       // Show OTP step
       setShowOtpStep(true);
@@ -47,8 +60,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
         setLoginData({ email: "", password: "" });
       }, 500);
     }
-    
-    setLoading(false);
+    */
   };
 
   const handleOtpVerification = async () => {
@@ -119,7 +131,8 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
-            {!showOtpStep ? (
+            {/* Laikinai paslėptas OTP žingsnis */}
+            {true ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <Label htmlFor="login-email">El. paštas</Label>
