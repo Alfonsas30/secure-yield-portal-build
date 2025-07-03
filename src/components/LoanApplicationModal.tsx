@@ -168,7 +168,7 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <p className="text-slate-600">{t('loanApplication.loanSummary.amount')}</p>
-                <p className="font-semibold">{calculatedData.loanAmount.toLocaleString('lt-LT')} €</p>
+                <p className="font-semibold">{calculatedData.loanAmount.toLocaleString('lt-LT')} LT</p>
               </div>
               <div>
                 <p className="text-slate-600">{t('loanApplication.loanSummary.term')}</p>
@@ -177,13 +177,13 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
               <div>
                 <p className="text-slate-600">{t('loanApplication.loanSummary.monthlyPayment')}</p>
                 <p className="font-semibold text-blue-600">
-                  {calculatedData.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                  {calculatedData.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                 </p>
               </div>
               <div>
                 <p className="text-slate-600">{t('loanApplication.loanSummary.totalAmount')}</p>
                 <p className="font-semibold">
-                  {calculatedData.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                  {calculatedData.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                 </p>
               </div>
             </div>

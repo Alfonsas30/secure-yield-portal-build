@@ -44,16 +44,16 @@ export const PaymentSchedule = ({ calculations }: PaymentScheduleProps) => {
                 <TableRow key={payment.month}>
                   <TableCell className="text-center font-medium">{payment.month}</TableCell>
                   <TableCell className="text-center font-semibold text-blue-600">
-                    {payment.payment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                    {payment.payment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                   </TableCell>
                   <TableCell className="text-center text-green-600">
-                    {payment.principal.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                    {payment.principal.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                   </TableCell>
                   <TableCell className="text-center text-orange-600">
-                    {payment.interest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                    {payment.interest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                   </TableCell>
                   <TableCell className="text-center text-slate-600">
-                    {payment.balance.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+                    {payment.balance.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
                   </TableCell>
                 </TableRow>
               ))}

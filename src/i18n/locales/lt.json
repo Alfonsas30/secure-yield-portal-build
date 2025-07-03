@@ -837,10 +837,10 @@
   "loanInputs": {
     "loanAmount": "Paskolos suma:",
     "loanTerm": "Paskolos terminas:",
-    "preciseAmount": "Tiksli suma (€)",
+    "preciseAmount": "Tiksli suma (LT)",
     "preciseTerm": "Tikslus terminas (mėn.)",
-    "minAmount": "1,000 €",
-    "maxAmount": "50,000 €",
+    "minAmount": "1,000 LT",
+    "maxAmount": "50,000 LT",
     "minTerm": "6 mėn.",
     "maxTerm": "60 mėn."
   },

@@ -18,7 +18,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       {/* Loan Amount */}
       <div className="space-y-3">
         <Label htmlFor="loanAmount" className="text-base font-medium text-slate-700">
-          {t('loanInputs.loanAmount')} {loanAmount.toLocaleString('lt-LT')} €
+          {t('loanInputs.loanAmount')} {loanAmount.toLocaleString('lt-LT')} LT
         </Label>
         <Slider
           id="loanAmount"

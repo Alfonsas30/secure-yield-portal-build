@@ -21,7 +21,7 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-3 lg:mb-4 text-slate-900 uppercase tracking-wide">{t('loanResults.monthlyPayment')}</h3>
           <p className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-blue-600 mb-3 lg:mb-4 drop-shadow-lg">
             {calculations.monthlyPayment > 0 
-              ? `${calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`
+              ? `${calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT`
               : t('loanResults.calculating')}
           </p>
           <p className="text-xs sm:text-sm lg:text-base text-slate-700 font-medium">
@@ -39,7 +39,7 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           </div>
           <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">{t('loanResults.totalAmount')}</h3>
           <p className="text-xl md:text-2xl font-bold text-green-600">
-            {calculations.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+            {calculations.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
           </p>
         </CardContent>
       </Card>
@@ -51,7 +51,7 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           </div>
           <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">{t('loanResults.interestAmount')}</h3>
           <p className="text-xl md:text-2xl font-bold text-orange-600">
-            {calculations.totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
+            {calculations.totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LT
           </p>
         </CardContent>
       </Card>

@@ -61,7 +61,7 @@ const LoanCalculator = () => {
             {t('loanCalculator.description')} <Badge variant="secondary" className="mx-1">{t('loanCalculator.annualRate')}</Badge>
             <br />
             <span className="text-sm text-slate-500 mt-2 block">
-              💡 {t('loanCalculator.applicationFee')} <Badge variant="outline" className="text-orange-600 border-orange-200">10€</Badge>
+              💡 {t('loanCalculator.applicationFee')} <Badge variant="outline" className="text-orange-600 border-orange-200">10 LT</Badge>
             </span>
           </CardDescription>
         </CardHeader>

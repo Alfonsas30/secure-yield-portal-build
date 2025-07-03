@@ -311,7 +311,7 @@
   "loanApplication": {
     "title": "Loan Application",
     "description": "Fill out the application and start receiving money today",
-    "applicationFee": "€10 application fee",
+    "applicationFee": "10 LT application fee",
     "loanSummary": {
       "title": "Loan Parameters",
       "amount": "Amount",
@@ -824,10 +824,10 @@
   "loanInputs": {
     "loanAmount": "Loan amount:",
     "loanTerm": "Loan term:",
-    "preciseAmount": "Exact amount (€)",
+    "preciseAmount": "Exact amount (LT)",
     "preciseTerm": "Exact term (months)",
-    "minAmount": "€1,000",
-    "maxAmount": "€50,000",
+    "minAmount": "1,000 LT",
+    "maxAmount": "50,000 LT",
     "minTerm": "6 months",
     "maxTerm": "60 months"
   },
