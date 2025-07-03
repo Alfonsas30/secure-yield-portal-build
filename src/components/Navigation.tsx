@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
@@ -10,8 +11,10 @@ import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
 import { useNavigate } from "react-router-dom";
 import { getExchangeRateDisplay } from "@/lib/currency";
+import LanguageSelector from "./LanguageSelector";
 
 const Navigation = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,10 +27,10 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { href: "/#paslaugos", label: "Paslaugos" },
-    { href: "/#kaip-veikia", label: "Kaip veikia" },
-    { href: "/#apie-mus", label: "Apie mus" },
-    { href: "/#kontaktai", label: "Kontaktai" },
+    { href: "/#paslaugos", label: t('navigation.services') },
+    { href: "/#kaip-veikia", label: t('navigation.howItWorks') },
+    { href: "/#apie-mus", label: t('navigation.about') },
+    { href: "/#kontaktai", label: t('navigation.contact') },
   ];
 
   const handleNavClick = (href: string) => {
@@ -98,7 +101,7 @@ const Navigation = () => {
               onClick={handleHomeClick}
               className="relative text-slate-600 hover:text-blue-600 transition-all duration-300 font-medium group py-2"
             >
-              Pradžia
+              {t('navigation.home')}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 group-hover:w-full transition-all duration-300 ease-out"></span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
             </button>
@@ -119,6 +122,7 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
+            <LanguageSelector />
             {user ? (
               <>
                 <Button 
@@ -150,14 +154,14 @@ const Navigation = () => {
                   }}
                   className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
                 >
-                  <span className="relative z-10">Prisijungti</span>
+                  <span className="relative z-10">{t('navigation.login')}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
                   onClick={() => setRegistrationModalOpen(true)}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
                 >
-                  <span className="relative z-10">Registruotis</span>
+                  <span className="relative z-10">{t('navigation.register')}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                 </Button>
               </>
@@ -184,6 +188,9 @@ const Navigation = () => {
               </div>
 
               <div className="flex flex-col space-y-6 mt-6 relative z-10">
+                <div className="flex justify-center mb-4">
+                  <LanguageSelector />
+                </div>
                 <button
                   onClick={() => {
                     setIsOpen(false);
@@ -191,7 +198,7 @@ const Navigation = () => {
                   }}
                   className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform text-left"
                 >
-                  Pradžia
+                  {t('navigation.home')}
                 </button>
                 {menuItems.map((item, index) => (
                   <button
@@ -219,7 +226,7 @@ const Navigation = () => {
                       style={{ animationDelay: '0.4s' }}
                     >
                       <User className="w-4 h-4 mr-2" />
-                      Mano paskyra
+                      {t('navigation.dashboard')}
                     </Button>
                     <Button 
                       variant="ghost"
@@ -246,7 +253,7 @@ const Navigation = () => {
                       className="justify-start hover:bg-blue-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
                       style={{ animationDelay: '0.4s' }}
                     >
-                      Prisijungti
+                      {t('navigation.login')}
                     </Button>
                      <Button 
                        onClick={() => {
@@ -256,7 +263,7 @@ const Navigation = () => {
                        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
                        style={{ animationDelay: '0.5s' }}
                      >
-                       <span className="relative z-10">Registruotis</span>
+                       <span className="relative z-10">{t('navigation.register')}</span>
                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                      </Button>
                   </>

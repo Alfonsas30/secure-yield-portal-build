@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Shield, Zap, Coins, Banknote, Star, Sparkles, Heart, Diamond, Gem, Hexagon, Triangle, Circle } from "lucide-react";
@@ -6,6 +7,7 @@ import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
 
 const Hero = () => {
+  const { t } = useTranslation();
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
 
@@ -88,18 +90,18 @@ const Hero = () => {
         <div className="animate-slide-in-left">
           <Badge variant="outline" className="mb-6 bg-blue-50/80 backdrop-blur-sm text-blue-700 border-blue-200 px-6 py-3 hover:bg-blue-100/80 transition-all duration-300 animate-pulse-glow">
             <Zap className="w-4 h-4 mr-2 animate-pulse" />
-            Naujoviški taupymo sprendimai
+            {t('hero.badge')}
           </Badge>
         </div>
         
         <div className="relative mb-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-scale-in">
             <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-green-800 bg-clip-text text-transparent animate-gradient-x bg-300%">
-              Taupyk protingai
+              {t('hero.title')}
             </span>
             <br />
             <span className="text-4xl md:text-6xl bg-gradient-to-r from-blue-600 via-green-600 to-blue-800 bg-clip-text text-transparent animate-gradient-shift bg-300%">
-              su dienos palūkanomis
+              {t('hero.subtitle')}
             </span>
           </h1>
           
@@ -109,8 +111,7 @@ const Hero = () => {
         
         <div className="animate-slide-in-right">
           <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. 
-            Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.
+            {t('hero.description')}
           </p>
         </div>
 
@@ -120,7 +121,7 @@ const Hero = () => {
             size="lg" 
             className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow group"
           >
-            <span className="relative z-10">Pradėti taupyti dabar</span>
+            <span className="relative z-10">{t('hero.startSaving')}</span>
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </Button>
           <Button 
@@ -128,7 +129,7 @@ const Hero = () => {
             variant="outline" 
             className="px-8 py-6 text-lg font-semibold border-2 hover:bg-slate-50 transition-all duration-300 backdrop-blur-sm bg-white/80 hover:scale-105 transform"
           >
-            Sužinoti daugiau
+            {t('hero.learnMore')}
           </Button>
         </div>
 
@@ -136,22 +137,22 @@ const Hero = () => {
           {[
             {
               icon: TrendingUp,
-              title: "Dienos palūkanos",
-              description: "Gaukite palūkanas kiekvieną dieną, ne kartą per metus",
+              title: t('hero.features.dailyInterest.title'),
+              description: t('hero.features.dailyInterest.description'),
               color: "green",
               delay: "0.2s"
             },
             {
               icon: Shield,
-              title: "100% saugumas",
-              description: "Jūsų pinigai apsaugoti bankine licencija ir draudimu",
+              title: t('hero.features.security.title'),
+              description: t('hero.features.security.description'),
               color: "blue",
               delay: "0.4s"
             },
             {
               icon: Zap,
-              title: "Jokių mokesčių",
-              description: "Nėra slepiamų mokesčių ar mėnesinių tarifų",
+              title: t('hero.features.noFees.title'),
+              description: t('hero.features.noFees.description'),
               color: "purple",
               delay: "0.6s"
             }

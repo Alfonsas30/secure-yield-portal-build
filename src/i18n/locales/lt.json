@@ -1,0 +1,110 @@
+{
+  "navigation": {
+    "home": "Pradžia",
+    "services": "Paslaugos",
+    "howItWorks": "Kaip veikia",
+    "about": "Apie mus",
+    "contact": "Kontaktai",
+    "login": "Prisijungti",
+    "register": "Registruotis",
+    "dashboard": "Skydelis"
+  },
+  "hero": {
+    "badge": "Naujoviški taupymo sprendimai",
+    "title": "Taupyk protingai",
+    "subtitle": "su dienos palūkanomis",
+    "description": "Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.",
+    "startSaving": "Pradėti taupyti dabar",
+    "learnMore": "Sužinoti daugiau",
+    "features": {
+      "dailyInterest": {
+        "title": "Dienos palūkanos",
+        "description": "Gaukite palūkanas kiekvieną dieną, ne kartą per metus"
+      },
+      "security": {
+        "title": "100% saugumas",
+        "description": "Jūsų pinigai apsaugoti bankine licencija ir draudimu"
+      },
+      "noFees": {
+        "title": "Jokių mokesčių",
+        "description": "Nėra slepiamų mokesčių ar mėnesinių tarifų"
+      }
+    }
+  },
+  "services": {
+    "badge": "Mūsų paslaugos",
+    "title": "Kodėl rinktis LTB Bankas?",
+    "description": "Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.",
+    "items": {
+      "dailyInterest": {
+        "title": "Dienos palūkanos",
+        "description": "Gaukite palūkanas kasdien, o ne tik metų pabaigoje. Jūsų pinigai dirba kiekvieną dieną.",
+        "badge": "Populiariausia"
+      },
+      "noReports": {
+        "title": "Jokių ataskaitų",
+        "description": "Jokių sudėtingų dokumentų ar perteklinių ataskaitų. Tiesiog taupykite ir gaukite palūkanas – greitai ir skaidriai.",
+        "badge": "Paprasta"
+      },
+      "confidentiality": {
+        "title": "Konfidencialumas",
+        "description": "Jūsų finansinė informacija yra griežtai konfidenciali. Niekam neatskleidžiame duomenų.",
+        "badge": "Saugus"
+      },
+      "transparent": {
+        "title": "Skaidrus skaičiavimas",
+        "description": "Visada žinote, kiek uždirbsite. Jokių slepiamų mokesčių ar sudėtingų sąlygų.",
+        "badge": "Aiškus"
+      },
+      "quickAccess": {
+        "title": "Greitas priėjimas",
+        "description": "Pinigai prieinami bet kada. Nėra užšaldymo periodų ar išėmimo apribojimų.",
+        "badge": "Greitas"
+      },
+      "competitive": {
+        "title": "Konkurencingos palūkanos",
+        "description": "Palūkanos iki 12 % per metus – rinkitės dienos palūkanas arba terminuotus indėlius.",
+        "badge": "Pelningas"
+      },
+      "loans": {
+        "title": "Paskolos 14% palūkanomis",
+        "description": "Gaukite paskolą su skaidria 14% metine palūkanų norma be jokių paslėptų mokesčių.",
+        "badge": "Naujas"
+      }
+    },
+    "cta": {
+      "title": "Pradėkite jau šiandien",
+      "description": "Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas",
+      "button": "Registruotis dabar"
+    }
+  },
+  "howItWorks": {
+    "badge": "Paprastas procesas",
+    "title": "Kaip tai veikia?",
+    "description": "Pradėti taupyti su LTB Bankas yra paprasta ir greita. Štai kaip tai veikia.",
+    "steps": {
+      "register": {
+        "title": "Registruokitės",
+        "description": "Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar perteklinių ataskaitų nereikia."
+      },
+      "deposit": {
+        "title": "Įneškite pinigus",
+        "description": "Įneškite pinigus į savo sąskaitą iš betkurio pasaulio banko, įnešimas saugus ir greitas."
+      },
+      "earn": {
+        "title": "Gaukite palūkanas",
+        "description": "Palūkanos pradedamos skaičiuoti iš karto – jos mokamos kasdien."
+      },
+      "use": {
+        "title": "Naudokitės pinigais",
+        "description": "Pinigai prieinami bet kada. Galite išsiimti visą sumą ar tik dalį - kaip jums patogu."
+      }
+    },
+    "cta": {
+      "title": "Pasiruošę pradėti taupyti?",
+      "description": "Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas",
+      "button": "Registruotis dabar",
+      "readMore": "Skaityti daugiau"
+    }
+  }
+}

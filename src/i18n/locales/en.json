@@ -1,0 +1,110 @@
+{
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "howItWorks": "How it Works",
+    "about": "About Us",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "badge": "Innovative saving solutions",
+    "title": "Save wisely",
+    "subtitle": "with daily interest",
+    "description": "The world's first bank that pays interest daily. Transparent, secure, with no hidden fees – this is what modern savings look like.",
+    "startSaving": "Start saving now",
+    "learnMore": "Learn more",
+    "features": {
+      "dailyInterest": {
+        "title": "Daily interest",
+        "description": "Receive interest every day, not just once a year"
+      },
+      "security": {
+        "title": "100% security",
+        "description": "Your money is protected by banking license and insurance"
+      },
+      "noFees": {
+        "title": "No fees",
+        "description": "No hidden fees or monthly charges"
+      }
+    }
+  },
+  "services": {
+    "badge": "Our services",
+    "title": "Why choose LTB Bank?",
+    "description": "We offer innovative solutions that will help you save more efficiently and securely than ever before.",
+    "items": {
+      "dailyInterest": {
+        "title": "Daily interest",
+        "description": "Receive interest daily, not just at the end of the year. Your money works every day.",
+        "badge": "Most popular"
+      },
+      "noReports": {
+        "title": "No reports",
+        "description": "No complex documents or excessive reports. Simply save and earn interest – quickly and transparently.",
+        "badge": "Simple"
+      },
+      "confidentiality": {
+        "title": "Confidentiality",
+        "description": "Your financial information is strictly confidential. We do not disclose data to anyone.",
+        "badge": "Secure"
+      },
+      "transparent": {
+        "title": "Transparent calculation",
+        "description": "You always know how much you will earn. No hidden fees or complex conditions.",
+        "badge": "Clear"
+      },
+      "quickAccess": {
+        "title": "Quick access",
+        "description": "Money is available anytime. No lock-up periods or withdrawal restrictions.",
+        "badge": "Fast"
+      },
+      "competitive": {
+        "title": "Competitive interest rates",
+        "description": "Interest rates up to 12% per year – choose daily interest or term deposits.",
+        "badge": "Profitable"
+      },
+      "loans": {
+        "title": "Loans at 14% interest",
+        "description": "Get a loan with a transparent 14% annual interest rate with no hidden fees.",
+        "badge": "New"
+      }
+    },
+    "cta": {
+      "title": "Start today",
+      "description": "Join thousands of clients who are already earning with LTB Bank",
+      "button": "Register now"
+    }
+  },
+  "howItWorks": {
+    "badge": "Simple process",
+    "title": "How does it work?",
+    "description": "Starting to save with LTB Bank is simple and fast. Here's how it works.",
+    "steps": {
+      "register": {
+        "title": "Register",
+        "description": "Create an account in 3 minutes. No complex documents or excessive reports needed."
+      },
+      "deposit": {
+        "title": "Deposit money",
+        "description": "Deposit money into your account from any bank worldwide, deposits are secure and fast."
+      },
+      "earn": {
+        "title": "Earn interest",
+        "description": "Interest starts calculating immediately – it's paid daily."
+      },
+      "use": {
+        "title": "Use your money",
+        "description": "Money is available anytime. You can withdraw the full amount or just a part - whatever suits you."
+      }
+    },
+    "cta": {
+      "title": "Ready to start saving?",
+      "description": "Join thousands of clients who are already earning with LTB Bank",
+      "button": "Register now",
+      "readMore": "Read more"
+    }
+  }
+}
