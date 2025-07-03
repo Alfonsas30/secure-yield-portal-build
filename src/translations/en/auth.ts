@@ -1,0 +1,21 @@
+export const auth = {
+  title: 'Banking System',
+  login: 'Login',
+  signup: 'Sign Up',
+  email: 'Email',
+  password: 'Password',
+  confirmPassword: 'Confirm Password',
+  displayName: 'Full Name',
+  emailPlaceholder: 'name@example.com',
+  passwordPlaceholder: '••••••••',
+  confirmPasswordPlaceholder: 'Confirm password',
+  displayNamePlaceholder: 'Full Name',
+  loginButton: 'Log In',
+  signupButton: 'Sign Up',
+  passwordMismatch: 'Passwords do not match',
+  signupNote: 'A unique account number will be automatically created during registration',
+  resendConfirmation: 'Unconfirmed email?',
+  resendButton: 'Send',
+  resendPlaceholder: 'Email',
+  minPasswordLength: 'At least 6 characters'
+};

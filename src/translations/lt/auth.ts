@@ -1,0 +1,21 @@
+export const auth = {
+  title: 'Banko sistema',
+  login: 'Prisijungimas',
+  signup: 'Registracija',
+  email: 'El. paštas',
+  password: 'Slaptažodis',
+  confirmPassword: 'Pakartokite slaptažodį',
+  displayName: 'Vardas Pavardė',
+  emailPlaceholder: 'vardas@example.com',
+  passwordPlaceholder: '••••••••',
+  confirmPasswordPlaceholder: 'Pakartokite slaptažodį',
+  displayNamePlaceholder: 'Vardas Pavardė',
+  loginButton: 'Prisijungti',
+  signupButton: 'Registruotis',
+  passwordMismatch: 'Slaptažodžiai nesutampa',
+  signupNote: 'Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris',
+  resendConfirmation: 'Nepatvirtintas el. paštas?',
+  resendButton: 'Siųsti',
+  resendPlaceholder: 'El. paštas',
+  minPasswordLength: 'Bent 6 simboliai'
+};
