@@ -65,10 +65,11 @@ const FAQ = () => {
     }
   };
 
-  const faqs = t('faq.questions', { returnObjects: true }) as Array<{
+  const faqs = t('faq.questions', { returnObjects: true });
+  const faqArray = Array.isArray(faqs) ? faqs as Array<{
     question: string;
     answer: string;
-  }>;
+  }> : [];
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
@@ -88,7 +89,7 @@ const FAQ = () => {
 
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl">
           <Accordion type="single" collapsible className="p-6">
-            {faqs.map((faq, index) => (
+            {faqArray.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`} className="border-slate-200">
                 <AccordionTrigger className="text-left text-lg font-semibold text-slate-900 hover:text-blue-600 transition-colors py-6">
                   {faq.question}

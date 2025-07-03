@@ -614,7 +614,8 @@
     "dailyProfit": "Vidutinis pelnas per dieną",
     "invest": "Investuoti dabar",
     "register": "Registruotis investavimui",
-    "login": "Prisijungti"
+    "login": "Prisijungti",
+    "signContract": "Pasirašyti sutartį"
   },
   "contact": {
     "form": {

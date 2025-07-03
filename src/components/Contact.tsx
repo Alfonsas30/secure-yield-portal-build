@@ -48,16 +48,16 @@ const Contact = () => {
       }
 
       toast({
-        title: "Žinutė išsiųsta!",
-        description: "Mes susisieksime su jumis per 24 valandas.",
+        title: t('contact.toast.messageSent'),
+        description: t('contact.toast.messageDescription'),
       });
       
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       console.error('Contact form error:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+        title: t('contact.toast.error'),
+        description: t('contact.toast.contactError'),
         variant: "destructive",
       });
     } finally {
@@ -77,8 +77,8 @@ const Contact = () => {
     
     if (!newsletterEmail || !consent) {
       toast({
-        title: "Klaida",
-        description: "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu",
+        title: t('contact.toast.error'),
+        description: t('contact.toast.newsletterValidation'),
         variant: "destructive",
       });
       return;
@@ -99,8 +99,8 @@ const Contact = () => {
       if (error) {
         if (error.code === '23505') {
           toast({
-            title: "El. paštas jau prenumeruoja",
-            description: "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+            title: t('contact.toast.alreadySubscribed'),
+            description: t('contact.toast.alreadyDescription'),
             variant: "destructive",
           });
         } else {
@@ -115,8 +115,8 @@ const Contact = () => {
       });
 
       toast({
-        title: "Sėkmingai prenumeruojate!",
-        description: "Ačiū! Netrukus gausite patvirtinimo laišką",
+        title: t('contact.toast.subscribeSuccess'),
+        description: t('contact.toast.subscribeDescription'),
       });
 
       setNewsletterEmail("");
@@ -125,8 +125,8 @@ const Contact = () => {
     } catch (error) {
       console.error('Newsletter subscription error:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko prenumeruoti. Pabandykite dar kartą",
+        title: t('contact.toast.error'),
+        description: t('contact.toast.newsletterError'),
         variant: "destructive",
       });
     } finally {
@@ -163,7 +163,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name" className="text-sm font-medium text-slate-700">
-                      Vardas *
+                      {t('contact.form.name')} *
                     </Label>
                     <Input
                       id="name"
@@ -172,12 +172,12 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       className="mt-1 border-2 focus:border-blue-500"
-                      placeholder="Jūsų vardas"
+                      placeholder={t('contact.form.namePlaceholder')}
                     />
                   </div>
                   <div>
                     <Label htmlFor="phone" className="text-sm font-medium text-slate-700">
-                      Telefonas
+                      {t('contact.form.phone')}
                     </Label>
                     <Input
                       id="phone"
@@ -185,14 +185,14 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="mt-1 border-2 focus:border-blue-500"
-                      placeholder="+370 XXX XXXXX"
+                      placeholder={t('contact.form.phonePlaceholder')}
                     />
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="email" className="text-sm font-medium text-slate-700">
-                    El. paštas *
+                    {t('contact.form.email')} *
                   </Label>
                   <Input
                     id="email"
@@ -202,13 +202,13 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1 border-2 focus:border-blue-500"
-                    placeholder="jusu.paštas@example.com"
+                    placeholder={t('contact.form.emailPlaceholder')}
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="message" className="text-sm font-medium text-slate-700">
-                    Žinutė *
+                    {t('contact.form.message')} *
                   </Label>
                   <Textarea
                     id="message"
@@ -218,7 +218,7 @@ const Contact = () => {
                     required
                     rows={5}
                     className="mt-1 border-2 focus:border-blue-500"
-                    placeholder="Parašykite savo klausimą arba komentarą..."
+                    placeholder={t('contact.form.messagePlaceholder')}
                   />
                 </div>
 
@@ -229,11 +229,11 @@ const Contact = () => {
                   size="lg"
                 >
                   {isLoading ? (
-                    "Siunčiama..."
+                    t('contact.form.submitting')
                   ) : (
                     <>
                       <Send className="w-5 h-5 mr-2" />
-                      Siųsti žinutę
+                      {t('contact.form.submit')}
                     </>
                   )}
                 </Button>
@@ -252,14 +252,14 @@ const Contact = () => {
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="newsletter-email" className="text-white">
-                    El. pašto adresas *
+                    {t('contact.newsletter.emailLabel')} *
                   </Label>
                   <Input
                     id="newsletter-email"
                     type="email"
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="jusu.pastas@example.com"
+                    placeholder={t('contact.newsletter.emailPlaceholder')}
                     required
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
                   />
@@ -267,14 +267,14 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="newsletter-name" className="text-white">
-                    Vardas (neprivaloma)
+                    {t('contact.newsletter.nameLabel')}
                   </Label>
                   <Input
                     id="newsletter-name"
                     type="text"
                     value={newsletterName}
                     onChange={(e) => setNewsletterName(e.target.value)}
-                    placeholder="Jūsų vardas"
+                    placeholder={t('contact.newsletter.namePlaceholder')}
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
                   />
                 </div>
@@ -287,7 +287,7 @@ const Contact = () => {
                     className="border-white/20 data-[state=checked]:bg-white data-[state=checked]:text-blue-600"
                   />
                   <Label htmlFor="newsletter-consent" className="text-sm text-white">
-                    Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui *
+                    {t('contact.newsletter.consent')} *
                   </Label>
                 </div>
 
@@ -298,11 +298,11 @@ const Contact = () => {
                   size="lg"
                 >
                   {isLoading ? (
-                    "Prenumeruojama..."
+                    t('contact.newsletter.submitting')
                   ) : (
                     <>
                       <Send className="w-4 h-4 mr-2" />
-                      Prenumeruoti
+                      {t('contact.newsletter.submit')}
                     </>
                   )}
                 </Button>

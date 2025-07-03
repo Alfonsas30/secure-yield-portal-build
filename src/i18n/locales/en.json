@@ -613,8 +613,9 @@
     "totalAmount": "Total amount:",
     "dailyProfit": "Average daily profit",
     "invest": "Invest Now",
-    "register": "Register for Investment",
-    "login": "Log In"
+    "register": "Register for Investment", 
+    "login": "Log In",
+    "signContract": "Sign contract"
   },
   "contact": {
     "form": {

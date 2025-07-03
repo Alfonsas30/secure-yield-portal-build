@@ -381,7 +381,7 @@ const TermDepositCalculator = () => {
                       className="w-full bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                       size="lg"
                     >
-                      <span className="relative z-10">Pasirašyti sutartį</span>
+                      <span className="relative z-10">{t('termDepositCalculator.signContract')}</span>
                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                     </Button>
                     <Button 
@@ -390,7 +390,7 @@ const TermDepositCalculator = () => {
                       className="w-full border-white/50 text-slate-800 hover:bg-white/20 font-semibold py-2 transition-all duration-300"
                       size="sm"
                     >
-                      Valdyti sąskaitą
+                      {t('interestCalculator.manageAccount')}
                     </Button>
                   </div>
                 ) : (
@@ -398,8 +398,8 @@ const TermDepositCalculator = () => {
                     <div className="bg-white/20 p-3 rounded-lg text-center">
                       <div className="text-sm opacity-90">
                         {isOverBalance 
-                          ? 'Suma viršija sąskaitos likutį' 
-                          : 'Įveskite investuojamą sumą'
+                          ? t('termDepositCalculator.overBalance')
+                          : t('termDepositCalculator.enterInvestAmount')
                         }
                       </div>
                     </div>
@@ -408,7 +408,7 @@ const TermDepositCalculator = () => {
                       className="w-full bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                       size="lg"
                     >
-                      <span className="relative z-10">Valdyti sąskaitą</span>
+                      <span className="relative z-10">{t('interestCalculator.manageAccount')}</span>
                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                     </Button>
                   </div>
@@ -420,7 +420,7 @@ const TermDepositCalculator = () => {
                     className="bg-white text-slate-800 hover:bg-slate-50 font-semibold py-4 px-6 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
-                    <span className="relative z-10">Registruotis</span>
+                    <span className="relative z-10">{t('termDepositCalculator.register')}</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                   </Button>
                   <Button 
@@ -429,7 +429,7 @@ const TermDepositCalculator = () => {
                     className="border-white/50 text-slate-800 hover:bg-white/20 font-semibold py-4 px-6 transition-all duration-300 text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
-                    Prisijungti
+                    {t('termDepositCalculator.login')}
                   </Button>
                 </div>
               )}
