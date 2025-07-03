@@ -7,6 +7,7 @@ import { ArrowUpCircle, ArrowDownCircle, Calendar, Download } from "lucide-react
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from 'react-i18next';
 
 interface Transaction {
   id: string;
@@ -21,6 +22,7 @@ interface Transaction {
 }
 
 export function TransactionHistory() {
+  const { t } = useTranslation();
   const { profile } = useAuth();
   const { toast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -74,8 +76,8 @@ export function TransactionHistory() {
       if (error) {
         console.error('Error fetching transactions:', error);
         toast({
-          title: "Klaida",
-          description: "Nepavyko įkelti operacijų istorijos",
+          title: t('transactions.error'),
+          description: t('transactions.loadError'),
           variant: "destructive"
         });
       } else {
@@ -107,13 +109,13 @@ export function TransactionHistory() {
   const getTransactionType = (type: string) => {
     switch (type) {
       case 'transfer_out':
-        return 'Pervedimas (išeinantis)';
+        return t('transactions.types.transferOut');
       case 'transfer_in':
-        return 'Pervedimas (įeinantis)';
+        return t('transactions.types.transferIn');
       case 'deposit':
-        return 'Papildymas';
+        return t('transactions.types.deposit');
       case 'withdrawal':
-        return 'Išėmimas';
+        return t('transactions.types.withdrawal');
       default:
         return type;
     }
@@ -122,15 +124,15 @@ export function TransactionHistory() {
   const exportTransactions = () => {
     if (transactions.length === 0) {
       toast({
-        title: "Nėra duomenų",
-        description: "Nėra operacijų eksportavimui",
+        title: t('transactions.noData'),
+        description: t('transactions.noDataToExport'),
         variant: "destructive"
       });
       return;
     }
 
     const csvContent = [
-      ['Data', 'Tipas', 'Suma', 'Gavėjas', 'Paskirtis', 'Statusas'].join(','),
+      [t('transactions.date'), t('transactions.type'), t('transactions.amount'), t('transactions.recipient'), t('transactions.purpose'), t('transactions.status')].join(','),
       ...transactions.map(t => [
         new Date(t.created_at).toLocaleDateString('lt-LT'),
         getTransactionType(t.transaction_type),
@@ -145,7 +147,7 @@ export function TransactionHistory() {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `operacijos_${timeFilter}_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `${t('transactions.fileName')}_${timeFilter}_${new Date().toISOString().split('T')[0]}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -158,7 +160,7 @@ export function TransactionHistory() {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Calendar className="w-5 h-5" />
-            Operacijų istorija
+            {t('transactions.title')}
           </CardTitle>
           <div className="flex gap-2">
             <Select value={timeFilter} onValueChange={setTimeFilter}>
@@ -166,16 +168,16 @@ export function TransactionHistory() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Visos</SelectItem>
-                <SelectItem value="day">Šiandien</SelectItem>
-                <SelectItem value="week">Savaitė</SelectItem>
-                <SelectItem value="month">Mėnuo</SelectItem>
-                <SelectItem value="year">Metai</SelectItem>
+                <SelectItem value="all">{t('transactions.filters.all')}</SelectItem>
+                <SelectItem value="day">{t('transactions.filters.today')}</SelectItem>
+                <SelectItem value="week">{t('transactions.filters.week')}</SelectItem>
+                <SelectItem value="month">{t('transactions.filters.month')}</SelectItem>
+                <SelectItem value="year">{t('transactions.filters.year')}</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" size="sm" onClick={exportTransactions}>
               <Download className="w-4 h-4 mr-2" />
-              Eksportuoti
+              {t('transactions.export')}
             </Button>
           </div>
         </div>
@@ -196,7 +198,7 @@ export function TransactionHistory() {
           </div>
         ) : transactions.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
-            Nėra operacijų pasirinktu laikotarpiu
+            {t('transactions.noTransactions')}
           </div>
         ) : (
           <div className="space-y-2">
@@ -209,9 +211,9 @@ export function TransactionHistory() {
                     {getTransactionType(transaction.transaction_type)}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {transaction.recipient_name && (
-                      <span>Gavėjas: {transaction.recipient_name} • </span>
-                    )}
+                     {transaction.recipient_name && (
+                       <span>{t('transactions.recipient')}: {transaction.recipient_name} • </span>
+                     )}
                     {new Date(transaction.created_at).toLocaleString('lt-LT')}
                   </div>
                   {transaction.description && (
@@ -226,10 +228,10 @@ export function TransactionHistory() {
                     {transaction.amount > 0 ? '+' : ''}
                     {formatCurrency(transaction.amount, transaction.currency)}
                   </div>
-                  <Badge variant={transaction.status === 'completed' ? 'default' : 'secondary'} className="text-xs">
-                    {transaction.status === 'completed' ? 'Įvykdyta' : 
-                     transaction.status === 'pending' ? 'Laukiama' : 'Nepavyko'}
-                  </Badge>
+                   <Badge variant={transaction.status === 'completed' ? 'default' : 'secondary'} className="text-xs">
+                     {transaction.status === 'completed' ? t('transactions.status.completed') : 
+                      transaction.status === 'pending' ? t('transactions.status.pending') : t('transactions.status.failed')}
+                   </Badge>
                 </div>
               </div>
             ))}

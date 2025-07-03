@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { formatDualCurrency } from "@/lib/currency";
+import { useTranslation } from 'react-i18next';
 
 interface AnalyticsData {
   totalIncome: number;
@@ -17,6 +18,7 @@ interface AnalyticsData {
 }
 
 export function Analytics() {
+  const { t } = useTranslation();
   const { profile } = useAuth();
   const { toast } = useToast();
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
@@ -66,8 +68,8 @@ export function Analytics() {
       if (error) {
         console.error('Error fetching analytics:', error);
         toast({
-          title: "Klaida",
-          description: "Nepavyko įkelti analitikos duomenų",
+          title: t('analytics.error'),
+          description: t('analytics.loadError'),
           variant: "destructive"
         });
         return;
@@ -111,11 +113,11 @@ export function Analytics() {
 
   const getPeriodLabel = () => {
     switch (period) {
-      case "week": return "Savaitės";
-      case "month": return "Mėnesio";
-      case "quarter": return "Ketvirčio";
-      case "year": return "Metų";
-      default: return "Laikotarpio";
+      case "week": return t('analytics.periods.week');
+      case "month": return t('analytics.periods.month');
+      case "quarter": return t('analytics.periods.quarter');
+      case "year": return t('analytics.periods.year');
+      default: return t('analytics.periods.default');
     }
   };
 
@@ -125,7 +127,7 @@ export function Analytics() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
-            Ataskaitos
+            {t('analytics.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -148,18 +150,18 @@ export function Analytics() {
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="w-5 h-5" />
-            {getPeriodLabel()} ataskaita
+            {t('analytics.periodReport', { period: getPeriodLabel() })}
           </CardTitle>
           <Select value={period} onValueChange={setPeriod}>
             <SelectTrigger className="w-32">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="week">Savaitė</SelectItem>
-              <SelectItem value="month">Mėnuo</SelectItem>
-              <SelectItem value="quarter">Ketvirtis</SelectItem>
-              <SelectItem value="year">Metai</SelectItem>
-            </SelectContent>
+              <SelectContent>
+                <SelectItem value="week">{t('analytics.filters.week')}</SelectItem>
+                <SelectItem value="month">{t('analytics.filters.month')}</SelectItem>
+                <SelectItem value="quarter">{t('analytics.filters.quarter')}</SelectItem>
+                <SelectItem value="year">{t('analytics.filters.year')}</SelectItem>
+              </SelectContent>
           </Select>
         </div>
       </CardHeader>
@@ -171,7 +173,7 @@ export function Analytics() {
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center gap-2 text-green-600 mb-2">
                   <TrendingUp className="w-4 h-4" />
-                  <span className="text-sm font-medium">Pajamos</span>
+                  <span className="text-sm font-medium">{t('analytics.income')}</span>
                 </div>
                 <div className="space-y-1">
                   <div className="text-2xl font-bold">
@@ -186,7 +188,7 @@ export function Analytics() {
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center gap-2 text-red-600 mb-2">
                   <TrendingDown className="w-4 h-4" />
-                  <span className="text-sm font-medium">Išlaidos</span>
+                  <span className="text-sm font-medium">{t('analytics.expenses')}</span>
                 </div>
                 <div className="space-y-1">
                   <div className="text-2xl font-bold">
@@ -201,7 +203,7 @@ export function Analytics() {
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center gap-2 text-blue-600 mb-2">
                   <PieChart className="w-4 h-4" />
-                  <span className="text-sm font-medium">Balansas</span>
+                  <span className="text-sm font-medium">{t('analytics.balance')}</span>
                 </div>
                 <div className="space-y-1">
                   <div className={`text-2xl font-bold ${
@@ -220,32 +222,32 @@ export function Analytics() {
               <div className="p-4 border rounded-lg">
                 <div className="flex items-center gap-2 text-purple-600 mb-2">
                   <BarChart3 className="w-4 h-4" />
-                  <span className="text-sm font-medium">Operacijos</span>
+                  <span className="text-sm font-medium">{t('analytics.transactions')}</span>
                 </div>
                 <div className="text-2xl font-bold">
                   {analytics.transactionCount}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">
-                  Vid. {formatCurrency(analytics.avgTransactionAmount)}
+                  {t('analytics.avgTransaction')} {formatCurrency(analytics.avgTransactionAmount)}
                 </div>
               </div>
             </div>
 
             {/* Summary */}
             <div className="p-4 bg-muted/50 rounded-lg">
-              <h4 className="font-semibold mb-2">{getPeriodLabel()} suvestinė</h4>
+              <h4 className="font-semibold mb-2">{t('analytics.summary', { period: getPeriodLabel() })}</h4>
               <div className="text-sm text-muted-foreground space-y-1">
                 <p>
-                  Laikotarpis: {new Date(analytics.periodStart).toLocaleDateString('lt-LT')} - 
+                  {t('analytics.period')}: {new Date(analytics.periodStart).toLocaleDateString('lt-LT')} - 
                   {new Date(analytics.periodEnd).toLocaleDateString('lt-LT')}
                 </p>
                 <p>
-                  Vidutinė operacija: {formatCurrency(analytics.avgTransactionAmount)}
+                  {t('analytics.avgTransactionLabel')}: {formatCurrency(analytics.avgTransactionAmount)}
                 </p>
                 <p>
                   {analytics.totalIncome > analytics.totalExpenses ? 
-                    `Taupymas: ${formatCurrency(analytics.totalIncome - analytics.totalExpenses)}` :
-                    `Deficitas: ${formatCurrency(analytics.totalExpenses - analytics.totalIncome)}`
+                    t('analytics.savings', { amount: formatCurrency(analytics.totalIncome - analytics.totalExpenses) }) :
+                    t('analytics.deficit', { amount: formatCurrency(analytics.totalExpenses - analytics.totalIncome) })
                   }
                 </p>
               </div>
@@ -253,7 +255,7 @@ export function Analytics() {
           </div>
         ) : (
           <div className="text-center py-8 text-muted-foreground">
-            Nėra duomenų pasirinktam laikotarpiui
+            {t('analytics.noData')}
           </div>
         )}
       </CardContent>
