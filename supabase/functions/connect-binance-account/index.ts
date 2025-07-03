@@ -64,14 +64,16 @@ serve(async (req) => {
       });
       
       if (!response.ok) {
-        throw new Error("Invalid API credentials or insufficient permissions");
+        const errorData = await response.text();
+        console.error('Binance API error:', response.status, errorData);
+        throw new Error(`Binance API error: ${response.status} - ${errorData}`);
       }
       
       const restrictions = await response.json();
       
-      // Check if API has required permissions
-      if (!restrictions.enableReading || restrictions.enableSpotAndMarginTrading) {
-        throw new Error("API key must have reading permissions only");
+      // Check if API has required permissions (only need reading enabled, trading can be disabled)
+      if (!restrictions.enableReading) {
+        throw new Error("API key must have reading permissions enabled");
       }
 
       // Store encrypted API credentials in database
@@ -120,7 +122,9 @@ serve(async (req) => {
       });
       
       if (!response.ok) {
-        throw new Error("Failed to fetch balances");
+        const errorData = await response.text();
+        console.error('Binance balance fetch error:', response.status, errorData);
+        throw new Error(`Failed to fetch balances: ${response.status} - ${errorData}`);
       }
       
       const account = await response.json();
@@ -198,9 +202,23 @@ serve(async (req) => {
     
   } catch (error) {
     console.error('Binance API error:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    
+    // Return more specific error messages
+    let errorMessage = error.message;
+    let statusCode = 500;
+    
+    if (errorMessage.includes('Invalid API credentials')) {
+      statusCode = 401;
+    } else if (errorMessage.includes('insufficient permissions')) {
+      statusCode = 403;
+    }
+    
+    return new Response(JSON.stringify({ 
+      error: errorMessage,
+      details: error.stack 
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
+      status: statusCode,
     });
   }
 });
