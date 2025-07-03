@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -9,6 +10,8 @@ interface PaymentScheduleProps {
 }
 
 export const PaymentSchedule = ({ calculations }: PaymentScheduleProps) => {
+  const { t } = useTranslation();
+  
   return (
     <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50">
       <CardHeader className="text-center pb-4">
@@ -18,10 +21,10 @@ export const PaymentSchedule = ({ calculations }: PaymentScheduleProps) => {
           </div>
         </div>
         <CardTitle className="text-xl font-bold text-slate-900">
-          Mokėjimo grafikas
+          {t('paymentSchedule.title')}
         </CardTitle>
         <CardDescription className="text-slate-600">
-          Išsamus kiekvieno mėnesio mokėjimo paskirstymas
+          {t('paymentSchedule.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -29,11 +32,11 @@ export const PaymentSchedule = ({ calculations }: PaymentScheduleProps) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-center">Mėnuo</TableHead>
-                <TableHead className="text-center">Mokėjimas</TableHead>
-                <TableHead className="text-center">Pagrindinis kapitalas</TableHead>
-                <TableHead className="text-center">Palūkanos</TableHead>
-                <TableHead className="text-center">Likutis</TableHead>
+                <TableHead className="text-center">{t('paymentSchedule.month')}</TableHead>
+                <TableHead className="text-center">{t('paymentSchedule.payment')}</TableHead>
+                <TableHead className="text-center">{t('paymentSchedule.principal')}</TableHead>
+                <TableHead className="text-center">{t('paymentSchedule.interest')}</TableHead>
+                <TableHead className="text-center">{t('paymentSchedule.balance')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -60,7 +63,7 @@ export const PaymentSchedule = ({ calculations }: PaymentScheduleProps) => {
         {calculations.paymentSchedule.length > 12 && (
           <div className="mt-4 text-center">
             <Badge variant="outline" className="text-slate-600">
-              Rodomi tik pirmieji 12 mėnesių. Iš viso: {calculations.paymentSchedule.length} mėnesių
+              {t('paymentSchedule.firstMonthsOnly', { totalMonths: calculations.paymentSchedule.length })}
             </Badge>
           </div>
         )}

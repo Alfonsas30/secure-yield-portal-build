@@ -807,7 +807,7 @@
     "checkInputs": "Check input data"
   },
   "paymentSchedule": {
-    "title": "Payment schedule",
+    "title": "Payment Schedule",
     "description": "Detailed breakdown of each month's payment",
     "month": "Month",
     "payment": "Payment",
