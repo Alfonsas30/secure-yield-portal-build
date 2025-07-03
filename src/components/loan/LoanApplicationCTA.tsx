@@ -1,14 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LoanData } from "./types";
+
 
 interface LoanApplicationCTAProps {
   onOpenModal: () => void;
-  calculatedData: LoanData;
 }
 
-export const LoanApplicationCTA = ({ onOpenModal, calculatedData }: LoanApplicationCTAProps) => {
+export const LoanApplicationCTA = ({ onOpenModal }: LoanApplicationCTAProps) => {
   return (
     <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50/80 to-green-50/80">
       <CardContent className="p-8 text-center">

@@ -5,12 +5,6 @@ enabled = true
 site_url = "https://viltb.com"
 additional_redirect_urls = ["https://viltb.com"]
 
-[functions.simple-test]
-verify_jwt = false
-
-[functions.test-function]
-verify_jwt = false
-
 [functions.request-discount]
 verify_jwt = false
 

@@ -77,13 +77,6 @@ const LoanCalculator = () => {
 
       <LoanApplicationCTA
         onOpenModal={() => setModalOpen(true)}
-        calculatedData={{
-          loanAmount: validLoanAmount,
-          loanTerm: validLoanTerm,
-          monthlyPayment: calculations.monthlyPayment,
-          totalPayment: calculations.totalPayment,
-          interestRate: calculations.interestRate
-        }}
       />
 
       <LoanApplicationModal 
