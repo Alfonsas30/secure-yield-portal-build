@@ -27,6 +27,7 @@ export function TermDepositContractModal({
   interestRate,
   onSuccess
 }: TermDepositContractModalProps) {
+  const { t } = useTranslation();
   const { profile } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
