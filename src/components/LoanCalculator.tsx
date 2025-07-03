@@ -4,14 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Calculator } from "lucide-react";
 import { LoanApplicationModal } from "./LoanApplicationModal";
 import { useLoanCalculations } from "@/hooks/useLoanCalculations";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { LoanInputs } from "./loan/LoanInputs";
 import { LoanResults } from "./loan/LoanResults";
 import { PaymentSchedule } from "./loan/PaymentSchedule";
 import { LoanApplicationCTA } from "./loan/LoanApplicationCTA";
 
 const LoanCalculator = () => {
-  const { t } = useLanguage();
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanTerm, setLoanTerm] = useState(24);
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,10 +51,10 @@ const LoanCalculator = () => {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-slate-900">
-            {t('loans.title')}
+            Paskolos skaičiuoklė
           </CardTitle>
           <CardDescription className="text-lg text-slate-600">
-            {t('loans.subtitle')} <Badge variant="secondary" className="mx-1">{t('loans.interestRate')}</Badge>
+            Sužinokite savo mėnesinio mokėjimo dydį su <Badge variant="secondary" className="mx-1">14% metine palūkanų norma</Badge>
           </CardDescription>
         </CardHeader>
         <CardContent>

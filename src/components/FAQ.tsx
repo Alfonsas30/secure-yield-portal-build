@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { HelpCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const FAQ = () => {
   const [showContactForm, setShowContactForm] = useState(false);
@@ -20,7 +19,6 @@ const FAQ = () => {
     message: ""
   });
   const { toast } = useToast();
-  const { t } = useLanguage();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -106,13 +104,13 @@ const FAQ = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-blue-50 text-blue-700 border-blue-200">
             <HelpCircle className="w-4 h-4 mr-2" />
-            {t('faq.badge')}
+            Dažniausiai užduodami klausimai
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            {t('faq.title')}
+            Turite klausimų?
           </h2>
           <p className="text-xl text-slate-600">
-            {t('faq.subtitle')}
+            Štai atsakymai į dažniausiai užduodamus klausimus apie LTB Bankas paslaugas
           </p>
         </div>
 
@@ -134,10 +132,10 @@ const FAQ = () => {
         <div className="mt-12 text-center">
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200">
             <h3 className="text-xl font-semibold mb-4 text-slate-900">
-              {t('faq.notFound.title')}
+              Neradote atsakymo į savo klausimą?
             </h3>
             <p className="text-slate-600 mb-6">
-              {t('faq.notFound.description')}
+              Susisiekite su mūsų ekspertų komanda - mes mielai padėsime
             </p>
             
             {!showContactForm ? (
@@ -145,13 +143,13 @@ const FAQ = () => {
                 onClick={() => setShowContactForm(true)}
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300"
               >
-                {t('faq.notFound.button')}
+                Susisiekti
               </Button>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4 text-left">
                 <div>
                   <Label htmlFor="quick-name" className="text-sm font-medium text-slate-700">
-                    {t('faq.form.name')} *
+                    Vardas *
                   </Label>
                   <Input
                     id="quick-name"
@@ -160,13 +158,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder={t('faq.form.placeholder.name')}
+                    placeholder="Jūsų vardas"
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-email" className="text-sm font-medium text-slate-700">
-                    {t('faq.form.email')} *
+                    El. paštas *
                   </Label>
                   <Input
                     id="quick-email"
@@ -176,13 +174,13 @@ const FAQ = () => {
                     onChange={handleInputChange}
                     required
                     className="mt-1"
-                    placeholder={t('faq.form.placeholder.email')}
+                    placeholder="jusu.pastas@example.com"
                   />
                 </div>
                 
                 <div>
                   <Label htmlFor="quick-message" className="text-sm font-medium text-slate-700">
-                    {t('faq.form.message')} *
+                    Žinutė *
                   </Label>
                   <Textarea
                     id="quick-message"
@@ -192,7 +190,7 @@ const FAQ = () => {
                     required
                     rows={3}
                     className="mt-1"
-                    placeholder={t('faq.form.placeholder.message')}
+                    placeholder="Jūsų klausimas..."
                   />
                 </div>
                 
@@ -203,11 +201,11 @@ const FAQ = () => {
                     className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
                   >
                     {isLoading ? (
-                      t('faq.form.sending')
+                      "Siunčiama..."
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
-                        {t('faq.form.send')}
+                        Siųsti
                       </>
                     )}
                   </Button>
@@ -220,7 +218,7 @@ const FAQ = () => {
                     }}
                     disabled={isLoading}
                   >
-                    {t('faq.form.cancel')}
+                    Atšaukti
                   </Button>
                 </div>
               </form>

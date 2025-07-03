@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Calculator, Shield, Zap, Eye, Users, TrendingUp, Clock, Lock, CheckCircle } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
@@ -22,8 +21,6 @@ import Footer from "@/components/Footer";
 import BoardInvitation from "@/components/BoardInvitation";
 
 const Index = () => {
-  const { t } = useLanguage();
-  
   return (
     <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
       <Navigation />
@@ -36,27 +33,27 @@ const Index = () => {
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 bg-slate-50/80 backdrop-blur-sm text-slate-700 border-slate-200">
               <Calculator className="w-4 h-4 mr-2" />
-              {t('calculators.title')}
+              Skaičiuoklės
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-              {t('calculators.title')}
+              Pasirinkite skaičiuoklės tipą
             </h2>
           </div>
           
           <Tabs defaultValue="daily" className="w-full">
             <TabsList className="grid w-full max-w-lg mx-auto grid-cols-3 mb-8">
-              <TabsTrigger value="daily" className="text-sm">{t('calculators.daily')}</TabsTrigger>
+              <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
               <TabsTrigger 
                 value="term" 
                 className="text-sm font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1]"
               >
-                {t('calculators.term')}
+                Terminuoti indėliai
               </TabsTrigger>
               <TabsTrigger 
                 value="loans" 
                 className="text-sm font-semibold text-slate-900 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 border border-orange-200"
               >
-                {t('calculators.loans')}
+                Paskolos
               </TabsTrigger>
             </TabsList>
             <TabsContent value="daily" className="w-full">
@@ -77,13 +74,13 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 bg-blue-50/80 backdrop-blur-sm text-blue-700 border-blue-200">
-              {t('nav.about')}
+              Apie mus
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-              {t('about.title')}
+              LTB Bankas - Jūsų patikimas partneris
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              {t('about.subtitle')}
+              Esame inovatyvus finansų sprendimų teikėjas, kuris padeda klientams saugiai ir pelningai taupyti pinigus.
             </p>
           </div>
           
@@ -93,8 +90,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('about.security.title')}</h3>
-                <p className="text-slate-600">{t('about.security.description')}</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">Saugumas</h3>
+                <p className="text-slate-600">Jūsų pinigai apsaugoti moderniausiais saugumo sprendimais ir draudimu.</p>
               </CardContent>
             </Card>
             
@@ -103,8 +100,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
                   <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('about.profitability.title')}</h3>
-                <p className="text-slate-600">{t('about.profitability.description')}</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">Pelningumo</h3>
+                <p className="text-slate-600">Siūlome konkurencingą 8% metinę palūkanų normą su kasdieniu palūkanų mokėjimu.</p>
               </CardContent>
             </Card>
             
@@ -113,8 +110,8 @@ const Index = () => {
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-slate-900">{t('about.experience.title')}</h3>
-                <p className="text-slate-600">{t('about.experience.description')}</p>
+                <h3 className="text-xl font-semibold mb-3 text-slate-900">Patirtis</h3>
+                <p className="text-slate-600">Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų.</p>
               </CardContent>
             </Card>
           </div>

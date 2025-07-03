@@ -1,7 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 interface LoanInputsProps {
   loanAmount: number;
@@ -11,14 +10,12 @@ interface LoanInputsProps {
 }
 
 export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange }: LoanInputsProps) => {
-  const { t } = useLanguage();
-  
   return (
     <div className="space-y-6">
       {/* Loan Amount */}
       <div className="space-y-3">
         <Label htmlFor="loanAmount" className="text-base font-medium text-slate-700">
-          {t('loans.form.loanAmount')} {loanAmount.toLocaleString('lt-LT')} €
+          Paskolos suma: {loanAmount.toLocaleString('lt-LT')} €
         </Label>
         <Slider
           id="loanAmount"
@@ -38,7 +35,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       {/* Loan Term */}
       <div className="space-y-3">
         <Label htmlFor="loanTerm" className="text-base font-medium text-slate-700">
-          {t('loans.form.loanTerm')} {loanTerm} {t('loans.form.months')}
+          Paskolos terminas: {loanTerm} mėn.
         </Label>
         <Slider
           id="loanTerm"
@@ -50,8 +47,8 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
           className="w-full"
         />
         <div className="flex justify-between text-sm text-slate-500">
-          <span>6 {t('loans.form.months')}</span>
-          <span>60 {t('loans.form.months')}</span>
+          <span>6 mėn.</span>
+          <span>60 mėn.</span>
         </div>
       </div>
 
@@ -59,7 +56,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="amountInput" className="text-sm font-medium text-slate-700">
-            {t('loans.form.exactAmount')}
+            Tiksli suma (€)
           </Label>
           <Input
             id="amountInput"
@@ -73,7 +70,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
         </div>
         <div className="space-y-2">
           <Label htmlFor="termInput" className="text-sm font-medium text-slate-700">
-            {t('loans.form.exactTerm')}
+            Tikslus terminas (mėn.)
           </Label>
           <Input
             id="termInput"

@@ -10,7 +10,6 @@ import { RegistrationModal } from "./RegistrationModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
 import { useNavigate } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const InterestCalculator = () => {
   const [amount, setAmount] = useState<string>("10000");
@@ -23,7 +22,6 @@ const InterestCalculator = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { t } = useLanguage();
   
   const calculateInterest = () => {
     const principal = parseFloat(amount) || 0;
@@ -87,13 +85,13 @@ const InterestCalculator = () => {
         <div className="text-center mb-12 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-blue-50/80 backdrop-blur-sm text-blue-700 border-blue-200 animate-pulse-glow">
             <Calculator className="w-4 h-4 mr-2" />
-            {t('calculator.badge')}
+            Palūkanų skaičiuoklė
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-blue-900 to-green-800 bg-clip-text text-transparent">
-            {t('calculator.title')}
+            Apskaičiuokite savo pelną
           </h2>
           <p className="text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            {t('calculator.subtitle')}
+            Sužinokite, kiek uždirbsite su mūsų dienos palūkanomis
           </p>
         </div>
 
@@ -101,13 +99,13 @@ const InterestCalculator = () => {
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
-                {t('calculator.amountLabel')}
+                Įveskite sumą
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <Label htmlFor="amount" className="text-base font-medium text-slate-700 mb-2 block">
-                  {t('calculator.amount')}
+                  Taupoma suma (LT)
                 </Label>
                 <div className="relative">
                   <Input
@@ -127,10 +125,10 @@ const InterestCalculator = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 via-green-100/50 to-blue-100/50 animate-gradient-x bg-300% opacity-0 group-hover/badge:opacity-100 transition-opacity duration-500"></div>
                 
                 <div className="flex items-center justify-between relative z-10">
-                  <span className="text-slate-700 font-medium">{t('calculator.rate')}</span>
+                  <span className="text-slate-700 font-medium">Palūkanų norma:</span>
                   <Badge className="bg-green-600 hover:bg-green-700 transition-colors duration-300 animate-pulse-glow">
                     <TrendingUp className="w-4 h-4 mr-1 animate-pulse" />
-                    {rate}% {t('calculator.rateValue')}
+                    {rate}% per metus
                   </Badge>
                 </div>
               </div>
@@ -159,15 +157,15 @@ const InterestCalculator = () => {
             <CardHeader className="relative z-10">
               <CardTitle className="text-2xl font-semibold flex items-center">
                 <Sparkles className="w-6 h-6 mr-2 animate-pulse" />
-                {t('calculator.results.title')}
+                Jūsų pelnas
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 relative z-10">
               <div className="space-y-4">
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
-                  <div className="text-sm opacity-90 mb-1">{t('calculator.results.daily')}</div>
+                  <div className="text-sm opacity-90 mb-1">Per dieną</div>
                   <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedDaily.toFixed(2)} €
+                    +{animatedDaily.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-full animate-shimmer" style={{ width: '30%' }}></div>
@@ -175,9 +173,9 @@ const InterestCalculator = () => {
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
-                  <div className="text-sm opacity-90 mb-1">{t('calculator.results.monthly')}</div>
+                  <div className="text-sm opacity-90 mb-1">Per mėnesį</div>
                   <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedMonthly.toFixed(2)} €
+                    +{animatedMonthly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-blue-400 to-green-400 rounded-full animate-shimmer" style={{ width: '60%', animationDelay: '0.5s' }}></div>
@@ -185,9 +183,9 @@ const InterestCalculator = () => {
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.4s' }}>
-                  <div className="text-sm opacity-90 mb-1">{t('calculator.results.yearly')}</div>
+                  <div className="text-sm opacity-90 mb-1">Per metus</div>
                   <div className="text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
-                    +{animatedYearly.toFixed(2)} €
+                    +{animatedYearly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-shimmer" style={{ width: '100%', animationDelay: '1s' }}></div>
@@ -201,7 +199,7 @@ const InterestCalculator = () => {
                   className="w-full bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                   size="lg"
                 >
-                  <span className="relative z-10">{t('calculator.buttons.manage')}</span>
+                  <span className="relative z-10">Valdyti sąskaitą</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                 </Button>
               ) : (
@@ -211,7 +209,7 @@ const InterestCalculator = () => {
                     className="bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
                     size="lg"
                   >
-                    <span className="relative z-10">{t('calculator.buttons.register')}</span>
+                    <span className="relative z-10">Registruotis</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                   </Button>
                   <Button 
@@ -220,7 +218,7 @@ const InterestCalculator = () => {
                     className="bg-white/20 backdrop-blur-sm border-white/40 text-white hover:bg-white/30 font-semibold py-3 transition-all duration-300"
                     size="lg"
                   >
-                    {t('calculator.buttons.login')}
+                    Prisijungti
                   </Button>
                 </div>
               )}

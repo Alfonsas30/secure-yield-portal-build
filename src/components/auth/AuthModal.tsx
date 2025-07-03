@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AuthModalProps {
   open: boolean;
@@ -28,7 +27,6 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
   const [resendEmail, setResendEmail] = useState("");
 
   const { signIn, signUp, resendConfirmation } = useAuth();
-  const { t } = useLanguage();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,26 +76,26 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            {t('auth.title')}
+            Banko sistema
           </DialogTitle>
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "login" | "signup")}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
-            <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
+            <TabsTrigger value="login">Prisijungimas</TabsTrigger>
+            <TabsTrigger value="signup">Registracija</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Label htmlFor="login-email">{t('auth.email')}</Label>
+                <Label htmlFor="login-email">El. paštas</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="login-email"
                     type="email"
-                    placeholder={t('auth.emailPlaceholder')}
+                    placeholder="vardas@example.com"
                     value={loginData.email}
                     onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
                     className="pl-10"
@@ -107,13 +105,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="login-password">{t('auth.password')}</Label>
+                <Label htmlFor="login-password">Slaptažodis</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="login-password"
                     type={showPassword ? "text" : "password"}
-                    placeholder={t('auth.passwordPlaceholder')}
+                    placeholder="••••••••"
                     value={loginData.password}
                     onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
                     className="pl-10 pr-10"
@@ -133,15 +131,15 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
 
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                {t('auth.loginButton')}
+                Prisijungti
               </Button>
             </form>
 
             <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground mb-2">{t('auth.resendConfirmation')}</p>
+              <p className="text-sm text-muted-foreground mb-2">Nepatvirtintas el. paštas?</p>
               <div className="flex gap-2">
                 <Input
-                  placeholder={t('auth.resendPlaceholder')}
+                  placeholder="El. paštas"
                   value={resendEmail}
                   onChange={(e) => setResendEmail(e.target.value)}
                   className="flex-1"
@@ -151,7 +149,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                   onClick={handleResendConfirmation}
                   disabled={loading || !resendEmail}
                 >
-                  {t('auth.resendButton')}
+                  Siųsti
                 </Button>
               </div>
             </div>
@@ -160,12 +158,12 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           <TabsContent value="signup" className="space-y-4">
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <Label htmlFor="signup-name">{t('auth.displayName')}</Label>
+                <Label htmlFor="signup-name">Vardas Pavardė</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-name"
-                    placeholder={t('auth.displayNamePlaceholder')}
+                    placeholder="Vardas Pavardė"
                     value={signupData.displayName}
                     onChange={(e) => setSignupData(prev => ({ ...prev, displayName: e.target.value }))}
                     className="pl-10"
@@ -174,13 +172,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-email">{t('auth.email')}</Label>
+                <Label htmlFor="signup-email">El. paštas</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder={t('auth.emailPlaceholder')}
+                    placeholder="vardas@example.com"
                     value={signupData.email}
                     onChange={(e) => setSignupData(prev => ({ ...prev, email: e.target.value }))}
                     className="pl-10"
@@ -190,13 +188,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-password">{t('auth.password')}</Label>
+                <Label htmlFor="signup-password">Slaptažodis</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-password"
                     type={showPassword ? "text" : "password"}
-                    placeholder={t('auth.minPasswordLength')}
+                    placeholder="Bent 6 simboliai"
                     value={signupData.password}
                     onChange={(e) => setSignupData(prev => ({ ...prev, password: e.target.value }))}
                     className="pl-10 pr-10"
@@ -216,13 +214,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-confirm">{t('auth.confirmPassword')}</Label>
+                <Label htmlFor="signup-confirm">Pakartokite slaptažodį</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-confirm"
                     type="password"
-                    placeholder={t('auth.confirmPasswordPlaceholder')}
+                    placeholder="Pakartokite slaptažodį"
                     value={signupData.confirmPassword}
                     onChange={(e) => setSignupData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                     className="pl-10"
@@ -230,7 +228,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                   />
                 </div>
                 {signupData.password && signupData.confirmPassword && signupData.password !== signupData.confirmPassword && (
-                  <p className="text-sm text-destructive mt-1">{t('auth.passwordMismatch')}</p>
+                  <p className="text-sm text-destructive mt-1">Slaptažodžiai nesutampa</p>
                 )}
               </div>
 
@@ -240,12 +238,12 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                 disabled={loading || signupData.password !== signupData.confirmPassword}
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                {t('auth.signupButton')}
+                Registruotis
               </Button>
             </form>
 
             <p className="text-xs text-muted-foreground text-center">
-              {t('auth.signupNote')}
+              Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris
             </p>
           </TabsContent>
         </Tabs>

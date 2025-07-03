@@ -10,7 +10,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +26,6 @@ const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const { toast } = useToast();
-  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,19 +45,19 @@ const Contact = () => {
         throw error;
       }
 
-        toast({
-          title: t('contact.form.success'),
-          description: t('contact.form.successDescription'),
-        });
+      toast({
+        title: "Žinutė išsiųsta!",
+        description: "Mes susisieksime su jumis per 24 valandas.",
+      });
       
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       console.error('Contact form error:', error);
-        toast({
-          title: t('contact.form.error'),
-          description: t('contact.form.errorDescription'),
-          variant: "destructive",
-        });
+      toast({
+        title: "Klaida",
+        description: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -140,13 +138,13 @@ const Contact = () => {
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 bg-green-50 text-green-700 border-green-200">
             <Mail className="w-4 h-4 mr-2" />
-            {t('contact.badge')}
+            Susisiekite su mumis
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
-            {t('contact.title')}
+            Turime klausimų?
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            {t('contact.subtitle')}
+            Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.
           </p>
         </div>
 
@@ -155,7 +153,7 @@ const Contact = () => {
           <Card className="shadow-xl border-0 bg-gradient-to-br from-white to-slate-50">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900">
-                {t('contact.form.title')}
+                Parašykite mums
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -163,7 +161,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name" className="text-sm font-medium text-slate-700">
-                      {t('contact.form.name')} {t('forms.required')}
+                      Vardas *
                     </Label>
                     <Input
                       id="name"
@@ -172,7 +170,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       className="mt-1 border-2 focus:border-blue-500"
-                      placeholder={t('contact.form.namePlaceholder')}
+                      placeholder="Jūsų vardas"
                     />
                   </div>
                   <div>

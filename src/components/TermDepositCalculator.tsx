@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Calculator, TrendingUp, Coins, ArrowRight, Sparkles, Crown, Star, Diamond, Wallet, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { AuthModal } from "./auth/AuthModal";
 import { RegistrationModal } from "./RegistrationModal";
 import { TermDepositContractModal } from "./TermDepositContractModal";
@@ -30,7 +29,6 @@ const TermDepositCalculator = () => {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
   
   // Fetch account balance for logged-in users
   useEffect(() => {
@@ -164,7 +162,7 @@ const TermDepositCalculator = () => {
         <div className="text-center mb-12 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-amber-50/80 backdrop-blur-sm text-amber-700 border-amber-200 animate-pulse-glow">
             <Calculator className="w-4 h-4 mr-2" />
-            {t('termDeposit.badge')}
+            Terminuotų indėlių skaičiuoklė
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-amber-900 to-orange-800 bg-clip-text text-transparent">
             Terminuoti indėliai

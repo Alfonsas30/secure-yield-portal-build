@@ -6,73 +6,71 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Shield, Eye, Calculator, Clock, TrendingUp, Sparkles } from "lucide-react";
 import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const Services = () => {
   const [registrationOpen, setRegistrationOpen] = useState(false);
   const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
-  const { t } = useLanguage();
 
   const services = [
     {
       icon: Calendar,
-      title: t('services.items.dailyInterest.title'),
-      description: t('services.items.dailyInterest.description'),
-      badge: t('services.items.dailyInterest.badge'),
+      title: "Dienos palūkanos",
+      description: "Gaukite palūkanas kasdien, o ne tik metų pabaigoje. Jūsų pinigai dirba kiekvieną dieną.",
+      badge: "Populiariausia",
       color: "bg-green-100 text-green-600",
       hoverColor: "hover:bg-green-200 hover:text-green-700",
       delay: "0.1s"
     },
     {
       icon: Eye,
-      title: t('services.items.noReports.title'),
-      description: t('services.items.noReports.description'),
-      badge: t('services.items.noReports.badge'),
+      title: "Jokių ataskaičių",
+      description: "Niekas neprašys deklaracijų ar pajamų paaiškinimų. Tiesiog taupykite ir gaukite palūkanas.",
+      badge: "Paprasta",
       color: "bg-blue-100 text-blue-600",
       hoverColor: "hover:bg-blue-200 hover:text-blue-700",
       delay: "0.2s"
     },
     {
       icon: Shield,
-      title: t('services.items.confidentiality.title'),
-      description: t('services.items.confidentiality.description'),
-      badge: t('services.items.confidentiality.badge'),
+      title: "Konfidencialumas",
+      description: "Jūsų finansinė informacija yra griežtai konfidenciali. Niekam neatskleidžiame duomenų.",
+      badge: "Saugus",
       color: "bg-purple-100 text-purple-600",
       hoverColor: "hover:bg-purple-200 hover:text-purple-700",
       delay: "0.3s"
     },
     {
       icon: Calculator,
-      title: t('services.items.transparent.title'),
-      description: t('services.items.transparent.description'),
-      badge: t('services.items.transparent.badge'),
+      title: "Skaidrus skaičiavimas",
+      description: "Visada žinote, kiek uždirbsite. Jokių slepiamų mokesčių ar sudėtingų sąlygų.",
+      badge: "Aiškus",
       color: "bg-orange-100 text-orange-600",
       hoverColor: "hover:bg-orange-200 hover:text-orange-700",
       delay: "0.4s"
     },
     {
       icon: Clock,
-      title: t('services.items.fastAccess.title'),
-      description: t('services.items.fastAccess.description'),
-      badge: t('services.items.fastAccess.badge'),
+      title: "Greitas priėjimas",
+      description: "Pinigai prieinami bet kada. Nėra užšaldymo periodų ar išėmimo apribojimų.",
+      badge: "Greitas",
       color: "bg-red-100 text-red-600",
       hoverColor: "hover:bg-red-200 hover:text-red-700",
       delay: "0.5s"
     },
     {
       icon: TrendingUp,
-      title: t('services.items.competitive.title'),
-      description: t('services.items.competitive.description'),
-      badge: t('services.items.competitive.badge'),
+      title: "Konkurencingos palūkanos",
+      description: "Siūlome vieną iš aukščiausių palūkanų normų rinkoje - iki 8% per metus.",
+      badge: "Pelningas",
       color: "bg-cyan-100 text-cyan-600",
       hoverColor: "hover:bg-cyan-200 hover:text-cyan-700",
       delay: "0.6s"
     },
     {
       icon: Calculator,
-      title: t('services.items.loans.title'),
-      description: t('services.items.loans.description'),
-      badge: t('services.items.loans.badge'),
+      title: "Paskolos 14% palūkanomis",
+      description: "Gaukite paskolą su skaidria 14% metine palūkanų norma be jokių paslėptų mokesčių.",
+      badge: "Naujas",
       color: "bg-orange-100 text-orange-600",
       hoverColor: "hover:bg-orange-200 hover:text-orange-700",
       delay: "0.7s"
@@ -103,13 +101,13 @@ const Services = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center mb-16 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-green-50/80 backdrop-blur-sm text-green-700 border-green-200 px-4 py-2 animate-pulse-glow">
-            {t('services.badge')}
+            Mūsų paslaugos
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-slate-900 via-blue-900 to-green-800 bg-clip-text text-transparent">
-            {t('services.title')}
+            Kodėl rinktis LTB Bankas?
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            {t('services.subtitle')}
+            Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.
           </p>
         </div>
 
@@ -168,16 +166,16 @@ const Services = () => {
                 </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
-                {t('services.cta.title')}
+                Pradėkite jau šiandien
               </h3>
               <p className="text-slate-600 text-lg mb-6 group-hover:text-slate-700 transition-colors duration-300">
-                {t('services.cta.description')}
+                Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
               </p>
               <Button 
                 onClick={() => setRegistrationOpen(true)}
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow"
               >
-                {t('services.cta.button')}
+                Registruotis dabar
               </Button>
             </div>
           </div>

@@ -3,10 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, Sparkles, User, LogOut, Languages } from "lucide-react";
+import { Menu, Sparkles, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { AuthModal } from "./auth/AuthModal";
 import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
@@ -23,19 +21,13 @@ const Navigation = () => {
   const [discountRequestModalOpen, setDiscountRequestModalOpen] = useState(false);
   
   const { user, profile, signOut } = useAuth();
-  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
 
-  const languageOptions = [
-    { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
-    { code: 'en', name: 'English', flag: '🇬🇧' }
-  ];
-
   const menuItems = [
-    { href: "/#paslaugos", label: t('nav.services') },
-    { href: "/#kaip-veikia", label: t('nav.howItWorks') },
-    { href: "/#apie-mus", label: t('nav.about') },
-    { href: "/#kontaktai", label: t('nav.contact') },
+    { href: "/#paslaugos", label: "Paslaugos" },
+    { href: "/#kaip-veikia", label: "Kaip veikia" },
+    { href: "/#apie-mus", label: "Apie mus" },
+    { href: "/#kontaktai", label: "Kontaktai" },
   ];
 
   const handleNavClick = (href: string) => {
@@ -106,7 +98,7 @@ const Navigation = () => {
               onClick={handleHomeClick}
               className="relative text-slate-600 hover:text-blue-600 transition-all duration-300 font-medium group py-2"
             >
-              {t('nav.home')}
+              Pradžia
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 group-hover:w-full transition-all duration-300 ease-out"></span>
               <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
             </button>
@@ -127,26 +119,6 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300">
-                  <Languages className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white border border-slate-200 shadow-lg">
-                {languageOptions.map((lang) => (
-                  <DropdownMenuItem
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
-                    className={`cursor-pointer hover:bg-blue-50 ${language === lang.code ? 'bg-blue-100 text-blue-600' : ''}`}
-                  >
-                    <span className="mr-2">{lang.flag}</span>
-                    {lang.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
             {user ? (
               <>
                 <Button 
@@ -178,14 +150,14 @@ const Navigation = () => {
                   }}
                   className="text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
                 >
-                  <span className="relative z-10">{t('nav.login')}</span>
+                  <span className="relative z-10">Prisijungti</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
                   onClick={() => setRegistrationModalOpen(true)}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
                 >
-                  <span className="relative z-10">{t('nav.register')}</span>
+                  <span className="relative z-10">Registruotis</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                 </Button>
               </>
@@ -219,7 +191,7 @@ const Navigation = () => {
                   }}
                   className="text-lg font-medium text-slate-600 hover:text-blue-600 transition-all duration-300 hover:translate-x-2 transform text-left"
                 >
-                  {t('nav.home')}
+                  Pradžia
                 </button>
                 {menuItems.map((item, index) => (
                   <button
@@ -235,24 +207,6 @@ const Navigation = () => {
                   </button>
                 ))}
                 <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
-                
-                {/* Language Selector for Mobile */}
-                <div className="flex gap-2">
-                  {languageOptions.map((lang) => (
-                    <Button
-                      key={lang.code}
-                      variant={language === lang.code ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setLanguage(lang.code)}
-                      className="flex items-center gap-1"
-                    >
-                      <span>{lang.flag}</span>
-                      <span className="text-xs">{lang.name}</span>
-                    </Button>
-                  ))}
-                </div>
-                
-                <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
                 {user ? (
                   <>
                     <Button 
@@ -265,7 +219,7 @@ const Navigation = () => {
                       style={{ animationDelay: '0.4s' }}
                     >
                       <User className="w-4 h-4 mr-2" />
-                      {t('nav.dashboard')}
+                      Mano paskyra
                     </Button>
                     <Button 
                       variant="ghost"
@@ -277,7 +231,7 @@ const Navigation = () => {
                       style={{ animationDelay: '0.5s' }}
                     >
                       <LogOut className="w-4 h-4 mr-2" />
-                      {t('nav.logout')}
+                      Atsijungti
                     </Button>
                   </>
                 ) : (
@@ -292,7 +246,7 @@ const Navigation = () => {
                       className="justify-start hover:bg-blue-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
                       style={{ animationDelay: '0.4s' }}
                     >
-                      {t('nav.login')}
+                      Prisijungti
                     </Button>
                      <Button 
                        onClick={() => {
@@ -301,8 +255,8 @@ const Navigation = () => {
                        }}
                        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
                        style={{ animationDelay: '0.5s' }}
-                      >
-                        <span className="relative z-10">{t('nav.register')}</span>
+                     >
+                       <span className="relative z-10">Registruotis</span>
                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                      </Button>
                   </>
