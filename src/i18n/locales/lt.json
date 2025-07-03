@@ -463,6 +463,21 @@
     "login": "Prisijungti",
     "signContract": "Pasirašyti sutartį"
   },
+  "deposit": {
+    "title": "Papildyti sąskaitą",
+    "amount": "Suma",
+    "range": "Suma nuo 1 iki 10,000 LT",
+    "pay": "Mokėti",
+    "processing": "Apdorojama...",
+    "amountError": "Neteisingos sumos. Suma turi būti nuo 1 iki 10,000 LT.",
+    "paymentError": "Mokėjimo klaida. Bandykite dar kartą.",
+    "sessionError": "Mokėjimo sesijos klaida.",
+    "processingError": "Mokėjimo apdorojimo klaida.",
+    "successTitle": "Mokėjimas sėkmingas!",
+    "successMessage": "Jūsų sąskaita papildyta {{amount}} LT suma.",
+    "balanceUpdated": "Sąskaitos balansas atnaujintas automatiškai.",
+    "backToDashboard": "Grįžti į valdymo skydą"
+  },
   "loanCalculator": {
     "title": "Paskolos skaičiuoklė",
     "description": "Sužinokite savo mėnesinio mokėjimo dydį su",

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Send, Plus, Download, BarChart3 } from "lucide-react";
 import { TransferModal } from "./TransferModal";
+import { DepositModal } from "./DepositModal";
 import { useTranslation } from 'react-i18next';
 
 interface QuickActionsProps {
@@ -13,6 +14,7 @@ interface QuickActionsProps {
 export function QuickActions({ onViewTransactions, onViewReports }: QuickActionsProps) {
   const { t } = useTranslation();
   const [transferModalOpen, setTransferModalOpen] = useState(false);
+  const [depositModalOpen, setDepositModalOpen] = useState(false);
 
   return (
     <>
@@ -33,9 +35,7 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
             <Button 
               variant="outline" 
               className="flex items-center gap-2 h-12"
-              onClick={() => {
-                // TODO: Implement deposit functionality
-              }}
+              onClick={() => setDepositModalOpen(true)}
             >
               <Plus className="w-4 h-4" />
               {t('quickActions.deposit')}
@@ -65,6 +65,11 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
       <TransferModal 
         open={transferModalOpen} 
         onOpenChange={setTransferModalOpen}
+      />
+      
+      <DepositModal 
+        open={depositModalOpen} 
+        onOpenChange={setDepositModalOpen}
       />
     </>
   );
