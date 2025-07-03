@@ -12,6 +12,8 @@ interface PaymentRequest {
   email: string;
   account_type: 'personal' | 'company';
   discount_code?: string;
+  campaign_active?: boolean;
+  campaign_discount?: number;
 }
 
 serve(async (req) => {
@@ -20,7 +22,7 @@ serve(async (req) => {
   }
 
   try {
-    const { name, email, account_type, discount_code }: PaymentRequest = await req.json();
+    const { name, email, account_type, discount_code, campaign_active, campaign_discount }: PaymentRequest = await req.json();
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2023-10-16",
@@ -39,9 +41,19 @@ serve(async (req) => {
 
     let originalPrice = prices[account_type];
     let finalPrice = originalPrice;
-    let discountPercent = 0;
+    let totalDiscountPercent = 0;
 
-    // Apply discount if code provided
+    // Check campaign validity on backend
+    const campaignEndDate = new Date('2025-09-01T00:00:00');
+    const isCampaignActive = new Date() < campaignEndDate;
+    
+    // Apply campaign discount if active
+    if (isCampaignActive && campaign_active && campaign_discount) {
+      totalDiscountPercent = campaign_discount;
+      console.log("Applying campaign discount:", campaign_discount + "%");
+    }
+
+    // Apply additional discount code if provided
     if (discount_code) {
       const { data: discountData } = await supabaseClient
         .from('discount_codes')
@@ -53,10 +65,13 @@ serve(async (req) => {
         .single();
 
       if (discountData) {
-        discountPercent = discountData.discount_percent;
-        finalPrice = Math.round(originalPrice * (1 - discountPercent / 100));
+        // Combine discounts (campaign + code discount)
+        totalDiscountPercent = Math.min(100, totalDiscountPercent + discountData.discount_percent);
+        console.log("Additional discount code applied:", discountData.discount_percent + "%");
       }
     }
+
+    finalPrice = Math.round(originalPrice * (1 - totalDiscountPercent / 100));
 
     // Check if customer exists
     const customers = await stripe.customers.list({ email, limit: 1 });
@@ -90,7 +105,8 @@ serve(async (req) => {
         account_type,
         discount_code: discount_code || '',
         original_price: originalPrice.toString(),
-        discount_percent: discountPercent.toString()
+        total_discount_percent: totalDiscountPercent.toString(),
+        campaign_discount: isCampaignActive && campaign_active ? campaign_discount?.toString() || '0' : '0'
       }
     });
 
@@ -111,7 +127,9 @@ serve(async (req) => {
       account_type, 
       original_price: originalPrice, 
       final_price: finalPrice,
-      discount_percent: discountPercent 
+      total_discount_percent: totalDiscountPercent,
+      campaign_active: isCampaignActive && campaign_active,
+      campaign_discount: campaign_discount || 0
     });
 
     return new Response(

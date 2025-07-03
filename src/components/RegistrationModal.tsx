@@ -84,7 +84,9 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),
-          account_type: formData.accountType
+          account_type: formData.accountType,
+          campaign_active: isCampaignActive,
+          campaign_discount: isCampaignActive ? 50 : 0
         }
       });
 
