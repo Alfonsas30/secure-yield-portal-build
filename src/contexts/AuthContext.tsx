@@ -258,15 +258,77 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       document.addEventListener(event, handleActivity, true);
     });
 
-    // Removed aggressive page visibility and beforeunload handlers
-    // These were causing premature logouts
-
     return () => {
       events.forEach(event => {
         document.removeEventListener(event, handleActivity, true);
       });
     };
   }, [user]);
+
+  // Page unload security - automatic logout when leaving site
+  useEffect(() => {
+    if (!user) return;
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      // Only show warning if user has been active recently
+      const timeSinceActivity = Date.now() - lastActivity;
+      if (timeSinceActivity < 60000) { // 1 minute
+        event.preventDefault();
+        return 'Ar tikrai norite palikti banko puslapį? Jūs būsite automatiškai atsijungti.';
+      }
+    };
+
+    const handleUnload = () => {
+      // Quick signout on page unload - clear session immediately
+      try {
+        // Clear authentication data immediately
+        localStorage.removeItem('supabase.auth.token');
+        localStorage.removeItem('sb-' + 'latwptcvghypdopbpxfr' + '-auth-token');
+        
+        // Attempt to notify server with keepalive
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/logout');
+        } else {
+          // Fallback for browsers without sendBeacon
+          fetch('/logout', { 
+            method: 'POST', 
+            keepalive: true,
+            headers: { 'Content-Type': 'application/json' }
+          }).catch(() => {});
+        }
+      } catch (error) {
+        console.error('Error during unload cleanup:', error);
+      }
+    };
+
+    const handlePageHide = () => {
+      // Alternative to unload for better mobile support
+      handleUnload();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Start timeout when page becomes hidden
+        setTimeout(() => {
+          if (document.hidden) {
+            signOut();
+          }
+        }, 30000); // 30 seconds
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('unload', handleUnload);
+    window.addEventListener('pagehide', handlePageHide);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('unload', handleUnload);
+      window.removeEventListener('pagehide', handlePageHide);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [user, lastActivity, signOut]);
 
   // Idle timeout timer
   useEffect(() => {
