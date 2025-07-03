@@ -193,8 +193,11 @@ export type Database = {
           monthly_income: number | null
           monthly_payment: number
           name: string
+          payment_amount: number | null
+          payment_status: string | null
           phone: string | null
           status: string
+          stripe_session_id: string | null
           total_payment: number
           updated_at: string
         }
@@ -210,8 +213,11 @@ export type Database = {
           monthly_income?: number | null
           monthly_payment: number
           name: string
+          payment_amount?: number | null
+          payment_status?: string | null
           phone?: string | null
           status?: string
+          stripe_session_id?: string | null
           total_payment: number
           updated_at?: string
         }
@@ -227,8 +233,11 @@ export type Database = {
           monthly_income?: number | null
           monthly_payment?: number
           name?: string
+          payment_amount?: number | null
+          payment_status?: string | null
           phone?: string | null
           status?: string
+          stripe_session_id?: string | null
           total_payment?: number
           updated_at?: string
         }

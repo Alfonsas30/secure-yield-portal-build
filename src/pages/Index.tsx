@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,8 +19,37 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BoardInvitation from "@/components/BoardInvitation";
+import { LoanPaymentSuccess } from "@/components/LoanPaymentSuccess";
 
 const Index = () => {
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('loan_payment');
+    const sessionIdParam = urlParams.get('session_id');
+
+    if (paymentStatus === 'success' && sessionIdParam) {
+      setSessionId(sessionIdParam);
+      setShowPaymentSuccess(true);
+      // Clean URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
+  if (showPaymentSuccess) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
+        <Navigation />
+        <div className="container mx-auto px-4 py-20">
+          <LoanPaymentSuccess sessionId={sessionId} />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
       <Navigation />

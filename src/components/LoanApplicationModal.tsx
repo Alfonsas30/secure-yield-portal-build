@@ -43,58 +43,40 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
     setIsSubmitting(true);
 
     try {
-      // Insert into database
-      const { error: dbError } = await supabase
-        .from('loan_applications')
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          monthly_income: formData.monthlyIncome ? parseFloat(formData.monthlyIncome) : null,
-          employment_info: formData.employmentInfo,
-          loan_purpose: formData.loanPurpose,
-          loan_amount: calculatedData.loanAmount,
-          loan_term_months: calculatedData.loanTerm,
-          monthly_payment: calculatedData.monthlyPayment,
-          total_payment: calculatedData.totalPayment,
-          interest_rate: calculatedData.interestRate
-        });
-
-      if (dbError) throw dbError;
-
-      // Send email notification
-      const { error: emailError } = await supabase.functions.invoke('submit-loan-application', {
+      // Create payment session for loan application
+      const { data, error } = await supabase.functions.invoke('create-loan-payment', {
         body: {
+          loanAmount: calculatedData.loanAmount,
+          loanTerm: calculatedData.loanTerm,
           ...formData,
           ...calculatedData
         }
       });
 
-      if (emailError) {
-        console.error('Email error:', emailError);
-        // Don't throw here - application is saved, email failure is secondary
-      }
+      if (error) throw error;
 
+      // Store form data in localStorage for after payment
+      localStorage.setItem('loanApplicationData', JSON.stringify({
+        formData,
+        calculatedData,
+        sessionId: data.sessionId
+      }));
+
+      // Redirect to Stripe payment
+      window.open(data.url, '_blank');
+      
       toast({
-        title: "Paraiška sėkmingai pateikta!",
-        description: "Susisieksime su jumis per 24 valandas.",
+        title: "Nukreipiama į mokėjimą",
+        description: "Mokėjimo suma: 10€. Po sėkmingo mokėjimo paraiška bus automatiškai pateikta.",
       });
 
       onOpenChange(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        monthlyIncome: "",
-        employmentInfo: "",
-        loanPurpose: ""
-      });
 
     } catch (error: any) {
-      console.error('Error submitting loan application:', error);
+      console.error('Error creating payment:', error);
       toast({
         title: "Klaida",
-        description: "Nepavyko pateikti paraiškos. Pabandykite dar kartą.",
+        description: "Nepavyko sukurti mokėjimo. Pabandykite dar kartą.",
         variant: "destructive",
       });
     } finally {
@@ -237,6 +219,7 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
               <div className="text-sm text-slate-700">
                 <p className="font-medium mb-1">Sutinku su sąlygomis:</p>
                 <ul className="list-disc list-inside space-y-1 text-slate-600">
+                  <li>10€ mokestis už paraiškos pateikimą</li>
                   <li>14% metinė palūkanų norma be paslėptų mokesčių</li>
                   <li>Sprendimas per 24 valandas</li>
                   <li>Duomenų tvarkymas pagal privatumo politiką</li>
