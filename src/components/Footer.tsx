@@ -31,10 +31,10 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-4">Paslaugos</h3>
             <ul className="space-y-3 text-slate-400">
               <li><a href="#" className="hover:text-white transition-colors">Dienos palūkanos</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Taupymo sąskaitā</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Taupymo sąskaita</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Mokėjimų kortelės</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Pervedimai</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Mobilėje aplikacija</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Mobilioji aplikacija</a></li>
             </ul>
           </div>
 
