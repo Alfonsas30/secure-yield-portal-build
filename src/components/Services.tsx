@@ -60,7 +60,7 @@ const Services = () => {
     {
       icon: TrendingUp,
       title: "Konkurencingos palūkanos",
-      description: "Siūlome dienos palūkanas 2% ir terminuotus indėlius iki 12% per metus.",
+      description: "Palūkanos iki 12 % per metus – rinkitės dienos palūkanas arba terminuotus indėlius.",
       badge: "Pelningas",
       color: "bg-cyan-100 text-cyan-600",
       hoverColor: "hover:bg-cyan-200 hover:text-cyan-700",
