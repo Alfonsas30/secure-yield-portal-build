@@ -52,12 +52,16 @@ serve(async (req) => {
     const baseUrl = "https://api.binance.com";
     
     if (action === "verify") {
-      // Verify API key and check restrictions
+      // Verify API key by trying to fetch account info
       const timestamp = Date.now();
       const queryString = `timestamp=${timestamp}`;
       const signature = await createSignature(apiSecret, queryString);
       
-      const response = await fetch(`${baseUrl}/sapi/v1/account/apiRestrictions?${queryString}&signature=${signature}`, {
+      console.log('Debug - Timestamp:', timestamp);
+      console.log('Debug - Query string:', queryString);
+      console.log('Debug - Request URL:', `${baseUrl}/api/v3/account?${queryString}&signature=${signature}`);
+      
+      const response = await fetch(`${baseUrl}/api/v3/account?${queryString}&signature=${signature}`, {
         headers: {
           'X-MBX-APIKEY': apiKey
         }
@@ -65,16 +69,22 @@ serve(async (req) => {
       
       if (!response.ok) {
         const errorData = await response.text();
-        console.error('Binance API error:', response.status, errorData);
-        throw new Error(`Binance API error: ${response.status} - ${errorData}`);
+        console.error('Binance API verification error:', response.status, errorData);
+        
+        // Provide more specific error messages
+        if (response.status === 401) {
+          throw new Error("Invalid API credentials. Please check your API key and secret.");
+        } else if (response.status === 403) {
+          throw new Error("API key doesn't have required permissions. Enable 'Read Info' permission in Binance.");
+        } else {
+          throw new Error(`Binance API error: ${response.status} - ${errorData}`);
+        }
       }
       
-      const restrictions = await response.json();
+      const accountInfo = await response.json();
+      console.log('Debug - Account info received:', !!accountInfo);
       
-      // Check if API has required permissions (only need reading enabled, trading can be disabled)
-      if (!restrictions.enableReading) {
-        throw new Error("API key must have reading permissions enabled");
-      }
+      // If we can fetch account info, the API key is valid and has necessary permissions
 
       // Store encrypted API credentials in database
       const { error: upsertError } = await supabaseClient
@@ -93,7 +103,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({ 
         success: true, 
         message: "Binance account connected successfully",
-        restrictions 
+        accountInfo: !!accountInfo
       }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
