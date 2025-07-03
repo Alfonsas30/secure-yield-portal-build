@@ -37,7 +37,7 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
-          <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">Bendra suma</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">{t('loanResults.totalAmount')}</h3>
           <p className="text-xl md:text-2xl font-bold text-green-600">
             {calculations.totalPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
           </p>
@@ -49,7 +49,7 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
             <Calculator className="w-6 h-6 text-white" />
           </div>
-          <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">Palūkanos</h3>
+          <h3 className="text-base md:text-lg font-semibold mb-2 text-slate-900">{t('loanResults.interestAmount')}</h3>
           <p className="text-xl md:text-2xl font-bold text-orange-600">
             {calculations.totalInterest.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €
           </p>
