@@ -6,6 +6,43 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Get Binance server time for synchronization
+async function getBinanceServerTime(): Promise<number> {
+  try {
+    const response = await fetch("https://api.binance.com/api/v3/time");
+    if (!response.ok) {
+      throw new Error(`Failed to get server time: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.serverTime;
+  } catch (error) {
+    console.error('Failed to get Binance server time:', error);
+    // Fallback to local time
+    return Date.now();
+  }
+}
+
+// Test Binance API connectivity
+async function testBinanceConnection(): Promise<{ success: boolean; message: string }> {
+  try {
+    // Test 1: Ping
+    const pingResponse = await fetch("https://api.binance.com/api/v3/ping");
+    if (!pingResponse.ok) {
+      return { success: false, message: `Ping failed: ${pingResponse.status}` };
+    }
+    
+    // Test 2: Time
+    const timeResponse = await fetch("https://api.binance.com/api/v3/time");
+    if (!timeResponse.ok) {
+      return { success: false, message: `Time endpoint failed: ${timeResponse.status}` };
+    }
+    
+    return { success: true, message: "Binance API is accessible" };
+  } catch (error) {
+    return { success: false, message: `Connection error: ${error.message}` };
+  }
+}
+
 // Simple HMAC-SHA256 implementation for Binance API
 async function createSignature(secret: string, queryString: string): Promise<string> {
   const key = await crypto.subtle.importKey(
@@ -52,37 +89,68 @@ serve(async (req) => {
     const baseUrl = "https://api.binance.com";
     
     if (action === "verify") {
-      // Verify API key by trying to fetch account info
-      const timestamp = Date.now();
-      const queryString = `timestamp=${timestamp}`;
+      console.log('Starting Binance API verification for user:', user.id);
+      
+      // Step 1: Test basic connectivity
+      const connectivityTest = await testBinanceConnection();
+      if (!connectivityTest.success) {
+        throw new Error(`Connectivity issue: ${connectivityTest.message}`);
+      }
+      console.log('Binance connectivity test passed:', connectivityTest.message);
+      
+      // Step 2: Get synchronized server time
+      const serverTime = await getBinanceServerTime();
+      console.log('Using Binance server time:', serverTime);
+      
+      // Step 3: Create properly signed request
+      const queryString = `timestamp=${serverTime}`;
       const signature = await createSignature(apiSecret, queryString);
       
-      console.log('Debug - Timestamp:', timestamp);
+      console.log('Debug - Server timestamp:', serverTime);
       console.log('Debug - Query string:', queryString);
-      console.log('Debug - Request URL:', `${baseUrl}/api/v3/account?${queryString}&signature=${signature}`);
+      console.log('Debug - Signature:', signature);
+      console.log('Debug - API Key (first 8 chars):', apiKey.substring(0, 8) + '...');
       
-      const response = await fetch(`${baseUrl}/api/v3/account?${queryString}&signature=${signature}`, {
+      const fullUrl = `${baseUrl}/api/v3/account?${queryString}&signature=${signature}`;
+      console.log('Debug - Request URL:', fullUrl);
+      
+      const response = await fetch(fullUrl, {
         headers: {
           'X-MBX-APIKEY': apiKey
         }
       });
       
+      console.log('Debug - Response status:', response.status);
+      console.log('Debug - Response headers:', Object.fromEntries(response.headers.entries()));
+      
       if (!response.ok) {
         const errorData = await response.text();
         console.error('Binance API verification error:', response.status, errorData);
         
-        // Provide more specific error messages
+        // Parse Binance API error response
+        let binanceError = errorData;
+        try {
+          const errorJson = JSON.parse(errorData);
+          binanceError = errorJson.msg || errorData;
+        } catch (e) {
+          // Keep original error text if not JSON
+        }
+        
+        // Provide more specific error messages based on status codes
         if (response.status === 401) {
-          throw new Error("Invalid API credentials. Please check your API key and secret.");
+          throw new Error(`Invalid API credentials: ${binanceError}. Please check your API key and secret.`);
         } else if (response.status === 403) {
-          throw new Error("API key doesn't have required permissions. Enable 'Read Info' permission in Binance.");
+          throw new Error(`API key permissions error: ${binanceError}. Please enable 'Read Info' permission in Binance API settings.`);
+        } else if (response.status === -1021) {
+          throw new Error(`Timestamp out of sync: ${binanceError}. Please check your system time.`);
         } else {
-          throw new Error(`Binance API error: ${response.status} - ${errorData}`);
+          throw new Error(`Binance API error (${response.status}): ${binanceError}`);
         }
       }
       
       const accountInfo = await response.json();
-      console.log('Debug - Account info received:', !!accountInfo);
+      console.log('Debug - Account info received successfully. Account type:', accountInfo.accountType);
+      console.log('Debug - Account permissions:', accountInfo.permissions || 'Not available');
       
       // If we can fetch account info, the API key is valid and has necessary permissions
 

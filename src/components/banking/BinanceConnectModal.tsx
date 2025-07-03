@@ -58,9 +58,26 @@ export function BinanceConnectModal({ open, onOpenChange, onConnected }: Binance
       }
     } catch (error) {
       console.error('Binance connection error:', error);
+      
+      // Extract detailed error message
+      let errorMessage = t('binance.connect.error');
+      if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      // Log full error details for debugging
+      console.error('Full error details:', {
+        error,
+        message: error?.message,
+        stack: error?.stack,
+        response: error?.response
+      });
+      
       toast({
         title: t('discount.error'),
-        description: t('binance.connect.error'),
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
