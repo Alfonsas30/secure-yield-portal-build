@@ -28,9 +28,7 @@ const Navigation = () => {
 
   const languageOptions = [
     { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
+    { code: 'en', name: 'English', flag: '🇬🇧' }
   ];
 
   const menuItems = [
@@ -236,6 +234,24 @@ const Navigation = () => {
                     {item.label}
                   </button>
                 ))}
+                <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
+                
+                {/* Language Selector for Mobile */}
+                <div className="flex gap-2">
+                  {languageOptions.map((lang) => (
+                    <Button
+                      key={lang.code}
+                      variant={language === lang.code ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setLanguage(lang.code)}
+                      className="flex items-center gap-1"
+                    >
+                      <span>{lang.flag}</span>
+                      <span className="text-xs">{lang.name}</span>
+                    </Button>
+                  ))}
+                </div>
+                
                 <Separator className="my-4 bg-gradient-to-r from-blue-200 to-green-200" />
                 {user ? (
                   <>

@@ -15,5 +15,13 @@ export const about = {
     title: 'Transparency',
     description: 'No hidden fees or complicated conditions. Everything is clear and understandable.',
     guarantee: 'No Hidden Fees'
+  },
+  profitability: {
+    title: 'Profitability',
+    description: 'High interest rates and innovative solutions help your money grow faster.'
+  },
+  experience: {
+    title: 'Experience',
+    description: 'Our expert team has more than 10 years of experience in finance.'
   }
 };

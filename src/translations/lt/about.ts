@@ -15,5 +15,13 @@ export const about = {
     title: 'Skaidrumas',
     description: 'Jokių paslėptų mokesčių ar sudėtingų sąlygų. Viskas aišku ir suprantama.',
     guarantee: 'Be paslėptų mokesčių'
+  },
+  profitability: {
+    title: 'Pelningumas',
+    description: 'Aukštos palūkanų normos ir inovatyvūs sprendimai padeda jūsų pinigams augti greičiau.'
+  },
+  experience: {
+    title: 'Patirtis',
+    description: 'Mūsų ekspertų komanda turi daugiau nei 10 metų patirtį finansų srityje.'
   }
 };

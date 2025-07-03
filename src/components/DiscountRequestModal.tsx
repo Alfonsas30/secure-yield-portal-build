@@ -8,6 +8,7 @@ import { Loader2, User, Building, Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/translations";
 
 interface DiscountRequestModalProps {
   open: boolean;
@@ -22,13 +23,13 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handleSubmit = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
       toast({
-        title: "Klaida",
-        description: "Užpildykite visus laukus",
+        title: t('forms.error'),
+        description: t('modals.discount.validationError'),
         variant: "destructive"
       });
       return;
@@ -48,12 +49,12 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
 
       if (error) {
         console.error("Edge function error:", error);
-        throw new Error("Nepavyko išsiųsti užklausos");
+        throw new Error(t('modals.discount.submitError'));
       }
 
       toast({
-        title: "Sėkmė!",
-        description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
+        title: t('modals.discount.success'),
+        description: t('modals.discount.successDescription'),
       });
 
       // Reset form and close modal
@@ -67,8 +68,8 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       console.error("Error details:", error);
       
       toast({
-        title: "Klaida",
-        description: error?.message || "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
+        title: t('forms.error'),
+        description: error?.message || t('modals.discount.submitError'),
         variant: "destructive"
       });
     } finally {
@@ -81,19 +82,19 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            Prašyti nuolaidos kodo
+            {t('modals.discount.title')}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
           <div className="text-center text-muted-foreground text-sm">
-            Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas
+            {t('modals.discount.description')}
           </div>
 
           {/* Account Type Selection */}
           <div>
             <Label className="text-base font-medium mb-3 block">
-              Sąskaitos tipas
+              {t('modals.discount.accountType')}
             </Label>
             <RadioGroup
               value={formData.accountType}
@@ -108,7 +109,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
                 <Label htmlFor="discount-personal" className="flex items-center gap-2 cursor-pointer">
                   <User className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Asmeninė</div>
+                    <div className="font-medium">{t('modals.discount.personal')}</div>
                     <div className="text-sm text-muted-foreground">800 € → 400 €</div>
                   </div>
                 </Label>
@@ -118,7 +119,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
                 <Label htmlFor="discount-company" className="flex items-center gap-2 cursor-pointer">
                   <Building className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Įmonės</div>
+                    <div className="font-medium">{t('modals.discount.company')}</div>
                     <div className="text-sm text-muted-foreground">1500 € → 750 €</div>
                   </div>
                 </Label>
@@ -129,22 +130,22 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
           {/* Personal Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="discount-name">Vardas Pavardė *</Label>
+              <Label htmlFor="discount-name">{t('modals.discount.name')} {t('forms.required')}</Label>
               <Input
                 id="discount-name"
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Įveskite vardą ir pavardę"
+                placeholder={t('modals.discount.namePlaceholder')}
               />
             </div>
             <div>
-              <Label htmlFor="discount-email">El. paštas *</Label>
+              <Label htmlFor="discount-email">{t('modals.discount.email')} {t('forms.required')}</Label>
               <Input
                 id="discount-email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="vardas@example.com"
+                placeholder={t('modals.discount.emailPlaceholder')}
               />
             </div>
           </div>
@@ -152,13 +153,12 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
           <div className="bg-blue-50 p-4 rounded-lg">
             <div className="flex items-center gap-2 text-blue-700 text-sm">
               <Mail className="w-4 h-4" />
-              <span className="font-medium">Kaip tai veikia?</span>
+              <span className="font-medium">{t('modals.discount.howItWorks')}</span>
             </div>
             <ul className="text-blue-600 text-sm mt-2 space-y-1">
-              <li>• Jūsų užklausa bus išsiųsta administratoriui</li>
-              <li>• Per 24 val. gausite atsakymą el. paštu</li>
-              <li>• Patvirtinus - gausite 50% nuolaidos kodą</li>
-              <li>• Kodas galioja 30 dienų</li>
+              {translations[language as keyof typeof translations].modals.discount.howItWorksList.map((item: string, index: number) => (
+                <li key={index}>• {item}</li>
+              ))}
             </ul>
           </div>
 
@@ -173,7 +173,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
             ) : (
               <Send className="w-4 h-4 mr-2" />
             )}
-            Siųsti užklausą
+            {t('modals.discount.submitButton')}
           </Button>
         </div>
       </DialogContent>

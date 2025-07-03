@@ -22,7 +22,10 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<string>('lt');
+  const [language, setLanguage] = useState<string>(() => {
+    // Get language from localStorage or default to 'lt'
+    return localStorage.getItem('language') || 'lt';
+  });
 
   const t = (key: string): string => {
     const keys = key.split('.');
@@ -39,8 +42,13 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     return typeof value === 'string' ? value : key;
   };
 
+  const handleSetLanguage = (lang: string) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
