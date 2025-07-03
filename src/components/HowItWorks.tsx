@@ -33,7 +33,7 @@ const HowItWorks = () => {
       number: "03",
       icon: TrendingUp,
       title: "Gaukite palūkanas",
-      description: "Jūsų pinigai pradės dirbti iš karto. Palūkanos skaičiuojamos ir mokai kasdien.",
+      description: "Palūkanos pradedamos skaičiuoti iš karto – jos mokamos kasdien.",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       delay: "0.3s"
