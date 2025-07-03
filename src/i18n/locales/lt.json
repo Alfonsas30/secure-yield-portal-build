@@ -884,5 +884,31 @@
       "errorDescription": "Nepavyko apdoroti mokėjimo. Susisiekite su mumis.",
       "dataError": "Paraiškos duomenys nerasti"
     }
+  },
+  "boardApplication": {
+    "title": "Paraiška valdybai",
+    "description": "Pateikite paraišką prisijungti prie mūsų direktorių valdybos ir padėti formuoti bankininkystės ateitį",
+    "warning": "⚠️ Ši paraiška reikalauja rimto įsipareigojimo ir finansų srities žinių",
+    "form": {
+      "name": "Vardas ir pavardė",
+      "email": "El. pašto adresas",
+      "phone": "Telefono numeris",
+      "experience": "Profesinė patirtis",
+      "namePlaceholder": "Įveskite vardą ir pavardę",
+      "emailPlaceholder": "vardas@example.com",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "experiencePlaceholder": "Aprašykite savo profesinę patirtį finansų, bankininkystės ar vadybos srityje..."
+    },
+    "buttons": {
+      "cancel": "Atšaukti",
+      "submit": "Pateikti paraišką",
+      "submitting": "Pateikiama..."
+    },
+    "toast": {
+      "success": "Paraiška pateikta!",
+      "successDescription": "Jūsų paraiška valdybai sėkmingai pateikta. Mes ją peržiūrėsime ir netrukus susisieksime.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
+    }
   }
 }

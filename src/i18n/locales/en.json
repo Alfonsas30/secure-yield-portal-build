@@ -871,5 +871,31 @@
       "errorDescription": "Failed to process payment. Please contact us.",
       "dataError": "Application data not found"
     }
+  },
+  "boardApplication": {
+    "title": "Board Application",
+    "description": "Apply to join our board of directors and help shape the future of banking",
+    "warning": "⚠️ This application requires serious commitment and financial expertise",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "experience": "Professional Experience",
+      "namePlaceholder": "Enter your full name",
+      "emailPlaceholder": "your.email@example.com",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "experiencePlaceholder": "Describe your professional experience in finance, banking, or management..."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "submit": "Submit Application",
+      "submitting": "Submitting..."
+    },
+    "toast": {
+      "success": "Application submitted!",
+      "successDescription": "Your board application has been submitted successfully. We will review it and contact you soon.",
+      "error": "Error",
+      "errorDescription": "Failed to submit application. Please try again."
+    }
   }
 }
