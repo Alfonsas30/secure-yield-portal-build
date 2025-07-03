@@ -239,9 +239,15 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
               <div className="text-sm text-slate-700">
                 <p className="font-medium mb-1">{t('modals.loan.terms.title')}</p>
                 <ul className="list-disc list-inside space-y-1 text-slate-600">
-                  {(t('modals.loan.terms.items') as unknown as string[]).map((item: string, index: number) => (
-                    <li key={index}>{item}</li>
-                  ))}
+                  {(() => {
+                    const items = t('modals.loan.terms.items');
+                    if (Array.isArray(items)) {
+                      return items.map((item: string, index: number) => (
+                        <li key={index}>{item}</li>
+                      ));
+                    }
+                    return <li>{items}</li>;
+                  })()}
                 </ul>
               </div>
             </div>
