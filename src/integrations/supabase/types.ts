@@ -494,6 +494,10 @@ export type Database = {
         Args: { data: string }
         Returns: string
       }
+      calculate_daily_interest: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       generate_account_number: {
         Args: Record<PropertyKey, never>
         Returns: string

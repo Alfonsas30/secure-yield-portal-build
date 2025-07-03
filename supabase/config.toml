@@ -19,3 +19,6 @@ verify_jwt = false
 
 [functions.create-registration-payment]
 verify_jwt = false
+
+[functions.calculate-daily-interest]
+verify_jwt = false
