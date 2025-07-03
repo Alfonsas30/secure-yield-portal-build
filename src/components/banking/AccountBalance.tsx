@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { formatDualCurrency } from "@/lib/currency";
+import { useTranslation } from 'react-i18next';
 
 interface AccountBalance {
   id: string;
@@ -16,6 +17,7 @@ interface AccountBalance {
 }
 
 export function AccountBalance() {
+  const { t } = useTranslation();
   const { profile } = useAuth();
   const { toast } = useToast();
   const [balance, setBalance] = useState<AccountBalance | null>(null);
@@ -42,8 +44,8 @@ export function AccountBalance() {
       if (error) {
         console.error('Error fetching balance:', error);
         toast({
-          title: "Klaida",
-          description: "Nepavyko įkelti sąskaitos likučio",
+          title: t('discount.error'),
+          description: t('accountBalance.loadError'),
           variant: "destructive"
         });
       } else if (data) {
@@ -64,8 +66,8 @@ export function AccountBalance() {
         if (createError) {
           console.error('Error creating balance:', createError);
           toast({
-            title: "Klaida",
-            description: "Nepavyko sukurti sąskaitos likučio",
+            title: t('discount.error'),
+            description: t('accountBalance.createError'),
             variant: "destructive"
           });
         } else {
@@ -93,7 +95,7 @@ export function AccountBalance() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wallet className="w-5 h-5" />
-            Sąskaitos likutis
+            {t('accountBalance.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -112,7 +114,7 @@ export function AccountBalance() {
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Wallet className="w-5 h-5" />
-            Sąskaitos likutis
+            {t('accountBalance.title')}
           </div>
           <Button
             variant="ghost"
@@ -142,11 +144,11 @@ export function AccountBalance() {
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Badge variant="outline" className="text-green-600 border-green-600">
               <TrendingUp className="w-3 h-3 mr-1" />
-              Aktyvus
+              {t('accountBalance.active')}
             </Badge>
             {balance && (
               <span>
-                Atnaujinta: {new Date(balance.updated_at).toLocaleDateString('lt-LT')}
+                {t('accountBalance.updated')}: {new Date(balance.updated_at).toLocaleDateString('lt-LT')}
               </span>
             )}
           </div>

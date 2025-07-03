@@ -27,8 +27,8 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
   const handleSubmit = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
       toast({
-        title: "Klaida",
-        description: "Užpildykite visus laukus",
+        title: t('discount.error'),
+        description: t('discount.fillAllFields'),
         variant: "destructive"
       });
       return;
@@ -52,8 +52,8 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       }
 
       toast({
-        title: "Sėkmė!",
-        description: "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
+        title: t('discount.success'),
+        description: t('discount.successDescription'),
       });
 
       // Reset form and close modal
@@ -67,7 +67,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       console.error("Error details:", error);
       
       toast({
-        title: "Klaida",
+        title: t('discount.error'),
         description: error?.message || "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
         variant: "destructive"
       });
@@ -81,19 +81,19 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            Prašyti nuolaidos kodo
+            {t('discount.title')}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
           <div className="text-center text-muted-foreground text-sm">
-            Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas
+            {t('discount.description')}
           </div>
 
           {/* Account Type Selection */}
           <div>
             <Label className="text-base font-medium mb-3 block">
-              Sąskaitos tipas
+              {t('discount.accountType')}
             </Label>
             <RadioGroup
               value={formData.accountType}
@@ -108,7 +108,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
                 <Label htmlFor="discount-personal" className="flex items-center gap-2 cursor-pointer">
                   <User className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Asmeninė</div>
+                    <div className="font-medium">{t('discount.personal')}</div>
                     <div className="text-sm text-muted-foreground">800 € → 400 €</div>
                   </div>
                 </Label>
@@ -118,7 +118,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
                 <Label htmlFor="discount-company" className="flex items-center gap-2 cursor-pointer">
                   <Building className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Įmonės</div>
+                    <div className="font-medium">{t('discount.company')}</div>
                     <div className="text-sm text-muted-foreground">1500 € → 750 €</div>
                   </div>
                 </Label>
@@ -129,7 +129,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
           {/* Personal Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="discount-name">Vardas Pavardė *</Label>
+              <Label htmlFor="discount-name">{t('discount.nameLabel')}</Label>
               <Input
                 id="discount-name"
                 value={formData.name}
@@ -138,7 +138,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
               />
             </div>
             <div>
-              <Label htmlFor="discount-email">El. paštas *</Label>
+              <Label htmlFor="discount-email">{t('discount.emailLabel')}</Label>
               <Input
                 id="discount-email"
                 type="email"
@@ -152,7 +152,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
           <div className="bg-blue-50 p-4 rounded-lg">
             <div className="flex items-center gap-2 text-blue-700 text-sm">
               <Mail className="w-4 h-4" />
-              <span className="font-medium">Kaip tai veikia?</span>
+              <span className="font-medium">{t('discount.howItWorks')}</span>
             </div>
             <ul className="text-blue-600 text-sm mt-2 space-y-1">
               <li>• Jūsų užklausa bus išsiųsta administratoriui</li>
@@ -173,7 +173,7 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
             ) : (
               <Send className="w-4 h-4 mr-2" />
             )}
-            Siųsti užklausą
+            {t('discount.sendRequest')}
           </Button>
         </div>
       </DialogContent>

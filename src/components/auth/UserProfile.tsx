@@ -10,8 +10,10 @@ import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown } fro
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from 'react-i18next';
 
 export function UserProfile() {
+  const { t } = useTranslation();
   const { profile, user, signOut } = useAuth();
   const { toast } = useToast();
   const [editing, setEditing] = useState(false);
@@ -28,8 +30,8 @@ export function UserProfile() {
       await navigator.clipboard.writeText(profile.account_number);
       setCopied(true);
       toast({
-        title: "Nukopijuota",
-        description: "Sąskaitos numeris nukopijuotas į iškarpinę"
+        title: t('userProfile.copied'),
+        description: t('userProfile.accountNumberCopied')
       });
       setTimeout(() => setCopied(false), 2000);
     }
@@ -51,15 +53,15 @@ export function UserProfile() {
       if (error) throw error;
 
       toast({
-        title: "Sėkmingai atnaujinta",
-        description: "Profilio duomenys sėkmingai atnaujinti"
+        title: t('userProfile.updateSuccess'),
+        description: t('userProfile.profileUpdated')
       });
       setEditing(false);
     } catch (error) {
       console.error('Error updating profile:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko atnaujinti profilio duomenų",
+        title: t('discount.error'),
+        description: t('userProfile.updateError'),
         variant: "destructive"
       });
     } finally {
@@ -85,34 +87,34 @@ export function UserProfile() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="w-5 h-5" />
-            Profilio informacija
+            {t('userProfile.title')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Summary view */}
           <div className="space-y-3">
             <div>
-              <Label>Vardas Pavardė</Label>
+              <Label>{t('userProfile.name')}</Label>
               <div className="p-2 bg-muted rounded-md">
-                {profile.display_name || "Nenurodyta"}
+                {profile.display_name || t('userProfile.notSpecified')}
               </div>
             </div>
 
             <div>
               <Label className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                El. paštas
+                {t('userProfile.email')}
               </Label>
               <div className="p-2 bg-muted rounded-md flex items-center justify-between">
                 {profile.email}
                 <Badge variant="outline" className="text-green-600 border-green-600">
-                  Patvirtintas
+                  {t('userProfile.verified')}
                 </Badge>
               </div>
             </div>
 
             <div>
-              <Label>Sąskaitos numeris</Label>
+              <Label>{t('userProfile.accountNumber')}</Label>
               <div className="p-2 bg-muted rounded-md font-mono">
                 {profile.account_number.slice(0, 10)}...
               </div>
@@ -122,13 +124,13 @@ export function UserProfile() {
           {/* Collapsible detailed information */}
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="flex items-center justify-between w-full p-2 hover:bg-muted/50 rounded-md transition-colors">
-              <span className="text-sm font-medium">Daugiau informacijos</span>
+              <span className="text-sm font-medium">{t('userProfile.moreInfo')}</span>
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
             </CollapsibleTrigger>
             
             <CollapsibleContent className="space-y-4 pt-4">
               <div>
-                <Label>Telefono numeris</Label>
+                <Label>{t('userProfile.phone')}</Label>
                 {editing ? (
                   <Input
                     value={formData.phone}
@@ -137,7 +139,7 @@ export function UserProfile() {
                   />
                 ) : (
                   <div className="p-2 bg-muted rounded-md">
-                    {profile.phone || "Nenurodyta"}
+                    {profile.phone || t('userProfile.notSpecified')}
                   </div>
                 )}
               </div>
@@ -145,7 +147,7 @@ export function UserProfile() {
               <div>
                 <Label className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  Registracijos data
+                  {t('userProfile.registrationDate')}
                 </Label>
                 <div className="p-2 bg-muted rounded-md">
                   {new Date(profile.created_at).toLocaleDateString('lt-LT')}
@@ -154,7 +156,7 @@ export function UserProfile() {
 
               {editing && (
                 <div>
-                  <Label>Vardas Pavardė</Label>
+                  <Label>{t('userProfile.name')}</Label>
                   <Input
                     value={formData.display_name}
                     onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
@@ -167,15 +169,15 @@ export function UserProfile() {
                 {editing ? (
                   <>
                     <Button onClick={handleSave} disabled={loading}>
-                      Išsaugoti
+                      {t('userProfile.save')}
                     </Button>
                     <Button variant="outline" onClick={handleCancel} disabled={loading}>
-                      Atšaukti
+                      {t('userProfile.cancel')}
                     </Button>
                   </>
                 ) : (
                   <Button onClick={() => setEditing(true)}>
-                    Redaguoti
+                    {t('userProfile.edit')}
                   </Button>
                 )}
               </div>
@@ -188,12 +190,12 @@ export function UserProfile() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CreditCard className="w-5 h-5" />
-            Banko sąskaita
+            {t('userProfile.bankAccount')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label>Sąskaitos numeris</Label>
+            <Label>{t('userProfile.accountNumber')}</Label>
             <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
               <code className="flex-1 font-mono text-lg font-semibold text-blue-800">
                 {profile.account_number}
@@ -208,14 +210,14 @@ export function UserProfile() {
               </Button>
             </div>
             <p className="text-sm text-muted-foreground mt-2">
-              Šis numeris yra unikalus ir skirtas tik jūsų sąskaitai. Pervedimams naudokite šį numerį.
+              {t('userProfile.uniqueNumber')}
             </p>
           </div>
 
           <Separator />
 
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <h4 className="font-semibold text-amber-800 mb-2">Svarbu žinoti:</h4>
+            <h4 className="font-semibold text-amber-800 mb-2">{t('userProfile.importantInfo')}</h4>
             <ul className="text-sm text-amber-700 space-y-1">
               <li>• Sąskaitos numeris generuojamas automatiškai registracijos metu</li>
               <li>• Numeris atitinka Lietuvos banko standartus (LT + 2 raidės + 12 skaitmenų)</li>
@@ -227,7 +229,7 @@ export function UserProfile() {
 
       <div className="flex justify-center">
         <Button variant="outline" onClick={signOut}>
-          Atsijungti
+          {t('userProfile.logout')}
         </Button>
       </div>
     </div>

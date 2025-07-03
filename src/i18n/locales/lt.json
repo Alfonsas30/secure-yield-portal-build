@@ -9,6 +9,73 @@
     "register": "Registruotis",
     "dashboard": "Skydelis"
   },
+  "auth": {
+    "title": "Banko sistema",
+    "login": "Prisijungimas",
+    "signup": "Registracija",
+    "email": "El. paštas",
+    "password": "Slaptažodis",
+    "name": "Vardas Pavardė",
+    "continue": "Tęsti",
+    "register": "Registruotis",
+    "signInWithGoogle": "Prisijungti su Google",
+    "confirmationCode": "Patvirtinimo kodas",
+    "enterCode": "Įveskite 6 skaitmenų kodą",
+    "verifyAndLogin": "Patvirtinti ir prisijungti",
+    "resendCode": "Nesulaukėte kodo? Siųsti dar kartą",
+    "goBack": "← Grįžti atgal",
+    "confirmPassword": "Pakartokite slaptažodį",
+    "passwordsDontMatch": "Slaptažodžiai nesutampa",
+    "registrationNote": "Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris",
+    "unverifiedEmail": "Nepatvirtintas el. paštas?",
+    "send": "Siųsti",
+    "or": "Arba"
+  },
+  "discount": {
+    "title": "Prašyti nuolaidos kodo",
+    "description": "Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas",
+    "accountType": "Sąskaitos tipas",
+    "personal": "Asmeninė",
+    "company": "Įmonės",
+    "nameLabel": "Vardas Pavardė *",
+    "emailLabel": "El. paštas *",
+    "howItWorks": "Kaip tai veikia?",
+    "sendRequest": "Siųsti užklausą",
+    "error": "Klaida",
+    "fillAllFields": "Užpildykite visus laukus",
+    "success": "Sėkmė!",
+    "successDescription": "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas."
+  },
+  "userProfile": {
+    "title": "Profilio informacija",
+    "name": "Vardas Pavardė",
+    "notSpecified": "Nenurodyta",
+    "email": "El. paštas",
+    "verified": "Patvirtintas",
+    "accountNumber": "Sąskaitos numeris",
+    "moreInfo": "Daugiau informacijos",
+    "phone": "Telefono numeris",
+    "registrationDate": "Registracijos data",
+    "edit": "Redaguoti",
+    "save": "Išsaugoti",
+    "cancel": "Atšaukti",
+    "bankAccount": "Banko sąskaita",
+    "copied": "Nukopijuota",
+    "accountNumberCopied": "Sąskaitos numeris nukopijuotas į iškarpinę",
+    "uniqueNumber": "Šis numeris yra unikalus ir skirtas tik jūsų sąskaitai. Pervedimams naudokite šį numerį.",
+    "importantInfo": "Svarbu žinoti:",
+    "logout": "Atsijungti",
+    "updateSuccess": "Sėkmingai atnaujinta",
+    "profileUpdated": "Profilio duomenys sėkmingai atnaujinti",
+    "updateError": "Nepavyko atnaujinti profilio duomenų"
+  },
+  "accountBalance": {
+    "title": "Sąskaitos likutis",
+    "active": "Aktyvus",
+    "updated": "Atnaujinta",
+    "loadError": "Nepavyko įkelti sąskaitos likučio",
+    "createError": "Nepavyko sukurti sąskaitos likučio"
+  },
   "hero": {
     "badge": "Naujoviški taupymo sprendimai",
     "title": "Taupyk protingai",
@@ -207,46 +274,31 @@
       "errorDescription": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą."
     }
   },
-  "contact": {
-    "badge": "Susisiekite su mumis",
-    "title": "Turime klausimų?",
-    "description": "Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.",
-    "form": {
-      "title": "Parašykite mums",
-      "name": "Vardas",
-      "phone": "Telefonas",
-      "email": "El. paštas",
-      "message": "Žinutė",
-      "namePlaceholder": "Jūsų vardas",
-      "phonePlaceholder": "+370 XXX XXXXX",
-      "emailPlaceholder": "jusu.paštas@example.com",
-      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
-      "send": "Siųsti žinutę",
-      "sending": "Siunčiama..."
-    },
-    "newsletter": {
-      "title": "Prenumeruoti naujienas",
-      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
-      "email": "El. pašto adresas",
-      "name": "Vardas (neprivaloma)",
-      "emailPlaceholder": "jusu.pastas@example.com",
-      "namePlaceholder": "Jūsų vardas",
-      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
-      "subscribe": "Prenumeruoti",
-      "subscribing": "Prenumeruojama..."
+  "loanApplication": {
+    "title": "Paskolos paraiška",
+    "description": "Užpildykite paraišką ir pradėkite gauti pinigus jau šiandien",
+    "applicationFee": "10€ paraiškos mokestis",
+    "loginRequired": {
+      "title": "Prisijungimas būtinas",
+      "description": "Norėdami pateikti paskolos paraišką, turite būti prisijungę",
+      "whyLogin": "Kodėl reikalingas prisijungimas?",
+      "reasons": [
+        "Saugumas ir apsauga nuo sukčiavimo",
+        "Automatinis duomenų išsaugojimas",
+        "Galimybė sekti paraiškos statusą"
+      ],
+      "cancelButton": "Atšaukti",
+      "loginButton": "Prisijungti"
     },
     "toast": {
-      "messageSent": "Žinutė išsiųsta!",
-      "messageDescription": "Mes susisieksime su jumis per 24 valandas.",
-      "subscribeSuccess": "Sėkmingai prenumeruojate!",
-      "subscribeDescription": "Ačiū! Netrukus gausite patvirtinimo laišką",
-      "alreadySubscribed": "El. paštas jau prenumeruoja",
-      "alreadyDescription": "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+      "redirecting": "Nukreipiama į mokėjimą...",
+      "redirectingDescription": "Atidarome saugų Stripe mokėjimo langą",
       "error": "Klaida",
-      "contactError": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
-      "newsletterError": "Nepavyko prenumeruoti. Pabandykite dar kartą",
-      "newsletterValidation": "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu"
+      "errorDescription": "Nepavyko sukurti mokėjimo sesijos"
     }
+  },
+  "termDepositContract": {
+    "title": "Terminuoto indėlio sutartis"
   },
   "calculators": {
     "badge": "Skaičiuoklės",
@@ -327,6 +379,47 @@
     "applyForLoan": "Pateikti paraišką",
     "loginToApply": "Prisijunkite, kad galėtumėte pateikti paraišką"
   },
+  "contact": {
+    "badge": "Susisiekite su mumis",
+    "title": "Turime klausimų?",
+    "description": "Mūsų ekspertų komanda visada pasiruošusi padėti. Susisiekite su mumis bet kuriuo jums patogiu būdu.",
+    "form": {
+      "title": "Parašykite mums",
+      "name": "Vardas",
+      "phone": "Telefonas",
+      "email": "El. paštas",
+      "message": "Žinutė",
+      "namePlaceholder": "Jūsų vardas",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "jusu.paštas@example.com",
+      "messagePlaceholder": "Parašykite savo klausimą arba komentarą...",
+      "send": "Siųsti žinutę",
+      "sending": "Siunčiama..."
+    },
+    "newsletter": {
+      "title": "Prenumeruoti naujienas",
+      "description": "Gaukite naujausią informaciją apie palūkanų pokyčius, naujas paslaugas ir finansų patarimus",
+      "email": "El. pašto adresas",
+      "name": "Vardas (neprivaloma)",
+      "emailPlaceholder": "jusu.pastas@example.com",
+      "namePlaceholder": "Jūsų vardas",
+      "consent": "Sutinku, kad mano duomenys būtų tvarkomi naujienlaiškio siuntimui",
+      "subscribe": "Prenumeruoti",
+      "subscribing": "Prenumeruojama..."
+    },
+    "toast": {
+      "messageSent": "Žinutė išsiųsta!",
+      "messageDescription": "Mes susisieksime su jumis per 24 valandas.",
+      "subscribeSuccess": "Sėkmingai prenumeruojate!",
+      "subscribeDescription": "Ačiū! Netrukus gausite patvirtinimo laišką",
+      "alreadySubscribed": "El. paštas jau prenumeruoja",
+      "alreadyDescription": "Šis el. pašto adresas jau prenumeruoja mūsų naujienas",
+      "error": "Klaida",
+      "contactError": "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+      "newsletterError": "Nepavyko prenumeruoti. Pabandykite dar kartą",
+      "newsletterValidation": "Prašome užpildyti el. pašto lauką ir sutikti su duomenų tvarkymu"
+    }
+  },
   "registrationModal": {
     "title": "Registracija",
     "campaign": "AKCIJA 50% NUOLAIDA!",
@@ -401,285 +494,6 @@
       "successDescription": "Mes su jumis susisieksime artimiausiu metu.",
       "error": "Klaida",
       "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
-    }
-  },
-  "discountRequest": {
-    "title": "Prašyti nuolaidos kodo",
-    "description": "Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas",
-    "accountType": "Sąskaitos tipas",
-    "personal": "Asmeninė",
-    "company": "Įmonės",
-    "form": {
-      "name": "Vardas Pavardė",
-      "email": "El. paštas",
-      "namePlaceholder": "Įveskite vardą ir pavardę",
-      "emailPlaceholder": "vardas@example.com"
-    },
-    "howItWorks": {
-      "title": "Kaip tai veikia?",
-      "steps": [
-        "Jūsų užklausa bus išsiųsta administratoriui",
-        "Per 24 val. gausite atsakymą el. paštu",
-        "Patvirtinus - gausite 50% nuolaidos kodą",
-        "Kodas galioja 30 dienų"
-      ]
-    },
-    "button": "Siųsti užklausą",
-    "toast": {
-      "success": "Sėkmė!",
-      "successDescription": "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
-      "error": "Klaida",
-      "errorDescription": "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
-      "validation": "Užpildykite visus laukus"
-    }
-  },
-  "authModal": {
-    "title": "Banko sistema",
-    "tabs": {
-      "login": "Prisijungimas",
-      "signup": "Registracija"
-    },
-    "login": {
-      "email": "El. paštas",
-      "password": "Slaptažodis",
-      "emailPlaceholder": "vardas@example.com",
-      "passwordPlaceholder": "••••••••",
-      "continueButton": "Tęsti",
-      "orText": "Arba",
-      "googleButton": "Prisijungti su Google",
-      "unverifiedEmail": "Nepatvirtintas el. paštas?",
-      "emailPlaceholderResend": "El. paštas",
-      "sendButton": "Siųsti",
-      "backButton": "← Grįžti atgal"
-    },
-    "signup": {
-      "name": "Vardas Pavardė",
-      "email": "El. paštas",
-      "password": "Slaptažodis",
-      "confirmPassword": "Pakartokite slaptažodį",
-      "namePlaceholder": "Vardas Pavardė",
-      "emailPlaceholder": "vardas@example.com",
-      "passwordPlaceholder": "Bent 6 simboliai",
-      "confirmPasswordPlaceholder": "Pakartokite slaptažodį",
-      "passwordMismatch": "Slaptažodžiai nesutampa",
-      "registerButton": "Registruotis",
-      "accountCreation": "Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris"
-    },
-    "otp": {
-      "title": "Patvirtinimo kodas",
-      "description": "Išsiuntėme 6 skaitmenų kodą į jūsų el. paštą:",
-      "inputLabel": "Įveskite 6 skaitmenų kodą",
-      "verifyButton": "Patvirtinti ir prisijungti",
-      "resendButton": "Nesulaukėte kodo? Siųsti dar kartą"
-    }
-  },
-  "loanApplication": {
-    "title": "Paraiška paskolai",
-    "description": "Užpildykite formą ir gaukite sprendimą per 24 valandas",
-    "applicationFee": "Paraiškos mokestis: 10€",
-    "loginRequired": {
-      "title": "Prisijungimas reikalingas",
-      "description": "Norėdami pateikti paraišką paskolai, turite būti prisijungę prie savo paskyros",
-      "whyLogin": "Kodėl reikalingas prisijungimas?",
-      "reasons": [
-        "Saugumo sumetimais",
-        "Paraiškos stebėjimui",
-        "Automatiniam duomenų užpildymui"
-      ],
-      "cancelButton": "Atšaukti",
-      "loginButton": "Prisijungti"
-    },
-    "summary": {
-      "title": "Paskolos parametrai",
-      "amount": "Suma",
-      "term": "Terminas",
-      "monthlyPayment": "Mėnesinis mokėjimas",
-      "totalAmount": "Bendra suma"
-    },
-    "personalInfo": {
-      "title": "Asmens duomenys",
-      "name": "Vardas, pavardė",
-      "email": "El. pašto adresas",
-      "phone": "Telefono numeris",
-      "namePlaceholder": "Jūsų vardas ir pavardė",
-      "emailPlaceholder": "jusu@elpastas.lt",
-      "phonePlaceholder": "+370 600 00000"
-    },
-    "financialInfo": {
-      "title": "Finansinė informacija",
-      "monthlyIncome": "Mėnesinės pajamos (€)",
-      "employer": "Darbo vieta",
-      "incomePlaceholder": "2000",
-      "employerPlaceholder": "UAB Pavyzdys"
-    },
-    "loanPurpose": {
-      "title": "Paskolos paskirtis",
-      "label": "Kam reikalinga paskola?",
-      "placeholder": "Trumpai aprašykite, kam planuojate panaudoti paskolą"
-    },
-    "terms": {
-      "agreeTitle": "Sutinku su sąlygomis:",
-      "conditions": [
-        "10€ mokestis už paraiškos pateikimą",
-        "14% metinė palūkanų norma be paslėptų mokesčių",
-        "Sprendimas per 24 valandas",
-        "Duomenų tvarkymas pagal privatumo politiką",
-        "Susisiekimas dėl papildomos informacijos"
-      ]
-    },
-    "submitButton": "Pateikti paraišką",
-    "submittingButton": "Pateikiama paraiška...",
-    "toast": {
-      "redirecting": "Nukreipiama į mokėjimą",
-      "redirectingDescription": "Mokėjimo suma: 10€. Po sėkmingo mokėjimo paraiška bus automatiškai pateikta.",
-      "error": "Klaida",
-      "errorDescription": "Nepavyko sukurti mokėjimo. Pabandykite dar kartą."
-    }
-  },
-  "termDepositContract": {
-    "title": "Terminuoto indėlio sutartis",
-    "contractInfo": "Sutarties informacija",
-    "client": "Klientas",
-    "account": "Sąskaita",
-    "investmentAmount": "Investuojama suma:",
-    "contractTerm": "Sutarties terminas:",
-    "annualRate": "Metinė palūkanų norma:",
-    "maturityAmount": "Suma grąžinimo dieną:",
-    "profit": "Jūsų pelnas:",
-    "maturityDate": "Grąžinimo data:",
-    "terms": {
-      "title": "Sutarties sąlygos:",
-      "conditions": [
-        "Indėlis bus užblokuotas visam sutarties terminui",
-        "Palūkanos bus priskaičiuotos sutarties pabaigoje",
-        "Pirmalaikis sutarties nutraukimas galimas tik su baudos mokesčiu",
-        "Automatinis sutarties pratęsimas galimas atskirai susitarus"
-      ]
-    },
-    "cancelButton": "Atšaukti",
-    "signButton": "Pasirašyti sutartį",
-    "signingButton": "Formuojama sutartis...",
-    "toast": {
-      "success": "Sutartis sėkmingai pasirašyta!",
-      "successDescription": "Terminuotas indėlis {amount} suformuotas {term} mėnesiams",
-      "error": "Klaida",
-      "errorDescription": "Nepavyko pasirašyti sutarties. Bandykite dar kartą.",
-      "insufficientFunds": "Nepakanka lėšų terminuotam indėliui"
-    }
-  },
-  "totpSetup": {
-    "title": "Dviejų faktorių autentifikavimas",
-    "requiredTitle": "Privalomas saugumo nustatymas",
-    "requiredWarning": {
-      "title": "⚠️ Saugumo reikalavimas",
-      "description": "Banko saugumo tikslais, dviejų faktorių autentifikavimas yra privalomas. Negalėsite naudotis sistema, kol nenustatysite TOTP."
-    },
-    "setup": {
-      "preparing": "Ruošiama TOTP nustatymas..."
-    },
-    "verify": {
-      "step1": "1. Nuskaitykite QR kodą su Authenticator programėle",
-      "step2Alternative": "Arba įveskite slaptos kodą rankiniu būdu:",
-      "step2": "2. Įveskite 6 skaitmenų kodą iš programėlės",
-      "verifyButton": "Patvirtinti nustatymą",
-      "recommendedApps": "Rekomenduojamos programėlės:",
-      "apps": [
-        "Google Authenticator",
-        "Microsoft Authenticator",
-        "Authy",
-        "1Password"
-      ]
-    },
-    "complete": {
-      "title": "TOTP nustatytas sėkmingai!",
-      "description": "Dviejų faktorių autentifikavimas dabar įjungtas jūsų paskyroje.",
-      "backupCodes": "Atsarginiai kodai",
-      "backupDescription": "Išsaugokite šiuos kodus saugioje vietoje. Galėsite juos naudoti prisijungimui, jei prarasite prieigą prie Authenticator programėlės.",
-      "downloadButton": "Parsisiųsti atsarginius kodus",
-      "finishButton": "Baigti nustatymą"
-    },
-    "toast": {
-      "success": "TOTP sėkmingai nustatytas",
-      "successDescription": "Dviejų faktorių autentifikavimas įjungtas",
-      "error": "TOTP nustatymo klaida",
-      "verificationError": "Patvirtinimo klaida",
-      "invalidCode": "Neteisingas kodas",
-      "secretCopied": "Nukopijuota",
-      "secretCopiedDescription": "Slaptas kodas nukopijuotas"
-    }
-  },
-  "newsletter": {
-    "title": "Naujienlaiškių valdymas",
-    "description": "Valdykite prenumeratorius ir siųskite naujienlaiškius",
-    "campaigns": "Kampanijos",
-    "subscribers": "Prenumeratoriai",
-    "createCampaign": {
-      "title": "Sukurti naują kampaniją",
-      "description": "Sukurkite naują naujienlaiškio kampaniją siuntimui",
-      "form": {
-        "title": "Kampanijos pavadinimas",
-        "titlePlaceholder": "Mėnesio naujienos",
-        "subject": "El. pašto tema",
-        "subjectPlaceholder": "LTB Bankas - Mėnesio naujienos ir pasiūlymai",
-        "content": "Turinys (HTML)",
-        "contentPlaceholder": "<h1>Sveiki!</h1><p>Šios savaitės naujienos...</p>"
-      },
-      "button": "Sukurti kampaniją",
-      "creating": "Kuriama..."
-    },
-    "campaignHistory": {
-      "title": "Kampanijų istorija",
-      "description": "Peržiūrėkite ir valdykite sukurtas kampanijas",
-      "table": {
-        "name": "Pavadinimas",
-        "subject": "Tema",
-        "status": "Statusas",
-        "recipients": "Gavėjai",
-        "date": "Data",
-        "actions": "Veiksmai"
-      },
-      "status": {
-        "sent": "Išsiųsta",
-        "draft": "Juodraštis"
-      },
-      "send": "Siųsti",
-      "noCampaigns": "Kampanijų nėra"
-    },
-    "subscribersList": {
-      "title": "Prenumeratorių sąrašas",
-      "description": "Aktyvūs naujienlaiškio prenumeratoriai",
-      "table": {
-        "email": "El. paštas",
-        "name": "Vardas",
-        "subscribeDate": "Prenumeratos data",
-        "status": "Statusas"
-      },
-      "statusActive": "Aktyvus",
-      "noSubscribers": "Prenumeratorių nėra"
-    },
-    "toast": {
-      "campaignCreated": "Kampanija sukurta",
-      "campaignCreatedDescription": "Naujienlaiškio kampanija sėkmingai sukurta",
-      "newsletterSent": "Naujienlaiškis išsiųstas",
-      "newsletterSentDescription": "Naujienlaiškis sėkmingai išsiųstas visiems prenumeratoriams",
-      "error": "Nepavyko",
-      "loadSubscribersError": "Nepavyko įkelti prenumeratorių sąrašo",
-      "loadCampaignsError": "Nepavyko įkelti kampanijų sąrašo",
-      "createCampaignError": "Nepavyko sukurti kampanijos",
-      "sendNewsletterError": "Nepavyko išsiųsti naujienlaiškio",
-      "fillAllFields": "Prašome užpildyti visus laukus"
-    }
-  },
-  "loanPaymentSuccess": {
-    "processing": "Apdorojamas mokėjimas...",
-    "processingDescription": "Prašome palaukti, kol patvirtinsime jūsų mokėjimą.",
-    "success": "Mokėjimas patvirtintas!",
-    "successDescription": "Jūsų paskolos paraiška sėkmingai pateikta. Susisieksime su jumis per 24 valandas.",
-    "toast": {
-      "success": "Paraiška sėkmingai pateikta!",
-      "successDescription": "Mokėjimas patvirtintas. Susisieksime su jumis per 24 valandas.",
-      "error": "Nepavyko apdoroti mokėjimo. Susisiekite su mumis.",
-      "dataNotFound": "Paraiškos duomenys nerasti"
     }
   }
 }

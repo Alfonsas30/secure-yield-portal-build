@@ -9,6 +9,73 @@
     "register": "Register",
     "dashboard": "Dashboard"
   },
+  "auth": {
+    "title": "Banking System",
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "continue": "Continue",
+    "register": "Register",
+    "signInWithGoogle": "Sign in with Google",
+    "confirmationCode": "Confirmation Code",
+    "enterCode": "Enter 6-digit code",
+    "verifyAndLogin": "Verify and login",
+    "resendCode": "Didn't receive code? Send again",
+    "goBack": "← Go back",
+    "confirmPassword": "Confirm Password",
+    "passwordsDontMatch": "Passwords don't match",
+    "registrationNote": "A unique account number will be automatically created during registration",
+    "unverifiedEmail": "Unverified email?",
+    "send": "Send",
+    "or": "Or"
+  },
+  "discount": {
+    "title": "Request Discount Code",
+    "description": "Fill out the form and we'll send you a discount code within 24 hours",
+    "accountType": "Account Type",
+    "personal": "Personal",
+    "company": "Company",
+    "nameLabel": "Full Name *",
+    "emailLabel": "Email *",
+    "howItWorks": "How it works?",
+    "sendRequest": "Send Request",
+    "error": "Error",
+    "fillAllFields": "Please fill all fields",
+    "success": "Success!",
+    "successDescription": "Your discount request has been sent successfully. We'll contact you within 24 hours."
+  },
+  "userProfile": {
+    "title": "Profile Information",
+    "name": "Full Name",
+    "notSpecified": "Not specified",
+    "email": "Email",
+    "verified": "Verified",
+    "accountNumber": "Account Number",
+    "moreInfo": "More information",
+    "phone": "Phone Number",
+    "registrationDate": "Registration Date",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "bankAccount": "Bank Account",
+    "copied": "Copied",
+    "accountNumberCopied": "Account number copied to clipboard",
+    "uniqueNumber": "This number is unique and assigned only to your account. Use this number for transfers.",
+    "importantInfo": "Important to know:",
+    "logout": "Logout",
+    "updateSuccess": "Successfully updated",
+    "profileUpdated": "Profile data successfully updated",
+    "updateError": "Failed to update profile data"
+  },
+  "accountBalance": {
+    "title": "Account Balance",
+    "active": "Active",
+    "updated": "Updated",
+    "loadError": "Failed to load account balance",
+    "createError": "Failed to create account balance"
+  },
   "hero": {
     "badge": "Innovative saving solutions",
     "title": "Save wisely",
@@ -207,46 +274,31 @@
       "errorDescription": "Failed to send message. Please try again."
     }
   },
-  "contact": {
-    "badge": "Contact us",
-    "title": "Have questions?",
-    "description": "Our team of experts is always ready to help. Contact us in any way convenient for you.",
-    "form": {
-      "title": "Write to us",
-      "name": "Name",
-      "phone": "Phone",
-      "email": "Email",
-      "message": "Message",
-      "namePlaceholder": "Your name",
-      "phonePlaceholder": "+370 XXX XXXXX",
-      "emailPlaceholder": "your.email@example.com",
-      "messagePlaceholder": "Write your question or comment...",
-      "send": "Send message",
-      "sending": "Sending..."
-    },
-    "newsletter": {
-      "title": "Subscribe to newsletter",
-      "description": "Get the latest information about interest rate changes, new services and financial advice",
-      "email": "Email address",
-      "name": "Name (optional)",
-      "emailPlaceholder": "your.email@example.com",
-      "namePlaceholder": "Your name",
-      "consent": "I agree that my data will be processed for newsletter sending",
-      "subscribe": "Subscribe",
-      "subscribing": "Subscribing..."
+  "loanApplication": {
+    "title": "Loan Application",
+    "description": "Fill out the application and start receiving money today",
+    "applicationFee": "€10 application fee",
+    "loginRequired": {
+      "title": "Login Required",
+      "description": "You must be logged in to submit a loan application",
+      "whyLogin": "Why is login required?",
+      "reasons": [
+        "Security and fraud protection",
+        "Automatic data saving",
+        "Ability to track application status"
+      ],
+      "cancelButton": "Cancel",
+      "loginButton": "Login"
     },
     "toast": {
-      "messageSent": "Message sent!",
-      "messageDescription": "We will contact you within 24 hours.",
-      "subscribeSuccess": "Successfully subscribed!",
-      "subscribeDescription": "Thank you! You will receive a confirmation email shortly",
-      "alreadySubscribed": "Email already subscribed",
-      "alreadyDescription": "This email address is already subscribed to our newsletter",
+      "redirecting": "Redirecting to payment...",
+      "redirectingDescription": "Opening secure Stripe payment window",
       "error": "Error",
-      "contactError": "Failed to send message. Please try again.",
-      "newsletterError": "Failed to subscribe. Please try again",
-      "newsletterValidation": "Please fill in the email field and agree to data processing"
+      "errorDescription": "Failed to create payment session"
     }
+  },
+  "termDepositContract": {
+    "title": "Term Deposit Contract"
   },
   "calculators": {
     "badge": "Calculators",
@@ -268,7 +320,6 @@
     "yourProfit": "Your profit",
     "perDay": "Per day",
     "perMonth": "Per month",
-    "perYear": "Per year",
     "manageAccount": "Manage account",
     "register": "Register",
     "login": "Login"
@@ -327,6 +378,47 @@
     "balance": "Balance",
     "applyForLoan": "Apply for loan",
     "loginToApply": "Login to apply for a loan"
+  },
+  "contact": {
+    "badge": "Contact us",
+    "title": "Have questions?",
+    "description": "Our team of experts is always ready to help. Contact us in any way convenient for you.",
+    "form": {
+      "title": "Write to us",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "namePlaceholder": "Your name",
+      "phonePlaceholder": "+370 XXX XXXXX",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Write your question or comment...",
+      "send": "Send message",
+      "sending": "Sending..."
+    },
+    "newsletter": {
+      "title": "Subscribe to newsletter",
+      "description": "Get the latest information about interest rate changes, new services and financial advice",
+      "email": "Email address",
+      "name": "Name (optional)",
+      "emailPlaceholder": "your.email@example.com",
+      "namePlaceholder": "Your name",
+      "consent": "I agree that my data will be processed for newsletter sending",
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing..."
+    },
+    "toast": {
+      "messageSent": "Message sent!",
+      "messageDescription": "We will contact you within 24 hours.",
+      "subscribeSuccess": "Successfully subscribed!",
+      "subscribeDescription": "Thank you! You will receive a confirmation email shortly",
+      "alreadySubscribed": "Email already subscribed",
+      "alreadyDescription": "This email address is already subscribed to our newsletter",
+      "error": "Error",
+      "contactError": "Failed to send message. Please try again.",
+      "newsletterError": "Failed to subscribe. Please try again",
+      "newsletterValidation": "Please fill in the email field and agree to data processing"
+    }
   },
   "registrationModal": {
     "title": "Registration",
@@ -402,285 +494,6 @@
       "successDescription": "We will contact you soon.",
       "error": "Error",
       "errorDescription": "Failed to submit application. Please try again."
-    }
-  },
-  "discountRequest": {
-    "title": "Request discount code",
-    "description": "Fill out the form and we will send you a discount code within 24 hours",
-    "accountType": "Account type",
-    "personal": "Personal",
-    "company": "Company",
-    "form": {
-      "name": "Full Name",
-      "email": "Email",
-      "namePlaceholder": "Enter your full name",
-      "emailPlaceholder": "name@example.com"
-    },
-    "howItWorks": {
-      "title": "How does this work?",
-      "steps": [
-        "Your request will be sent to the administrator",
-        "You will receive a response via email within 24 hours",
-        "Upon approval - you will receive a 50% discount code",
-        "The code is valid for 30 days"
-      ]
-    },
-    "button": "Send request",
-    "toast": {
-      "success": "Success!",
-      "successDescription": "Your discount request has been sent successfully. We will contact you within 24 hours.",
-      "error": "Error",
-      "errorDescription": "Failed to send request. Please try again.",
-      "validation": "Fill in all fields"
-    }
-  },
-  "authModal": {
-    "title": "Banking system",
-    "tabs": {
-      "login": "Login",
-      "signup": "Register"
-    },
-    "login": {
-      "email": "Email",
-      "password": "Password",
-      "emailPlaceholder": "name@example.com",
-      "passwordPlaceholder": "••••••••",
-      "continueButton": "Continue",
-      "orText": "Or",
-      "googleButton": "Sign in with Google",
-      "unverifiedEmail": "Unverified email?",
-      "emailPlaceholderResend": "Email",
-      "sendButton": "Send",
-      "backButton": "← Go back"
-    },
-    "signup": {
-      "name": "Full Name",
-      "email": "Email",
-      "password": "Password",
-      "confirmPassword": "Confirm password",
-      "namePlaceholder": "Full Name",
-      "emailPlaceholder": "name@example.com",
-      "passwordPlaceholder": "At least 6 characters",
-      "confirmPasswordPlaceholder": "Confirm password",
-      "passwordMismatch": "Passwords do not match",
-      "registerButton": "Register",
-      "accountCreation": "A unique account number will be automatically created during registration"
-    },
-    "otp": {
-      "title": "Verification code",
-      "description": "We sent a 6-digit code to your email:",
-      "inputLabel": "Enter the 6-digit code",
-      "verifyButton": "Verify and login",
-      "resendButton": "Didn't receive the code? Send again"
-    }
-  },
-  "loanApplication": {
-    "title": "Loan application",
-    "description": "Fill out the form and get a decision within 24 hours",
-    "applicationFee": "Application fee: 10€",
-    "loginRequired": {
-      "title": "Login required",
-      "description": "To submit a loan application, you must be logged into your account",
-      "whyLogin": "Why is login required?",
-      "reasons": [
-        "For security reasons",
-        "For application tracking",
-        "For automatic data filling"
-      ],
-      "cancelButton": "Cancel",
-      "loginButton": "Login"
-    },
-    "summary": {
-      "title": "Loan parameters",
-      "amount": "Amount",
-      "term": "Term",
-      "monthlyPayment": "Monthly payment",
-      "totalAmount": "Total amount"
-    },
-    "personalInfo": {
-      "title": "Personal information",
-      "name": "Full name",
-      "email": "Email address",
-      "phone": "Phone number",
-      "namePlaceholder": "Your full name",
-      "emailPlaceholder": "your@email.com",
-      "phonePlaceholder": "+370 600 00000"
-    },
-    "financialInfo": {
-      "title": "Financial information",
-      "monthlyIncome": "Monthly income (€)",
-      "employer": "Employer",
-      "incomePlaceholder": "2000",
-      "employerPlaceholder": "Example Ltd"
-    },
-    "loanPurpose": {
-      "title": "Loan purpose",
-      "label": "What do you need the loan for?",
-      "placeholder": "Briefly describe what you plan to use the loan for"
-    },
-    "terms": {
-      "agreeTitle": "I agree to the terms:",
-      "conditions": [
-        "€10 fee for application submission",
-        "14% annual interest rate with no hidden fees",
-        "Decision within 24 hours",
-        "Data processing according to privacy policy",
-        "Contact for additional information"
-      ]
-    },
-    "submitButton": "Submit application",
-    "submittingButton": "Submitting application...",
-    "toast": {
-      "redirecting": "Redirecting to payment",
-      "redirectingDescription": "Payment amount: €10. After successful payment, the application will be automatically submitted.",
-      "error": "Error",
-      "errorDescription": "Failed to create payment. Please try again."
-    }
-  },
-  "termDepositContract": {
-    "title": "Term deposit contract",
-    "contractInfo": "Contract information",
-    "client": "Client",
-    "account": "Account",
-    "investmentAmount": "Investment amount:",
-    "contractTerm": "Contract term:",
-    "annualRate": "Annual interest rate:",
-    "maturityAmount": "Amount at maturity:",
-    "profit": "Your profit:",
-    "maturityDate": "Maturity date:",
-    "terms": {
-      "title": "Contract terms:",
-      "conditions": [
-        "The deposit will be locked for the entire contract term",
-        "Interest will be calculated at the end of the contract",
-        "Early contract termination is possible only with a penalty fee",
-        "Automatic contract extension is possible by separate agreement"
-      ]
-    },
-    "cancelButton": "Cancel",
-    "signButton": "Sign contract",
-    "signingButton": "Creating contract...",
-    "toast": {
-      "success": "Contract signed successfully!",
-      "successDescription": "Term deposit {amount} created for {term} months",
-      "error": "Error",
-      "errorDescription": "Failed to sign contract. Please try again.",
-      "insufficientFunds": "Insufficient funds for term deposit"
-    }
-  },
-  "totpSetup": {
-    "title": "Two-factor authentication",
-    "requiredTitle": "Mandatory security setup",
-    "requiredWarning": {
-      "title": "⚠️ Security requirement",
-      "description": "For bank security purposes, two-factor authentication is mandatory. You will not be able to use the system until you set up TOTP."
-    },
-    "setup": {
-      "preparing": "Preparing TOTP setup..."
-    },
-    "verify": {
-      "step1": "1. Scan the QR code with your Authenticator app",
-      "step2Alternative": "Or enter the secret code manually:",
-      "step2": "2. Enter the 6-digit code from the app",
-      "verifyButton": "Confirm setup",
-      "recommendedApps": "Recommended apps:",
-      "apps": [
-        "Google Authenticator",
-        "Microsoft Authenticator",
-        "Authy",
-        "1Password"
-      ]
-    },
-    "complete": {
-      "title": "TOTP setup successful!",
-      "description": "Two-factor authentication is now enabled on your account.",
-      "backupCodes": "Backup codes",
-      "backupDescription": "Save these codes in a safe place. You can use them to log in if you lose access to your Authenticator app.",
-      "downloadButton": "Download backup codes",
-      "finishButton": "Finish setup"
-    },
-    "toast": {
-      "success": "TOTP setup successful",
-      "successDescription": "Two-factor authentication enabled",
-      "error": "TOTP setup error",
-      "verificationError": "Verification error",
-      "invalidCode": "Invalid code",
-      "secretCopied": "Copied",
-      "secretCopiedDescription": "Secret code copied"
-    }
-  },
-  "newsletter": {
-    "title": "Newsletter Management",
-    "description": "Manage subscribers and send newsletters",
-    "campaigns": "Campaigns",
-    "subscribers": "Subscribers",
-    "createCampaign": {
-      "title": "Create new campaign",
-      "description": "Create a new newsletter campaign for sending",
-      "form": {
-        "title": "Campaign title",
-        "titlePlaceholder": "Monthly news",
-        "subject": "Email subject",
-        "subjectPlaceholder": "LTB Bank - Monthly news and offers",
-        "content": "Content (HTML)",
-        "contentPlaceholder": "<h1>Hello!</h1><p>This week's news...</p>"
-      },
-      "button": "Create campaign",
-      "creating": "Creating..."
-    },
-    "campaignHistory": {
-      "title": "Campaign history",
-      "description": "View and manage created campaigns",
-      "table": {
-        "name": "Name",
-        "subject": "Subject",
-        "status": "Status",
-        "recipients": "Recipients",
-        "date": "Date",
-        "actions": "Actions"
-      },
-      "status": {
-        "sent": "Sent",
-        "draft": "Draft"
-      },
-      "send": "Send",
-      "noCampaigns": "No campaigns"
-    },
-    "subscribersList": {
-      "title": "Subscribers list",
-      "description": "Active newsletter subscribers",
-      "table": {
-        "email": "Email",
-        "name": "Name",
-        "subscribeDate": "Subscribe date",
-        "status": "Status"
-      },
-      "statusActive": "Active",
-      "noSubscribers": "No subscribers"
-    },
-    "toast": {
-      "campaignCreated": "Campaign created",
-      "campaignCreatedDescription": "Newsletter campaign successfully created",
-      "newsletterSent": "Newsletter sent",
-      "newsletterSentDescription": "Newsletter successfully sent to all subscribers",
-      "error": "Failed",
-      "loadSubscribersError": "Failed to load subscribers list",
-      "loadCampaignsError": "Failed to load campaigns list",
-      "createCampaignError": "Failed to create campaign",
-      "sendNewsletterError": "Failed to send newsletter",
-      "fillAllFields": "Please fill in all fields"
-    }
-  },
-  "loanPaymentSuccess": {
-    "processing": "Processing payment...",
-    "processingDescription": "Please wait while we confirm your payment.",
-    "success": "Payment confirmed!",
-    "successDescription": "Your loan application has been successfully submitted. We will contact you within 24 hours.",
-    "toast": {
-      "success": "Application successfully submitted!",
-      "successDescription": "Payment confirmed. We will contact you within 24 hours.",
-      "error": "Failed to process payment. Please contact us.",
-      "dataNotFound": "Application data not found"
     }
   }
 }
