@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageCircle, Phone, Shield, Info, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { TelegramBotSetup } from "./TelegramBotSetup";
 
 interface MessengerSetupModalProps {
   open: boolean;
@@ -234,10 +235,12 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
               </AlertDescription>
             </Alert>
 
+            <TelegramBotSetup />
+
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm flex items-center gap-2">
-                  Telegram Bot konfigūracija
+                  Vartotojo instrukcijos
                   <a 
                     href="https://t.me/viltb_security_bot" 
                     target="_blank" 
@@ -252,9 +255,10 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
               <CardContent className="space-y-3">
                 <div className="text-xs space-y-1">
                   <p>1. Atidarykite Telegram ir eikite į @viltb_security_bot</p>
-                  <p>2. Paspauskite "Start" ir išsiųskite /start</p>
-                  <p>3. Bot atsiųs jūsų Telegram ID - nukopijuokite jį</p>
-                  <p>4. Įveskite Telegram ID žemiau</p>
+                  <p>2. Paspauskite "Start" ir išsiųskite <code>/start</code></p>
+                  <p>3. Bot'as atsiųs jūsų Telegram ID numerį</p>
+                  <p>4. Nukopijuokite ID ir įveskite jį žemiau</p>
+                  <p>5. Paspauskite "Įjungti Telegram 2FA"</p>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   <Badge variant="outline" className="text-xs">✓ Greitas gavimas</Badge>
