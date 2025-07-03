@@ -455,6 +455,17 @@
     "applyForLoan": "Apply for loan",
     "loginToApply": "Login to apply for a loan"
   },
+  "boardInvitation": {
+    "badge": "Special invitation",
+    "title": "Join our board of directors",
+    "description": "We are looking for experienced financial professionals to join our board and help shape the future of banking.",
+    "button": "Apply for board position",
+    "features": {
+      "strategic": "Strategic vision",
+      "financial": "Financial expertise", 
+      "vision": "Future vision"
+    }
+  },
   "contact": {
     "badge": "Contact us",
     "title": "Have questions?",

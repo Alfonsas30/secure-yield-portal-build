@@ -455,6 +455,17 @@
     "applyForLoan": "Pateikti paraišką",
     "loginToApply": "Prisijunkite, kad galėtumėte pateikti paraišką"
   },
+  "boardInvitation": {
+    "badge": "Specialus pakvietimas",
+    "title": "Prisijunkite prie mūsų valdybos",
+    "description": "Ieškome patyrių finansų sričių specialistų prisijungti prie mūsų valdybos ir padėti formuoti bankininkystės ateitį.",
+    "button": "Teikti paraišką valdybai",
+    "features": {
+      "strategic": "Strateginė vizija",
+      "financial": "Finansų ekspertizė",
+      "vision": "Ateities vizija"
+    }
+  },
   "contact": {
     "badge": "Susisiekite su mumis",
     "title": "Turime klausimų?",
