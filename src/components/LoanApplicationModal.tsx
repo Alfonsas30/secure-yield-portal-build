@@ -94,6 +94,10 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
           </DialogTitle>
           <DialogDescription>
             Užpildykite formą ir gaukite sprendimą per 24 valandas
+            <br />
+            <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 mt-2">
+              Paraiškos mokestis: 10€
+            </Badge>
           </DialogDescription>
         </DialogHeader>
 

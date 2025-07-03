@@ -55,6 +55,10 @@ const LoanCalculator = () => {
           </CardTitle>
           <CardDescription className="text-lg text-slate-600">
             Sužinokite savo mėnesinio mokėjimo dydį su <Badge variant="secondary" className="mx-1">14% metine palūkanų norma</Badge>
+            <br />
+            <span className="text-sm text-slate-500 mt-2 block">
+              💡 Paraiškos pateikimo mokestis: <Badge variant="outline" className="text-orange-600 border-orange-200">10€</Badge>
+            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LoanData } from "./types";
 
 interface LoanApplicationCTAProps {
@@ -14,8 +15,14 @@ export const LoanApplicationCTA = ({ onOpenModal, calculatedData }: LoanApplicat
         <h3 className="text-xl font-semibold mb-4 text-slate-900">
           Patenkino skaičiavimas?
         </h3>
-        <p className="text-slate-600 mb-6">
+        <p className="text-slate-600 mb-4">
           Pateikite paraišką paskolai ir gaukite sprendimą per 24 valandas
+        </p>
+        <p className="text-sm text-slate-500 mb-6 flex items-center justify-center gap-2">
+          <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50">
+            Paraiškos mokestis: 10€
+          </Badge>
+          <span>• Mokama vienkartinai • Grąžinama jei paskola nepatvirtinta</span>
         </p>
         <Button 
           onClick={onOpenModal}
