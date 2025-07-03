@@ -977,5 +977,27 @@
       "error": "Error",
       "errorDescription": "Failed to submit application. Please try again."
     }
+  },
+  "seo": {
+    "defaultTitle": "LTB Bank - Save Smart with Daily Interest",
+    "defaultDescription": "Lithuania's first bank paying daily interest. Safe, simple, and profitable savings without reports. High interest rates, term deposits, loans.",
+    "defaultKeywords": "bank, savings, interest, deposits, loans, LTB bank, daily interest, term deposits, finance Lithuania, investments, safe savings",
+    "pages": {
+      "dashboard": {
+        "title": "LTB Bank - Personal Banking Dashboard",
+        "description": "Manage your LTB bank account, monitor balance, make transfers, and view transaction history.",
+        "keywords": "banking dashboard, account management, transfer, transactions, LTB bank"
+      },
+      "calculator": {
+        "title": "LTB Bank - Interest Calculator",
+        "description": "Calculate your potential earnings with LTB bank's daily interest, term deposits, and loan payments.",
+        "keywords": "interest calculator, deposit calculator, loan calculator, daily interest"
+      },
+      "loans": {
+        "title": "LTB Bank - Loans with Competitive Rates",
+        "description": "Get a loan with favorable terms from LTB bank. Fast decisions, competitive interest rates.",
+        "keywords": "loans, credit, interest rates, financing, LTB bank"
+      }
+    }
   }
 }

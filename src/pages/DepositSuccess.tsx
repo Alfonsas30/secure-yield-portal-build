@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { SEOHead } from "@/components/SEOHead";
 
 export default function DepositSuccess() {
   const { t } = useTranslation();
@@ -74,8 +75,14 @@ export default function DepositSuccess() {
 
   if (processing) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-        <Navigation />
+      <>
+        <SEOHead 
+          title={`${t('deposit.processing')} - LTB Bankas`}
+          description={t('deposit.processing')}
+          noIndex={true}
+        />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+          <Navigation />
         <div className="container mx-auto px-4 py-8">
           <Card className="max-w-md mx-auto">
             <CardContent className="p-6 text-center">
@@ -83,14 +90,21 @@ export default function DepositSuccess() {
               <p>{t('deposit.processing')}</p>
             </CardContent>
           </Card>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Navigation />
+    <>
+      <SEOHead 
+        title={`${t('deposit.successTitle')} - LTB Bankas`}
+        description={t('deposit.successMessage', { eurAmount: eurAmount, ltAmount: ltAmount })}
+        noIndex={true}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        <Navigation />
       <div className="container mx-auto px-4 py-8">
         <Card className="max-w-md mx-auto">
           <CardHeader className="text-center">
@@ -148,11 +162,12 @@ export default function DepositSuccess() {
         </Card>
       </div>
 
-      <AuthModal 
-        open={authModalOpen} 
-        onOpenChange={setAuthModalOpen}
-        defaultTab="login"
-      />
-    </div>
+        <AuthModal 
+          open={authModalOpen} 
+          onOpenChange={setAuthModalOpen}
+          defaultTab="login"
+        />
+      </div>
+    </>
   );
 }

@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
 import { useAuth } from "@/contexts/AuthContext";
+import { SEOHead } from "@/components/SEOHead";
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -32,9 +33,16 @@ export default function Dashboard() {
   const isTOTPRequired = user && profile && !profile.totp_enabled;
 
   return (
-    <ProtectedRoute>
-      <Navigation />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
+    <>
+      <SEOHead 
+        title={t('seo.pages.dashboard.title')}
+        description={t('seo.pages.dashboard.description')}
+        keywords={t('seo.pages.dashboard.keywords')}
+        noIndex={true}
+      />
+      <ProtectedRoute>
+        <Navigation />
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-8">
             <div className="flex justify-between items-center mb-4">
@@ -106,8 +114,9 @@ export default function Dashboard() {
         open={showTOTPSetup} 
         onOpenChange={setShowTOTPSetup}
         onSetupComplete={handleTOTPSetupComplete}
-        required={isTOTPRequired}
-      />
-    </ProtectedRoute>
+          required={isTOTPRequired}
+        />
+      </ProtectedRoute>
+    </>
   );
 }

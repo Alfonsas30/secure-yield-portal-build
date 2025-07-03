@@ -975,5 +975,27 @@
       "error": "Klaida",
       "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
     }
+  },
+  "seo": {
+    "defaultTitle": "LTB Bankas - Taupyk protingai su dienos palūkanomis",
+    "defaultDescription": "Pirmasis Lietuvoje bankas, mokantis palūkanas kasdien. Saugus, paprastas ir pelningas taupymas be ataskaičių. Aukštos palūkanos, terminuoti indėliai, paskolos.",
+    "defaultKeywords": "bankas, taupymas, palūkanos, indėliai, paskolos, LTB bankas, dienos palūkanos, terminuoti indėliai, finansai Lietuva, investicijos, saugus taupymas",
+    "pages": {
+      "dashboard": {
+        "title": "LTB Bankas - Asmeninis bankininkystės skydelis",
+        "description": "Valdykite savo LTB banko sąskaitą, stebėkite balansą, atliekite perveddimus ir peržiūrėkite transakcijų istoriją.",
+        "keywords": "banko skydelis, sąskaitos valdymas, pervedimas, transakcijos, LTB bankas"
+      },
+      "calculator": {
+        "title": "LTB Bankas - Palūkanų skaičiuoklė",
+        "description": "Apskaičiuokite savo galimus pajamas su LTB banko dienos palūkanomis, terminuotais indėliais ir paskolų išmokomis.",
+        "keywords": "palūkanų skaičiuoklė, indėlių skaičiuoklė, paskolų skaičiuoklė, dienos palūkanos"
+      },
+      "loans": {
+        "title": "LTB Bankas - Paskolos su konkurencingomis palūkanomis",
+        "description": "Gaukite paskolą su palankiomis sąlygomis iš LTB banko. Greitas sprendimas, konkurencingos palūkanos.",
+        "keywords": "paskolos, kreditas, palūkanos, finansavimas, LTB bankas"
+      }
+    }
   }
 }

@@ -21,6 +21,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BoardInvitation from "@/components/BoardInvitation";
 import { LoanPaymentSuccess } from "@/components/LoanPaymentSuccess";
+import { SEOHead } from "@/components/SEOHead";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -42,21 +43,30 @@ const Index = () => {
 
   if (showPaymentSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
-        <Navigation />
-        <div className="container mx-auto px-4 py-20">
-          <LoanPaymentSuccess sessionId={sessionId} />
+      <>
+        <SEOHead 
+          title={t('seo.pages.loans.title')}
+          description={t('seo.pages.loans.description')}
+          keywords={t('seo.pages.loans.keywords')}
+        />
+        <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
+          <Navigation />
+          <div className="container mx-auto px-4 py-20">
+            <LoanPaymentSuccess sessionId={sessionId} />
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
-      <Navigation />
-      <Hero />
-      <Services />
+    <>
+      <SEOHead />
+      <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
+        <Navigation />
+        <Hero />
+        <Services />
       
       {/* Calculator Section with Tabs */}
       <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-slate-100">
@@ -157,9 +167,10 @@ const Index = () => {
       <BoardInvitation />
       <HowItWorks />
       <FAQ />
-      <Contact />
-      <Footer />
-    </div>
+        <Contact />
+        <Footer />
+      </div>
+    </>
   );
 };
 
