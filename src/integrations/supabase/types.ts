@@ -84,6 +84,33 @@ export type Database = {
         }
         Relationships: []
       }
+      backup_codes: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          used: boolean
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       board_applications: {
         Row: {
           created_at: string
@@ -322,6 +349,8 @@ export type Database = {
           mfa_enabled: boolean
           mfa_verified: boolean
           phone: string | null
+          totp_enabled: boolean
+          totp_secret: string | null
           updated_at: string
           user_id: string
         }
@@ -334,6 +363,8 @@ export type Database = {
           mfa_enabled?: boolean
           mfa_verified?: boolean
           phone?: string | null
+          totp_enabled?: boolean
+          totp_secret?: string | null
           updated_at?: string
           user_id: string
         }
@@ -346,6 +377,8 @@ export type Database = {
           mfa_enabled?: boolean
           mfa_verified?: boolean
           phone?: string | null
+          totp_enabled?: boolean
+          totp_secret?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -545,6 +578,10 @@ export type Database = {
         Returns: undefined
       }
       generate_account_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_backup_code: {
         Args: Record<PropertyKey, never>
         Returns: string
       }

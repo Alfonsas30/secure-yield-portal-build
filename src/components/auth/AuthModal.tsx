@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { TOTPSetupModal } from "./TOTPSetupModal";
 
 interface AuthModalProps {
   open: boolean;
@@ -28,39 +29,45 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
   const [resendEmail, setResendEmail] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [showOtpStep, setShowOtpStep] = useState(false);
+  const [totpCode, setTotpCode] = useState("");
+  const [showTOTPStep, setShowTOTPStep] = useState(false);
+  const [showBackupCode, setShowBackupCode] = useState(false);
 
-  const { signIn, signUp, resendConfirmation, pendingMFAEmail, sendVerificationCode, verifyCodeAndSignIn } = useAuth();
+  const { 
+    signIn, 
+    signUp, 
+    resendConfirmation, 
+    pendingMFAEmail, 
+    sendVerificationCode, 
+    verifyCodeAndSignIn,
+    showTOTPSetup,
+    setShowTOTPSetup,
+    verifyTOTP
+  } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await signIn(loginData.email, loginData.password);
+    const result = await signIn(loginData.email, loginData.password);
     
-    // Laikinai išjungtas 2FA - tiesioginis prisijungimas
-    if (!error) {
-      setTimeout(() => {
-        onOpenChange(false);
-        setLoginData({ email: "", password: "" });
-        setOtpCode("");
-        setShowOtpStep(false);
-      }, 500);
+    if (!result.error) {
+      if ((result as any).requiresTOTP) {
+        // Show TOTP verification step
+        setShowTOTPStep(true);
+      } else {
+        // Regular login success or TOTP setup required
+        setTimeout(() => {
+          onOpenChange(false);
+          setLoginData({ email: "", password: "" });
+          setOtpCode("");
+          setShowOtpStep(false);
+          setShowTOTPStep(false);
+        }, 500);
+      }
     }
     
     setLoading(false);
-
-    /* 2FA KODAS - LAIKINAI IŠJUNGTAS
-    if (!error && pendingMFAEmail) {
-      // Show OTP step
-      setShowOtpStep(true);
-    } else if (!error) {
-      // Regular login success
-      setTimeout(() => {
-        onOpenChange(false);
-        setLoginData({ email: "", password: "" });
-      }, 500);
-    }
-    */
   };
 
   const handleOtpVerification = async () => {
@@ -79,6 +86,32 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
     }
     
     setLoading(false);
+  };
+
+  const handleTOTPVerification = async () => {
+    if (totpCode.length !== 6 && !showBackupCode) return;
+    
+    setLoading(true);
+    const { error } = await verifyTOTP(totpCode, showBackupCode);
+    
+    if (!error) {
+      setTimeout(() => {
+        onOpenChange(false);
+        setLoginData({ email: "", password: "" });
+        setTotpCode("");
+        setShowTOTPStep(false);
+        setShowBackupCode(false);
+      }, 500);
+    }
+    
+    setLoading(false);
+  };
+
+  const handleTOTPSetupComplete = (backupCodes: string[]) => {
+    setTimeout(() => {
+      onOpenChange(false);
+      setLoginData({ email: "", password: "" });
+    }, 500);
   };
 
   const handleResendCode = async () => {
@@ -131,8 +164,88 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
-            {/* Laikinai paslėptas OTP žingsnis */}
-            {true ? (
+            {showTOTPStep ? (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <Shield className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <h3 className="text-lg font-semibold mb-2">Authenticator kodas</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Įveskite 6 skaitmenų kodą iš Authenticator programėlės
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="totp">
+                      {showBackupCode ? "Atsarginis kodas" : "6 skaitmenų kodas"}
+                    </Label>
+                    <div className="flex justify-center mt-2">
+                      {showBackupCode ? (
+                        <Input
+                          placeholder="Įveskite atsarginį kodą"
+                          value={totpCode}
+                          onChange={(e) => setTotpCode(e.target.value.toUpperCase())}
+                          className="text-center font-mono"
+                          maxLength={8}
+                        />
+                      ) : (
+                        <InputOTP
+                          maxLength={6}
+                          value={totpCode}
+                          onChange={setTotpCode}
+                          className="gap-2"
+                        >
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      )}
+                    </div>
+                  </div>
+
+                  <Button 
+                    onClick={handleTOTPVerification} 
+                    className="w-full" 
+                    disabled={loading || (!showBackupCode && totpCode.length !== 6) || (showBackupCode && !totpCode)}
+                  >
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    Prisijungti
+                  </Button>
+
+                  <div className="text-center space-y-2">
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        setShowBackupCode(!showBackupCode);
+                        setTotpCode("");
+                      }}
+                      className="text-sm"
+                    >
+                      {showBackupCode ? "Naudoti Authenticator kodą" : "Naudoti atsarginį kodą"}
+                    </Button>
+                    
+                    <br />
+                    
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        setShowTOTPStep(false);
+                        setShowBackupCode(false);
+                        setTotpCode("");
+                      }}
+                      className="text-sm"
+                    >
+                      ← Grįžti atgal
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ) : !showOtpStep ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <Label htmlFor="login-email">El. paštas</Label>
@@ -363,6 +476,12 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
             </p>
           </TabsContent>
         </Tabs>
+
+        <TOTPSetupModal
+          open={showTOTPSetup}
+          onOpenChange={setShowTOTPSetup}
+          onSetupComplete={handleTOTPSetupComplete}
+        />
       </DialogContent>
     </Dialog>
   );

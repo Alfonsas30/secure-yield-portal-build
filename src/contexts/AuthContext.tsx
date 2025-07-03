@@ -23,12 +23,16 @@ interface AuthContextType {
   loading: boolean;
   timeLeft: number;
   pendingMFAEmail: string | null;
+  showTOTPSetup: boolean;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any; requiresTOTP?: boolean }>;
   signOut: () => Promise<{ error: any }>;
   resendConfirmation: (email: string) => Promise<{ error: any }>;
   sendVerificationCode: (email: string) => Promise<{ error: any }>;
   verifyCodeAndSignIn: (email: string, password: string, code: string) => Promise<{ error: any }>;
+  setupTOTP: () => Promise<{ error: any }>;
+  verifyTOTP: (code: string, isBackupCode?: boolean) => Promise<{ error: any }>;
+  setShowTOTPSetup: (show: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,6 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [sessionTimeoutActive, setSessionTimeoutActive] = useState(false);
   const [pendingMFAEmail, setPendingMFAEmail] = useState<string | null>(null);
+  const [showTOTPSetup, setShowTOTPSetup] = useState(false);
+  const [pendingTOTPEmail, setPendingTOTPEmail] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -153,7 +159,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Laikinai išjungtas 2FA - tiesioginis prisijungimas
+      // First check credentials
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -168,44 +174,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: signInError };
       }
 
-      // Sėkmingas prisijungimas
-      toast({
-        title: "Prisijungimas sėkmingas",
-        description: "Nukreipiame į asmeninį kabinetą",
-        variant: "default"
-      });
+      // Check if user has TOTP enabled
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('totp_enabled')
+        .eq('user_id', signInData.user.id)
+        .single();
 
-      return { error: null };
-
-      /* 2FA KODAS - LAIKINAI IŠJUNGTAS
-      // First check if credentials are valid (without creating session)
-      const { data: signInData, error: preCheckError } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (preCheckError) {
-        toast({
-          title: "Prisijungimo klaida",
-          description: getErrorMessage(preCheckError.message),
-          variant: "destructive"
-        });
-        return { error: preCheckError };
-      }
-
-      // If credentials are valid, sign out immediately and send 2FA code
-      if (signInData.session) {
+      if (profileData?.totp_enabled) {
+        // User has TOTP enabled, sign out and require TOTP
         await supabase.auth.signOut();
+        setPendingTOTPEmail(email);
         
-        // Send verification code
-        const { error: codeError } = await sendVerificationCode(email);
-        if (codeError) {
-          return { error: codeError };
-        }
+        toast({
+          title: "TOTP reikalingas",
+          description: "Įveskite kodą iš Authenticator programėlės",
+          variant: "default"
+        });
+        
+        return { error: null, requiresTOTP: true };
+      } else {
+        // Check if this is first login - show TOTP setup
+        setShowTOTPSetup(true);
+        
+        toast({
+          title: "Prisijungimas sėkmingas",
+          description: "Nustatykite dviejų faktorių autentifikavimą",
+          variant: "default"
+        });
+        
+        return { error: null };
       }
-
-      return { error: null };
-      */
     } catch (error: any) {
       toast({
         title: "Prisijungimo klaida",
@@ -349,6 +348,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       toast({
         title: "Prisijungimo klaida",
         description: getErrorMessage(error.message),
+        variant: "destructive"
+      });
+      return { error };
+    }
+  };
+
+  const setupTOTP = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('setup-totp');
+      
+      if (error) throw error;
+      if (!data.success) throw new Error(data.error);
+
+      return { error: null };
+    } catch (error: any) {
+      toast({
+        title: "TOTP nustatymo klaida",
+        description: error.message || "Nepavyko nustatyti TOTP",
+        variant: "destructive"
+      });
+      return { error };
+    }
+  };
+
+  const verifyTOTP = async (code: string, isBackupCode = false) => {
+    try {
+      if (!pendingTOTPEmail) {
+        throw new Error('No pending TOTP verification');
+      }
+
+      const { data, error } = await supabase.functions.invoke('verify-totp-login', {
+        body: { 
+          email: pendingTOTPEmail, 
+          code,
+          isBackupCode 
+        }
+      });
+      
+      if (error) throw error;
+      if (!data.success) throw new Error(data.error);
+
+      // Now complete the sign in
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: pendingTOTPEmail,
+        password: '' // This will be handled by TOTP verification
+      });
+
+      setPendingTOTPEmail(null);
+      
+      toast({
+        title: "Prisijungimas sėkmingas",
+        description: "Nukreipiame į asmeninį kabinetą",
+        variant: "default"
+      });
+
+      return { error: null };
+    } catch (error: any) {
+      toast({
+        title: "TOTP klaida",
+        description: error.message || "Neteisingas kodas",
         variant: "destructive"
       });
       return { error };
@@ -519,12 +578,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loading,
     timeLeft,
     pendingMFAEmail,
+    showTOTPSetup,
     signUp,
     signIn,
     signOut,
     resendConfirmation,
     sendVerificationCode,
-    verifyCodeAndSignIn
+    verifyCodeAndSignIn,
+    setupTOTP,
+    verifyTOTP,
+    setShowTOTPSetup
   };
 
   return (
