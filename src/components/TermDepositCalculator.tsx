@@ -194,7 +194,7 @@ const TermDepositCalculator = () => {
                 <h3 className="text-xl font-semibold mb-2 text-slate-900">1 metų terminas</h3>
                 <p className="text-sm text-slate-600 mb-3">Tradiciniu palūkanų normu</p>
                 <div className="space-y-1 text-sm">
-                  <div>Iki 10,000 LT: <span className="font-bold text-blue-600">2%</span></div>
+                  <div>Iki 10,000 LT: <span className="font-bold text-blue-600">8%</span></div>
                   <div>10,000-100,000 LT: <span className="font-bold text-blue-600">10%</span></div>
                   <div>100,000+ LT: <span className="font-bold text-blue-600">12%</span></div>
                 </div>
