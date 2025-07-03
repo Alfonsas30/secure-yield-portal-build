@@ -164,7 +164,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('Starting signIn for:', email);
       
-      // First check credentials
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -180,48 +179,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: signInError };
       }
 
-      console.log('SignIn successful, checking TOTP status for user:', signInData.user.id);
+      console.log('SignIn successful for user:', signInData.user.id);
+      
+      toast({
+        title: "Prisijungimas sėkmingas",
+        description: "Nukreipiame į asmeninį kabinetą",
+        variant: "default"
+      });
 
-      // Check if user has TOTP enabled
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('totp_enabled, totp_secret')
-        .eq('user_id', signInData.user.id)
-        .single();
-
-      console.log('Profile data:', profileData, 'Profile error:', profileError);
-
-      if (profileData?.totp_enabled) {
-        console.log('TOTP enabled, requiring TOTP verification');
-        // User has TOTP enabled, sign out and require TOTP
-        await supabase.auth.signOut();
-        setPendingTOTPEmail(email);
-        
-        toast({
-          title: "TOTP reikalingas",
-          description: "Įveskite kodą iš Authenticator programėlės",
-          variant: "default"
-        });
-        
-        return { error: null, requiresTOTP: true };
-      } else {
-        console.log('TOTP not enabled, showing mandatory setup modal');
-        // User doesn't have TOTP enabled - show MANDATORY setup modal
-        
-        // Wait a bit for the navigation to complete
-        setTimeout(() => {
-          console.log('Setting showTOTPSetup to true (REQUIRED)');
-          setShowTOTPSetup(true);
-        }, 500);
-        
-        toast({
-          title: "Privalomas saugumo nustatymas",
-          description: "Turite nustatyti dviejų faktorių autentifikavimą",
-          variant: "destructive"
-        });
-        
-        return { error: null };
-      }
+      return { error: null };
     } catch (error: any) {
       console.error('SignIn exception:', error);
       toast({
