@@ -203,8 +203,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: null, requiresTOTP: true };
       } else {
         console.log('TOTP not enabled, showing setup modal');
-        // User doesn't have TOTP enabled - show setup modal
-        setShowTOTPSetup(true);
+        // User doesn't have TOTP enabled - show setup modal immediately after login
+        
+        // Wait a bit for the navigation to complete
+        setTimeout(() => {
+          console.log('Setting showTOTPSetup to true');
+          setShowTOTPSetup(true);
+        }, 500);
         
         toast({
           title: "Prisijungimas sėkmingas",
@@ -366,13 +371,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const setupTOTP = async () => {
     try {
+      console.log('Calling setup-totp edge function...');
       const { data, error } = await supabase.functions.invoke('setup-totp');
+      
+      console.log('Setup-totp response:', { data, error });
       
       if (error) throw error;
       if (!data.success) throw new Error(data.error);
 
       return { error: null };
     } catch (error: any) {
+      console.error('Setup TOTP error:', error);
       toast({
         title: "TOTP nustatymo klaida",
         description: error.message || "Nepavyko nustatyti TOTP",

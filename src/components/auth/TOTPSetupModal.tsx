@@ -119,11 +119,15 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete }: TOTPSetu
     console.log('TOTP setup completed, calling onSetupComplete with backup codes:', backupCodes);
     onSetupComplete(backupCodes);
     onOpenChange(false);
-    setStep('setup');
-    setTotpCode("");
-    setQrCodeDataUrl("");
-    setSecret("");
-    setBackupCodes([]);
+    
+    // Reset component state
+    setTimeout(() => {
+      setStep('setup');
+      setTotpCode("");
+      setQrCodeDataUrl("");
+      setSecret("");
+      setBackupCodes([]);
+    }, 100);
   };
 
   return (

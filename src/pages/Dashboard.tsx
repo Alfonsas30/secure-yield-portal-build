@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UserProfile } from "@/components/auth/UserProfile";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { SessionTimer } from "@/components/auth/SessionTimer";
+import { TOTPSetupModal } from "@/components/auth/TOTPSetupModal";
 import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
@@ -11,12 +12,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  const { showTOTPSetup, setShowTOTPSetup } = useAuth();
   
   // Enable dashboard security features
   useDashboardSecurity();
+
+  const handleTOTPSetupComplete = (backupCodes: string[]) => {
+    console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);
+    // TOTP setup completed successfully - modal will close automatically
+  };
 
   return (
     <ProtectedRoute>
@@ -87,6 +95,13 @@ export default function Dashboard() {
           </Tabs>
         </div>
       </div>
+
+      {/* TOTP Setup Modal */}
+      <TOTPSetupModal 
+        open={showTOTPSetup} 
+        onOpenChange={setShowTOTPSetup}
+        onSetupComplete={handleTOTPSetupComplete}
+      />
     </ProtectedRoute>
   );
 }
