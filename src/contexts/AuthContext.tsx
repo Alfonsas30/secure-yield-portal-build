@@ -14,6 +14,8 @@ interface Profile {
   phone: string | null;
   created_at: string;
   updated_at: string;
+  totp_enabled: boolean;
+  totp_secret: string | null;
 }
 
 interface AuthContextType {
@@ -202,19 +204,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         return { error: null, requiresTOTP: true };
       } else {
-        console.log('TOTP not enabled, showing setup modal');
-        // User doesn't have TOTP enabled - show setup modal immediately after login
+        console.log('TOTP not enabled, showing mandatory setup modal');
+        // User doesn't have TOTP enabled - show MANDATORY setup modal
         
         // Wait a bit for the navigation to complete
         setTimeout(() => {
-          console.log('Setting showTOTPSetup to true');
+          console.log('Setting showTOTPSetup to true (REQUIRED)');
           setShowTOTPSetup(true);
         }, 500);
         
         toast({
-          title: "Prisijungimas sėkmingas",
-          description: "Nustatykite dviejų faktorių autentifikavimą saugumo tikslais",
-          variant: "default"
+          title: "Privalomas saugumo nustatymas",
+          description: "Turite nustatyti dviejų faktorių autentifikavimą",
+          variant: "destructive"
         });
         
         return { error: null };

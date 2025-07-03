@@ -16,7 +16,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
-  const { showTOTPSetup, setShowTOTPSetup } = useAuth();
+  const { showTOTPSetup, setShowTOTPSetup, user, profile } = useAuth();
   
   // Enable dashboard security features
   useDashboardSecurity();
@@ -25,6 +25,9 @@ export default function Dashboard() {
     console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);
     // TOTP setup completed successfully - modal will close automatically
   };
+
+  // Check if TOTP is required but not set up
+  const isTOTPRequired = user && profile && !profile.totp_enabled;
 
   return (
     <ProtectedRoute>
@@ -96,11 +99,12 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* TOTP Setup Modal */}
+      {/* TOTP Setup Modal - MANDATORY for security */}
       <TOTPSetupModal 
         open={showTOTPSetup} 
         onOpenChange={setShowTOTPSetup}
         onSetupComplete={handleTOTPSetupComplete}
+        required={isTOTPRequired}
       />
     </ProtectedRoute>
   );

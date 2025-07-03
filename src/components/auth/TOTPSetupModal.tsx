@@ -13,9 +13,10 @@ interface TOTPSetupModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSetupComplete: (backupCodes: string[]) => void;
+  required?: boolean; // If true, modal cannot be dismissed
 }
 
-export function TOTPSetupModal({ open, onOpenChange, onSetupComplete }: TOTPSetupModalProps) {
+export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required = false }: TOTPSetupModalProps) {
   const [step, setStep] = useState<'setup' | 'verify' | 'complete'>('setup');
   const [loading, setLoading] = useState(false);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
@@ -131,14 +132,24 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete }: TOTPSetu
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+    <Dialog open={open} onOpenChange={required ? undefined : onOpenChange}>
+      <DialogContent className="max-w-md" onPointerDownOutside={required ? (e) => e.preventDefault() : undefined}>
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center flex items-center justify-center gap-2">
             <Shield className="w-6 h-6" />
-            Dviejų faktorių autentifikavimas
+            {required ? "Privalomas saugumo nustatymas" : "Dviejų faktorių autentifikavimas"}
           </DialogTitle>
         </DialogHeader>
+
+        {required && (
+          <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-sm">
+            <p className="text-yellow-800 font-medium">⚠️ Saugumo reikalavimas</p>
+            <p className="text-yellow-700 mt-1">
+              Banko saugumo tikslais, dviejų faktorių autentifikavimas yra privalomas. 
+              Negalėsite naudotis sistema, kol nenustatysite TOTP.
+            </p>
+          </div>
+        )}
 
         {step === 'setup' && (
           <div className="text-center space-y-4">
