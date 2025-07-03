@@ -413,7 +413,8 @@
     "successTitle": "Payment Successful!",
     "successMessage": "You paid {{eurAmount}} EUR and received {{ltAmount}} LT in your account.",
     "balanceUpdated": "Account balance updated automatically.",
-    "backToDashboard": "Back to Dashboard"
+    "backToDashboard": "Back to Dashboard",
+    "loginToAccess": "Log in to access your dashboard and view updated balance"
   },
   "loanCalculator": {
     "title": "Loan calculator",

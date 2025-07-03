@@ -3,20 +3,24 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowLeft } from "lucide-react";
+import { CheckCircle, ArrowLeft, User, LogIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
+import { AuthModal } from "@/components/auth/AuthModal";
 
 export default function DepositSuccess() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
   const [processing, setProcessing] = useState(true);
   const [success, setSuccess] = useState(false);
   const [eurAmount, setEurAmount] = useState("");
   const [ltAmount, setLtAmount] = useState("");
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const processPayment = async () => {
@@ -102,16 +106,53 @@ export default function DepositSuccess() {
             <p className="text-sm text-muted-foreground">
               {t('deposit.balanceUpdated')}
             </p>
-            <Button 
-              onClick={() => navigate('/dashboard')}
-              className="w-full"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('deposit.backToDashboard')}
-            </Button>
+            
+            {/* Show different buttons based on authentication status */}
+            {!authLoading && user ? (
+              <Button 
+                onClick={() => navigate('/dashboard')}
+                className="w-full"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                {t('deposit.backToDashboard')}
+              </Button>
+            ) : !authLoading ? (
+              <div className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  {t('deposit.loginToAccess')}
+                </p>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setAuthModalOpen(true)}
+                    className="flex-1"
+                  >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    {t('navigation.login')}
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => navigate('/')}
+                    className="flex-1"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    {t('navigation.home')}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="animate-pulse">
+                <div className="h-10 bg-gray-200 rounded"></div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
+
+      <AuthModal 
+        open={authModalOpen} 
+        onOpenChange={setAuthModalOpen}
+        defaultTab="login"
+      />
     </div>
   );
 }

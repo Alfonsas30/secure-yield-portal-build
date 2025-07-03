@@ -476,7 +476,8 @@
     "successTitle": "Mokėjimas sėkmingas!",
     "successMessage": "Sumokėjote {{eurAmount}} EUR ir gavote {{ltAmount}} LT į sąskaitą.",
     "balanceUpdated": "Sąskaitos balansas atnaujintas automatiškai.",
-    "backToDashboard": "Grįžti į valdymo skydą"
+    "backToDashboard": "Grįžti į valdymo skydą",
+    "loginToAccess": "Prisijunkite, kad patektumėte į skydelį ir pamatytumėte atnaujintą likutį"
   },
   "loanCalculator": {
     "title": "Paskolos skaičiuoklė",
