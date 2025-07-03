@@ -755,6 +755,77 @@
       "validationError": "Please fill in all fields"
     }
   },
+  "protectedRoute": {
+    "loginRequired": "Please log in",
+    "accessRequired": "You must be logged in to view this content"
+  },
+  "termDepositContract": {
+    "title": "Term Deposit Contract",
+    "clientInfo": "Contract Information",
+    "client": "Client",
+    "account": "Account",
+    "investedAmount": "Investment amount:",
+    "contractTerm": "Contract term:",
+    "interestRate": "Annual interest rate:",
+    "maturityAmount": "Amount at maturity:",
+    "profit": "Your profit:",
+    "maturityDate": "Maturity date:",
+    "months": "months",
+    "termsAndConditions": "Terms and conditions:",
+    "terms": {
+      "blocked": "Deposit will be locked for the entire contract term",
+      "interest": "Interest will be calculated at the end of the contract",
+      "early": "Early termination is possible only with penalty fee",
+      "renewal": "Automatic renewal is possible by separate agreement"
+    },
+    "cancel": "Cancel",
+    "sign": "Sign contract",
+    "signing": "Creating contract...",
+    "error": "Error",
+    "insufficientFunds": "Insufficient funds for term deposit",
+    "createError": "Failed to create term deposit",
+    "signError": "Failed to sign contract. Please try again.",
+    "success": "Contract signed successfully!",
+    "successDescription": "Term deposit {amount} created for {termMonths} months"
+  },
+  "loanInputs": {
+    "loanAmount": "Loan amount:",
+    "loanTerm": "Loan term:",
+    "preciseAmount": "Exact amount (€)",
+    "preciseTerm": "Exact term (months)",
+    "minAmount": "€1,000",
+    "maxAmount": "€50,000",
+    "minTerm": "6 months",
+    "maxTerm": "60 months"
+  },
+  "loanResults": {
+    "monthlyPayment": "MONTHLY PAYMENT:",
+    "totalAmount": "Total amount",
+    "interestAmount": "Interest",
+    "monthlyPaymentNote": "This amount will be paid every month for {termMonths} months",
+    "calculating": "Calculating...",
+    "checkInputs": "Check input data"
+  },
+  "paymentSchedule": {
+    "title": "Payment schedule",
+    "description": "Detailed breakdown of each month's payment",
+    "month": "Month",
+    "payment": "Payment",
+    "principal": "Principal",
+    "interest": "Interest",
+    "balance": "Balance",
+    "firstMonthsOnly": "Showing only the first 12 months. Total: {totalMonths} months"
+  },
+  "loanApplicationCTA": {
+    "applyForLoan": "Want to apply for a loan?",
+    "loginToApply": "Log in to your account to apply for a loan",
+    "applyNow": "Apply for loan",
+    "loginAndApply": "Log in and apply",
+    "applicationFee": "Application fee: €10",
+    "feeDetails": "• One-time payment • Non-refundable regardless of decision",
+    "satisfiedWithCalculation": "Satisfied with the calculation?",
+    "applyWithin24h": "Submit your loan application and get a decision within 24 hours"
+  },
   "loanPaymentSuccess": {
     "processing": "Processing payment...",
     "processingDescription": "Please wait while we confirm your payment.",

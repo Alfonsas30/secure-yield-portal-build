@@ -79,16 +79,16 @@ export function TermDepositContractModal({
       
       if (!result.success) {
         toast({
-          title: "Klaida",
-          description: result.error === 'Insufficient funds' ? "Nepakanka lėšų terminuotam indėliui" : "Nepavyko sukurti terminuoto indėlio",
+          title: t('termDepositContract.error'),
+          description: result.error === 'Insufficient funds' ? t('termDepositContract.insufficientFunds') : t('termDepositContract.createError'),
           variant: "destructive"
         });
         return;
       }
 
       toast({
-        title: "Sutartis sėkmingai pasirašyta!",
-        description: `Terminuotas indėlis ${formatDualCurrency(amount)} suformuotas ${termMonths} mėnesiams`,
+        title: t('termDepositContract.success'),
+        description: t('termDepositContract.successDescription', { amount: formatDualCurrency(amount), termMonths }),
       });
 
       onSuccess();
@@ -96,8 +96,8 @@ export function TermDepositContractModal({
     } catch (error) {
       console.error('Error signing contract:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko pasirašyti sutarties. Bandykite dar kartą.",
+        title: t('termDepositContract.error'),
+        description: t('termDepositContract.signError'),
         variant: "destructive"
       });
     } finally {
@@ -122,19 +122,19 @@ export function TermDepositContractModal({
         <div className="space-y-6">
           {/* Contract Summary */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
-            <h3 className="text-lg font-semibold mb-4 text-slate-900">Sutarties informacija</h3>
+            <h3 className="text-lg font-semibold mb-4 text-slate-900">{t('termDepositContract.clientInfo')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-blue-600" />
                 <div>
-                  <div className="text-sm text-slate-600">Klientas</div>
+                  <div className="text-sm text-slate-600">{t('termDepositContract.client')}</div>
                   <div className="font-medium">{profile?.display_name || profile?.email}</div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4 text-blue-600" />
                 <div>
-                  <div className="text-sm text-slate-600">Sąskaita</div>
+                  <div className="text-sm text-slate-600">{t('termDepositContract.account')}</div>
                   <div className="font-medium">{profile?.account_number}</div>
                 </div>
               </div>
@@ -144,22 +144,22 @@ export function TermDepositContractModal({
           {/* Investment Details */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Investuojama suma:</span>
+              <span className="text-slate-600">{t('termDepositContract.investedAmount')}</span>
               <Badge variant="outline" className="text-lg font-semibold">
                 {formatDualCurrency(amount)}
               </Badge>
             </div>
             
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Sutarties terminas:</span>
+              <span className="text-slate-600">{t('termDepositContract.contractTerm')}</span>
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4 text-blue-600" />
-                <span className="font-semibold">{termMonths} mėnesiai</span>
+                <span className="font-semibold">{termMonths} {t('termDepositContract.months')}</span>
               </div>
             </div>
             
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">Metinė palūkanų norma:</span>
+              <span className="text-slate-600">{t('termDepositContract.interestRate')}</span>
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-4 h-4 text-green-600" />
                 <span className="font-semibold text-green-600">{interestRate}%</span>
@@ -170,19 +170,19 @@ export function TermDepositContractModal({
 
             <div className="space-y-2 bg-green-50 p-4 rounded-lg">
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Suma grąžinimo dieną:</span>
+                <span className="text-slate-600">{t('termDepositContract.maturityAmount')}</span>
                 <span className="text-xl font-bold text-green-700">
                   {formatDualCurrency(totalReturn)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Jūsų pelnas:</span>
+                <span className="text-slate-600">{t('termDepositContract.profit')}</span>
                 <span className="text-lg font-semibold text-green-600">
                   +{formatDualCurrency(profit)}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Grąžinimo data:</span>
+                <span className="text-slate-600">{t('termDepositContract.maturityDate')}</span>
                 <span className="font-medium">
                   {maturityDate.toLocaleDateString('lt-LT')}
                 </span>
@@ -192,12 +192,12 @@ export function TermDepositContractModal({
 
           {/* Terms and Conditions */}
           <div className="bg-slate-50 p-4 rounded-lg text-sm text-slate-600">
-            <h4 className="font-semibold mb-2">Sutarties sąlygos:</h4>
+            <h4 className="font-semibold mb-2">{t('termDepositContract.termsAndConditions')}</h4>
             <ul className="space-y-1 list-disc list-inside">
-              <li>Indėlis bus užblokuotas visam sutarties terminui</li>
-              <li>Palūkanos bus priskaičiuotos sutarties pabaigoje</li>
-              <li>Pirmalaikis sutarties nutraukimas galimas tik su baudos mokesčiu</li>
-              <li>Automatinis sutarties pratęsimas galimas atskirai susitarus</li>
+              <li>{t('termDepositContract.terms.blocked')}</li>
+              <li>{t('termDepositContract.terms.interest')}</li>
+              <li>{t('termDepositContract.terms.early')}</li>
+              <li>{t('termDepositContract.terms.renewal')}</li>
             </ul>
           </div>
 
@@ -209,7 +209,7 @@ export function TermDepositContractModal({
               className="flex-1"
               disabled={loading}
             >
-              Atšaukti
+              {t('termDepositContract.cancel')}
             </Button>
             <Button
               onClick={handleSignContract}
@@ -217,11 +217,11 @@ export function TermDepositContractModal({
               disabled={loading}
             >
               {loading ? (
-                "Formuojama sutartis..."
+                t('termDepositContract.signing')
               ) : (
                 <>
                   <CheckCircle className="w-4 h-4 mr-2" />
-                  Pasirašyti sutartį
+                  {t('termDepositContract.sign')}
                 </>
               )}
             </Button>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +13,8 @@ interface LoanApplicationCTAProps {
 
 export const LoanApplicationCTA = ({ onOpenModal, onOpenAuthModal }: LoanApplicationCTAProps) => {
   const { user } = useAuth();
+  const { t } = useTranslation();
+  
   return (
     <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50/80 to-green-50/80">
       <CardContent className="p-8 text-center">

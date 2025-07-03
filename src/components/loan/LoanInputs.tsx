@@ -18,7 +18,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       {/* Loan Amount */}
       <div className="space-y-3">
         <Label htmlFor="loanAmount" className="text-base font-medium text-slate-700">
-          Paskolos suma: {loanAmount.toLocaleString('lt-LT')} €
+          {t('loanInputs.loanAmount')} {loanAmount.toLocaleString('lt-LT')} €
         </Label>
         <Slider
           id="loanAmount"
@@ -30,15 +30,15 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
           className="w-full touch-manipulation"
         />
         <div className="flex justify-between text-sm text-slate-500">
-          <span>1,000 €</span>
-          <span>50,000 €</span>
+          <span>{t('loanInputs.minAmount')}</span>
+          <span>{t('loanInputs.maxAmount')}</span>
         </div>
       </div>
 
       {/* Loan Term */}
       <div className="space-y-3">
         <Label htmlFor="loanTerm" className="text-base font-medium text-slate-700">
-          Paskolos terminas: {loanTerm} mėn.
+          {t('loanInputs.loanTerm')} {loanTerm} mėn.
         </Label>
         <Slider
           id="loanTerm"
@@ -50,8 +50,8 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
           className="w-full touch-manipulation"
         />
         <div className="flex justify-between text-sm text-slate-500">
-          <span>6 mėn.</span>
-          <span>60 mėn.</span>
+          <span>{t('loanInputs.minTerm')}</span>
+          <span>{t('loanInputs.maxTerm')}</span>
         </div>
       </div>
 
@@ -59,7 +59,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="amountInput" className="text-sm font-medium text-slate-700">
-            Tiksli suma (€)
+            {t('loanInputs.preciseAmount')}
           </Label>
           <Input
             id="amountInput"
@@ -73,7 +73,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
         </div>
         <div className="space-y-2">
           <Label htmlFor="termInput" className="text-sm font-medium text-slate-700">
-            Tikslus terminas (mėn.)
+            {t('loanInputs.preciseTerm')}
           </Label>
           <Input
             id="termInput"

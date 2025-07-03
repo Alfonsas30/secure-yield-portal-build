@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from "@/components/ui/card";
 import { CreditCard, TrendingUp, Calculator } from "lucide-react";
 import { LoanCalculation } from "./types";
@@ -8,6 +9,8 @@ interface LoanResultsProps {
 }
 
 export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
       <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200">
@@ -15,16 +18,16 @@ export const LoanResults = ({ calculations, validLoanTerm }: LoanResultsProps) =
           <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
             <CreditCard className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-3 lg:mb-4 text-slate-900 uppercase tracking-wide">MOKĖSITE KAS MĖNESĮ:</h3>
+          <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-3 lg:mb-4 text-slate-900 uppercase tracking-wide">{t('loanResults.monthlyPayment')}</h3>
           <p className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-blue-600 mb-3 lg:mb-4 drop-shadow-lg">
             {calculations.monthlyPayment > 0 
               ? `${calculations.monthlyPayment.toLocaleString('lt-LT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`
-              : 'Skaičiuojama...'}
+              : t('loanResults.calculating')}
           </p>
           <p className="text-xs sm:text-sm lg:text-base text-slate-700 font-medium">
             {calculations.monthlyPayment > 0 
-              ? `Ši suma bus mokama kiekvieną mėnesį ${validLoanTerm} mėnesių`
-              : 'Patikrinkite įvesties duomenis'}
+              ? t('loanResults.monthlyPaymentNote', { termMonths: validLoanTerm })
+              : t('loanResults.checkInputs')}
           </p>
         </CardContent>
       </Card>

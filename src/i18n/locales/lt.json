@@ -755,6 +755,77 @@
       "validationError": "Prašome užpildyti visus laukus"
     }
   },
+  "protectedRoute": {
+    "loginRequired": "Prašome prisijungti",
+    "accessRequired": "Turite būti prisijungę, kad galėtumėte matyti šį turinį"
+  },
+  "termDepositContract": {
+    "title": "Terminuoto indėlio sutartis",
+    "clientInfo": "Sutarties informacija",
+    "client": "Klientas",
+    "account": "Sąskaita",
+    "investedAmount": "Investuojama suma:",
+    "contractTerm": "Sutarties terminas:",
+    "interestRate": "Metinė palūkanų norma:",
+    "maturityAmount": "Suma grąžinimo dieną:",
+    "profit": "Jūsų pelnas:",
+    "maturityDate": "Grąžinimo data:",
+    "months": "mėnesiai",
+    "termsAndConditions": "Sutarties sąlygos:",
+    "terms": {
+      "blocked": "Indėlis bus užblokuotas visam sutarties terminui",
+      "interest": "Palūkanos bus priskaičiuotos sutarties pabaigoje",
+      "early": "Pirmalaikis sutarties nutraukimas galimas tik su baudos mokesčiu",
+      "renewal": "Automatinis sutarties pratęsimas galimas atskirai susitarus"
+    },
+    "cancel": "Atšaukti",
+    "sign": "Pasirašyti sutartį",
+    "signing": "Formuojama sutartis...",
+    "error": "Klaida",
+    "insufficientFunds": "Nepakanka lėšų terminuotam indėliui",
+    "createError": "Nepavyko sukurti terminuoto indėlio",
+    "signError": "Nepavyko pasirašyti sutarties. Bandykite dar kartą.",
+    "success": "Sutartis sėkmingai pasirašyta!",
+    "successDescription": "Terminuotas indėlis {amount} suformuotas {termMonths} mėnesiams"
+  },
+  "loanInputs": {
+    "loanAmount": "Paskolos suma:",
+    "loanTerm": "Paskolos terminas:",
+    "preciseAmount": "Tiksli suma (€)",
+    "preciseTerm": "Tikslus terminas (mėn.)",
+    "minAmount": "1,000 €",
+    "maxAmount": "50,000 €",
+    "minTerm": "6 mėn.",
+    "maxTerm": "60 mėn."
+  },
+  "loanResults": {
+    "monthlyPayment": "MOKĖSITE KAS MĖNESĮ:",
+    "totalAmount": "Bendra suma",
+    "interestAmount": "Palūkanos",
+    "monthlyPaymentNote": "Ši suma bus mokama kiekvieną mėnesį {termMonths} mėnesių",
+    "calculating": "Skaičiuojama...",
+    "checkInputs": "Patikrinkite įvesties duomenis"
+  },
+  "paymentSchedule": {
+    "title": "Mokėjimo grafikas",
+    "description": "Išsamus kiekvieno mėnesio mokėjimo paskirstymas",
+    "month": "Mėnuo",
+    "payment": "Mokėjimas",
+    "principal": "Pagrindinis kapitalas",
+    "interest": "Palūkanos",
+    "balance": "Likutis",
+    "firstMonthsOnly": "Rodomi tik pirmieji 12 mėnesių. Iš viso: {totalMonths} mėnesių"
+  },
+  "loanApplicationCTA": {
+    "applyForLoan": "Norite pateikti paraišką?",
+    "loginToApply": "Prisijunkite prie savo paskyros, kad galėtumėte pateikti paraišką paskolai",
+    "applyNow": "Pateikti paraišką paskolai",
+    "loginAndApply": "Prisijungti ir pateikti paraišką",
+    "applicationFee": "Paraiškos mokestis: 10€",
+    "feeDetails": "• Mokama vienkartinai • Negrąžinamas nepriklausomai nuo sprendimo",
+    "satisfiedWithCalculation": "Patenkino skaičiavimas?",
+    "applyWithin24h": "Pateikite paraišką paskolai ir gaukite sprendimą per 24 valandas"
+  },
   "loanPaymentSuccess": {
     "processing": "Apdorojamas mokėjimas...",
     "processingDescription": "Prašome palaukti, kol patvirtinsime jūsų mokėjimą.",
