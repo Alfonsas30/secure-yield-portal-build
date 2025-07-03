@@ -229,11 +229,11 @@ const Contact = () => {
                   size="lg"
                 >
                   {isLoading ? (
-                    t('contact.form.submitting')
+                    t('contact.form.sending')
                   ) : (
                     <>
                       <Send className="w-5 h-5 mr-2" />
-                      {t('contact.form.submit')}
+                      {t('contact.form.send')}
                     </>
                   )}
                 </Button>
@@ -252,7 +252,7 @@ const Contact = () => {
               <form onSubmit={handleNewsletterSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="newsletter-email" className="text-white">
-                    {t('contact.newsletter.emailLabel')} *
+                    {t('contact.newsletter.email')} *
                   </Label>
                   <Input
                     id="newsletter-email"
@@ -267,7 +267,7 @@ const Contact = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="newsletter-name" className="text-white">
-                    {t('contact.newsletter.nameLabel')}
+                    {t('contact.newsletter.name')}
                   </Label>
                   <Input
                     id="newsletter-name"
@@ -298,11 +298,11 @@ const Contact = () => {
                   size="lg"
                 >
                   {isLoading ? (
-                    t('contact.newsletter.submitting')
+                    t('contact.newsletter.subscribing')
                   ) : (
                     <>
                       <Send className="w-4 h-4 mr-2" />
-                      {t('contact.newsletter.submit')}
+                      {t('contact.newsletter.subscribe')}
                     </>
                   )}
                 </Button>
