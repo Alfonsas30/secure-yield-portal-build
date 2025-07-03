@@ -22,10 +22,13 @@ interface AuthContextType {
   profile: Profile | null;
   loading: boolean;
   timeLeft: number;
+  pendingMFAEmail: string | null;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resendConfirmation: (email: string) => Promise<{ error: any }>;
+  sendVerificationCode: (email: string) => Promise<{ error: any }>;
+  verifyCodeAndSignIn: (email: string, password: string, code: string) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,6 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [showWarning, setShowWarning] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [sessionTimeoutActive, setSessionTimeoutActive] = useState(false);
+  const [pendingMFAEmail, setPendingMFAEmail] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -148,27 +152,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    try {
+      // First check if credentials are valid (without creating session)
+      const { data: signInData, error: preCheckError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
 
-    if (error) {
+      if (preCheckError) {
+        toast({
+          title: "Prisijungimo klaida",
+          description: getErrorMessage(preCheckError.message),
+          variant: "destructive"
+        });
+        return { error: preCheckError };
+      }
+
+      // If credentials are valid, sign out immediately and send 2FA code
+      if (signInData.session) {
+        await supabase.auth.signOut();
+        
+        // Send verification code
+        const { error: codeError } = await sendVerificationCode(email);
+        if (codeError) {
+          return { error: codeError };
+        }
+      }
+
+      return { error: null };
+    } catch (error: any) {
       toast({
         title: "Prisijungimo klaida",
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
-    } else {
-      toast({
-        title: "Prisijungimas sėkmingas",
-        description: "Nukreipiame į asmeninį kabinetą",
-        variant: "default"
-      });
-      // Navigation will be handled by the auth state change listener
+      return { error };
     }
-
-    return { error };
   };
 
   const signOut = async () => {
@@ -246,6 +265,68 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     return { error };
+  };
+
+  const sendVerificationCode = async (email: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('send-verification-code', {
+        body: { email }
+      });
+
+      if (error) throw error;
+
+      setPendingMFAEmail(email);
+      toast({
+        title: "Kodas išsiųstas",
+        description: "Patikrinkite el. paštą ir įveskite gavotą kodą",
+        variant: "default"
+      });
+
+      return { error: null };
+    } catch (error: any) {
+      toast({
+        title: "Klaida",
+        description: error.message || "Nepavyko išsiųsti patvirtinimo kodo",
+        variant: "destructive"
+      });
+      return { error };
+    }
+  };
+
+  const verifyCodeAndSignIn = async (email: string, password: string, code: string) => {
+    try {
+      // First verify the code
+      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-code', {
+        body: { email, code }
+      });
+
+      if (verifyError) throw verifyError;
+      if (!verifyData.success) throw new Error(verifyData.error);
+
+      // If code is valid, proceed with normal sign in
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (signInError) throw signInError;
+
+      setPendingMFAEmail(null);
+      toast({
+        title: "Prisijungimas sėkmingas",
+        description: "Nukreipiame į asmeninį kabinetą",
+        variant: "default"
+      });
+
+      return { error: null };
+    } catch (error: any) {
+      toast({
+        title: "Prisijungimo klaida",
+        description: getErrorMessage(error.message),
+        variant: "destructive"
+      });
+      return { error };
+    }
   };
 
   const getErrorMessage = (message: string) => {
@@ -411,10 +492,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     profile,
     loading,
     timeLeft,
+    pendingMFAEmail,
     signUp,
     signIn,
     signOut,
-    resendConfirmation
+    resendConfirmation,
+    sendVerificationCode,
+    verifyCodeAndSignIn
   };
 
   return (

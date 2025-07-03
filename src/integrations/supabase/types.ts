@@ -319,6 +319,8 @@ export type Database = {
           display_name: string | null
           email: string
           id: string
+          mfa_enabled: boolean
+          mfa_verified: boolean
           phone: string | null
           updated_at: string
           user_id: string
@@ -329,6 +331,8 @@ export type Database = {
           display_name?: string | null
           email: string
           id?: string
+          mfa_enabled?: boolean
+          mfa_verified?: boolean
           phone?: string | null
           updated_at?: string
           user_id: string
@@ -339,6 +343,8 @@ export type Database = {
           display_name?: string | null
           email?: string
           id?: string
+          mfa_enabled?: boolean
+          mfa_verified?: boolean
           phone?: string | null
           updated_at?: string
           user_id?: string
@@ -474,6 +480,42 @@ export type Database = {
         }
         Relationships: []
       }
+      verification_codes: {
+        Row: {
+          attempts: number
+          code: string
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          updated_at: string
+          used: boolean
+          user_id: string
+        }
+        Insert: {
+          attempts?: number
+          code: string
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          updated_at?: string
+          used?: boolean
+          user_id: string
+        }
+        Update: {
+          attempts?: number
+          code?: string
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          updated_at?: string
+          used?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -497,6 +539,10 @@ export type Database = {
       calculate_daily_interest: {
         Args: Record<PropertyKey, never>
         Returns: Json
+      }
+      cleanup_expired_verification_codes: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       generate_account_number: {
         Args: Record<PropertyKey, never>
