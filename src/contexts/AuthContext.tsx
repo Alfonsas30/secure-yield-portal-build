@@ -159,6 +159,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
+      console.log('Starting signIn for:', email);
+      
       // First check credentials
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
@@ -166,6 +168,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (signInError) {
+        console.log('SignIn error:', signInError);
         toast({
           title: "Prisijungimo klaida",
           description: getErrorMessage(signInError.message),
@@ -174,14 +177,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: signInError };
       }
 
+      console.log('SignIn successful, checking TOTP status for user:', signInData.user.id);
+
       // Check if user has TOTP enabled
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('totp_enabled')
+        .select('totp_enabled, totp_secret')
         .eq('user_id', signInData.user.id)
         .single();
 
+      console.log('Profile data:', profileData, 'Profile error:', profileError);
+
       if (profileData?.totp_enabled) {
+        console.log('TOTP enabled, requiring TOTP verification');
         // User has TOTP enabled, sign out and require TOTP
         await supabase.auth.signOut();
         setPendingTOTPEmail(email);
@@ -194,18 +202,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         return { error: null, requiresTOTP: true };
       } else {
-        // Check if this is first login - show TOTP setup
+        console.log('TOTP not enabled, showing setup modal');
+        // User doesn't have TOTP enabled - show setup modal
         setShowTOTPSetup(true);
         
         toast({
           title: "Prisijungimas sėkmingas",
-          description: "Nustatykite dviejų faktorių autentifikavimą",
+          description: "Nustatykite dviejų faktorių autentifikavimą saugumo tikslais",
           variant: "default"
         });
         
         return { error: null };
       }
     } catch (error: any) {
+      console.error('SignIn exception:', error);
       toast({
         title: "Prisijungimo klaida",
         description: getErrorMessage(error.message),

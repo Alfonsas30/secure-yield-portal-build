@@ -116,6 +116,7 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete }: TOTPSetu
   };
 
   const handleComplete = () => {
+    console.log('TOTP setup completed, calling onSetupComplete with backup codes:', backupCodes);
     onSetupComplete(backupCodes);
     onOpenChange(false);
     setStep('setup');
