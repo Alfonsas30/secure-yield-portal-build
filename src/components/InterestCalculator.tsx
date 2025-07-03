@@ -95,7 +95,7 @@ const InterestCalculator = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
@@ -203,10 +203,10 @@ const InterestCalculator = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                 </Button>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
                     onClick={() => setRegistrationOpen(true)}
-                    className="bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                    className="bg-white text-blue-600 hover:bg-slate-50 font-semibold py-4 px-6 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
                     <span className="relative z-10">Registruotis</span>
@@ -215,7 +215,7 @@ const InterestCalculator = () => {
                   <Button 
                     onClick={() => setShowAuthModal(true)}
                     variant="outline"
-                    className="bg-white/20 backdrop-blur-sm border-white/40 text-white hover:bg-white/30 font-semibold py-3 transition-all duration-300"
+                    className="bg-white/20 backdrop-blur-sm border-white/40 text-white hover:bg-white/30 font-semibold py-4 px-6 transition-all duration-300 text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
                     Prisijungti

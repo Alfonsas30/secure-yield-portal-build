@@ -24,7 +24,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
           step={500}
           value={[loanAmount]}
           onValueChange={(value) => onAmountChange(value[0])}
-          className="w-full"
+          className="w-full touch-manipulation"
         />
         <div className="flex justify-between text-sm text-slate-500">
           <span>1,000 €</span>
@@ -44,7 +44,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
           step={1}
           value={[loanTerm]}
           onValueChange={(value) => onTermChange(value[0])}
-          className="w-full"
+          className="w-full touch-manipulation"
         />
         <div className="flex justify-between text-sm text-slate-500">
           <span>6 mėn.</span>
@@ -65,7 +65,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
             max="50000"
             value={loanAmount}
             onChange={(e) => onAmountChange(e.target.value)}
-            className="w-full"
+            className="w-full py-3 text-base min-h-[48px]"
           />
         </div>
         <div className="space-y-2">
@@ -79,7 +79,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
             max="60"
             value={loanTerm}
             onChange={(e) => onTermChange(e.target.value)}
-            className="w-full"
+            className="w-full py-3 text-base min-h-[48px]"
           />
         </div>
       </div>

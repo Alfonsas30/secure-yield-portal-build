@@ -178,7 +178,7 @@ const TermDepositCalculator = () => {
             <h3 className="text-2xl font-bold text-slate-900 mb-2">Pasirinkite terminą</h3>
             <p className="text-slate-600">Skirtingi terminai - skirtingos palūkanos</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
             <Card 
               className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${
                 selectedTerm === 12 
@@ -187,7 +187,7 @@ const TermDepositCalculator = () => {
               }`}
               onClick={() => setSelectedTerm(12)}
             >
-              <CardContent className="p-6 text-center">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
                   <Crown className="w-8 h-8 text-white" />
                 </div>
@@ -209,7 +209,7 @@ const TermDepositCalculator = () => {
               }`}
               onClick={() => setSelectedTerm(72)}
             >
-              <CardContent className="p-6 text-center">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                   <Diamond className="w-8 h-8 text-white" />
                 </div>
@@ -223,7 +223,7 @@ const TermDepositCalculator = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-amber-800 transition-colors duration-300">
@@ -266,7 +266,7 @@ const TermDepositCalculator = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     max={user && balance ? balance : undefined}
-                    className={`text-lg md:text-xl py-3 md:py-4 border-2 transition-all duration-300 bg-white/90 backdrop-blur-sm ${
+                    className={`text-base sm:text-lg lg:text-xl py-4 px-4 border-2 transition-all duration-300 bg-white/90 backdrop-blur-sm min-h-[48px] ${
                       isOverBalance 
                         ? 'border-red-500 focus:border-red-500' 
                         : 'border-slate-200 focus:border-amber-500'
@@ -280,7 +280,7 @@ const TermDepositCalculator = () => {
                       max={balance}
                       min={0}
                       step={1000}
-                      className="mt-3"
+                      className="mt-3 touch-manipulation"
                     />
                   )}
                 </div>
@@ -345,9 +345,9 @@ const TermDepositCalculator = () => {
             </CardHeader>
             <CardContent className="space-y-6 relative z-10">
               <div className="space-y-4">
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
-                  <div className="text-xs md:text-sm opacity-90 mb-1">Pelnas per metus</div>
-                  <div className="text-xl md:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
+                  <div className="text-sm opacity-90 mb-1">Pelnas per metus</div>
+                  <div className="text-xl sm:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedYearly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
@@ -355,11 +355,11 @@ const TermDepositCalculator = () => {
                   </div>
                 </div>
 
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
-                  <div className="text-xs md:text-sm opacity-90 mb-1">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
+                  <div className="text-sm opacity-90 mb-1">
                     Bendras pelnas už {selectedTerm === 12 ? '1 metus' : '6 metus'}
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{formatDualCurrency(interest.totalProfit)}
                   </div>
                   <div className="text-sm opacity-90 mt-1">
@@ -412,10 +412,10 @@ const TermDepositCalculator = () => {
                   </div>
                 )
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
                     onClick={() => setRegistrationOpen(true)}
-                    className="bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
+                    className="bg-white text-slate-800 hover:bg-slate-50 font-semibold py-4 px-6 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
                     <span className="relative z-10">Registruotis</span>
@@ -424,7 +424,7 @@ const TermDepositCalculator = () => {
                   <Button 
                     onClick={() => setShowAuthModal(true)}
                     variant="outline"
-                    className="border-white/50 text-slate-800 hover:bg-white/20 font-semibold py-3 transition-all duration-300"
+                    className="border-white/50 text-slate-800 hover:bg-white/20 font-semibold py-4 px-6 transition-all duration-300 text-base min-h-[48px] w-full sm:w-auto"
                     size="lg"
                   >
                     Prisijungti

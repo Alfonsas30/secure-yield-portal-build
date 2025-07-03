@@ -70,17 +70,22 @@ const Index = () => {
           </div>
           
           <Tabs defaultValue="daily" className="w-full">
-            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-3 mb-8">
-              <TabsTrigger value="daily" className="text-sm">Dienos palūkanos</TabsTrigger>
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-0 p-2 h-auto sm:h-10 mb-8 bg-white/80 backdrop-blur-sm border border-slate-200 shadow-sm">
+              <TabsTrigger 
+                value="daily" 
+                className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-medium whitespace-nowrap"
+              >
+                Dienos palūkanos
+              </TabsTrigger>
               <TabsTrigger 
                 value="term" 
-                className="text-sm font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1]"
+                className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-bold text-slate-900 relative before:content-[''] before:absolute before:inset-[-2px] before:rounded-md before:bg-conic-gradient before:animate-rotating-border before:opacity-70 hover:before:opacity-100 transition-all duration-300 after:content-[''] after:absolute after:inset-0 after:bg-background after:rounded-sm after:z-[-1] whitespace-nowrap"
               >
                 Terminuoti indėliai
               </TabsTrigger>
               <TabsTrigger 
                 value="loans" 
-                className="text-sm font-semibold text-slate-900 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 border border-orange-200"
+                className="text-sm sm:text-xs lg:text-sm px-3 py-3 sm:py-1.5 rounded-md sm:rounded-sm font-semibold text-slate-900 bg-gradient-to-r from-orange-100 to-red-100 hover:from-orange-200 hover:to-red-200 border border-orange-200 whitespace-nowrap"
               >
                 Paskolos
               </TabsTrigger>
