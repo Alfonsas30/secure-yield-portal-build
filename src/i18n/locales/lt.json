@@ -445,55 +445,106 @@
   "aboutUs": {
     "badge": "Apie mus",
     "title": "LTB Bankas - Jūsų patikimas partneris",
-    "description": "Esame inovatyvus finansų sprendimų teikėjas, kuris padeda klientams saugiai ir pelningai taupyti pinigus.",
+    "description": "Mes esame inovatyvių finansų sprendimų teikėjas, padedantis klientams saugiai ir pelningai taupyti pinigus.",
     "security": {
       "title": "Saugumas",
       "description": "Jūsų pinigai apsaugoti moderniausiais saugumo sprendimais ir draudimu."
     },
     "profitability": {
-      "title": "Pelningumo",
-      "description": "Siūlome konkurencingą 2% metinę palūkanų normą su kasdieniu palūkanų mokėjimu."
+      "title": "Pelningumas",
+      "description": "Siūlome konkurencingą 2% metinę palūkanų normą su dienos palūkanų mokėjimu."
     },
     "experience": {
       "title": "Patirtis",
-      "description": "Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų."
+      "description": "Mūsų komanda turi daugelio metų finansų paslaugų patirtį."
+    },
+    "cta": {
+      "title": "Pasiruošę pradėti?",
+      "description": "Atidarykite sąskaitą šiandien ir pradėkite uždirbti",
+      "button": "Registruotis dabar"
     }
   },
-  "boardInvitation": {
-    "badge": "Valdyba",
-    "title": "Prisijunk prie LTB Banko valdybos",
-    "description": "Registruokis, ir mes su tavimi susisieksime artimiausiu metu. Tapk dalimi komandos, formuojančios ateities finansų sprendimus.",
-    "button": "Tapti valdybos nariu",
-    "features": {
-      "strategic": "Strateginis planavimas",
-      "financial": "Finansų valdymas",
-      "vision": "Vizijos formavimas"
-    }
+  "quickActions": {
+    "title": "Greitieji veiksmai",
+    "transfer": "Pervesti",
+    "deposit": "Papildyti", 
+    "history": "Istorija",
+    "reports": "Ataskaitos"
   },
-  "boardApplication": {
-    "title": "Tapti valdybos nariu",
-    "description": "Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.",
-    "warning": "⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.",
-    "form": {
-      "name": "Vardas ir pavardė",
-      "email": "El. paštas",
-      "phone": "Telefono numeris",
-      "experience": "Patirtis ir motyvacija",
-      "namePlaceholder": "Įveskite vardą ir pavardę",
-      "emailPlaceholder": "Įveskite el. paštą",
-      "phonePlaceholder": "Įveskite telefono numerį",
-      "experiencePlaceholder": "Aprašykite savo patirtį finansų srityje, vadyboje ar susijusiose srityse, taip pat savo motyvaciją tapti valdybos nariu..."
+  "transfer": {
+    "title": "Pinigų pervedimas",
+    "recipientAccount": "Gavėjo sąskaita",
+    "recipientName": "Gavėjo vardas",
+    "recipientNamePlaceholder": "Įveskite gavėjo vardą",
+    "amount": "Suma",
+    "purpose": "Paskirtis", 
+    "purposePlaceholder": "Įveskite pervedimo paskirtį",
+    "processing": "Apdorojama...",
+    "submit": "Pervesti",
+    "cancel": "Atšaukti",
+    "error": "Klaida",
+    "amountMustBePositive": "Suma turi būti teigiama",
+    "transferError": "Pervedimo klaida",
+    "transferFailed": "Pervedimas nepavyko",
+    "insufficientFunds": "Nepakanka lėšų",
+    "transferSuccess": "Pervedimas sėkmingas",
+    "transferSuccessDescription": "Sėkmingai pervesta {{amount}} LT į {{account}}",
+    "defaultDescription": "Pervedimas į"
+  },
+  "transactions": {
+    "title": "Operacijų istorija",
+    "filters": {
+      "all": "Visos",
+      "today": "Šiandien",
+      "week": "Šią savaitę",
+      "month": "Šį mėnesį",
+      "year": "Šiais metais"
     },
-    "buttons": {
-      "cancel": "Atšaukti",
-      "submit": "Pateikti paraišką",
-      "submitting": "Siunčiama..."
+    "export": "Eksportuoti",
+    "noTransactions": "Operacijų nerasta",
+    "types": {
+      "transferOut": "Pervedimas iš sąskaitos",
+      "transferIn": "Pervedimas į sąskaitą", 
+      "deposit": "Įnešimas",
+      "withdrawal": "Išėmimas"
     },
-    "toast": {
-      "success": "Paraiška sėkmingai pateikta!",
-      "successDescription": "Mes su jumis susisieksime artimiausiu metu.",
-      "error": "Klaida",
-      "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
-    }
+    "recipient": "Kam",
+    "status": {
+      "completed": "Įvykdyta",
+      "pending": "Laukiama",
+      "failed": "Nepavyko"
+    },
+    "date": "Data",
+    "type": "Tipas",
+    "amount": "Suma",
+    "purpose": "Paskirtis",
+    "fileName": "operacijos",
+    "noData": "Nėra duomenų",
+    "noDataToExport": "Nėra duomenų eksportavimui",
+    "error": "Klaida", 
+    "loadError": "Nepavyko įkelti operacijų"
+  },
+  "analytics": {
+    "title": "Finansų analitika",
+    "totalBalance": "Bendras likutis",
+    "monthlyGrowth": "Mėnesio augimas",
+    "dailyInterest": "Dienos palūkanos",
+    "projectedYearly": "Prognozuojamas metinis",
+    "transactionChart": "Operacijų apimtis",
+    "balanceChart": "Likučio augimas",
+    "lastDays": "Paskutinės {{days}} dienos",
+    "summary": {
+      "title": "Suvestinė",
+      "totalTransactions": "Bendrai operacijų",
+      "avgTransactionSize": "Vid. operacijos",
+      "interestEarned": "Uždirbtos palūkanos"
+    },
+    "charts": {
+      "transactions": "Operacijos",
+      "balance": "Likutis",
+      "amount": "Suma",
+      "date": "Data"
+    },
+    "error": "Nepavyko įkelti analitikos duomenų"
   }
 }

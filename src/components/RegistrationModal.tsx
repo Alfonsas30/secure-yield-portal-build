@@ -73,8 +73,8 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
   const handlePayment = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
       toast({
-        title: "Klaida",
-        description: "Užpildykite visus privalomatus laukus",
+        title: t('registrationModal.error'),
+        description: t('registrationModal.fillRequiredFields'),
         variant: "destructive"
       });
       return;
@@ -114,7 +114,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
       <DialogContent className="max-w-lg max-h-[95vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            Registracija
+            {t('registrationModal.title')}
           </DialogTitle>
         </DialogHeader>
 
@@ -124,14 +124,14 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
             <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-3 rounded-lg text-center">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Clock className="w-4 h-4" />
-                <span className="font-bold text-base">AKCIJA 50% NUOLAIDA!</span>
+                <span className="font-bold text-base">{t('registrationModal.campaign')}</span>
               </div>
               <div className="text-sm opacity-90">
-                Naujiems klientams iki 2025-09-01
+                {t('registrationModal.campaignDescription')}
               </div>
               {timeLeft && (
                 <div className="text-sm font-medium mt-1">
-                  Liko: {timeLeft}
+                  {t('registrationModal.timeLeft')} {timeLeft}
                 </div>
               )}
             </div>
@@ -140,7 +140,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Account Type Selection */}
           <div>
             <Label className="text-base font-medium mb-3 block">
-              Sąskaitos tipas
+              {t('registrationModal.accountType')}
             </Label>
             <RadioGroup
               value={formData.accountType}
@@ -155,7 +155,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
                 <Label htmlFor="personal" className="flex items-center gap-2 cursor-pointer">
                   <User className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Asmeninė</div>
+                    <div className="font-medium">{t('registrationModal.personal')}</div>
                     <div className="text-sm text-muted-foreground">
                       {isCampaignActive ? (
                         <>
@@ -174,7 +174,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
                 <Label htmlFor="company" className="flex items-center gap-2 cursor-pointer">
                   <Building className="w-4 h-4" />
                   <div>
-                    <div className="font-medium">Įmonės</div>
+                    <div className="font-medium">{t('registrationModal.company')}</div>
                     <div className="text-sm text-muted-foreground">
                       {isCampaignActive ? (
                         <>
@@ -194,31 +194,31 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Personal Information */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="name">Vardas Pavardė *</Label>
+              <Label htmlFor="name">{t('registrationModal.fullName')} *</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Įveskite vardą ir pavardę"
+                placeholder={t('registrationModal.fullNamePlaceholder')}
               />
             </div>
             <div>
-              <Label htmlFor="email">El. paštas *</Label>
+              <Label htmlFor="email">{t('registrationModal.email')} *</Label>
               <Input
                 id="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="vardas@example.com"
+                placeholder={t('registrationModal.emailPlaceholder')}
               />
             </div>
             <div>
-              <Label htmlFor="phone">Telefono numeris</Label>
+              <Label htmlFor="phone">{t('registrationModal.phone')}</Label>
               <Input
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="+370..."
+                placeholder={t('registrationModal.phonePlaceholder')}
               />
             </div>
           </div>
@@ -228,17 +228,17 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           {/* Price Summary */}
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span>Pradinė kaina:</span>
+              <span>{t('registrationModal.initialPrice')}</span>
               <span>{originalPrice} €</span>
             </div>
             {totalDiscount > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Nuolaida ({totalDiscount}%):</span>
+                <span>{t('registrationModal.discount')} ({totalDiscount}%):</span>
                 <span>-{discountAmount.toFixed(0)} €</span>
               </div>
             )}
             <div className="flex justify-between font-semibold text-lg border-t pt-2">
-              <span>Galutinė kaina:</span>
+              <span>{t('registrationModal.finalPrice')}</span>
               <span>{finalPrice} €</span>
             </div>
           </div>
@@ -254,7 +254,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
             ) : (
               <CreditCard className="w-4 h-4 mr-2" />
             )}
-            Mokėti su Stripe
+            {t('registrationModal.payWithStripe')}
           </Button>
         </div>
       </DialogContent>

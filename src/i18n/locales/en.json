@@ -456,44 +456,95 @@
     },
     "experience": {
       "title": "Experience",
-      "description": "We have many years of experience in the financial sector and thousands of satisfied clients."
+      "description": "Our team has many years of financial services experience."
+    },
+    "cta": {
+      "title": "Ready to start?",
+      "description": "Open your account today and start earning",
+      "button": "Register now"
     }
   },
-  "boardInvitation": {
-    "badge": "Board",
-    "title": "Join LTB Bank's board",
-    "description": "Register, and we will contact you soon. Become part of the team shaping the future of financial solutions.",
-    "button": "Become a board member",
-    "features": {
-      "strategic": "Strategic planning",
-      "financial": "Financial management",
-      "vision": "Vision shaping"
-    }
+  "quickActions": {
+    "title": "Quick Actions",
+    "transfer": "Transfer",
+    "deposit": "Deposit", 
+    "history": "History",
+    "reports": "Reports"
   },
-  "boardApplication": {
-    "title": "Become a board member",
-    "description": "Fill out the form and we will contact you soon to discuss opportunities.",
-    "warning": "⚠️ ATTENTION: To become a board member, a contribution of no less than 100,000 litas is required.",
-    "form": {
-      "name": "Full Name",
-      "email": "Email",
-      "phone": "Phone number",
-      "experience": "Experience and motivation",
-      "namePlaceholder": "Enter your full name",
-      "emailPlaceholder": "Enter your email",
-      "phonePlaceholder": "Enter your phone number",
-      "experiencePlaceholder": "Describe your experience in finance, management or related fields, as well as your motivation to become a board member..."
+  "transfer": {
+    "title": "Money Transfer",
+    "recipientAccount": "Recipient Account",
+    "recipientName": "Recipient Name",
+    "recipientNamePlaceholder": "Enter recipient name",
+    "amount": "Amount",
+    "purpose": "Purpose", 
+    "purposePlaceholder": "Enter transfer purpose",
+    "processing": "Processing...",
+    "submit": "Transfer",
+    "cancel": "Cancel",
+    "error": "Error",
+    "amountMustBePositive": "Amount must be positive",
+    "transferError": "Transfer Failed",
+    "transferFailed": "Transfer failed",
+    "insufficientFunds": "Insufficient funds",
+    "transferSuccess": "Transfer Successful",
+    "transferSuccessDescription": "Successfully transferred {{amount}} LT to {{account}}",
+    "defaultDescription": "Transfer to"
+  },
+  "transactions": {
+    "title": "Transaction History",
+    "filters": {
+      "all": "All",
+      "today": "Today",
+      "week": "This week",
+      "month": "This month",
+      "year": "This year"
     },
-    "buttons": {
-      "cancel": "Cancel",
-      "submit": "Submit application",
-      "submitting": "Submitting..."
+    "export": "Export",
+    "noTransactions": "No transactions found",
+    "types": {
+      "transferOut": "Transfer Out",
+      "transferIn": "Transfer In", 
+      "deposit": "Deposit",
+      "withdrawal": "Withdrawal"
     },
-    "toast": {
-      "success": "Application submitted successfully!",
-      "successDescription": "We will contact you soon.",
-      "error": "Error",
-      "errorDescription": "Failed to submit application. Please try again."
-    }
+    "recipient": "To",
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed"
+    },
+    "date": "Date",
+    "type": "Type",
+    "amount": "Amount",
+    "purpose": "Purpose",
+    "fileName": "transactions",
+    "noData": "No Data",
+    "noDataToExport": "No data to export",
+    "error": "Error", 
+    "loadError": "Failed to load transactions"
+  },
+  "analytics": {
+    "title": "Financial Analytics",
+    "totalBalance": "Total Balance",
+    "monthlyGrowth": "Monthly Growth",
+    "dailyInterest": "Daily Interest",
+    "projectedYearly": "Projected Yearly",
+    "transactionChart": "Transaction Volume",
+    "balanceChart": "Balance Growth",
+    "lastDays": "Last {{days}} Days",
+    "summary": {
+      "title": "Summary",
+      "totalTransactions": "Total Transactions",
+      "avgTransactionSize": "Avg Transaction",
+      "interestEarned": "Interest Earned"
+    },
+    "charts": {
+      "transactions": "Transactions",
+      "balance": "Balance",
+      "amount": "Amount",
+      "date": "Date"
+    },
+    "error": "Failed to load analytics data"
   }
 }

@@ -16,63 +16,63 @@ const Services = () => {
   const services = [
     {
       icon: Calendar,
-      title: "Dienos palūkanos",
-      description: "Gaukite palūkanas kasdien, o ne tik metų pabaigoje. Jūsų pinigai dirba kiekvieną dieną.",
-      badge: "Populiariausia",
+      title: t('services.items.dailyInterest.title'),
+      description: t('services.items.dailyInterest.description'),
+      badge: t('services.items.dailyInterest.badge'),
       color: "bg-green-100 text-green-600",
       hoverColor: "hover:bg-green-200 hover:text-green-700",
       delay: "0.1s"
     },
     {
       icon: Eye,
-      title: "Jokių ataskaitų",
-      description: "Jokių sudėtingų dokumentų ar perteklinių ataskaitų. Tiesiog taupykite ir gaukite palūkanas – greitai ir skaidriai.",
-      badge: "Paprasta",
+      title: t('services.items.noReports.title'),
+      description: t('services.items.noReports.description'),
+      badge: t('services.items.noReports.badge'),
       color: "bg-blue-100 text-blue-600",
       hoverColor: "hover:bg-blue-200 hover:text-blue-700",
       delay: "0.2s"
     },
     {
       icon: Shield,
-      title: "Konfidencialumas",
-      description: "Jūsų finansinė informacija yra griežtai konfidenciali. Niekam neatskleidžiame duomenų.",
-      badge: "Saugus",
+      title: t('services.items.confidentiality.title'),
+      description: t('services.items.confidentiality.description'),
+      badge: t('services.items.confidentiality.badge'),
       color: "bg-purple-100 text-purple-600",
       hoverColor: "hover:bg-purple-200 hover:text-purple-700",
       delay: "0.3s"
     },
     {
       icon: Calculator,
-      title: "Skaidrus skaičiavimas",
-      description: "Visada žinote, kiek uždirbsite. Jokių slepiamų mokesčių ar sudėtingų sąlygų.",
-      badge: "Aiškus",
+      title: t('services.items.transparent.title'),
+      description: t('services.items.transparent.description'),
+      badge: t('services.items.transparent.badge'),
       color: "bg-orange-100 text-orange-600",
       hoverColor: "hover:bg-orange-200 hover:text-orange-700",
       delay: "0.4s"
     },
     {
       icon: Clock,
-      title: "Greitas priėjimas",
-      description: "Pinigai prieinami bet kada. Nėra užšaldymo periodų ar išėmimo apribojimų.",
-      badge: "Greitas",
+      title: t('services.items.quickAccess.title'),
+      description: t('services.items.quickAccess.description'),
+      badge: t('services.items.quickAccess.badge'),
       color: "bg-red-100 text-red-600",
       hoverColor: "hover:bg-red-200 hover:text-red-700",
       delay: "0.5s"
     },
     {
       icon: TrendingUp,
-      title: "Konkurencingos palūkanos",
-      description: "Palūkanos iki 12 % per metus – rinkitės dienos palūkanas arba terminuotus indėlius.",
-      badge: "Pelningas",
+      title: t('services.items.competitive.title'),
+      description: t('services.items.competitive.description'),
+      badge: t('services.items.competitive.badge'),
       color: "bg-cyan-100 text-cyan-600",
       hoverColor: "hover:bg-cyan-200 hover:text-cyan-700",
       delay: "0.6s"
     },
     {
       icon: Calculator,
-      title: "Paskolos 14% palūkanomis",
-      description: "Gaukite paskolą su skaidria 14% metine palūkanų norma be jokių paslėptų mokesčių.",
-      badge: "Naujas",
+      title: t('services.items.loans.title'),
+      description: t('services.items.loans.description'),
+      badge: t('services.items.loans.badge'),
       color: "bg-orange-100 text-orange-600",
       hoverColor: "hover:bg-orange-200 hover:text-orange-700",
       delay: "0.7s"
@@ -103,13 +103,13 @@ const Services = () => {
       <div className="container mx-auto max-w-6xl relative">
         <div className="text-center mb-16 animate-scale-in">
           <Badge variant="outline" className="mb-4 bg-green-50/80 backdrop-blur-sm text-green-700 border-green-200 px-4 py-2 animate-pulse-glow">
-            Mūsų paslaugos
+            {t('services.badge')}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-slate-900 via-blue-900 to-green-800 bg-clip-text text-transparent">
-            Kodėl rinktis LTB Bankas?
+            {t('services.title')}
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
-            Siūlome inovatyvius sprendimus, kurie padės jums taupyti efektyviau ir saugiau nei bet kada anksčiau.
+            {t('services.description')}
           </p>
         </div>
 
@@ -168,16 +168,16 @@ const Services = () => {
                 </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
-                Pradėkite jau šiandien
+                {t('services.cta.title')}
               </h3>
               <p className="text-slate-600 text-lg mb-6 group-hover:text-slate-700 transition-colors duration-300">
-                Prisijunkite prie tūkstančių klientų, kurie jau uždirba su LTB Bankas
+                {t('services.cta.description')}
               </p>
               <Button 
                 onClick={() => setRegistrationOpen(true)}
                 className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-3 font-semibold transition-all duration-300 hover:shadow-lg animate-pulse-glow"
               >
-                Registruotis dabar
+                {t('services.cta.button')}
               </Button>
             </div>
           </div>

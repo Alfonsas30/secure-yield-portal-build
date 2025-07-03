@@ -156,27 +156,27 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
-            Banko sistema
+            {t('auth.title')}
           </DialogTitle>
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "login" | "signup")}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Prisijungimas</TabsTrigger>
-            <TabsTrigger value="signup">Registracija</TabsTrigger>
+            <TabsTrigger value="login">{t('auth.login')}</TabsTrigger>
+            <TabsTrigger value="signup">{t('auth.signup')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
             {!showOtpStep ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
-                  <Label htmlFor="login-email">El. paštas</Label>
+                  <Label htmlFor="login-email">{t('auth.email')}</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="login-email"
                       type="email"
-                      placeholder="vardas@example.com"
+                      placeholder={t('auth.email')}
                       value={loginData.email}
                       onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
                       className="pl-10"
@@ -186,7 +186,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                 </div>
 
                 <div>
-                  <Label htmlFor="login-password">Slaptažodis</Label>
+                  <Label htmlFor="login-password">{t('auth.password')}</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                     <Input
@@ -212,7 +212,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
 
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                  Tęsti
+                  {t('auth.continue')}
                 </Button>
 
                 <div className="relative">
@@ -220,7 +220,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                     <span className="w-full border-t" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">Arba</span>
+                    <span className="bg-background px-2 text-muted-foreground">{t('auth.or')}</span>
                   </div>
                 </div>
 
@@ -232,23 +232,23 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                   disabled={loading}
                 >
                   <Chrome className="w-4 h-4 mr-2" />
-                  Prisijungti su Google
+                  {t('auth.signInWithGoogle')}
                 </Button>
               </form>
             ) : (
               <div className="space-y-4">
                 <div className="text-center">
                   <Shield className="w-12 h-12 mx-auto mb-4 text-primary" />
-                  <h3 className="text-lg font-semibold mb-2">Patvirtinimo kodas</h3>
+                  <h3 className="text-lg font-semibold mb-2">{t('auth.confirmationCode')}</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Išsiuntėme 6 skaitmenų kodą į jūsų el. paštą: <br />
+                    {t('auth.enterCode')} <br />
                     <strong>{pendingMFAEmail}</strong>
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="otp">Įveskite 6 skaitmenų kodą</Label>
+                    <Label htmlFor="otp">{t('auth.enterCode')}</Label>
                     <div className="flex justify-center mt-2">
                       <InputOTP
                         maxLength={6}
@@ -274,7 +274,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                     disabled={loading || otpCode.length !== 6}
                   >
                     {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                    Patvirtinti ir prisijungti
+                    {t('auth.verifyAndLogin')}
                   </Button>
 
                   <div className="text-center">
@@ -284,7 +284,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                       disabled={loading}
                       className="text-sm"
                     >
-                      Nesulaukėte kodo? Siųsti dar kartą
+                      {t('auth.resendCode')}
                     </Button>
                   </div>
 
@@ -297,7 +297,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                       }}
                       className="text-sm"
                     >
-                      ← Grįžti atgal
+                      {t('auth.goBack')}
                     </Button>
                   </div>
                 </div>
@@ -306,10 +306,10 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
 
             {!showOtpStep && (
               <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                <p className="text-sm text-muted-foreground mb-2">Nepatvirtintas el. paštas?</p>
+                <p className="text-sm text-muted-foreground mb-2">{t('auth.unverifiedEmail')}</p>
                 <div className="flex gap-2">
                   <Input
-                    placeholder="El. paštas"
+                    placeholder={t('auth.email')}
                     value={resendEmail}
                     onChange={(e) => setResendEmail(e.target.value)}
                     className="flex-1"
@@ -319,7 +319,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                     onClick={handleResendConfirmation}
                     disabled={loading || !resendEmail}
                   >
-                    Siųsti
+                    {t('auth.send')}
                   </Button>
                 </div>
               </div>
@@ -329,12 +329,12 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           <TabsContent value="signup" className="space-y-4">
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <Label htmlFor="signup-name">Vardas Pavardė</Label>
+                <Label htmlFor="signup-name">{t('auth.name')}</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-name"
-                    placeholder="Vardas Pavardė"
+                    placeholder={t('auth.name')}
                     value={signupData.displayName}
                     onChange={(e) => setSignupData(prev => ({ ...prev, displayName: e.target.value }))}
                     className="pl-10"
@@ -343,13 +343,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-email">El. paštas</Label>
+                <Label htmlFor="signup-email">{t('auth.email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="vardas@example.com"
+                    placeholder={t('auth.email')}
                     value={signupData.email}
                     onChange={(e) => setSignupData(prev => ({ ...prev, email: e.target.value }))}
                     className="pl-10"
@@ -359,7 +359,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-password">Slaptažodis</Label>
+                <Label htmlFor="signup-password">{t('auth.password')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -385,13 +385,13 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
               </div>
 
               <div>
-                <Label htmlFor="signup-confirm">Pakartokite slaptažodį</Label>
+                <Label htmlFor="signup-confirm">{t('auth.confirmPassword')}</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="signup-confirm"
                     type="password"
-                    placeholder="Pakartokite slaptažodį"
+                    placeholder={t('auth.confirmPassword')}
                     value={signupData.confirmPassword}
                     onChange={(e) => setSignupData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                     className="pl-10"
@@ -399,7 +399,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                   />
                 </div>
                 {signupData.password && signupData.confirmPassword && signupData.password !== signupData.confirmPassword && (
-                  <p className="text-sm text-destructive mt-1">Slaptažodžiai nesutampa</p>
+                  <p className="text-sm text-destructive mt-1">{t('auth.passwordsDontMatch')}</p>
                 )}
               </div>
 
@@ -409,12 +409,12 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                 disabled={loading || signupData.password !== signupData.confirmPassword}
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                Registruotis
+                {t('auth.register')}
               </Button>
             </form>
 
             <p className="text-xs text-muted-foreground text-center">
-              Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris
+              {t('auth.registrationNote')}
             </p>
           </TabsContent>
         </Tabs>
