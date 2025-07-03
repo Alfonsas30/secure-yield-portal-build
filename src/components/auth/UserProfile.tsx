@@ -6,11 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown } from "lucide-react";
+import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown, Shield, MessageCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from 'react-i18next';
+import { MessengerSetupModal } from "./MessengerSetupModal";
 
 export function UserProfile() {
   const { t } = useTranslation();
@@ -20,6 +21,7 @@ export function UserProfile() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showMessengerSetup, setShowMessengerSetup] = useState(false);
   const [formData, setFormData] = useState({
     display_name: profile?.display_name || "",
     phone: profile?.phone || ""
@@ -227,11 +229,66 @@ export function UserProfile() {
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="w-5 h-5" />
+            Saugumo nustatymai
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <Label className="text-sm font-medium">2FA per Messenger</Label>
+                <p className="text-xs text-muted-foreground">
+                  Gauti patvirtinimo kodus per Telegram, WhatsApp ar kitas aplikacijas
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowMessengerSetup(true)}
+                className="flex items-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Konfigūruoti
+              </Button>
+            </div>
+
+            {profile.totp_enabled && (
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">TOTP (Authenticator)</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Sukonfigūruotas ir aktyvus
+                  </p>
+                </div>
+                <Badge variant="outline" className="text-green-600 border-green-600">
+                  Įjungtas
+                </Badge>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="flex justify-center">
         <Button variant="outline" onClick={signOut}>
           {t('userProfile.logout')}
         </Button>
       </div>
+
+      <MessengerSetupModal 
+        open={showMessengerSetup}
+        onOpenChange={setShowMessengerSetup}
+        onSetupComplete={() => {
+          toast({
+            title: "Sėkmingai sukonfigūruota",
+            description: "Messenger 2FA nustatymai atnaujinti"
+          });
+        }}
+      />
     </div>
   );
 }

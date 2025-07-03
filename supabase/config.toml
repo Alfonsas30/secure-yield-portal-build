@@ -19,3 +19,6 @@ verify_jwt = false
 
 [functions.connect-binance-account]
 verify_jwt = true
+
+[functions.send-telegram-2fa]
+verify_jwt = true

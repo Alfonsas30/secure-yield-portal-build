@@ -270,6 +270,51 @@ export type Database = {
         }
         Relationships: []
       }
+      messenger_2fa: {
+        Row: {
+          code_attempts: number | null
+          code_expires_at: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          is_active: boolean
+          is_primary: boolean
+          messenger_id: string
+          messenger_type: string
+          updated_at: string
+          user_id: string
+          verification_code: string | null
+        }
+        Insert: {
+          code_attempts?: number | null
+          code_expires_at?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          is_active?: boolean
+          is_primary?: boolean
+          messenger_id: string
+          messenger_type: string
+          updated_at?: string
+          user_id: string
+          verification_code?: string | null
+        }
+        Update: {
+          code_attempts?: number | null
+          code_expires_at?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          is_active?: boolean
+          is_primary?: boolean
+          messenger_id?: string
+          messenger_type?: string
+          updated_at?: string
+          user_id?: string
+          verification_code?: string | null
+        }
+        Relationships: []
+      }
       newsletter_campaigns: {
         Row: {
           content: string
