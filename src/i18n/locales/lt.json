@@ -477,7 +477,56 @@
     "successMessage": "Sumokėjote {{eurAmount}} EUR ir gavote {{ltAmount}} LT į sąskaitą.",
     "balanceUpdated": "Sąskaitos balansas atnaujintas automatiškai.",
     "backToDashboard": "Grįžti į valdymo skydą",
-    "loginToAccess": "Prisijunkite, kad patektumėte į skydelį ir pamatytumėte atnaujintą likutį"
+    "loginToAccess": "Prisijunkite, kad patektumėte į skydelį ir pamatytumėte atnaujintą likutį",
+    "methods": {
+      "card": "Kortelė"
+    }
+  },
+  "binance": {
+    "connect": {
+      "title": "Prijungti Binance sąskaitą",
+      "button": "Prijungti Binance",
+      "connecting": "Jungiama...",
+      "successTitle": "Binance prijungta!",
+      "successMessage": "Jūsų Binance sąskaita sėkmingai prijungta.",
+      "error": "Nepavyko prijungti Binance sąskaitos. Patikrinkite API duomenis."
+    },
+    "credentials": {
+      "required": "Reikalingas ir API raktas, ir paslaptis",
+      "apiKey": "API raktas",
+      "apiSecret": "API paslaptis"
+    },
+    "security": {
+      "warning": "Įveskite tik API raktus su skaitymo teisėmis. Niekada nedelkite prekybos ar išėmimo teisių."
+    },
+    "setup": {
+      "title": "API nustatymo instrukcijos",
+      "step1": "Eikite į Binance API valdymą",
+      "step2": "Sukurkite naują API raktą tik su skaitymo teisėmis",
+      "step3": "Nukopijuokite API raktą ir paslaptį žemiau"
+    },
+    "permissions": {
+      "read": "Tik skaitymas",
+      "trade": "Prekyba",
+      "withdraw": "Išėmimai"
+    },
+    "notConnected": "Prijunkite savo Binance sąskaitą, kad galėtumėte papildyti kriptovaliutomis tiesiogiai iš biržos balanso.",
+    "selectAsset": "Pasirinkite kriptovaliutą",
+    "balances": {
+      "title": "Galimi balansai",
+      "error": "Nepavyko užkrauti Binance balansų",
+      "empty": "Nerasta palaikomų kriptovaliutų jūsų Binance sąskaitoje"
+    },
+    "transfer": {
+      "amount": "Pervedama suma",
+      "button": "Pervesti į sąskaitą",
+      "processing": "Apdorojamas pervedimas...",
+      "validation": "Pasirinkite turtą ir įveskite sumą",
+      "insufficientBalance": "Nepakanka balanso šiam pervedimui",
+      "successTitle": "Pervedimas sėkmingas!",
+      "successMessage": "Pervestas {{cryptoAmount}} {{asset}} ir gauta {{ltAmount}} LT į sąskaitą.",
+      "error": "Pervedimas nepavyko. Bandykite dar kartą."
+    }
   },
   "loanCalculator": {
     "title": "Paskolos skaičiuoklė",

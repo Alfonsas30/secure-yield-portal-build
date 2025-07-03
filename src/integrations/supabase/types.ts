@@ -342,6 +342,9 @@ export type Database = {
       profiles: {
         Row: {
           account_number: string
+          binance_api_key: string | null
+          binance_api_secret: string | null
+          binance_connected_at: string | null
           created_at: string
           display_name: string | null
           email: string
@@ -356,6 +359,9 @@ export type Database = {
         }
         Insert: {
           account_number: string
+          binance_api_key?: string | null
+          binance_api_secret?: string | null
+          binance_connected_at?: string | null
           created_at?: string
           display_name?: string | null
           email: string
@@ -370,6 +376,9 @@ export type Database = {
         }
         Update: {
           account_number?: string
+          binance_api_key?: string | null
+          binance_api_secret?: string | null
+          binance_connected_at?: string | null
           created_at?: string
           display_name?: string | null
           email?: string

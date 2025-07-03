@@ -414,7 +414,56 @@
     "successMessage": "You paid {{eurAmount}} EUR and received {{ltAmount}} LT in your account.",
     "balanceUpdated": "Account balance updated automatically.",
     "backToDashboard": "Back to Dashboard",
-    "loginToAccess": "Log in to access your dashboard and view updated balance"
+    "loginToAccess": "Log in to access your dashboard and view updated balance",
+    "methods": {
+      "card": "Card"
+    }
+  },
+  "binance": {
+    "connect": {
+      "title": "Connect Binance Account",
+      "button": "Connect Binance",
+      "connecting": "Connecting...",
+      "successTitle": "Binance Connected!",
+      "successMessage": "Your Binance account has been connected successfully.",
+      "error": "Failed to connect Binance account. Please check your API credentials."
+    },
+    "credentials": {
+      "required": "Both API Key and Secret are required",
+      "apiKey": "API Key",
+      "apiSecret": "API Secret"
+    },
+    "security": {
+      "warning": "Only enter API keys with read-only permissions. Never share trading or withdrawal permissions."
+    },
+    "setup": {
+      "title": "API Setup Instructions",
+      "step1": "Go to Binance API Management",
+      "step2": "Create new API key with read-only permissions",
+      "step3": "Copy API Key and Secret below"
+    },
+    "permissions": {
+      "read": "Read Only",
+      "trade": "Trading",
+      "withdraw": "Withdrawals"
+    },
+    "notConnected": "Connect your Binance account to deposit crypto directly from your exchange balance.",
+    "selectAsset": "Select cryptocurrency",
+    "balances": {
+      "title": "Available Balances",
+      "error": "Failed to load Binance balances",
+      "empty": "No supported cryptocurrencies found in your Binance account"
+    },
+    "transfer": {
+      "amount": "Amount to transfer",
+      "button": "Transfer to Account",
+      "processing": "Processing transfer...",
+      "validation": "Please select an asset and enter amount",
+      "insufficientBalance": "Insufficient balance for this transfer",
+      "successTitle": "Transfer Successful!",
+      "successMessage": "Transferred {{cryptoAmount}} {{asset}} and received {{ltAmount}} LT in your account.",
+      "error": "Transfer failed. Please try again."
+    }
   },
   "loanCalculator": {
     "title": "Loan calculator",
