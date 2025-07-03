@@ -10,9 +10,13 @@ import NewsletterAdmin from "@/components/NewsletterAdmin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
+import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Enable dashboard security features
+  useDashboardSecurity();
 
   return (
     <ProtectedRoute>
