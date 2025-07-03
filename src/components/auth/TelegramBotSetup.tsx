@@ -146,7 +146,9 @@ export function TelegramBotSetup() {
             {webhookInfo.url && (
               <div className="text-xs text-muted-foreground">
                 <p><strong>URL:</strong> {webhookInfo.url}</p>
-                <p><strong>Paskutinis atnaujinimas:</strong> {new Date(webhookInfo.last_error_date * 1000).toLocaleString()}</p>
+                {webhookInfo.last_error_date && (
+                  <p><strong>Paskutinis atnaujinimas:</strong> {new Date(webhookInfo.last_error_date * 1000).toLocaleString()}</p>
+                )}
               </div>
             )}
           </div>

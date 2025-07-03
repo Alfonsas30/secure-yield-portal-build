@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, Phone, Shield, Info, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -199,7 +200,7 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-primary" />
@@ -207,8 +208,8 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
           </DialogTitle>
         </DialogHeader>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 overflow-hidden">
+          <TabsList className="grid w-full grid-cols-4 flex-shrink-0">
             <TabsTrigger value="telegram" className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4" />
               Telegram
@@ -227,7 +228,9 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="telegram" className="space-y-4">
+          <TabsContent value="telegram" className="flex-1 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="space-y-4 pr-4">
             <Alert>
               <Info className="h-4 w-4" />
               <AlertDescription>
@@ -289,6 +292,8 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
                 {loading ? "Konfigūruojama..." : "Įjungti Telegram 2FA"}
               </Button>
             </div>
+              </div>
+            </ScrollArea>
           </TabsContent>
 
           <TabsContent value="whatsapp" className="space-y-4">
