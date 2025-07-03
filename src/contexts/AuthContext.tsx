@@ -28,6 +28,7 @@ interface AuthContextType {
   showTOTPSetup: boolean;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any; requiresTOTP?: boolean }>;
+  signInWithGoogle: () => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resendConfirmation: (email: string) => Promise<{ error: any }>;
   sendVerificationCode: (email: string) => Promise<{ error: any }>;
@@ -225,6 +226,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('SignIn exception:', error);
       toast({
         title: "Prisijungimo klaida",
+        description: getErrorMessage(error.message),
+        variant: "destructive"
+      });
+      return { error };
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      });
+
+      if (error) {
+        toast({
+          title: "Google prisijungimo klaida",
+          description: getErrorMessage(error.message),
+          variant: "destructive"
+        });
+        return { error };
+      }
+
+      return { error: null };
+    } catch (error: any) {
+      console.error('Google signIn exception:', error);
+      toast({
+        title: "Google prisijungimo klaida",
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
@@ -602,6 +633,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     showTOTPSetup,
     signUp,
     signIn,
+    signInWithGoogle,
     signOut,
     resendConfirmation,
     sendVerificationCode,

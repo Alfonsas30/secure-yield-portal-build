@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield } from "lucide-react";
+import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield, Chrome } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { TOTPSetupModal } from "./TOTPSetupModal";
 
@@ -36,6 +36,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
   const { 
     signIn, 
     signUp, 
+    signInWithGoogle,
     resendConfirmation, 
     pendingMFAEmail, 
     sendVerificationCode, 
@@ -291,6 +292,26 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                   Tęsti
+                </Button>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">Arba</span>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={signInWithGoogle}
+                  disabled={loading}
+                >
+                  <Chrome className="w-4 h-4 mr-2" />
+                  Prisijungti su Google
                 </Button>
               </form>
             ) : (
