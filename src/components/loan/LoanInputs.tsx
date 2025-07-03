@@ -53,7 +53,7 @@ export const LoanInputs = ({ loanAmount, loanTerm, onAmountChange, onTermChange 
       </div>
 
       {/* Alternative Input Method */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="amountInput" className="text-sm font-medium text-slate-700">
             Tiksli suma (€)

@@ -41,7 +41,7 @@ export default function Dashboard() {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-5 mb-8">
+            <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 mb-6 md:mb-8 text-xs md:text-sm">
               <TabsTrigger value="overview">Pagrindinis</TabsTrigger>
               <TabsTrigger value="transactions">Operacijos</TabsTrigger>
               <TabsTrigger value="analytics">Ataskaitos</TabsTrigger>
@@ -49,9 +49,9 @@ export default function Dashboard() {
               <TabsTrigger value="profile">Profilis</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
+            <TabsContent value="overview" className="space-y-4 md:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div className="md:col-span-2">
                   <AccountBalance />
                 </div>
                 <div>

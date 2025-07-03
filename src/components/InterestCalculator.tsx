@@ -67,7 +67,7 @@ const InterestCalculator = () => {
   }, [amount, interest.daily, interest.monthly, interest.yearly]);
 
   return (
-    <section className="relative py-20 px-4 bg-gradient-to-br from-blue-50 via-green-50 to-blue-50 animate-gradient-shift bg-300% overflow-hidden">
+    <section className="relative py-12 md:py-20 px-4 bg-gradient-to-br from-blue-50 via-green-50 to-blue-50 animate-gradient-shift bg-300% overflow-hidden">
       {/* Fono dalelių efektai */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 animate-float">
@@ -87,15 +87,15 @@ const InterestCalculator = () => {
             <Calculator className="w-4 h-4 mr-2" />
             Palūkanų skaičiuoklė
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-blue-900 to-green-800 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-slate-900 bg-gradient-to-r from-blue-900 to-green-800 bg-clip-text text-transparent">
             Apskaičiuokite savo pelną
           </h2>
-          <p className="text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg md:text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
             Sužinokite, kiek uždirbsite su mūsų dienos palūkanomis
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-blue-800 transition-colors duration-300">
@@ -113,7 +113,7 @@ const InterestCalculator = () => {
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    className="text-xl py-4 border-2 focus:border-blue-500 transition-all duration-300 animate-pulse-glow bg-white/90 backdrop-blur-sm"
+                    className="text-lg md:text-xl py-3 md:py-4 border-2 focus:border-blue-500 transition-all duration-300 animate-pulse-glow bg-white/90 backdrop-blur-sm"
                     placeholder="10000"
                   />
                   <div className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -162,9 +162,9 @@ const InterestCalculator = () => {
             </CardHeader>
             <CardContent className="space-y-6 relative z-10">
               <div className="space-y-4">
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
-                  <div className="text-sm opacity-90 mb-1">Per dieną</div>
-                  <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
+                  <div className="text-xs md:text-sm opacity-90 mb-1">Per dieną</div>
+                  <div className="text-xl md:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedDaily.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
@@ -172,9 +172,9 @@ const InterestCalculator = () => {
                   </div>
                 </div>
 
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
-                  <div className="text-sm opacity-90 mb-1">Per mėnesį</div>
-                  <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
+                  <div className="text-xs md:text-sm opacity-90 mb-1">Per mėnesį</div>
+                  <div className="text-xl md:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedMonthly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
@@ -182,9 +182,9 @@ const InterestCalculator = () => {
                   </div>
                 </div>
 
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.4s' }}>
-                  <div className="text-sm opacity-90 mb-1">Per metus</div>
-                  <div className="text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.4s' }}>
+                  <div className="text-xs md:text-sm opacity-90 mb-1">Per metus</div>
+                  <div className="text-2xl md:text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedYearly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
@@ -203,7 +203,7 @@ const InterestCalculator = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/50 to-green-100/50 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out"></div>
                 </Button>
               ) : (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button 
                     onClick={() => setRegistrationOpen(true)}
                     className="bg-white text-blue-600 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"

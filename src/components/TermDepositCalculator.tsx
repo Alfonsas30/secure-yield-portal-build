@@ -144,7 +144,7 @@ const TermDepositCalculator = () => {
   }, [amount, interest.monthly, interest.yearly]);
 
   return (
-    <section className="relative py-20 px-4 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 animate-gradient-shift bg-300% overflow-hidden">
+    <section className="relative py-12 md:py-20 px-4 bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 animate-gradient-shift bg-300% overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 animate-float">
@@ -164,10 +164,10 @@ const TermDepositCalculator = () => {
             <Calculator className="w-4 h-4 mr-2" />
             Terminuotų indėlių skaičiuoklė
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 bg-gradient-to-r from-amber-900 to-orange-800 bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-slate-900 bg-gradient-to-r from-amber-900 to-orange-800 bg-clip-text text-transparent">
             Terminuoti indėliai
           </h2>
-          <p className="text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg md:text-xl text-slate-600 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
             Aukštesnės palūkanos už didesnės sumos indėlius
           </p>
         </div>
@@ -223,7 +223,7 @@ const TermDepositCalculator = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm animate-slide-in-left hover:shadow-2xl transition-all duration-500 group">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold text-slate-900 group-hover:text-amber-800 transition-colors duration-300">
@@ -266,7 +266,7 @@ const TermDepositCalculator = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     max={user && balance ? balance : undefined}
-                    className={`text-xl py-4 border-2 transition-all duration-300 bg-white/90 backdrop-blur-sm ${
+                    className={`text-lg md:text-xl py-3 md:py-4 border-2 transition-all duration-300 bg-white/90 backdrop-blur-sm ${
                       isOverBalance 
                         ? 'border-red-500 focus:border-red-500' 
                         : 'border-slate-200 focus:border-amber-500'
@@ -345,9 +345,9 @@ const TermDepositCalculator = () => {
             </CardHeader>
             <CardContent className="space-y-6 relative z-10">
               <div className="space-y-4">
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
-                  <div className="text-sm opacity-90 mb-1">Pelnas per metus</div>
-                  <div className="text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item">
+                  <div className="text-xs md:text-sm opacity-90 mb-1">Pelnas per metus</div>
+                  <div className="text-xl md:text-2xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{animatedYearly.toFixed(2)} LT
                   </div>
                   <div className="w-full h-1 bg-white/20 rounded-full mt-2 overflow-hidden">
@@ -355,11 +355,11 @@ const TermDepositCalculator = () => {
                   </div>
                 </div>
 
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
-                  <div className="text-sm opacity-90 mb-1">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-3 md:p-4 hover:bg-white/30 transition-all duration-300 animate-count-up group/item" style={{ animationDelay: '0.2s' }}>
+                  <div className="text-xs md:text-sm opacity-90 mb-1">
                     Bendras pelnas už {selectedTerm === 12 ? '1 metus' : '6 metus'}
                   </div>
-                  <div className="text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
+                  <div className="text-2xl md:text-3xl font-bold group-hover/item:scale-105 transition-transform duration-300">
                     +{formatDualCurrency(interest.totalProfit)}
                   </div>
                   <div className="text-sm opacity-90 mt-1">
@@ -412,7 +412,7 @@ const TermDepositCalculator = () => {
                   </div>
                 )
               ) : (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Button 
                     onClick={() => setRegistrationOpen(true)}
                     className="bg-white text-slate-800 hover:bg-slate-50 font-semibold py-3 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group/btn"
