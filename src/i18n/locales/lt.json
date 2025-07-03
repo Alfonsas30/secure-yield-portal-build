@@ -423,39 +423,45 @@
     "badge": "Terminuotų indėlių skaičiuoklė",
     "title": "Terminuoti indėliai",
     "description": "Aukštesnės palūkanos už didesnės sumos indėlius",
-    "selectTerm": "Pasirinkite terminą",
-    "termDescription": "Skirtingi terminai - skirtingos palūkanos",
-    "oneYear": "1 metų terminas",
-    "oneYearDescription": "Tradiciniu palūkanų normu",
-    "sixYears": "6 metų terminas",
-    "sixYearsDescription": "Ypatingas pasiūlymas",
-    "anyAmount": "Bet kokiai sumai!",
-    "highestInterest": "AUKŠČIAUSIOS PALŪKANOS",
-    "enterDepositAmount": "Įveskite indėlio sumą",
-    "enterInvestmentAmount": "Įveskite investuojamą sumą",
-    "investmentDescription": "Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis",
-    "accountBalance": "Sąskaitos likutis:",
-    "depositAmount": "Indėlio suma (LT)",
-    "max": "maks.",
-    "category": {
-      "beginner": "Pradedantis",
-      "advanced": "Pažengęs",
-      "vip": "VIP",
-      "vip6Years": "VIP 6 metai",
-      "level": "lygis",
-      "yourRate": "Jūsų palūkanų norma"
+    "selectTerm": "Pasirinkite indėlio terminą",
+    "termDescription": "Pasirinkite tarp skirtingų terminų su skirtingomis palūkanų normomis",
+    "term1Year": {
+      "title": "1 metų terminas",
+      "description": "Tradiciniu palūkanų normu",
+      "rates": {
+        "up10k": "Iki 10,000 LT:",
+        "up100k": "10,000-100,000 LT:",
+        "over100k": "100,000+ LT:"
+      }
     },
+    "term6Years": {
+      "title": "6 metų terminas",
+      "description": "Ypatingas pasiūlymas",
+      "rate": "100%",
+      "subtitle": "Bet kokiai sumai!",
+      "badge": "AUKŠČIAUSIOS PALŪKANOS"
+    },
+    "enterAmount": "Įveskite indėlio sumą",
+    "enterInvestAmount": "Įveskite investuojamą sumą",
+    "investDescription": "Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis",
+    "accountBalance": "Sąskaitos likutis:",
+    "amountLabel": "Indėlio suma (LT)",
+    "maxAmount": "maks.",
+    "overBalance": "Suma viršija sąskaitos likutį",
+    "remainingBalance": "Liks sąskaitoje:",
+    "categoryLevel": "lygis",
+    "rateDescription": "Jūsų palūkanų norma",
+    "profit": "Jūsų pelnas",
     "yearlyProfit": "Pelnas per metus",
     "totalProfit": "Bendras pelnas už",
-    "totalReturn": "Gaunama suma:",
-    "remainingBalance": "Liks sąskaitoje:",
-    "overBalance": "Suma viršija sąskaitos likutį",
-    "oneYearTerm": "1 metus",
-    "sixYearsTerm": "6 metus",
-    "investNow": "Investuoti dabar",
-    "createContract": "Sudaryti sutartį",
-    "notEnoughBalance": "Nepakanka lėšų",
-    "minimumAmount": "Minimali suma: 1,000 LT"
+    "years1": "1 metus",
+    "years6": "6 metus",
+    "totalAmount": "Gaunama suma:",
+    "dailyProfit": "Vidutinis pelnas per dieną",
+    "invest": "Investuoti dabar",
+    "register": "Registruotis investavimui",
+    "login": "Prisijungti",
+    "signContract": "Pasirašyti sutartį"
   },
   "loanCalculator": {
     "title": "Paskolos skaičiuoklė",
@@ -681,47 +687,6 @@
       "button": "Registruotis dabar",
       "learnMore": "Skaityti daugiau"
     }
-  },
-  "termDepositCalculator": {
-    "selectTerm": "Pasirinkite indėlio terminą",
-    "termDescription": "Pasirinkite tarp skirtingų terminų su skirtingomis palūkanų normomis",
-    "term1Year": {
-      "title": "1 metų terminas",
-      "description": "Tradiciniu palūkanų normu",
-      "rates": {
-        "up10k": "Iki 10,000 LT:",
-        "up100k": "10,000-100,000 LT:",
-        "over100k": "100,000+ LT:"
-      }
-    },
-    "term6Years": {
-      "title": "6 metų terminas",
-      "description": "Ypatingas pasiūlymas",
-      "rate": "100%",
-      "subtitle": "Bet kokiai sumai!",
-      "badge": "AUKŠČIAUSIOS PALŪKANOS"
-    },
-    "enterAmount": "Įveskite indėlio sumą",
-    "enterInvestAmount": "Įveskite investuojamą sumą",
-    "investDescription": "Pasirinkite sumą, kurią norite investuoti 6 metams su 100% palūkanomis",
-    "accountBalance": "Sąskaitos likutis:",
-    "amountLabel": "Indėlio suma (LT)",
-    "maxAmount": "maks.",
-    "overBalance": "Suma viršija sąskaitos likutį",
-    "remainingBalance": "Liks sąskaitoje:",
-    "categoryLevel": "lygis",
-    "rateDescription": "Jūsų palūkanų norma",
-    "profit": "Jūsų pelnas",
-    "yearlyProfit": "Pelnas per metus",
-    "totalProfit": "Bendras pelnas už",
-    "years1": "1 metus",
-    "years6": "6 metus",
-    "totalAmount": "Gaunama suma:",
-    "dailyProfit": "Vidutinis pelnas per dieną",
-    "invest": "Investuoti dabar",
-    "register": "Registruotis investavimui",
-    "login": "Prisijungti",
-    "signContract": "Pasirašyti sutartį"
   },
   "dashboard": {
     "title": "Banko valdymo sistema",
