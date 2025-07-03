@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -41,6 +42,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   
   // Mobile-optimized timeouts for better security
@@ -145,14 +147,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (error) {
       toast({
-        title: "Registracijos klaida",
+        title: t('auth.toast.signUpError'),
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
     } else {
       toast({
-        title: "Registracija sėkminga",
-        description: "Patikrinkite el. paštą ir patvirtinkite paskyrą",
+        title: t('auth.toast.signUpSuccess'),
+        description: t('auth.toast.signUpSuccessDescription'),
         variant: "default"
       });
     }
@@ -172,7 +174,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (signInError) {
         console.log('SignIn error:', signInError);
         toast({
-          title: "Prisijungimo klaida",
+          title: t('auth.toast.signInError'),
           description: getErrorMessage(signInError.message),
           variant: "destructive"
         });
@@ -182,8 +184,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('SignIn successful for user:', signInData.user.id);
       
       toast({
-        title: "Prisijungimas sėkmingas",
-        description: "Nukreipiame į asmeninį kabinetą",
+        title: t('auth.toast.signInSuccess'),
+        description: t('auth.toast.signInSuccessDescription'),
         variant: "default"
       });
 
@@ -191,7 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error: any) {
       console.error('SignIn exception:', error);
       toast({
-        title: "Prisijungimo klaida",
+        title: t('auth.toast.signInError'),
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
@@ -210,7 +212,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (error) {
         toast({
-          title: "Google prisijungimo klaida",
+          title: t('auth.toast.googleSignInError'),
           description: getErrorMessage(error.message),
           variant: "destructive"
         });
@@ -221,7 +223,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error: any) {
       console.error('Google signIn exception:', error);
       toast({
-        title: "Google prisijungimo klaida",
+        title: t('auth.toast.googleSignInError'),
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
@@ -261,8 +263,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
         console.error('Logout error:', error);
         toast({
-          title: "Atsijungimo klaida",
-          description: "Nepavyko atsijungti",
+          title: t('auth.toast.signOutError'),
+          description: t('auth.toast.signOutErrorDescription'),
           variant: "destructive"
         });
       } else {
@@ -291,14 +293,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (error) {
       toast({
-        title: "Klaida",
-        description: "Nepavyko išsiųsti patvirtinimo",
+        title: t('auth.toast.confirmationError'),
+        description: t('auth.toast.confirmationErrorDescription'),
         variant: "destructive"
       });
     } else {
       toast({
-        title: "Patvirtinimas išsiųstas",
-        description: "Patikrinkite el. paštą",
+        title: t('auth.toast.confirmationSent'),
+        description: t('auth.toast.confirmationSentDescription'),
         variant: "default"
       });
     }
@@ -316,16 +318,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setPendingMFAEmail(email);
       toast({
-        title: "Kodas išsiųstas",
-        description: "Patikrinkite el. paštą ir įveskite gavotą kodą",
+        title: t('auth.toast.codeSent'),
+        description: t('auth.toast.codeSentDescription'),
         variant: "default"
       });
 
       return { error: null };
     } catch (error: any) {
       toast({
-        title: "Klaida",
-        description: error.message || "Nepavyko išsiųsti patvirtinimo kodo",
+        title: t('auth.toast.verificationError'),
+        description: error.message || t('auth.toast.verificationErrorDescription'),
         variant: "destructive"
       });
       return { error };
@@ -352,15 +354,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       setPendingMFAEmail(null);
       toast({
-        title: "Prisijungimas sėkmingas",
-        description: "Nukreipiame į asmeninį kabinetą",
+        title: t('auth.toast.signInSuccess'),
+        description: t('auth.toast.signInSuccessDescription'),
         variant: "default"
       });
 
       return { error: null };
     } catch (error: any) {
       toast({
-        title: "Prisijungimo klaida",
+        title: t('auth.toast.signInError'),
         description: getErrorMessage(error.message),
         variant: "destructive"
       });
@@ -382,8 +384,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error: any) {
       console.error('Setup TOTP error:', error);
       toast({
-        title: "TOTP nustatymo klaida",
-        description: error.message || "Nepavyko nustatyti TOTP",
+        title: t('auth.toast.totpSetupError'),
+        description: error.message || t('auth.toast.totpSetupErrorDescription'),
         variant: "destructive"
       });
       return { error };
@@ -416,16 +418,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setPendingTOTPEmail(null);
       
       toast({
-        title: "Prisijungimas sėkmingas",
-        description: "Nukreipiame į asmeninį kabinetą",
+        title: t('auth.toast.signInSuccess'),
+        description: t('auth.toast.signInSuccessDescription'),
         variant: "default"
       });
 
       return { error: null };
     } catch (error: any) {
       toast({
-        title: "TOTP klaida",
-        description: error.message || "Neteisingas kodas",
+        title: t('auth.toast.totpError'),
+        description: error.message || t('auth.toast.totpErrorDescription'),
         variant: "destructive"
       });
       return { error };
@@ -434,16 +436,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const getErrorMessage = (message: string) => {
     if (message.includes('Invalid login credentials')) {
-      return 'Neteisingi prisijungimo duomenys';
+      return t('auth.toast.errors.invalidCredentials');
     }
     if (message.includes('User already registered')) {
-      return 'Vartotojas jau užsiregistravęs';
+      return t('auth.toast.errors.userExists');
     }
     if (message.includes('Email not confirmed')) {
-      return 'El. paštas nepatvirtintas';
+      return t('auth.toast.errors.emailNotConfirmed');
     }
     if (message.includes('Password should be at least')) {
-      return 'Slaptažodis turi būti bent 6 simbolių';
+      return t('auth.toast.errors.passwordTooShort');
     }
     return message;
   };
@@ -482,7 +484,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const timeSinceActivity = Date.now() - lastActivity;
       if (timeSinceActivity < 60000) { // 1 minute
         event.preventDefault();
-        return 'Ar tikrai norite palikti banko puslapį? Jūs būsite automatiškai atsijungti.';
+        return t('auth.toast.pageUnloadWarning');
       }
     };
 
@@ -566,8 +568,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (remaining <= 0 && !sessionTimeoutActive) {
         setSessionTimeoutActive(true);
         toast({
-          title: "Sesija baigėsi",
-          description: "Atsijungiama dėl neaktyvumo",
+          title: t('auth.toast.sessionExpired'),
+          description: t('auth.toast.sessionExpiredDescription'),
           variant: "destructive"
         });
         signOut();
@@ -577,8 +579,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (remaining <= WARNING_TIME && !showWarning && !sessionTimeoutActive) {
         setShowWarning(true);
         toast({
-          title: "Sesija baigiasi",
-          description: `Sesija baigsis po ${Math.ceil(remaining / 1000)} sekundžių`,
+          title: t('auth.toast.sessionExpiring'),
+          description: t('auth.toast.sessionExpiringDescription', { seconds: Math.ceil(remaining / 1000) }),
           variant: "destructive"
         });
       }

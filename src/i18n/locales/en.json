@@ -29,7 +29,41 @@
     "registrationNote": "A unique account number will be automatically created during registration",
     "unverifiedEmail": "Unverified email?",
     "send": "Send",
-    "or": "Or"
+    "or": "Or",
+    "toast": {
+      "signUpError": "Registration Error",
+      "signUpSuccess": "Registration Successful",
+      "signUpSuccessDescription": "Check your email and confirm your account",
+      "signInError": "Login Error",
+      "signInSuccess": "Login Successful",
+      "signInSuccessDescription": "Redirecting to dashboard",
+      "signOutError": "Logout Error",
+      "signOutErrorDescription": "Failed to logout",
+      "googleSignInError": "Google Login Error",
+      "sessionExpired": "Session Expired",
+      "sessionExpiredDescription": "Logging out due to inactivity",
+      "sessionExpiring": "Session Expiring",
+      "sessionExpiringDescription": "Session will expire in {{seconds}} seconds",
+      "codeSent": "Code Sent",
+      "codeSentDescription": "Check your email and enter the received code",
+      "confirmationSent": "Confirmation Sent",
+      "confirmationSentDescription": "Check your email",
+      "confirmationError": "Error",
+      "confirmationErrorDescription": "Failed to send confirmation",
+      "verificationError": "Error",
+      "verificationErrorDescription": "Failed to send verification code",
+      "totpSetupError": "TOTP Setup Error",
+      "totpSetupErrorDescription": "Failed to setup TOTP",
+      "totpError": "TOTP Error",
+      "totpErrorDescription": "Invalid code",
+      "errors": {
+        "invalidCredentials": "Invalid login credentials",
+        "userExists": "User already registered",
+        "emailNotConfirmed": "Email not confirmed",
+        "passwordTooShort": "Password must be at least 6 characters"
+      },
+      "pageUnloadWarning": "Are you sure you want to leave the banking page? You will be automatically logged out."
+    }
   },
   "discount": {
     "title": "Request Discount Code",

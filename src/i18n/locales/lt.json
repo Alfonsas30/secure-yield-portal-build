@@ -29,7 +29,41 @@
     "registrationNote": "Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris",
     "unverifiedEmail": "Nepatvirtintas el. paštas?",
     "send": "Siųsti",
-    "or": "Arba"
+    "or": "Arba",
+    "toast": {
+      "signUpError": "Registracijos klaida",
+      "signUpSuccess": "Registracija sėkminga",
+      "signUpSuccessDescription": "Patikrinkite el. paštą ir patvirtinkite paskyrą",
+      "signInError": "Prisijungimo klaida",
+      "signInSuccess": "Prisijungimas sėkmingas",
+      "signInSuccessDescription": "Nukreipiame į asmeninį kabinetą",
+      "signOutError": "Atsijungimo klaida",
+      "signOutErrorDescription": "Nepavyko atsijungti",
+      "googleSignInError": "Google prisijungimo klaida",
+      "sessionExpired": "Sesija baigėsi",
+      "sessionExpiredDescription": "Atsijungiama dėl neaktyvumo",
+      "sessionExpiring": "Sesija baigiasi",
+      "sessionExpiringDescription": "Sesija baigsis po {{seconds}} sekundžių",
+      "codeSent": "Kodas išsiųstas",
+      "codeSentDescription": "Patikrinkite el. paštą ir įveskite gavotą kodą",
+      "confirmationSent": "Patvirtinimas išsiųstas",
+      "confirmationSentDescription": "Patikrinkite el. paštą",
+      "confirmationError": "Klaida",
+      "confirmationErrorDescription": "Nepavyko išsiųsti patvirtinimo",
+      "verificationError": "Klaida",
+      "verificationErrorDescription": "Nepavyko išsiųsti patvirtinimo kodo",
+      "totpSetupError": "TOTP nustatymo klaida",
+      "totpSetupErrorDescription": "Nepavyko nustatyti TOTP",
+      "totpError": "TOTP klaida",
+      "totpErrorDescription": "Neteisingas kodas",
+      "errors": {
+        "invalidCredentials": "Neteisingi prisijungimo duomenys",
+        "userExists": "Vartotojas jau užsiregistravęs",
+        "emailNotConfirmed": "El. paštas nepatvirtintas",
+        "passwordTooShort": "Slaptažodis turi būti bent 6 simbolių"
+      },
+      "pageUnloadWarning": "Ar tikrai norite palikti banko puslapį? Jūs būsite automatiškai atsijungti."
+    }
   },
   "discount": {
     "title": "Prašyti nuolaidos kodo",
@@ -275,6 +309,48 @@
     }
   },
   "loanApplication": {
+    "loanSummary": {
+      "title": "Paskolos parametrai",
+      "amount": "Suma",
+      "term": "Terminas",
+      "monthlyPayment": "Mėnesinis mokėjimas",
+      "totalAmount": "Bendra suma",
+      "months": "mėnesiai",
+      "annualRate": "metinė palūkanų norma"
+    },
+    "personalInfo": {
+      "title": "Asmens duomenys",
+      "nameLabel": "Vardas Pavardė *",
+      "namePlaceholder": "Jūsų vardas ir pavardė",
+      "emailLabel": "El. pašto adresas *",
+      "emailPlaceholder": "jusu@email.com",
+      "phoneLabel": "Telefono numeris",
+      "phonePlaceholder": "+370 600 00000"
+    },
+    "financialInfo": {
+      "title": "Finansinė informacija",
+      "incomeLabel": "Mėnesio pajamos (€)",
+      "incomePlaceholder": "2000",
+      "employmentLabel": "Darbovietė",
+      "employmentPlaceholder": "UAB Įmonė"
+    },
+    "loanPurpose": {
+      "title": "Paskolos paskirtis",
+      "label": "Kam reikalinga paskola?",
+      "placeholder": "Trumpai apibūdinkite, kam planuojate panaudoti paskolą"
+    },
+    "terms": {
+      "title": "Sutinku su sąlygomis:",
+      "applicationFee": "10€ mokestis už paraiškos pateikimą",
+      "interestRate": "14% metinė palūkanų norma be jokių paslėptų mokesčių",
+      "decision": "Sprendimas per 24 valandas",
+      "dataProcessing": "Duomenų tvarkymas pagal privatumo politiką",
+      "contact": "Susisiekimas dėl papildomos informacijos"
+    },
+    "buttons": {
+      "submit": "Pateikti paraišką",
+      "submitting": "Pateikiama paraiška..."
+    },
     "title": "Paskolos paraiška",
     "description": "Užpildykite paraišką ir pradėkite gauti pinigus jau šiandien",
     "applicationFee": "10€ paraiškos mokestis",
