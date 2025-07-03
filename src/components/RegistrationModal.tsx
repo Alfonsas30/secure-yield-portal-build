@@ -109,20 +109,20 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-lg max-h-[95vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center">
             Registracija
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Campaign Banner */}
           {isCampaignActive && (
-            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 rounded-lg text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Clock className="w-5 h-5" />
-                <span className="font-bold text-lg">AKCIJA 50% NUOLAIDA!</span>
+            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-3 rounded-lg text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Clock className="w-4 h-4" />
+                <span className="font-bold text-base">AKCIJA 50% NUOLAIDA!</span>
               </div>
               <div className="text-sm opacity-90">
                 Naujiems klientams iki 2025-09-01
