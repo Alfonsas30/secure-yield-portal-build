@@ -11,15 +11,30 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Telegram bot setup function started');
+    
     const telegramToken = Deno.env.get('TELEGRAM_BOT_TOKEN');
     if (!telegramToken) {
+      console.error('TELEGRAM_BOT_TOKEN not configured');
       return new Response(
         JSON.stringify({ error: 'TELEGRAM_BOT_TOKEN not configured' }),
         { status: 500, headers: corsHeaders }
       );
     }
 
-    const { action } = await req.json();
+    let requestBody;
+    try {
+      requestBody = await req.json();
+    } catch (jsonError) {
+      console.error('Invalid JSON in request body:', jsonError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON in request body' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    const { action } = requestBody;
+    console.log('Action requested:', action);
 
     if (action === 'setup_webhook') {
       // Set up webhook URL for the bot

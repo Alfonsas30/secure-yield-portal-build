@@ -12,9 +12,11 @@ serve(async (req) => {
   }
 
   try {
+    console.log('WhatsApp 2FA function started');
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       {
         auth: {
           autoRefreshToken: false,
@@ -23,18 +25,39 @@ serve(async (req) => {
       }
     );
 
-    const authHeader = req.headers.get('Authorization')!;
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      console.error('No Authorization header provided');
+      return new Response(
+        JSON.stringify({ error: 'Authorization header required' }),
+        { status: 401, headers: corsHeaders }
+      );
+    }
+
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
 
     if (authError || !user) {
+      console.error('Authentication failed:', authError);
       return new Response(
         JSON.stringify({ error: 'Unauthorized' }),
         { status: 401, headers: corsHeaders }
       );
     }
 
-    const { action, phone_number, display_name } = await req.json();
+    let requestBody;
+    try {
+      requestBody = await req.json();
+    } catch (jsonError) {
+      console.error('Invalid JSON in request body:', jsonError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON in request body' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    const { action, phone_number, display_name } = requestBody;
+    console.log(`Action: ${action}, User: ${user.id}, Phone: ${phone_number}`);
 
     if (action === 'setup') {
       // Setup WhatsApp 2FA for user
@@ -133,7 +156,7 @@ serve(async (req) => {
     }
 
     if (action === 'verify_code') {
-      const { code } = await req.json();
+      const { code } = requestBody;
 
       // Get the stored verification data
       const { data: messengerData, error: fetchError } = await supabaseClient
