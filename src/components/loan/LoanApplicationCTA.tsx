@@ -19,19 +19,19 @@ export const LoanApplicationCTA = ({ onOpenModal, onOpenAuthModal }: LoanApplica
     <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50/80 to-green-50/80">
       <CardContent className="p-8 text-center">
         <h3 className="text-xl font-semibold mb-4 text-slate-900">
-          {user ? 'Patenkino skaičiavimas?' : 'Norite pateikti paraišką?'}
+          {user ? t('loanApplicationCTA.satisfiedWithCalculation') : t('loanApplicationCTA.applyForLoan')}
         </h3>
         <p className="text-slate-600 mb-4">
           {user 
-            ? 'Pateikite paraišką paskolai ir gaukite sprendimą per 24 valandas'
-            : 'Prisijunkite prie savo paskyros, kad galėtumėte pateikti paraišką paskolai'
+            ? t('loanApplicationCTA.applyWithin24h')
+            : t('loanApplicationCTA.loginToApply')
           }
         </p>
         <p className="text-sm text-slate-500 mb-6 flex items-center justify-center gap-2">
           <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50">
-            Paraiškos mokestis: 10€
+            {t('loanApplicationCTA.applicationFee')}
           </Badge>
-          <span>• Mokama vienkartinai • Negrąžinamas nepriklausomai nuo sprendimo</span>
+          <span>{t('loanApplicationCTA.feeDetails')}</span>
         </p>
         <Button 
           onClick={user ? onOpenModal : onOpenAuthModal}
@@ -41,11 +41,11 @@ export const LoanApplicationCTA = ({ onOpenModal, onOpenAuthModal }: LoanApplica
           }
         >
           {user ? (
-            'Pateikti paraišką paskolai'
+            t('loanApplicationCTA.applyNow')
           ) : (
             <>
               <LogIn className="w-5 h-5 mr-2" />
-              Prisijungti ir pateikti paraišką
+              {t('loanApplicationCTA.loginAndApply')}
             </>
           )}
         </Button>
