@@ -365,5 +365,247 @@
       "title": "Patirtis",
       "description": "Turime daugelio metų patirtį finansų srityje ir tūkstančių patenkintų klientų."
     }
+  },
+  "boardInvitation": {
+    "badge": "Valdyba",
+    "title": "Prisijunk prie LTB Banko valdybos",
+    "description": "Registruokis, ir mes su tavimi susisieksime artimiausiu metu. Tapk dalimi komandos, formuojančios ateities finansų sprendimus.",
+    "button": "Tapti valdybos nariu",
+    "features": {
+      "strategic": "Strateginis planavimas",
+      "financial": "Finansų valdymas",
+      "vision": "Vizijos formavimas"
+    }
+  },
+  "boardApplication": {
+    "title": "Tapti valdybos nariu",
+    "description": "Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.",
+    "warning": "⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.",
+    "form": {
+      "name": "Vardas ir pavardė",
+      "email": "El. paštas",
+      "phone": "Telefono numeris",
+      "experience": "Patirtis ir motyvacija",
+      "namePlaceholder": "Įveskite vardą ir pavardę",
+      "emailPlaceholder": "Įveskite el. paštą",
+      "phonePlaceholder": "Įveskite telefono numerį",
+      "experiencePlaceholder": "Aprašykite savo patirtį finansų srityje, vadyboje ar susijusiose srityse, taip pat savo motyvaciją tapti valdybos nariu..."
+    },
+    "buttons": {
+      "cancel": "Atšaukti",
+      "submit": "Pateikti paraišką",
+      "submitting": "Siunčiama..."
+    },
+    "toast": {
+      "success": "Paraiška sėkmingai pateikta!",
+      "successDescription": "Mes su jumis susisieksime artimiausiu metu.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
+    }
+  },
+  "discountRequest": {
+    "title": "Prašyti nuolaidos kodo",
+    "description": "Užpildykite formą ir mes išsiųsime jums nuolaidos kodą per 24 valandas",
+    "accountType": "Sąskaitos tipas",
+    "personal": "Asmeninė",
+    "company": "Įmonės",
+    "form": {
+      "name": "Vardas Pavardė",
+      "email": "El. paštas",
+      "namePlaceholder": "Įveskite vardą ir pavardę",
+      "emailPlaceholder": "vardas@example.com"
+    },
+    "howItWorks": {
+      "title": "Kaip tai veikia?",
+      "steps": [
+        "Jūsų užklausa bus išsiųsta administratoriui",
+        "Per 24 val. gausite atsakymą el. paštu",
+        "Patvirtinus - gausite 50% nuolaidos kodą",
+        "Kodas galioja 30 dienų"
+      ]
+    },
+    "button": "Siųsti užklausą",
+    "toast": {
+      "success": "Sėkmė!",
+      "successDescription": "Jūsų nuolaidų užklausa sėkmingai išsiųsta. Susisieksime su jumis per 24 valandas.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko išsiųsti užklausos. Bandykite dar kartą.",
+      "validation": "Užpildykite visus laukus"
+    }
+  },
+  "authModal": {
+    "title": "Banko sistema",
+    "tabs": {
+      "login": "Prisijungimas",
+      "signup": "Registracija"
+    },
+    "login": {
+      "email": "El. paštas",
+      "password": "Slaptažodis",
+      "emailPlaceholder": "vardas@example.com",
+      "passwordPlaceholder": "••••••••",
+      "continueButton": "Tęsti",
+      "orText": "Arba",
+      "googleButton": "Prisijungti su Google",
+      "unverifiedEmail": "Nepatvirtintas el. paštas?",
+      "emailPlaceholderResend": "El. paštas",
+      "sendButton": "Siųsti",
+      "backButton": "← Grįžti atgal"
+    },
+    "signup": {
+      "name": "Vardas Pavardė",
+      "email": "El. paštas",
+      "password": "Slaptažodis",
+      "confirmPassword": "Pakartokite slaptažodį",
+      "namePlaceholder": "Vardas Pavardė",
+      "emailPlaceholder": "vardas@example.com",
+      "passwordPlaceholder": "Bent 6 simboliai",
+      "confirmPasswordPlaceholder": "Pakartokite slaptažodį",
+      "passwordMismatch": "Slaptažodžiai nesutampa",
+      "registerButton": "Registruotis",
+      "accountCreation": "Registracijos metu automatiškai bus sukurtas unikalus sąskaitos numeris"
+    },
+    "otp": {
+      "title": "Patvirtinimo kodas",
+      "description": "Išsiuntėme 6 skaitmenų kodą į jūsų el. paštą:",
+      "inputLabel": "Įveskite 6 skaitmenų kodą",
+      "verifyButton": "Patvirtinti ir prisijungti",
+      "resendButton": "Nesulaukėte kodo? Siųsti dar kartą"
+    }
+  },
+  "loanApplication": {
+    "title": "Paraiška paskolai",
+    "description": "Užpildykite formą ir gaukite sprendimą per 24 valandas",
+    "applicationFee": "Paraiškos mokestis: 10€",
+    "loginRequired": {
+      "title": "Prisijungimas reikalingas",
+      "description": "Norėdami pateikti paraišką paskolai, turite būti prisijungę prie savo paskyros",
+      "whyLogin": "Kodėl reikalingas prisijungimas?",
+      "reasons": [
+        "Saugumo sumetimais",
+        "Paraiškos stebėjimui",
+        "Automatiniam duomenų užpildymui"
+      ],
+      "cancelButton": "Atšaukti",
+      "loginButton": "Prisijungti"
+    },
+    "summary": {
+      "title": "Paskolos parametrai",
+      "amount": "Suma",
+      "term": "Terminas",
+      "monthlyPayment": "Mėnesinis mokėjimas",
+      "totalAmount": "Bendra suma"
+    },
+    "personalInfo": {
+      "title": "Asmens duomenys",
+      "name": "Vardas, pavardė",
+      "email": "El. pašto adresas",
+      "phone": "Telefono numeris",
+      "namePlaceholder": "Jūsų vardas ir pavardė",
+      "emailPlaceholder": "jusu@elpastas.lt",
+      "phonePlaceholder": "+370 600 00000"
+    },
+    "financialInfo": {
+      "title": "Finansinė informacija",
+      "monthlyIncome": "Mėnesinės pajamos (€)",
+      "employer": "Darbo vieta",
+      "incomePlaceholder": "2000",
+      "employerPlaceholder": "UAB Pavyzdys"
+    },
+    "loanPurpose": {
+      "title": "Paskolos paskirtis",
+      "label": "Kam reikalinga paskola?",
+      "placeholder": "Trumpai aprašykite, kam planuojate panaudoti paskolą"
+    },
+    "terms": {
+      "agreeTitle": "Sutinku su sąlygomis:",
+      "conditions": [
+        "10€ mokestis už paraiškos pateikimą",
+        "14% metinė palūkanų norma be paslėptų mokesčių",
+        "Sprendimas per 24 valandas",
+        "Duomenų tvarkymas pagal privatumo politiką",
+        "Susisiekimas dėl papildomos informacijos"
+      ]
+    },
+    "submitButton": "Pateikti paraišką",
+    "submittingButton": "Pateikiama paraiška...",
+    "toast": {
+      "redirecting": "Nukreipiama į mokėjimą",
+      "redirectingDescription": "Mokėjimo suma: 10€. Po sėkmingo mokėjimo paraiška bus automatiškai pateikta.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko sukurti mokėjimo. Pabandykite dar kartą."
+    }
+  },
+  "termDepositContract": {
+    "title": "Terminuoto indėlio sutartis",
+    "contractInfo": "Sutarties informacija",
+    "client": "Klientas",
+    "account": "Sąskaita",
+    "investmentAmount": "Investuojama suma:",
+    "contractTerm": "Sutarties terminas:",
+    "annualRate": "Metinė palūkanų norma:",
+    "maturityAmount": "Suma grąžinimo dieną:",
+    "profit": "Jūsų pelnas:",
+    "maturityDate": "Grąžinimo data:",
+    "terms": {
+      "title": "Sutarties sąlygos:",
+      "conditions": [
+        "Indėlis bus užblokuotas visam sutarties terminui",
+        "Palūkanos bus priskaičiuotos sutarties pabaigoje",
+        "Pirmalaikis sutarties nutraukimas galimas tik su baudos mokesčiu",
+        "Automatinis sutarties pratęsimas galimas atskirai susitarus"
+      ]
+    },
+    "cancelButton": "Atšaukti",
+    "signButton": "Pasirašyti sutartį",
+    "signingButton": "Formuojama sutartis...",
+    "toast": {
+      "success": "Sutartis sėkmingai pasirašyta!",
+      "successDescription": "Terminuotas indėlis {amount} suformuotas {term} mėnesiams",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko pasirašyti sutarties. Bandykite dar kartą.",
+      "insufficientFunds": "Nepakanka lėšų terminuotam indėliui"
+    }
+  },
+  "totpSetup": {
+    "title": "Dviejų faktorių autentifikavimas",
+    "requiredTitle": "Privalomas saugumo nustatymas",
+    "requiredWarning": {
+      "title": "⚠️ Saugumo reikalavimas",
+      "description": "Banko saugumo tikslais, dviejų faktorių autentifikavimas yra privalomas. Negalėsite naudotis sistema, kol nenustatysite TOTP."
+    },
+    "setup": {
+      "preparing": "Ruošiama TOTP nustatymas..."
+    },
+    "verify": {
+      "step1": "1. Nuskaitykite QR kodą su Authenticator programėle",
+      "step2Alternative": "Arba įveskite slaptos kodą rankiniu būdu:",
+      "step2": "2. Įveskite 6 skaitmenų kodą iš programėlės",
+      "verifyButton": "Patvirtinti nustatymą",
+      "recommendedApps": "Rekomenduojamos programėlės:",
+      "apps": [
+        "Google Authenticator",
+        "Microsoft Authenticator",
+        "Authy",
+        "1Password"
+      ]
+    },
+    "complete": {
+      "title": "TOTP nustatytas sėkmingai!",
+      "description": "Dviejų faktorių autentifikavimas dabar įjungtas jūsų paskyroje.",
+      "backupCodes": "Atsarginiai kodai",
+      "backupDescription": "Išsaugokite šiuos kodus saugioje vietoje. Galėsite juos naudoti prisijungimui, jei prarasite prieigą prie Authenticator programėlės.",
+      "downloadButton": "Parsisiųsti atsarginius kodus",
+      "finishButton": "Baigti nustatymą"
+    },
+    "toast": {
+      "success": "TOTP sėkmingai nustatytas",
+      "successDescription": "Dviejų faktorių autentifikavimas įjungtas",
+      "error": "TOTP nustatymo klaida",
+      "verificationError": "Patvirtinimo klaida",
+      "invalidCode": "Neteisingas kodas",
+      "secretCopied": "Nukopijuota",
+      "secretCopiedDescription": "Slaptas kodas nukopijuotas"
+    }
   }
 }

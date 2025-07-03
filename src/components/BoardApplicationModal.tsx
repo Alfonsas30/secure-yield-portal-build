@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -40,6 +41,7 @@ interface BoardApplicationModalProps {
 }
 
 export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationModalProps) => {
+  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -69,8 +71,8 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
       if (error) throw error;
 
       toast({
-        title: "Paraiška sėkmingai pateikta!",
-        description: "Mes su jumis susisieksime artimiausiu metu.",
+        title: t('boardApplication.toast.success'),
+        description: t('boardApplication.toast.successDescription'),
       });
 
       form.reset();
@@ -78,8 +80,8 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
     } catch (error) {
       console.error('Error submitting application:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko pateikti paraiškos. Bandykite dar kartą.",
+        title: t('boardApplication.toast.error'),
+        description: t('boardApplication.toast.errorDescription'),
         variant: "destructive",
       });
     } finally {
@@ -93,17 +95,17 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
         <DialogHeader>
           <DialogTitle className="flex items-center text-2xl font-bold bg-gradient-to-r from-purple-700 to-amber-600 bg-clip-text text-transparent">
             <Crown className="w-6 h-6 mr-2 text-amber-600" />
-            Tapti valdybos nariu
+            {t('boardApplication.title')}
           </DialogTitle>
           <DialogDescription className="text-slate-600">
-            Užpildykite formą ir mes su jumis susisieksime artimiausiu metu aptarti galimybes.
+            {t('boardApplication.description')}
           </DialogDescription>
         </DialogHeader>
 
         <Alert variant="destructive" className="mb-4 border-red-200 bg-red-50">
           <AlertTriangle className="h-4 w-4 text-red-600" />
           <AlertDescription className="text-red-700 font-bold text-base">
-            ⚠️ DĖMESIO: Norint tapti valdybos nariu, reikalingas įnašas – ne mažesnis kaip 100,000 litų.
+            {t('boardApplication.warning')}
           </AlertDescription>
         </Alert>
 
@@ -114,9 +116,9 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Vardas ir pavardė *</FormLabel>
+                  <FormLabel>{t('boardApplication.form.name')} *</FormLabel>
                   <FormControl>
-                    <Input placeholder="Įveskite vardą ir pavardę" {...field} />
+                    <Input placeholder={t('boardApplication.form.namePlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,9 +130,9 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>El. paštas *</FormLabel>
+                  <FormLabel>{t('boardApplication.form.email')} *</FormLabel>
                   <FormControl>
-                    <Input placeholder="Įveskite el. paštą" type="email" {...field} />
+                    <Input placeholder={t('boardApplication.form.emailPlaceholder')} type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,9 +144,9 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Telefono numeris</FormLabel>
+                  <FormLabel>{t('boardApplication.form.phone')}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Įveskite telefono numerį" {...field} />
+                    <Input placeholder={t('boardApplication.form.phonePlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -156,10 +158,10 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
               name="experience"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Patirtis ir motyvacija *</FormLabel>
+                  <FormLabel>{t('boardApplication.form.experience')} *</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Aprašykite savo patirtį finansų srityje, vadyboje ar susijusiose srityse, taip pat savo motyvaciją tapti valdybos nariu..."
+                      placeholder={t('boardApplication.form.experiencePlaceholder')}
                       className="min-h-[100px]"
                       {...field} 
                     />
@@ -176,7 +178,7 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
                 onClick={() => onOpenChange(false)}
                 className="flex-1"
               >
-                Atšaukti
+                {t('boardApplication.buttons.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -186,10 +188,10 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Siunčiama...
+                    {t('boardApplication.buttons.submitting')}
                   </>
                 ) : (
-                  'Pateikti paraišką'
+                  t('boardApplication.buttons.submit')
                 )}
               </Button>
             </div>

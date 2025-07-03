@@ -366,5 +366,247 @@
       "title": "Experience",
       "description": "We have many years of experience in the financial sector and thousands of satisfied clients."
     }
+  },
+  "boardInvitation": {
+    "badge": "Board",
+    "title": "Join LTB Bank's board",
+    "description": "Register, and we will contact you soon. Become part of the team shaping the future of financial solutions.",
+    "button": "Become a board member",
+    "features": {
+      "strategic": "Strategic planning",
+      "financial": "Financial management",
+      "vision": "Vision shaping"
+    }
+  },
+  "boardApplication": {
+    "title": "Become a board member",
+    "description": "Fill out the form and we will contact you soon to discuss opportunities.",
+    "warning": "⚠️ ATTENTION: To become a board member, a contribution of no less than 100,000 litas is required.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone number",
+      "experience": "Experience and motivation",
+      "namePlaceholder": "Enter your full name",
+      "emailPlaceholder": "Enter your email",
+      "phonePlaceholder": "Enter your phone number",
+      "experiencePlaceholder": "Describe your experience in finance, management or related fields, as well as your motivation to become a board member..."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "submit": "Submit application",
+      "submitting": "Submitting..."
+    },
+    "toast": {
+      "success": "Application submitted successfully!",
+      "successDescription": "We will contact you soon.",
+      "error": "Error",
+      "errorDescription": "Failed to submit application. Please try again."
+    }
+  },
+  "discountRequest": {
+    "title": "Request discount code",
+    "description": "Fill out the form and we will send you a discount code within 24 hours",
+    "accountType": "Account type",
+    "personal": "Personal",
+    "company": "Company",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "namePlaceholder": "Enter your full name",
+      "emailPlaceholder": "name@example.com"
+    },
+    "howItWorks": {
+      "title": "How does this work?",
+      "steps": [
+        "Your request will be sent to the administrator",
+        "You will receive a response via email within 24 hours",
+        "Upon approval - you will receive a 50% discount code",
+        "The code is valid for 30 days"
+      ]
+    },
+    "button": "Send request",
+    "toast": {
+      "success": "Success!",
+      "successDescription": "Your discount request has been sent successfully. We will contact you within 24 hours.",
+      "error": "Error",
+      "errorDescription": "Failed to send request. Please try again.",
+      "validation": "Fill in all fields"
+    }
+  },
+  "authModal": {
+    "title": "Banking system",
+    "tabs": {
+      "login": "Login",
+      "signup": "Register"
+    },
+    "login": {
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "name@example.com",
+      "passwordPlaceholder": "••••••••",
+      "continueButton": "Continue",
+      "orText": "Or",
+      "googleButton": "Sign in with Google",
+      "unverifiedEmail": "Unverified email?",
+      "emailPlaceholderResend": "Email",
+      "sendButton": "Send",
+      "backButton": "← Go back"
+    },
+    "signup": {
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "namePlaceholder": "Full Name",
+      "emailPlaceholder": "name@example.com",
+      "passwordPlaceholder": "At least 6 characters",
+      "confirmPasswordPlaceholder": "Confirm password",
+      "passwordMismatch": "Passwords do not match",
+      "registerButton": "Register",
+      "accountCreation": "A unique account number will be automatically created during registration"
+    },
+    "otp": {
+      "title": "Verification code",
+      "description": "We sent a 6-digit code to your email:",
+      "inputLabel": "Enter the 6-digit code",
+      "verifyButton": "Verify and login",
+      "resendButton": "Didn't receive the code? Send again"
+    }
+  },
+  "loanApplication": {
+    "title": "Loan application",
+    "description": "Fill out the form and get a decision within 24 hours",
+    "applicationFee": "Application fee: 10€",
+    "loginRequired": {
+      "title": "Login required",
+      "description": "To submit a loan application, you must be logged into your account",
+      "whyLogin": "Why is login required?",
+      "reasons": [
+        "For security reasons",
+        "For application tracking",
+        "For automatic data filling"
+      ],
+      "cancelButton": "Cancel",
+      "loginButton": "Login"
+    },
+    "summary": {
+      "title": "Loan parameters",
+      "amount": "Amount",
+      "term": "Term",
+      "monthlyPayment": "Monthly payment",
+      "totalAmount": "Total amount"
+    },
+    "personalInfo": {
+      "title": "Personal information",
+      "name": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "namePlaceholder": "Your full name",
+      "emailPlaceholder": "your@email.com",
+      "phonePlaceholder": "+370 600 00000"
+    },
+    "financialInfo": {
+      "title": "Financial information",
+      "monthlyIncome": "Monthly income (€)",
+      "employer": "Employer",
+      "incomePlaceholder": "2000",
+      "employerPlaceholder": "Example Ltd"
+    },
+    "loanPurpose": {
+      "title": "Loan purpose",
+      "label": "What do you need the loan for?",
+      "placeholder": "Briefly describe what you plan to use the loan for"
+    },
+    "terms": {
+      "agreeTitle": "I agree to the terms:",
+      "conditions": [
+        "€10 fee for application submission",
+        "14% annual interest rate with no hidden fees",
+        "Decision within 24 hours",
+        "Data processing according to privacy policy",
+        "Contact for additional information"
+      ]
+    },
+    "submitButton": "Submit application",
+    "submittingButton": "Submitting application...",
+    "toast": {
+      "redirecting": "Redirecting to payment",
+      "redirectingDescription": "Payment amount: €10. After successful payment, the application will be automatically submitted.",
+      "error": "Error",
+      "errorDescription": "Failed to create payment. Please try again."
+    }
+  },
+  "termDepositContract": {
+    "title": "Term deposit contract",
+    "contractInfo": "Contract information",
+    "client": "Client",
+    "account": "Account",
+    "investmentAmount": "Investment amount:",
+    "contractTerm": "Contract term:",
+    "annualRate": "Annual interest rate:",
+    "maturityAmount": "Amount at maturity:",
+    "profit": "Your profit:",
+    "maturityDate": "Maturity date:",
+    "terms": {
+      "title": "Contract terms:",
+      "conditions": [
+        "The deposit will be locked for the entire contract term",
+        "Interest will be calculated at the end of the contract",
+        "Early contract termination is possible only with a penalty fee",
+        "Automatic contract extension is possible by separate agreement"
+      ]
+    },
+    "cancelButton": "Cancel",
+    "signButton": "Sign contract",
+    "signingButton": "Creating contract...",
+    "toast": {
+      "success": "Contract signed successfully!",
+      "successDescription": "Term deposit {amount} created for {term} months",
+      "error": "Error",
+      "errorDescription": "Failed to sign contract. Please try again.",
+      "insufficientFunds": "Insufficient funds for term deposit"
+    }
+  },
+  "totpSetup": {
+    "title": "Two-factor authentication",
+    "requiredTitle": "Mandatory security setup",
+    "requiredWarning": {
+      "title": "⚠️ Security requirement",
+      "description": "For bank security purposes, two-factor authentication is mandatory. You will not be able to use the system until you set up TOTP."
+    },
+    "setup": {
+      "preparing": "Preparing TOTP setup..."
+    },
+    "verify": {
+      "step1": "1. Scan the QR code with your Authenticator app",
+      "step2Alternative": "Or enter the secret code manually:",
+      "step2": "2. Enter the 6-digit code from the app",
+      "verifyButton": "Confirm setup",
+      "recommendedApps": "Recommended apps:",
+      "apps": [
+        "Google Authenticator",
+        "Microsoft Authenticator",
+        "Authy",
+        "1Password"
+      ]
+    },
+    "complete": {
+      "title": "TOTP setup successful!",
+      "description": "Two-factor authentication is now enabled on your account.",
+      "backupCodes": "Backup codes",
+      "backupDescription": "Save these codes in a safe place. You can use them to log in if you lose access to your Authenticator app.",
+      "downloadButton": "Download backup codes",
+      "finishButton": "Finish setup"
+    },
+    "toast": {
+      "success": "TOTP setup successful",
+      "successDescription": "Two-factor authentication enabled",
+      "error": "TOTP setup error",
+      "verificationError": "Verification error",
+      "invalidCode": "Invalid code",
+      "secretCopied": "Copied",
+      "secretCopiedDescription": "Secret code copied"
+    }
   }
 }
