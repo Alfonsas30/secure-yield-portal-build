@@ -607,5 +607,79 @@
       "secretCopied": "Nukopijuota",
       "secretCopiedDescription": "Slaptas kodas nukopijuotas"
     }
+  },
+  "newsletter": {
+    "title": "Naujienlaiškių valdymas",
+    "description": "Valdykite prenumeratorius ir siųskite naujienlaiškius",
+    "campaigns": "Kampanijos",
+    "subscribers": "Prenumeratoriai",
+    "createCampaign": {
+      "title": "Sukurti naują kampaniją",
+      "description": "Sukurkite naują naujienlaiškio kampaniją siuntimui",
+      "form": {
+        "title": "Kampanijos pavadinimas",
+        "titlePlaceholder": "Mėnesio naujienos",
+        "subject": "El. pašto tema",
+        "subjectPlaceholder": "LTB Bankas - Mėnesio naujienos ir pasiūlymai",
+        "content": "Turinys (HTML)",
+        "contentPlaceholder": "<h1>Sveiki!</h1><p>Šios savaitės naujienos...</p>"
+      },
+      "button": "Sukurti kampaniją",
+      "creating": "Kuriama..."
+    },
+    "campaignHistory": {
+      "title": "Kampanijų istorija",
+      "description": "Peržiūrėkite ir valdykite sukurtas kampanijas",
+      "table": {
+        "name": "Pavadinimas",
+        "subject": "Tema",
+        "status": "Statusas",
+        "recipients": "Gavėjai",
+        "date": "Data",
+        "actions": "Veiksmai"
+      },
+      "status": {
+        "sent": "Išsiųsta",
+        "draft": "Juodraštis"
+      },
+      "send": "Siųsti",
+      "noCampaigns": "Kampanijų nėra"
+    },
+    "subscribersList": {
+      "title": "Prenumeratorių sąrašas",
+      "description": "Aktyvūs naujienlaiškio prenumeratoriai",
+      "table": {
+        "email": "El. paštas",
+        "name": "Vardas",
+        "subscribeDate": "Prenumeratos data",
+        "status": "Statusas"
+      },
+      "statusActive": "Aktyvus",
+      "noSubscribers": "Prenumeratorių nėra"
+    },
+    "toast": {
+      "campaignCreated": "Kampanija sukurta",
+      "campaignCreatedDescription": "Naujienlaiškio kampanija sėkmingai sukurta",
+      "newsletterSent": "Naujienlaiškis išsiųstas",
+      "newsletterSentDescription": "Naujienlaiškis sėkmingai išsiųstas visiems prenumeratoriams",
+      "error": "Nepavyko",
+      "loadSubscribersError": "Nepavyko įkelti prenumeratorių sąrašo",
+      "loadCampaignsError": "Nepavyko įkelti kampanijų sąrašo",
+      "createCampaignError": "Nepavyko sukurti kampanijos",
+      "sendNewsletterError": "Nepavyko išsiųsti naujienlaiškio",
+      "fillAllFields": "Prašome užpildyti visus laukus"
+    }
+  },
+  "loanPaymentSuccess": {
+    "processing": "Apdorojamas mokėjimas...",
+    "processingDescription": "Prašome palaukti, kol patvirtinsime jūsų mokėjimą.",
+    "success": "Mokėjimas patvirtintas!",
+    "successDescription": "Jūsų paskolos paraiška sėkmingai pateikta. Susisieksime su jumis per 24 valandas.",
+    "toast": {
+      "success": "Paraiška sėkmingai pateikta!",
+      "successDescription": "Mokėjimas patvirtintas. Susisieksime su jumis per 24 valandas.",
+      "error": "Nepavyko apdoroti mokėjimo. Susisiekite su mumis.",
+      "dataNotFound": "Paraiškos duomenys nerasti"
+    }
   }
 }

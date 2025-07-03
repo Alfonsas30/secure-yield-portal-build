@@ -608,5 +608,79 @@
       "secretCopied": "Copied",
       "secretCopiedDescription": "Secret code copied"
     }
+  },
+  "newsletter": {
+    "title": "Newsletter Management",
+    "description": "Manage subscribers and send newsletters",
+    "campaigns": "Campaigns",
+    "subscribers": "Subscribers",
+    "createCampaign": {
+      "title": "Create new campaign",
+      "description": "Create a new newsletter campaign for sending",
+      "form": {
+        "title": "Campaign title",
+        "titlePlaceholder": "Monthly news",
+        "subject": "Email subject",
+        "subjectPlaceholder": "LTB Bank - Monthly news and offers",
+        "content": "Content (HTML)",
+        "contentPlaceholder": "<h1>Hello!</h1><p>This week's news...</p>"
+      },
+      "button": "Create campaign",
+      "creating": "Creating..."
+    },
+    "campaignHistory": {
+      "title": "Campaign history",
+      "description": "View and manage created campaigns",
+      "table": {
+        "name": "Name",
+        "subject": "Subject",
+        "status": "Status",
+        "recipients": "Recipients",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "status": {
+        "sent": "Sent",
+        "draft": "Draft"
+      },
+      "send": "Send",
+      "noCampaigns": "No campaigns"
+    },
+    "subscribersList": {
+      "title": "Subscribers list",
+      "description": "Active newsletter subscribers",
+      "table": {
+        "email": "Email",
+        "name": "Name",
+        "subscribeDate": "Subscribe date",
+        "status": "Status"
+      },
+      "statusActive": "Active",
+      "noSubscribers": "No subscribers"
+    },
+    "toast": {
+      "campaignCreated": "Campaign created",
+      "campaignCreatedDescription": "Newsletter campaign successfully created",
+      "newsletterSent": "Newsletter sent",
+      "newsletterSentDescription": "Newsletter successfully sent to all subscribers",
+      "error": "Failed",
+      "loadSubscribersError": "Failed to load subscribers list",
+      "loadCampaignsError": "Failed to load campaigns list",
+      "createCampaignError": "Failed to create campaign",
+      "sendNewsletterError": "Failed to send newsletter",
+      "fillAllFields": "Please fill in all fields"
+    }
+  },
+  "loanPaymentSuccess": {
+    "processing": "Processing payment...",
+    "processingDescription": "Please wait while we confirm your payment.",
+    "success": "Payment confirmed!",
+    "successDescription": "Your loan application has been successfully submitted. We will contact you within 24 hours.",
+    "toast": {
+      "success": "Application successfully submitted!",
+      "successDescription": "Payment confirmed. We will contact you within 24 hours.",
+      "error": "Failed to process payment. Please contact us.",
+      "dataNotFound": "Application data not found"
+    }
   }
 }

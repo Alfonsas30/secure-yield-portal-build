@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ interface LoanApplicationModalProps {
 }
 
 export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calculatedData }: LoanApplicationModalProps) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -69,8 +71,8 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
       window.open(data.url, '_blank');
       
       toast({
-        title: "Nukreipiama į mokėjimą",
-        description: "Mokėjimo suma: 10€. Po sėkmingo mokėjimo paraiška bus automatiškai pateikta.",
+        title: t('loanApplication.toast.redirecting'),
+        description: t('loanApplication.toast.redirectingDescription'),
       });
 
       onOpenChange(false);
@@ -78,8 +80,8 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
     } catch (error: any) {
       console.error('Error creating payment:', error);
       toast({
-        title: "Klaida",
-        description: "Nepavyko sukurti mokėjimo. Pabandykite dar kartą.",
+        title: t('loanApplication.toast.error'),
+        description: t('loanApplication.toast.errorDescription'),
         variant: "destructive",
       });
     } finally {
@@ -95,21 +97,21 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl text-center">
               <Shield className="w-6 h-6 text-amber-600" />
-              Prisijungimas reikalingas
+              {t('loanApplication.loginRequired.title')}
             </DialogTitle>
             <DialogDescription className="text-center">
-              Norėdami pateikti paraišką paskolai, turite būti prisijungę prie savo paskyros
+              {t('loanApplication.loginRequired.description')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 pt-4">
             <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
               <CardContent className="p-4 text-center">
-                <h3 className="font-semibold text-slate-900 mb-2">Kodėl reikalingas prisijungimas?</h3>
+                <h3 className="font-semibold text-slate-900 mb-2">{t('loanApplication.loginRequired.whyLogin')}</h3>
                 <ul className="text-sm text-slate-600 space-y-1">
-                  <li>• Saugumo sumetimais</li>
-                  <li>• Paraiškos stebėjimui</li>
-                  <li>• Automatiniam duomenų užpildymui</li>
+                  <li>• {t('loanApplication.loginRequired.reasons.0')}</li>
+                  <li>• {t('loanApplication.loginRequired.reasons.1')}</li>
+                  <li>• {t('loanApplication.loginRequired.reasons.2')}</li>
                 </ul>
               </CardContent>
             </Card>
@@ -120,7 +122,7 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
                 variant="outline"
                 className="flex-1"
               >
-                Atšaukti
+                {t('loanApplication.loginRequired.cancelButton')}
               </Button>
               <Button
                 onClick={() => {
@@ -130,7 +132,7 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
                 className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
               >
                 <LogIn className="w-4 h-4 mr-2" />
-                Prisijungti
+                {t('loanApplication.loginRequired.loginButton')}
               </Button>
             </div>
           </div>
@@ -145,13 +147,13 @@ export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calc
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Calculator className="w-6 h-6 text-blue-600" />
-            Paraiška paskolai
+            {t('loanApplication.title')}
           </DialogTitle>
           <DialogDescription>
-            Užpildykite formą ir gaukite sprendimą per 24 valandas
+            {t('loanApplication.description')}
             <br />
             <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 mt-2">
-              Paraiškos mokestis: 10€
+              {t('loanApplication.applicationFee')}
             </Badge>
           </DialogDescription>
         </DialogHeader>
