@@ -6,13 +6,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, CheckCircle, Loader2 } from "lucide-react";
+import { Calculator, CheckCircle, Loader2, LogIn, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LoanApplicationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onOpenAuthModal?: () => void;
   calculatedData: {
     loanAmount: number;
     loanTerm: number;
@@ -22,7 +24,7 @@ interface LoanApplicationModalProps {
   };
 }
 
-export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: LoanApplicationModalProps) => {
+export const LoanApplicationModal = ({ open, onOpenChange, onOpenAuthModal, calculatedData }: LoanApplicationModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,6 +35,7 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -83,6 +86,58 @@ export const LoanApplicationModal = ({ open, onOpenChange, calculatedData }: Loa
       setIsSubmitting(false);
     }
   };
+
+  // If user is not logged in, show login prompt
+  if (!user) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-2xl text-center">
+              <Shield className="w-6 h-6 text-amber-600" />
+              Prisijungimas reikalingas
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Norėdami pateikti paraišką paskolai, turite būti prisijungę prie savo paskyros
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 pt-4">
+            <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
+              <CardContent className="p-4 text-center">
+                <h3 className="font-semibold text-slate-900 mb-2">Kodėl reikalingas prisijungimas?</h3>
+                <ul className="text-sm text-slate-600 space-y-1">
+                  <li>• Saugumo sumetimais</li>
+                  <li>• Paraiškos stebėjimui</li>
+                  <li>• Automatiniam duomenų užpildymui</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <div className="flex gap-3">
+              <Button
+                onClick={() => onOpenChange(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Atšaukti
+              </Button>
+              <Button
+                onClick={() => {
+                  onOpenChange(false);
+                  onOpenAuthModal?.();
+                }}
+                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+              >
+                <LogIn className="w-4 h-4 mr-2" />
+                Prisijungti
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Calculator } from "lucide-react";
 import { LoanApplicationModal } from "./LoanApplicationModal";
+import { AuthModal } from "./auth/AuthModal";
 import { useLoanCalculations } from "@/hooks/useLoanCalculations";
 import { LoanInputs } from "./loan/LoanInputs";
 import { LoanResults } from "./loan/LoanResults";
@@ -13,6 +14,7 @@ const LoanCalculator = () => {
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanTerm, setLoanTerm] = useState(24);
   const [modalOpen, setModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   // Validate and sanitize inputs
   const validLoanAmount = useMemo(() => {
@@ -77,11 +79,13 @@ const LoanCalculator = () => {
 
       <LoanApplicationCTA
         onOpenModal={() => setModalOpen(true)}
+        onOpenAuthModal={() => setAuthModalOpen(true)}
       />
 
       <LoanApplicationModal 
         open={modalOpen} 
         onOpenChange={setModalOpen}
+        onOpenAuthModal={() => setAuthModalOpen(true)}
         calculatedData={{
           loanAmount: validLoanAmount,
           loanTerm: validLoanTerm,
@@ -89,6 +93,12 @@ const LoanCalculator = () => {
           totalPayment: calculations.totalPayment,
           interestRate: calculations.interestRate
         }}
+      />
+
+      <AuthModal 
+        open={authModalOpen}
+        onOpenChange={setAuthModalOpen}
+        defaultTab="login"
       />
     </div>
   );
