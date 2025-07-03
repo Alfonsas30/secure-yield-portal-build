@@ -641,5 +641,131 @@
       "submit": "Subscribe",
       "submitting": "Subscribing..."
     }
+  },
+  "dashboard": {
+    "title": "Bank Management System",
+    "description": "Manage your bank account and transactions",
+    "tabs": {
+      "overview": "Overview",
+      "transactions": "Transactions",
+      "analytics": "Reports",
+      "newsletter": "Newsletter",
+      "profile": "Profile"
+    }
+  },
+  "totpSetup": {
+    "title": "Two-Factor Authentication",
+    "requiredTitle": "Mandatory Security Setup",
+    "requiredWarning": "⚠️ Security Requirement",
+    "requiredDescription": "For banking security purposes, two-factor authentication is mandatory. You cannot use the system until you set up TOTP.",
+    "setupInProgress": "Preparing TOTP setup...",
+    "step1": "1. Scan the QR code with your Authenticator app",
+    "step2": "2. Enter the 6-digit code from the app",
+    "manualEntry": "Or enter the secret code manually:",
+    "copy": "Copy",
+    "verify": "Verify Setup",
+    "verifying": "Verifying...",
+    "apps": {
+      "title": "Recommended apps:",
+      "google": "Google Authenticator",
+      "microsoft": "Microsoft Authenticator",
+      "authy": "Authy",
+      "onepassword": "1Password"
+    },
+    "success": {
+      "title": "TOTP setup successful!",
+      "description": "Two-factor authentication is now enabled on your account.",
+      "backupCodes": "Backup Codes",
+      "backupDescription": "Save these codes in a safe place. You can use them to log in if you lose access to your Authenticator app.",
+      "download": "Download backup codes",
+      "complete": "Complete Setup"
+    },
+    "toast": {
+      "setupSuccess": "TOTP successfully set up",
+      "setupSuccessDescription": "Two-factor authentication enabled",
+      "setupError": "TOTP setup error",
+      "setupErrorDescription": "Failed to set up TOTP",
+      "verifyError": "Verification error",
+      "verifyErrorDescription": "Invalid code",
+      "copied": "Copied",
+      "copiedDescription": "Secret code copied"
+    }
+  },
+  "newsletterAdmin": {
+    "title": "Newsletter Management",
+    "description": "Manage subscribers and send newsletters",
+    "tabs": {
+      "campaigns": "Campaigns",
+      "subscribers": "Subscribers"
+    },
+    "createCampaign": {
+      "title": "Create New Campaign",
+      "description": "Create a new newsletter campaign to send",
+      "titleLabel": "Campaign Title",
+      "titlePlaceholder": "Monthly News",
+      "subjectLabel": "Email Subject",
+      "subjectPlaceholder": "LTB Bank - Monthly News and Offers",
+      "contentLabel": "Content (HTML)",
+      "contentPlaceholder": "<h1>Hello!</h1><p>This week's news...</p>",
+      "submit": "Create Campaign",
+      "submitting": "Creating..."
+    },
+    "campaignHistory": {
+      "title": "Campaign History",
+      "description": "View and manage created campaigns",
+      "headers": {
+        "title": "Title",
+        "subject": "Subject",
+        "status": "Status",
+        "recipients": "Recipients",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "status": {
+        "sent": "Sent",
+        "draft": "Draft"
+      },
+      "send": "Send",
+      "noData": "No campaigns"
+    },
+    "subscribers": {
+      "title": "Subscribers List",
+      "description": "Active newsletter subscribers",
+      "headers": {
+        "email": "Email",
+        "name": "Name",
+        "date": "Subscription Date",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active"
+      },
+      "noData": "No subscribers"
+    },
+    "confirm": "Are you sure you want to send this campaign to all subscribers?",
+    "toast": {
+      "createSuccess": "Campaign created",
+      "createSuccessDescription": "Newsletter campaign successfully created",
+      "createError": "Failed to create campaign",
+      "sendSuccess": "Newsletter sent",
+      "sendSuccessDescription": "Newsletter successfully sent to all subscribers",
+      "sendError": "Failed to send newsletter",
+      "loadError": "Failed to load subscribers list",
+      "campaignsLoadError": "Failed to load campaigns list",
+      "validationError": "Please fill in all fields"
+    }
+  },
+  "loanPaymentSuccess": {
+    "processing": "Processing payment...",
+    "processingDescription": "Please wait while we confirm your payment.",
+    "success": "Payment confirmed!",
+    "successDescription": "Your loan application has been successfully submitted. We will contact you within 24 hours.",
+    "toast": {
+      "success": "Application successfully submitted!",
+      "successDescription": "Payment confirmed. We will contact you within 24 hours.",
+      "error": "Error",
+      "errorDescription": "Failed to process payment. Please contact us.",
+      "dataError": "Application data not found"
+    }
   }
 }

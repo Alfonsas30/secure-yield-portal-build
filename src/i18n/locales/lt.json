@@ -641,5 +641,131 @@
       "submit": "Prenumeruoti",
       "submitting": "Prenumeruojama..."
     }
+  },
+  "dashboard": {
+    "title": "Banko valdymo sistema",
+    "description": "Valdykite savo banko sąskaitą ir operacijas",
+    "tabs": {
+      "overview": "Pagrindinis",
+      "transactions": "Operacijos",
+      "analytics": "Ataskaitos",
+      "newsletter": "Naujienlaiškis",
+      "profile": "Profilis"
+    }
+  },
+  "totpSetup": {
+    "title": "Dviejų faktorių autentifikavimas",
+    "requiredTitle": "Privalomas saugumo nustatymas",
+    "requiredWarning": "⚠️ Saugumo reikalavimas",
+    "requiredDescription": "Banko saugumo tikslais, dviejų faktorių autentifikavimas yra privalomas. Negalėsite naudotis sistema, kol nenustatysite TOTP.",
+    "setupInProgress": "Ruošiama TOTP nustatymas...",
+    "step1": "1. Nuskaitykite QR kodą su Authenticator programėle",
+    "step2": "2. Įveskite 6 skaitmenų kodą iš programėlės",
+    "manualEntry": "Arba įveskite slaptos kodą rankiniu būdu:",
+    "copy": "Nukopijuoti",
+    "verify": "Patvirtinti nustatymą",
+    "verifying": "Patvirtinama...",
+    "apps": {
+      "title": "Rekomenduojamos programėlės:",
+      "google": "Google Authenticator",
+      "microsoft": "Microsoft Authenticator",
+      "authy": "Authy",
+      "onepassword": "1Password"
+    },
+    "success": {
+      "title": "TOTP nustatytas sėkmingai!",
+      "description": "Dviejų faktorių autentifikavimas dabar įjungtas jūsų paskyroje.",
+      "backupCodes": "Atsarginiai kodai",
+      "backupDescription": "Išsaugokite šiuos kodus saugioje vietoje. Galėsite juos naudoti prisijungimui, jei prarasite prieigą prie Authenticator programėlės.",
+      "download": "Parsisiųsti atsarginius kodus",
+      "complete": "Baigti nustatymą"
+    },
+    "toast": {
+      "setupSuccess": "TOTP sėkmingai nustatytas",
+      "setupSuccessDescription": "Dviejų faktorių autentifikavimas įjungtas",
+      "setupError": "TOTP nustatymo klaida",
+      "setupErrorDescription": "Nepavyko nustatyti TOTP",
+      "verifyError": "Patvirtinimo klaida",
+      "verifyErrorDescription": "Neteisingas kodas",
+      "copied": "Nukopijuota",
+      "copiedDescription": "Slaptas kodas nukopijuotas"
+    }
+  },
+  "newsletterAdmin": {
+    "title": "Naujienlaiškių valdymas",
+    "description": "Valdykite prenumeratorius ir siųskite naujienlaiškius",
+    "tabs": {
+      "campaigns": "Kampanijos",
+      "subscribers": "Prenumeratoriai"
+    },
+    "createCampaign": {
+      "title": "Sukurti naują kampaniją",
+      "description": "Sukurkite naują naujienlaiškio kampaniją siuntimui",
+      "titleLabel": "Kampanijos pavadinimas",
+      "titlePlaceholder": "Mėnesio naujienos",
+      "subjectLabel": "El. pašto tema",
+      "subjectPlaceholder": "LTB Bankas - Mėnesio naujienos ir pasiūlymai",
+      "contentLabel": "Turinys (HTML)",
+      "contentPlaceholder": "<h1>Sveiki!</h1><p>Šios savaitės naujienos...</p>",
+      "submit": "Sukurti kampaniją",
+      "submitting": "Kuriama..."
+    },
+    "campaignHistory": {
+      "title": "Kampanijų istorija",
+      "description": "Peržiūrėkite ir valdykite sukurtas kampanijas",
+      "headers": {
+        "title": "Pavadinimas",
+        "subject": "Tema",
+        "status": "Statusas",
+        "recipients": "Gavėjai",
+        "date": "Data",
+        "actions": "Veiksmai"
+      },
+      "status": {
+        "sent": "Išsiųsta",
+        "draft": "Juodraštis"
+      },
+      "send": "Siųsti",
+      "noData": "Kampanijų nėra"
+    },
+    "subscribers": {
+      "title": "Prenumeratorių sąrašas",
+      "description": "Aktyvūs naujienlaiškio prenumeratoriai",
+      "headers": {
+        "email": "El. paštas",
+        "name": "Vardas",
+        "date": "Prenumeratos data",
+        "status": "Statusas"
+      },
+      "status": {
+        "active": "Aktyvus"
+      },
+      "noData": "Prenumeratorių nėra"
+    },
+    "confirm": "Ar tikrai norite išsiųsti šią kampaniją visiems prenumeratoriams?",
+    "toast": {
+      "createSuccess": "Kampanija sukurta",
+      "createSuccessDescription": "Naujienlaiškio kampanija sėkmingai sukurta",
+      "createError": "Nepavyko sukurti kampanijos",
+      "sendSuccess": "Naujienlaiškis išsiųstas",
+      "sendSuccessDescription": "Naujienlaiškis sėkmingai išsiųstas visiems prenumeratoriams",
+      "sendError": "Nepavyko išsiųsti naujienlaiškio",
+      "loadError": "Nepavyko įkelti prenumeratorių sąrašo",
+      "campaignsLoadError": "Nepavyko įkelti kampanijų sąrašo",
+      "validationError": "Prašome užpildyti visus laukus"
+    }
+  },
+  "loanPaymentSuccess": {
+    "processing": "Apdorojamas mokėjimas...",
+    "processingDescription": "Prašome palaukti, kol patvirtinsime jūsų mokėjimą.",
+    "success": "Mokėjimas patvirtintas!",
+    "successDescription": "Jūsų paskolos paraiška sėkmingai pateikta. Susisieksime su jumis per 24 valandas.",
+    "toast": {
+      "success": "Paraiška sėkmingai pateikta!",
+      "successDescription": "Mokėjimas patvirtintas. Susisieksime su jumis per 24 valandas.",
+      "error": "Klaida",
+      "errorDescription": "Nepavyko apdoroti mokėjimo. Susisiekite su mumis.",
+      "dataError": "Paraiškos duomenys nerasti"
+    }
   }
 }

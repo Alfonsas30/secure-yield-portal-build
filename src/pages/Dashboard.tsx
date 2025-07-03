@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { UserProfile } from "@/components/auth/UserProfile";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { SessionTimer } from "@/components/auth/SessionTimer";
@@ -15,6 +16,7 @@ import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
   const { showTOTPSetup, setShowTOTPSetup, user, profile } = useAuth();
   
@@ -39,10 +41,10 @@ export default function Dashboard() {
               <div className="flex-1" />
               <div className="flex-1 text-center">
                 <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                  Banko valdymo sistema
+                  {t('dashboard.title')}
                 </h1>
                 <p className="text-slate-600">
-                  Valdykite savo banko sąskaitą ir operacijas
+                  {t('dashboard.description')}
                 </p>
               </div>
               <div className="flex-1 flex justify-end">
@@ -53,11 +55,11 @@ export default function Dashboard() {
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 mb-6 md:mb-8 text-xs md:text-sm">
-              <TabsTrigger value="overview">Pagrindinis</TabsTrigger>
-              <TabsTrigger value="transactions">Operacijos</TabsTrigger>
-              <TabsTrigger value="analytics">Ataskaitos</TabsTrigger>
-              <TabsTrigger value="newsletter">Naujienlaiškis</TabsTrigger>
-              <TabsTrigger value="profile">Profilis</TabsTrigger>
+              <TabsTrigger value="overview">{t('dashboard.tabs.overview')}</TabsTrigger>
+              <TabsTrigger value="transactions">{t('dashboard.tabs.transactions')}</TabsTrigger>
+              <TabsTrigger value="analytics">{t('dashboard.tabs.analytics')}</TabsTrigger>
+              <TabsTrigger value="newsletter">{t('dashboard.tabs.newsletter')}</TabsTrigger>
+              <TabsTrigger value="profile">{t('dashboard.tabs.profile')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-4 md:space-y-6">

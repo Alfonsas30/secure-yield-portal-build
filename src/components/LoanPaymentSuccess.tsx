@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -9,6 +10,7 @@ interface LoanPaymentSuccessProps {
 }
 
 export const LoanPaymentSuccess = ({ sessionId }: LoanPaymentSuccessProps) => {
+  const { t } = useTranslation();
   const [isProcessing, setIsProcessing] = useState(true);
   const [success, setSuccess] = useState(false);
   const { toast } = useToast();
