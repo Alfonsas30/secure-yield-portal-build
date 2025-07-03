@@ -15,7 +15,7 @@ const HowItWorks = () => {
       number: "01",
       icon: UserPlus,
       title: "Registruokitės",
-      description: "Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar ataskaičių nereikia.",
+      description: "Sukurkite paskyrą per 3 minutes. Jokių sudėtingų dokumentų ar perteklinių ataskaitų nereikia.",
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       delay: "0.1s"

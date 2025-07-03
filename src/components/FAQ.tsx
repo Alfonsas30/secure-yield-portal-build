@@ -69,8 +69,8 @@ const FAQ = () => {
       answer: "Palūkanos skaičiuojamos kasdien pagal jūsų sąskaitos likutį. Vietoj to, kad palūkanos būtų mokamos kartą per metus, mes jas mokame kasdien. Tai reiškia, kad jūsų pinigai auga kiekvieną dieną, o ne tik metų pabaigoje."
     },
     {
-      question: "Ar tikrai nereikia teikti jokių ataskaičių?",
-      answer: "Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems."
+      question: "Ar tikrai nereikia teikti jokių ataskaitų?",
+      answer: "Taip, mums nereikia pajamų deklaracijų, darbuotojų pažymų ar kitų sudėtingų dokumentų. Tiesiog atidarykite sąskaitą ir pradėkite taupyti. Mes tikime, kad taupymas turi būti paprastas ir prieinamas visiems."
     },
     {
       question: "Kiek saugūs mano pinigai?",

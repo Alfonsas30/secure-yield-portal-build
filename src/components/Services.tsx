@@ -23,8 +23,8 @@ const Services = () => {
     },
     {
       icon: Eye,
-      title: "Jokių ataskaičių",
-      description: "Niekas neprašys deklaracijų ar pajamų paaiškinimų. Tiesiog taupykite ir gaukite palūkanas.",
+      title: "Jokių ataskaitų",
+      description: "Jokių sudėtingų dokumentų ar perteklinių ataskaitų. Tiesiog taupykite ir gaukite palūkanas – greitai ir skaidriai.",
       badge: "Paprasta",
       color: "bg-blue-100 text-blue-600",
       hoverColor: "hover:bg-blue-200 hover:text-blue-700",
