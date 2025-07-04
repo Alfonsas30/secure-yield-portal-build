@@ -484,8 +484,8 @@
   },
   "withdrawal": {
     "title": "Išimti pinigus",
-    "amount": "Suma (LT)",
-    "range": "Suma nuo 0.01 iki 50,000 LT",
+    "amount": "Suma (EUR)",
+    "range": "Suma nuo €0.01 iki €14,285",
     "recipientAccount": "Gavėjo sąskaitos numeris",
     "recipientName": "Gavėjo vardas",
     "recipientNamePlaceholder": "Vardas Pavardė arba įmonės pavadinimas",
@@ -493,13 +493,13 @@
     "descriptionPlaceholder": "Mokėjimo paskirtis...",
     "withdraw": "Išimti pinigus",
     "processing": "Apdorojama...",
-    "amountError": "Neteisinga suma. Suma turi būti nuo 0.01 iki 50,000 LT.",
+    "amountError": "Neteisinga suma. Suma turi būti nuo €0.01 iki €14,285.",
     "fieldsRequired": "Gavėjo sąskaitos numeris ir vardas yra privalomi",
     "loginRequired": "Turite būti prisijungę, kad galėtumėte išimti pinigus",
     "insufficientFunds": "Nepakankamas likutis sąskaitoje",
     "processingError": "Išėmimo apdorojimo klaida. Bandykite dar kartą.",
     "success": "Pinigai sėkmingai išimti!",
-    "successDescription": "{{amount}} LT išsiųsta gavėjui {{recipient}}"
+    "successDescription": "€{{amount}} išsiųsta gavėjui {{recipient}}"
   },
   "binance": {
     "connect": {

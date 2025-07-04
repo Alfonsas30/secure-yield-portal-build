@@ -421,8 +421,8 @@
   },
   "withdrawal": {
     "title": "Withdraw Money",
-    "amount": "Amount (LT)",
-    "range": "Amount from 0.01 to 50,000 LT",
+    "amount": "Amount (EUR)", 
+    "range": "Amount from €0.01 to €14,285",
     "recipientAccount": "Recipient Account Number",
     "recipientName": "Recipient Name",
     "recipientNamePlaceholder": "Full Name or Company Name",
@@ -430,13 +430,13 @@
     "descriptionPlaceholder": "Payment purpose...",
     "withdraw": "Withdraw Money",
     "processing": "Processing...",
-    "amountError": "Invalid amount. Amount must be between 0.01 and 50,000 LT.",
+    "amountError": "Invalid amount. Amount must be between €0.01 and €14,285.",
     "fieldsRequired": "Recipient account number and name are required",
     "loginRequired": "You must be logged in to withdraw money",
     "insufficientFunds": "Insufficient account balance",
     "processingError": "Withdrawal processing error. Please try again.",
     "success": "Money withdrawn successfully!",
-    "successDescription": "{{amount}} LT sent to recipient {{recipient}}"
+    "successDescription": "€{{amount}} sent to recipient {{recipient}}"
   },
   "binance": {
     "connect": {

@@ -9,6 +9,7 @@ import { Minus, ArrowUpRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { eurToLt, formatDualCurrency } from "@/lib/currency";
 
 interface WithdrawalModalProps {
   open: boolean;
@@ -26,9 +27,9 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
   const [loading, setLoading] = useState(false);
 
   const handleWithdrawal = async () => {
-    const withdrawalAmount = parseFloat(amount);
+    const withdrawalAmountEUR = parseFloat(amount);
     
-    if (!withdrawalAmount || withdrawalAmount <= 0 || withdrawalAmount > 50000) {
+    if (!withdrawalAmountEUR || withdrawalAmountEUR <= 0 || withdrawalAmountEUR > 14285) {
       toast({
         title: t('discount.error'),
         description: t('withdrawal.amountError'),
@@ -57,12 +58,16 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
 
     setLoading(true);
     try {
+      // Convert EUR to LT for internal processing
+      const withdrawalAmountLT = eurToLt(withdrawalAmountEUR);
+      
       const { data, error } = await supabase.functions.invoke('create-withdrawal-request', {
         body: { 
-          amount: withdrawalAmount,
+          amount: withdrawalAmountLT, // Send LT amount to backend
+          amountEUR: withdrawalAmountEUR, // Also send EUR for reference
           recipientAccount,
           recipientName,
-          description: description || `Pinigų išėmimas į ${recipientName} sąskaitą ${recipientAccount}`
+          description: description || `Pinigų išėmimas €${withdrawalAmountEUR.toFixed(2)} į ${recipientName} sąskaitą ${recipientAccount}`
         }
       });
 
@@ -72,7 +77,7 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
         toast({
           title: t('withdrawal.success'),
           description: t('withdrawal.successDescription', { 
-            amount: withdrawalAmount.toFixed(2),
+            amount: withdrawalAmountEUR.toFixed(2),
             recipient: recipientName 
           })
         });
@@ -119,7 +124,7 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
                 id="amount"
                 type="number"
                 min="0.01"
-                max="50000"
+                max="14285"
                 step="0.01"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -127,7 +132,7 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
                 className="pr-12"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                LT
+                EUR
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
