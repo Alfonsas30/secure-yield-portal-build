@@ -37,3 +37,6 @@ verify_jwt = false
 
 [functions.telegram-bot-setup]
 verify_jwt = true
+
+[functions.send-contact-email]
+verify_jwt = false
