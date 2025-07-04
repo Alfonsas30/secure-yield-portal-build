@@ -1,7 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +21,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      throw new Error('El. pašto paslauga nesukonfigūruota');
+    }
+
+    const resend = new Resend(resendApiKey);
+    console.log('Processing contact email submission');
+    
     const { name, email, phone, message }: ContactEmailRequest = await req.json();
 
     // Validate required fields
@@ -53,9 +60,13 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.replace(/[<>]/g, '').trim();
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
+    // Send email to admin
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
+    console.log(`Sending contact email to: ${adminEmail}`);
+
     const emailResponse = await resend.emails.send({
       from: "LTB Bankas <onboarding@resend.dev>",
-      to: [Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com"],
+      to: [adminEmail],
       subject: `Nauja žinutė iš LTB Bankas svetainės - ${sanitizedName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
