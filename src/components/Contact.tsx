@@ -33,8 +33,11 @@ const Contact = () => {
     e.preventDefault();
     setIsLoading(true);
     
+    console.log('🔄 Pradedame siųsti kontaktų formą...', formData);
+    
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
+      console.log('📤 Iškviečiama send-contact-email funkcija...');
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name,
           email: formData.email,
@@ -43,10 +46,14 @@ const Contact = () => {
         }
       });
 
+      console.log('📨 Funkcijos atsakymas:', { data, error });
+
       if (error) {
+        console.error('❌ Funkcijos klaida:', error);
         throw error;
       }
 
+      console.log('✅ Žinutė sėkmingai išsiųsta!');
       toast({
         title: t('contact.toast.messageSent'),
         description: t('contact.toast.messageDescription'),
@@ -54,7 +61,7 @@ const Contact = () => {
       
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
-      console.error('Contact form error:', error);
+      console.error('❌ Kontaktų formos klaida:', error);
       toast({
         title: t('contact.toast.error'),
         description: t('contact.toast.contactError'),

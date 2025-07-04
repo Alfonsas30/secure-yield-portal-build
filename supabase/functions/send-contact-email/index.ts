@@ -110,9 +110,16 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
+    console.error("Error details:", {
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause
+    });
+    
     return new Response(
       JSON.stringify({ 
-        error: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą." 
+        error: "Nepavyko išsiųsti žinutės. Pabandykite dar kartą.",
+        details: error.message 
       }),
       {
         status: 500,
