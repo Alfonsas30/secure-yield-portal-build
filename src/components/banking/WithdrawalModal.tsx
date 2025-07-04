@@ -29,7 +29,7 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
   const handleWithdrawal = async () => {
     const withdrawalAmountEUR = parseFloat(amount);
     
-    if (!withdrawalAmountEUR || withdrawalAmountEUR <= 0 || withdrawalAmountEUR > 14285) {
+    if (!withdrawalAmountEUR || withdrawalAmountEUR <= 0 || withdrawalAmountEUR > 105000) {
       toast({
         title: t('discount.error'),
         description: t('withdrawal.amountError'),
@@ -124,7 +124,7 @@ export function WithdrawalModal({ open, onOpenChange }: WithdrawalModalProps) {
                 id="amount"
                 type="number"
                 min="0.01"
-                max="14285"
+                max="105000"
                 step="0.01"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}

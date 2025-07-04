@@ -485,7 +485,7 @@
   "withdrawal": {
     "title": "Išimti pinigus",
     "amount": "Suma (EUR)",
-    "range": "Suma nuo €0.01 iki €14,285",
+    "range": "Suma nuo €0.01 iki €105,000",
     "recipientAccount": "Gavėjo sąskaitos numeris",
     "recipientName": "Gavėjo vardas",
     "recipientNamePlaceholder": "Vardas Pavardė arba įmonės pavadinimas",
@@ -493,7 +493,7 @@
     "descriptionPlaceholder": "Mokėjimo paskirtis...",
     "withdraw": "Išimti pinigus",
     "processing": "Apdorojama...",
-    "amountError": "Neteisinga suma. Suma turi būti nuo €0.01 iki €14,285.",
+    "amountError": "Neteisinga suma. Suma turi būti nuo €0.01 iki €105,000.",
     "fieldsRequired": "Gavėjo sąskaitos numeris ir vardas yra privalomi",
     "loginRequired": "Turite būti prisijungę, kad galėtumėte išimti pinigus",
     "insufficientFunds": "Nepakankamas likutis sąskaitoje",

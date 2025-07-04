@@ -38,9 +38,9 @@ serve(async (req) => {
     const { amount, amountEUR, recipientAccount, recipientName, description } = await req.json()
 
     // Input validation for EUR amount (front-end sends EUR, we convert to LT)
-    if (!amount || amount <= 0 || amount > 4081.6) { // ~14,285 EUR converted to LT
+    if (!amount || amount <= 0 || amount > 30000) { // 105,000 EUR converted to LT
       return new Response(
-        JSON.stringify({ error: 'Invalid amount. Must be between 0.01 and 4081.6 LT (€0.01-€14,285)' }),
+        JSON.stringify({ error: 'Invalid amount. Must be between 0.01 and 30000 LT (€0.01-€105,000)' }),
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 

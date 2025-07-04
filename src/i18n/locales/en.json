@@ -422,7 +422,7 @@
   "withdrawal": {
     "title": "Withdraw Money",
     "amount": "Amount (EUR)", 
-    "range": "Amount from €0.01 to €14,285",
+    "range": "Amount from €0.01 to €105,000",
     "recipientAccount": "Recipient Account Number",
     "recipientName": "Recipient Name",
     "recipientNamePlaceholder": "Full Name or Company Name",
@@ -430,7 +430,7 @@
     "descriptionPlaceholder": "Payment purpose...",
     "withdraw": "Withdraw Money",
     "processing": "Processing...",
-    "amountError": "Invalid amount. Amount must be between €0.01 and €14,285.",
+    "amountError": "Invalid amount. Amount must be between €0.01 and €105,000.",
     "fieldsRequired": "Recipient account number and name are required",
     "loginRequired": "You must be logged in to withdraw money",
     "insufficientFunds": "Insufficient account balance",
