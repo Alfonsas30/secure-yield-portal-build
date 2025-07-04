@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wallet, TrendingUp, Eye, EyeOff } from "lucide-react";
+import { Wallet, TrendingUp, Eye, EyeOff, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,6 +16,11 @@ interface AccountBalance {
   updated_at: string;
 }
 
+interface LastInterestTransaction {
+  created_at: string;
+  amount: number;
+}
+
 export function AccountBalance() {
   const { t } = useTranslation();
   const { profile } = useAuth();
@@ -23,12 +28,35 @@ export function AccountBalance() {
   const [balance, setBalance] = useState<AccountBalance | null>(null);
   const [loading, setLoading] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
+  const [lastInterest, setLastInterest] = useState<LastInterestTransaction | null>(null);
 
   useEffect(() => {
     if (profile) {
       fetchBalance();
+      fetchLastInterest();
     }
   }, [profile]);
+
+  const fetchLastInterest = async () => {
+    if (!profile) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('created_at, amount')
+        .eq('user_id', profile.user_id)
+        .eq('transaction_type', 'daily_interest')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!error && data) {
+        setLastInterest(data);
+      }
+    } catch (error) {
+      console.error('Error fetching last interest:', error);
+    }
+  };
 
   const fetchBalance = async () => {
     if (!profile) return;
@@ -152,6 +180,14 @@ export function AccountBalance() {
               </span>
             )}
           </div>
+          {lastInterest && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+              <Clock className="w-3 h-3" />
+              <span>
+                Paskutinės palūkanos: +{lastInterest.amount.toFixed(2)} LT ({new Date(lastInterest.created_at).toLocaleDateString('lt-LT')})
+              </span>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

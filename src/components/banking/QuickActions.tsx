@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Send, Plus, Download, BarChart3 } from "lucide-react";
+import { Send, Plus, Download, BarChart3, Calculator } from "lucide-react";
 import { TransferModal } from "./TransferModal";
 import { DepositModal } from "./DepositModal";
 import { useTranslation } from 'react-i18next';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface QuickActionsProps {
   onViewTransactions: () => void;
@@ -13,8 +15,41 @@ interface QuickActionsProps {
 
 export function QuickActions({ onViewTransactions, onViewReports }: QuickActionsProps) {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [transferModalOpen, setTransferModalOpen] = useState(false);
   const [depositModalOpen, setDepositModalOpen] = useState(false);
+  const [calculatingInterest, setCalculatingInterest] = useState(false);
+
+  const handleCalculateInterest = async () => {
+    setCalculatingInterest(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('calculate-daily-interest');
+      
+      if (error) {
+        toast({
+          title: "Klaida",
+          description: "Nepavyko apskaičiuoti palūkanų",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const result = data;
+      toast({
+        title: "Palūkanos apskaičiuotos",
+        description: `Apdorota ${result.accounts_processed} sąskaitų, pridėta ${result.total_interest_paid?.toFixed(2)} LT palūkanų`,
+      });
+    } catch (error) {
+      console.error('Interest calculation error:', error);
+      toast({
+        title: "Klaida",
+        description: "Nepavyko apskaičiuoti palūkanų",
+        variant: "destructive"
+      });
+    } finally {
+      setCalculatingInterest(false);
+    }
+  };
 
   return (
     <>
@@ -57,6 +92,16 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
             >
               <BarChart3 className="w-4 h-4" />
               {t('quickActions.reports')}
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              onClick={handleCalculateInterest}
+              disabled={calculatingInterest}
+              className="flex items-center gap-2 h-12 col-span-2"
+            >
+              <Calculator className="w-4 h-4" />
+              {calculatingInterest ? "Skaičiuojama..." : "Apskaičiuoti dienos palūkanas"}
             </Button>
           </div>
         </CardContent>
