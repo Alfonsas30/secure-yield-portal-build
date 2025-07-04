@@ -482,6 +482,25 @@
       "card": "Kortelė"
     }
   },
+  "withdrawal": {
+    "title": "Išimti pinigus",
+    "amount": "Suma (LT)",
+    "range": "Suma nuo 0.01 iki 50,000 LT",
+    "recipientAccount": "Gavėjo sąskaitos numeris",
+    "recipientName": "Gavėjo vardas",
+    "recipientNamePlaceholder": "Vardas Pavardė arba įmonės pavadinimas",
+    "description": "Aprašymas (neprivaloma)",
+    "descriptionPlaceholder": "Mokėjimo paskirtis...",
+    "withdraw": "Išimti pinigus",
+    "processing": "Apdorojama...",
+    "amountError": "Neteisinga suma. Suma turi būti nuo 0.01 iki 50,000 LT.",
+    "fieldsRequired": "Gavėjo sąskaitos numeris ir vardas yra privalomi",
+    "loginRequired": "Turite būti prisijungę, kad galėtumėte išimti pinigus",
+    "insufficientFunds": "Nepakankamas likutis sąskaitoje",
+    "processingError": "Išėmimo apdorojimo klaida. Bandykite dar kartą.",
+    "success": "Pinigai sėkmingai išimti!",
+    "successDescription": "{{amount}} LT išsiųsta gavėjui {{recipient}}"
+  },
   "binance": {
     "connect": {
       "title": "Prijungti Binance sąskaitą",
@@ -645,6 +664,7 @@
     "title": "Greitieji veiksmai",
     "transfer": "Pervesti",
     "deposit": "Papildyti", 
+    "withdraw": "Išimti",
     "history": "Istorija",
     "reports": "Ataskaitos"
   },

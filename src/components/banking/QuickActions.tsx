@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Send, Plus, Download, BarChart3, Calculator } from "lucide-react";
+import { Send, Plus, Download, BarChart3, Calculator, Minus } from "lucide-react";
 import { TransferModal } from "./TransferModal";
 import { DepositModal } from "./DepositModal";
+import { WithdrawalModal } from "./WithdrawalModal";
 import { useTranslation } from 'react-i18next';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -18,6 +19,7 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
   const { toast } = useToast();
   const [transferModalOpen, setTransferModalOpen] = useState(false);
   const [depositModalOpen, setDepositModalOpen] = useState(false);
+  const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false);
   const [calculatingInterest, setCalculatingInterest] = useState(false);
 
   const handleCalculateInterest = async () => {
@@ -58,7 +60,7 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
           <CardTitle>{t('quickActions.title')}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <Button 
               onClick={() => setTransferModalOpen(true)}
               className="flex items-center gap-2 h-12"
@@ -74,6 +76,15 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
             >
               <Plus className="w-4 h-4" />
               {t('quickActions.deposit')}
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2 h-12"
+              onClick={() => setWithdrawalModalOpen(true)}
+            >
+              <Minus className="w-4 h-4 text-red-500" />
+              {t('quickActions.withdraw')}
             </Button>
             
             <Button 
@@ -98,7 +109,7 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
               variant="outline" 
               onClick={handleCalculateInterest}
               disabled={calculatingInterest}
-              className="flex items-center gap-2 h-12 col-span-2"
+              className="flex items-center gap-2 h-12 col-span-3"
             >
               <Calculator className="w-4 h-4" />
               {calculatingInterest ? "Skaičiuojama..." : "Apskaičiuoti dienos palūkanas"}
@@ -115,6 +126,11 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
       <DepositModal 
         open={depositModalOpen} 
         onOpenChange={setDepositModalOpen}
+      />
+      
+      <WithdrawalModal 
+        open={withdrawalModalOpen} 
+        onOpenChange={setWithdrawalModalOpen}
       />
     </>
   );

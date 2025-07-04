@@ -419,6 +419,25 @@
       "card": "Card"
     }
   },
+  "withdrawal": {
+    "title": "Withdraw Money",
+    "amount": "Amount (LT)",
+    "range": "Amount from 0.01 to 50,000 LT",
+    "recipientAccount": "Recipient Account Number",
+    "recipientName": "Recipient Name",
+    "recipientNamePlaceholder": "Full Name or Company Name",
+    "description": "Description (optional)",
+    "descriptionPlaceholder": "Payment purpose...",
+    "withdraw": "Withdraw Money",
+    "processing": "Processing...",
+    "amountError": "Invalid amount. Amount must be between 0.01 and 50,000 LT.",
+    "fieldsRequired": "Recipient account number and name are required",
+    "loginRequired": "You must be logged in to withdraw money",
+    "insufficientFunds": "Insufficient account balance",
+    "processingError": "Withdrawal processing error. Please try again.",
+    "success": "Money withdrawn successfully!",
+    "successDescription": "{{amount}} LT sent to recipient {{recipient}}"
+  },
   "binance": {
     "connect": {
       "title": "Connect Binance Account",
@@ -541,6 +560,7 @@
     "title": "Quick Actions",
     "transfer": "Transfer",
     "deposit": "Deposit",
+    "withdraw": "Withdraw",
     "history": "History",
     "reports": "Reports"
   },
