@@ -1,7 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +21,13 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      throw new Error('El. pašto paslauga nesukonfigūruota');
+    }
+
+    const resend = new Resend(resendApiKey);
     const { email, name }: SubscribeRequest = await req.json();
     console.log("Processing subscription for:", email);
 

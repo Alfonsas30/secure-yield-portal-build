@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -65,20 +65,24 @@ serve(async (req) => {
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     
     if (!resendApiKey) {
-      console.error("RESEND_API_KEY not found");
-      throw new Error("Email service not configured");
+      console.error("RESEND_API_KEY not found in environment variables");
+      throw new Error("El. pašto paslauga nesukonfigūruota");
     }
     
     const resend = new Resend(resendApiKey);
+    console.log('Resend client initialized for discount request');
     
     const accountTypeText = account_type === 'personal' ? 'Asmeninė sąskaita' : 'Įmonės sąskaita';
     const discountText = account_type === 'personal' ? '800 € → 400 € (50% nuolaida)' : '1500 € → 750 € (50% nuolaida)';
 
     console.log("Sending email...");
 
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
+    console.log(`Sending discount request to admin: ${adminEmail}`);
+    
     const emailResponse = await resend.emails.send({
-      from: "GMB Invest <onboarding@resend.dev>",
-      to: ["gmbhinvest333@gmail.com"],
+      from: "LTB Bankas <onboarding@resend.dev>",
+      to: [adminEmail],
       subject: `Nauja nuolaidų užklausa - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">

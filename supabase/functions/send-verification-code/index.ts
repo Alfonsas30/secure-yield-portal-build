@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.2";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,12 +18,19 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      throw new Error('El. pašto paslauga nesukonfigūruota');
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    const resend = new Resend(resendApiKey);
+    console.log('Resend client initialized successfully');
 
     const { email, user_id }: VerificationRequest = await req.json();
 
@@ -57,8 +64,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send email with verification code
+    console.log(`Sending verification code to: ${email}`);
     const emailResponse = await resend.emails.send({
-      from: 'Banko Sistema <onboarding@resend.dev>',
+      from: 'LTB Bankas <onboarding@resend.dev>',
       to: [email],
       subject: 'Jūsų prisijungimo kodas',
       html: `

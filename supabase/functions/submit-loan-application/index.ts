@@ -1,7 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -30,6 +28,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      throw new Error('El. pašto paslauga nesukonfigūruota');
+    }
+
+    const resend = new Resend(resendApiKey);
+    console.log('Processing loan application submission');
+    
     const data: LoanApplicationRequest = await req.json();
 
     // Validate required fields
@@ -62,9 +69,12 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedPhone = data.phone?.replace(/[<>]/g, '').trim() || '';
 
     // Send email to admin
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@viltb.com";
+    console.log(`Sending admin notification to: ${adminEmail}`);
+    
     const adminEmailResponse = await resend.emails.send({
-      from: "LTB Bankas <info@viltb.com>",
-      to: [Deno.env.get("ADMIN_EMAIL") || "info@viltb.com"],
+      from: "LTB Bankas <onboarding@resend.dev>",
+      to: [adminEmail],
       subject: `Nauja paskolos paraiška - ${sanitizedName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -107,8 +117,9 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Admin email sent successfully:", adminEmailResponse);
 
     // Send confirmation email to customer
+    console.log(`Sending confirmation email to customer: ${data.email}`);
     const customerEmailResponse = await resend.emails.send({
-      from: "LTB Bankas <info@viltb.com>",
+      from: "LTB Bankas <onboarding@resend.dev>",
       to: [data.email],
       subject: "Paskolos paraiška gauta - LTB Bankas",
       html: `
