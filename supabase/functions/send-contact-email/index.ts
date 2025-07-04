@@ -54,8 +54,8 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
     const emailResponse = await resend.emails.send({
-      from: "LTB Bankas <info@viltb.com>",
-      to: [Deno.env.get("ADMIN_EMAIL") || "info@viltb.com"],
+      from: "LTB Bankas <onboarding@resend.dev>",
+      to: [Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com"],
       subject: `Nauja žinutė iš LTB Bankas svetainės - ${sanitizedName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">

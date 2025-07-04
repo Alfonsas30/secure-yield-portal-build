@@ -69,7 +69,7 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedPhone = data.phone?.replace(/[<>]/g, '').trim() || '';
 
     // Send email to admin
-    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "info@viltb.com";
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     console.log(`Sending admin notification to: ${adminEmail}`);
     
     const adminEmailResponse = await resend.emails.send({
