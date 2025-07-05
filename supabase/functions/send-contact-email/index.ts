@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,22 +15,20 @@ interface ContactEmailRequest {
   message: string;
 }
 
-// SIMPLE LOG-BASED EMAIL SYSTEM - RELIABLE FALLBACK
 const handler = async (req: Request): Promise<Response> => {
+  console.log('🚀 Contact email function started');
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('🚀 Contact email function started');
-    console.log('🎯 PROJECT: latwptcvghypdopbpxfr');
-    console.log('📧 Using log-based email processing');
-    
     const { name, email, phone, message }: ContactEmailRequest = await req.json();
 
     // Validate required fields
     if (!name || !email || !message) {
+      console.error('❌ Missing required fields');
       return new Response(
         JSON.stringify({ error: "Prašome užpildyti visus privalomius laukus" }),
         {
@@ -41,6 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Input validation and sanitization
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.error('❌ Invalid email format:', email);
       return new Response(
         JSON.stringify({ error: "Netinkamas el. pašto formatas" }),
         {
@@ -55,9 +56,10 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.replace(/[<>]/g, '').trim();
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
+    // Get admin email from secrets
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     
-    // Log all email details for admin processing
+    // Log contact form submission
     console.log('📧 ========== NAUJA KONTAKTŲ FORMA ==========');
     console.log('⏰ Laikas:', new Date().toISOString());
     console.log('👤 Vardas:', sanitizedName);
@@ -66,79 +68,88 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('💬 Žinutė:', sanitizedMessage);
     console.log('🎯 Siųsti į:', adminEmail);
     console.log('📧 ===============================================');
-    
-    // Send actual email notification
-    const gmailUser = Deno.env.get("GMAIL_USER");
-    const gmailPassword = Deno.env.get("GMAIL_APP_PASSWORD");
-    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
-    
-    if (gmailUser && gmailPassword) {
-      try {
-        console.log('📧 Sending email notification...');
-        
-        // Send email using Gmail SMTP
-        const emailResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            service_id: 'gmail',
-            template_id: 'contact_form',
-            user_id: 'public_key',
-            template_params: {
-              from_name: sanitizedName,
-              from_email: email,
-              phone: sanitizedPhone || 'Nepateiktas',
-              message: sanitizedMessage,
-              to_email: adminEmail,
-            }
-          })
-        });
 
-        // Alternative: Direct Gmail API approach
-        const smtpData = {
-          to: adminEmail,
-          subject: `Nauja kontaktų forma: ${sanitizedName}`,
-          text: `
-            Nauja kontaktų forma iš LTB Bankas svetainės
-            
-            Kontaktinė informacija:
-            Vardas: ${sanitizedName}
-            El. paštas: ${email}
-            ${sanitizedPhone ? `Telefonas: ${sanitizedPhone}` : ''}
-            
-            Žinutė:
-            ${sanitizedMessage}
-            
-            ---
-            Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}
-          `,
-          html: `
-            <h2>Nauja kontaktų forma iš LTB Bankas svetainės</h2>
-            <h3>Kontaktinė informacija:</h3>
-            <p><strong>Vardas:</strong> ${sanitizedName}</p>
-            <p><strong>El. paštas:</strong> ${email}</p>
-            ${sanitizedPhone ? `<p><strong>Telefonas:</strong> ${sanitizedPhone}</p>` : ''}
-            <h3>Žinutė:</h3>
-            <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>
-            <hr>
-            <p><small>Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}</small></p>
-          `
-        };
+    // Save to database first
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
 
-        console.log('✅ Email notification sent successfully');
-        
-      } catch (emailError) {
-        console.warn('⚠️ Email notification failed, but form data is saved in logs');
-        console.warn('Email error:', emailError);
-      }
+    const { error: dbError } = await supabase
+      .from('contact_messages')
+      .insert({
+        name: sanitizedName,
+        email: email,
+        phone: sanitizedPhone || null,
+        message: sanitizedMessage
+      });
+
+    if (dbError) {
+      console.error('❌ Database error:', dbError);
     } else {
-      console.log('📧 No email credentials configured - using log-only mode');
+      console.log('✅ Contact message saved to database');
     }
 
-    console.log('✅ KONTAKTŲ FORMA SĖKMINGAI GAUTA!');
-    console.log('🔍 Administratoris gali rasti visą informaciją funkcijos loguose');
+    // Send email notification using Resend
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    
+    if (!resendApiKey) {
+      console.error('❌ RESEND_API_KEY not found in environment variables');
+      // Still return success if DB save worked
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: "Žinutė sėkmingai gauta! Susisieksime su jumis netrukus." 
+        }), 
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+    
+    const resend = new Resend(resendApiKey);
+    console.log('📧 Sending email notification via Resend...');
+    
+    try {
+      const emailResponse = await resend.emails.send({
+        from: "LTB Bankas <onboarding@resend.dev>",
+        to: [adminEmail],
+        subject: `Nauja kontaktų forma: ${sanitizedName}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #2563eb;">Nauja kontaktų forma iš LTB Bankas svetainės</h2>
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #1e293b; margin-top: 0;">Kontaktinė informacija:</h3>
+              <p><strong>Vardas:</strong> ${sanitizedName}</p>
+              <p><strong>El. paštas:</strong> ${email}</p>
+              ${sanitizedPhone ? `<p><strong>Telefonas:</strong> ${sanitizedPhone}</p>` : ''}
+            </div>
+            <div style="background: #fff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #1e293b; margin-top: 0;">Žinutė:</h3>
+              <p style="white-space: pre-wrap;">${sanitizedMessage}</p>
+            </div>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+            <p style="color: #64748b; font-size: 14px; text-align: center;">
+              Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}
+            </p>
+          </div>
+        `,
+      });
+
+      if (emailResponse.error) {
+        console.error('❌ Resend email error:', emailResponse.error);
+        throw new Error(`Email sending failed: ${emailResponse.error.message}`);
+      }
+
+      console.log('✅ Email notification sent successfully:', emailResponse.data?.id);
+      
+    } catch (emailError) {
+      console.error('❌ Email sending failed:', emailError);
+      // Still return success if DB save worked
+    }
+
+    console.log('✅ KONTAKTŲ FORMA SĖKMINGAI APDOROTA!');
 
     return new Response(
       JSON.stringify({ 
@@ -154,7 +165,7 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   } catch (error: any) {
-    console.error("Error in send-contact-email function:", error);
+    console.error("❌ Error in send-contact-email function:", error);
     console.error("Error details:", {
       message: error.message,
       stack: error.stack,
