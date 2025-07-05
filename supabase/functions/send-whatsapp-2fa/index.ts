@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Viber 2FA function started');
+    console.log('WhatsApp 2FA function started');
     
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -60,27 +60,27 @@ serve(async (req) => {
     console.log(`Action: ${action}, User: ${user.id}, Phone: ${phone_number}`);
 
     if (action === 'setup') {
-      // Setup Viber 2FA for user
+      // Setup WhatsApp 2FA for user
       const { error: insertError } = await supabaseClient
         .from('messenger_2fa')
         .upsert({
           user_id: user.id,
-          messenger_type: 'viber',
+          messenger_type: 'whatsapp',
           messenger_id: phone_number,
-          display_name: display_name || `Viber (${phone_number})`,
+          display_name: display_name || `WhatsApp (${phone_number})`,
           is_active: true
         });
 
       if (insertError) {
-        console.error('Error setting up Viber 2FA:', insertError);
+        console.error('Error setting up WhatsApp 2FA:', insertError);
         return new Response(
-          JSON.stringify({ error: 'Failed to setup Viber 2FA' }),
+          JSON.stringify({ error: 'Failed to setup WhatsApp 2FA' }),
           { status: 500, headers: corsHeaders }
         );
       }
 
       return new Response(
-        JSON.stringify({ success: true, message: 'Viber 2FA setup successful' }),
+        JSON.stringify({ success: true, message: 'WhatsApp 2FA setup successful' }),
         { headers: corsHeaders }
       );
     }
@@ -99,7 +99,7 @@ serve(async (req) => {
           code_attempts: 0
         })
         .eq('user_id', user.id)
-        .eq('messenger_type', 'viber')
+        .eq('messenger_type', 'whatsapp')
         .eq('messenger_id', phone_number);
 
       if (updateError) {
@@ -110,24 +110,46 @@ serve(async (req) => {
         );
       }
 
-      // Save code in log for admin (since Viber requires special Bot setup)
-      console.log('📱 ========== VIBER 2FA KODAS ==========');
-      console.log('⏰ Laikas:', new Date().toISOString());
-      console.log('👤 Vartotojas:', user.id);
-      console.log('📱 Telefonas:', phone_number);
-      console.log('🔐 Kodas:', code);
-      console.log('⏳ Galioja iki:', expiresAt.toISOString());
-      console.log('📱 =======================================');
+      // Send message via Twilio WhatsApp API
+      const twilioAccountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+      const twilioAuthToken = Deno.env.get('TWILIO_AUTH_TOKEN');
+      const twilioWhatsAppNumber = Deno.env.get('TWILIO_WHATSAPP_NUMBER');
 
-      // Note: Actual Viber integration would require Bot setup and Webhook
-      // For now, we'll simulate successful sending but log the code for admin
+      if (!twilioAccountSid || !twilioAuthToken || !twilioWhatsAppNumber) {
+        return new Response(
+          JSON.stringify({ error: 'WhatsApp integration not configured' }),
+          { status: 500, headers: corsHeaders }
+        );
+      }
+
+      const message = `🔐 Jūsų VILTB patvirtinimo kodas: ${code}\n\nKodas galioja 5 minutes.\nNiekada nesidalinkite šiuo kodu su kitais!`;
+
+      const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`;
       
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: 'Verification code prepared for Viber',
-          note: 'Check function logs for the code (Viber Bot setup required for actual sending)'
+      const twilioResponse = await fetch(twilioUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${btoa(`${twilioAccountSid}:${twilioAuthToken}`)}`,
+        },
+        body: new URLSearchParams({
+          'From': `whatsapp:${twilioWhatsAppNumber}`,
+          'To': `whatsapp:${phone_number}`,
+          'Body': message
         }),
+      });
+
+      if (!twilioResponse.ok) {
+        const twilioError = await twilioResponse.text();
+        console.error('Twilio API error:', twilioError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to send WhatsApp message' }),
+          { status: 500, headers: corsHeaders }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ success: true, message: 'Verification code sent via WhatsApp' }),
         { headers: corsHeaders }
       );
     }
@@ -140,13 +162,13 @@ serve(async (req) => {
         .from('messenger_2fa')
         .select('*')
         .eq('user_id', user.id)
-        .eq('messenger_type', 'viber')
+        .eq('messenger_type', 'whatsapp')
         .eq('messenger_id', phone_number)
         .single();
 
       if (fetchError || !messengerData) {
         return new Response(
-          JSON.stringify({ error: 'Viber 2FA not configured' }),
+          JSON.stringify({ error: 'WhatsApp 2FA not configured' }),
           { status: 400, headers: corsHeaders }
         );
       }
@@ -192,7 +214,7 @@ serve(async (req) => {
         .eq('id', messengerData.id);
 
       return new Response(
-        JSON.stringify({ success: true, message: 'Viber verification successful' }),
+        JSON.stringify({ success: true, message: 'WhatsApp verification successful' }),
         { headers: corsHeaders }
       );
     }
@@ -203,7 +225,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error in Viber 2FA function:', error);
+    console.error('Error in WhatsApp 2FA function:', error);
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: corsHeaders }

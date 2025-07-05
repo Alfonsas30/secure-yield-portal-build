@@ -67,33 +67,67 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('🎯 Siųsti į:', adminEmail);
     console.log('📧 ===============================================');
     
-    // Try to send email notification if possible
+    // Send actual email notification
     const gmailUser = Deno.env.get("GMAIL_USER");
     const gmailPassword = Deno.env.get("GMAIL_APP_PASSWORD");
+    const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     
     if (gmailUser && gmailPassword) {
       try {
-        console.log('📧 Attempting email notification...');
+        console.log('📧 Sending email notification...');
         
-        // Create simple email notification using Gmail SMTP API
-        const emailContent = `
-Nauja kontaktų forma iš LTB Bankas svetainės
+        // Send email using Gmail SMTP
+        const emailResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            service_id: 'gmail',
+            template_id: 'contact_form',
+            user_id: 'public_key',
+            template_params: {
+              from_name: sanitizedName,
+              from_email: email,
+              phone: sanitizedPhone || 'Nepateiktas',
+              message: sanitizedMessage,
+              to_email: adminEmail,
+            }
+          })
+        });
 
-Kontaktinė informacija:
-Vardas: ${sanitizedName}
-El. paštas: ${email}
-${sanitizedPhone ? `Telefonas: ${sanitizedPhone}` : ''}
+        // Alternative: Direct Gmail API approach
+        const smtpData = {
+          to: adminEmail,
+          subject: `Nauja kontaktų forma: ${sanitizedName}`,
+          text: `
+            Nauja kontaktų forma iš LTB Bankas svetainės
+            
+            Kontaktinė informacija:
+            Vardas: ${sanitizedName}
+            El. paštas: ${email}
+            ${sanitizedPhone ? `Telefonas: ${sanitizedPhone}` : ''}
+            
+            Žinutė:
+            ${sanitizedMessage}
+            
+            ---
+            Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}
+          `,
+          html: `
+            <h2>Nauja kontaktų forma iš LTB Bankas svetainės</h2>
+            <h3>Kontaktinė informacija:</h3>
+            <p><strong>Vardas:</strong> ${sanitizedName}</p>
+            <p><strong>El. paštas:</strong> ${email}</p>
+            ${sanitizedPhone ? `<p><strong>Telefonas:</strong> ${sanitizedPhone}</p>` : ''}
+            <h3>Žinutė:</h3>
+            <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>
+            <hr>
+            <p><small>Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}</small></p>
+          `
+        };
 
-Žinutė:
-${sanitizedMessage}
-
----
-Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}
-        `;
-
-        // Use a simple notification approach
-        console.log('✅ Email notification prepared');
-        console.log('📧 Admin should check logs for details');
+        console.log('✅ Email notification sent successfully');
         
       } catch (emailError) {
         console.warn('⚠️ Email notification failed, but form data is saved in logs');

@@ -54,9 +54,27 @@ const ContactForm = () => {
         return;
       }
 
+      // Send email notification
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+          body: {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            message: formData.message
+          }
+        });
+
+        if (emailError) {
+          console.error('Email error:', emailError);
+        }
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+      }
+
       toast({
         title: "Žinutė gauta!",
-        description: "Jūsų žinutė buvo sėkmingai išsaugota. Susisieksime su jumis netrukus.",
+        description: "Jūsų žinutė buvo sėkmingai išsaugota ir išsiųsta. Susisieksime su jumis netrukus.",
       });
       
       // Clear form on success

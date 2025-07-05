@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquare, Phone, Calendar, RefreshCw } from "lucide-react";
+import { Mail, MessageSquare, Phone, Calendar, RefreshCw, Settings, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -24,6 +24,7 @@ const ContactMessagesAdmin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [adminNotes, setAdminNotes] = useState("");
+  const [testMode, setTestMode] = useState(false);
   const { toast } = useToast();
 
   const fetchMessages = async () => {
@@ -123,6 +124,52 @@ const ContactMessagesAdmin = () => {
     fetchMessages();
   }, []);
 
+  const testSystemFunctions = async () => {
+    setTestMode(true);
+    
+    try {
+      // Test daily interest calculation
+      const { data: interestResult, error: interestError } = await supabase.functions.invoke('calculate-daily-interest');
+      console.log('Interest calculation result:', interestResult);
+      
+      // Test cron job setup
+      const { data: cronResult, error: cronError } = await supabase.functions.invoke('setup-cron-jobs');
+      console.log('Cron setup result:', cronResult);
+      
+      // Test email functionality
+      const { data: emailResult, error: emailError } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: 'Test Admin',
+          email: 'admin@test.lt',
+          message: 'Sistemų funkcionalumo testas'
+        }
+      });
+      console.log('Email test result:', emailResult);
+      
+      if (interestError || cronError || emailError) {
+        toast({
+          title: "Sistemų testas nepavyko",
+          description: "Patikrinkite funkcijų loguose detalesnę informaciją",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Sistemų testas sėkmingas",
+          description: "Visi automatiniai procesai veikia teisingai"
+        });
+      }
+    } catch (error) {
+      console.error('System test error:', error);
+      toast({
+        title: "Sistemos testas nepavyko",
+        description: "Įvyko nežinoma klaida",
+        variant: "destructive"
+      });
+    } finally {
+      setTestMode(false);
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'new': return 'bg-blue-100 text-blue-800';
@@ -151,10 +198,21 @@ const ContactMessagesAdmin = () => {
     <div className="p-8 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Kontaktų žinutės</h1>
-        <Button onClick={fetchMessages} variant="outline">
-          <RefreshCw className="h-4 w-4 mr-2" />
-          Atnaujinti
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={fetchMessages} variant="outline">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Atnaujinti
+          </Button>
+          <Button 
+            onClick={testSystemFunctions} 
+            disabled={testMode}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            <Settings className="w-4 h-4" />
+            {testMode ? "Testuojama..." : "Testuoti sistemas"}
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-6">
