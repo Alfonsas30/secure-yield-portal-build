@@ -37,6 +37,8 @@ const Contact = () => {
     
     try {
       console.log('📤 Iškviečiama send-contact-email funkcija...');
+      console.log('📊 Siunčiami duomenys:', formData);
+      
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name,
@@ -47,9 +49,12 @@ const Contact = () => {
       });
 
       console.log('📨 Funkcijos atsakymas:', { data, error });
+      console.log('📊 Detalūs duomenys:', JSON.stringify({ data, error }, null, 2));
 
       if (error) {
         console.error('❌ Funkcijos klaida:', error);
+        console.error('❌ Klaidos tipas:', typeof error);
+        console.error('❌ Klaidos turinys:', JSON.stringify(error, null, 2));
         throw error;
       }
 
