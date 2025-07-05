@@ -159,36 +159,36 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-primary" />
+      <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="flex items-center gap-2 text-base">
+            <Shield className="w-4 h-4 text-primary" />
             Messenger 2FA nustatymai
           </DialogTitle>
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 overflow-hidden">
-          <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
-            <TabsTrigger value="telegram" className="flex items-center gap-2">
-              <MessageCircle className="w-4 h-4" />
+          <TabsList className="grid w-full grid-cols-3 flex-shrink-0 h-8">
+            <TabsTrigger value="telegram" className="flex items-center gap-1 text-xs h-6">
+              <MessageCircle className="w-3 h-3" />
               Telegram
             </TabsTrigger>
-            <TabsTrigger value="viber" className="flex items-center gap-2">
-              <MessageCircle className="w-4 h-4" />
+            <TabsTrigger value="viber" className="flex items-center gap-1 text-xs h-6">
+              <MessageCircle className="w-3 h-3" />
               Viber
             </TabsTrigger>
-            <TabsTrigger value="signal" className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
+            <TabsTrigger value="signal" className="flex items-center gap-1 text-xs h-6">
+              <Shield className="w-3 h-3" />
               Signal
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="telegram" className="flex-1 overflow-hidden">
             <ScrollArea className="h-full">
-              <div className="space-y-4 pr-4">
+              <div className="space-y-3 pr-4">
             <Alert>
               <Info className="h-4 w-4" />
-              <AlertDescription>
+              <AlertDescription className="text-xs">
                 Telegram bot leis jums gauti patvirtinimo kodus per Telegram žinutes.
               </AlertDescription>
             </Alert>
@@ -196,53 +196,69 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
             <TelegramBotSetup />
 
             <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm flex items-center gap-2">
-                  Vartotojo instrukcijos
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center justify-between">
+                  <span>Vartotojo instrukcijos</span>
                   <a 
-                    href="https://t.me/viltb_security_bot" 
+                    href="https://t.me/VILTBBOT" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-primary hover:underline"
+                    className="inline-flex items-center gap-1 text-primary hover:underline text-xs"
                   >
                     <ExternalLink className="w-3 h-3" />
-                    @viltb_security_bot
+                    @VILTBBOT
                   </a>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-xs space-y-1">
-                  <p>1. Atidarykite Telegram ir eikite į @viltb_security_bot</p>
-                  <p>2. Paspauskite "Start" ir išsiųskite <code>/start</code></p>
-                  <p>3. Bot'as atsiųs jūsų Telegram ID numerį</p>
-                  <p>4. Nukopijuokite ID ir įveskite jį žemiau</p>
-                  <p>5. Paspauskite "Įjungti Telegram 2FA"</p>
+              <CardContent className="space-y-2">
+                <div className="text-xs space-y-1 leading-relaxed">
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold text-primary">1.</span>
+                    <span>Atidarykite Telegram ir eikite į @VILTBBOT</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold text-primary">2.</span>
+                    <span>Paspauskite "Start" ir parašykite <code className="bg-muted px-1 rounded text-xs">/start</code></span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold text-primary">3.</span>
+                    <span>Bot'as atsiųs jūsų Telegram ID numerį</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold text-primary">4.</span>
+                    <span>Nukopijuokite ID ir įveskite žemiau</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-semibold text-primary">5.</span>
+                    <span>Spauskite "Įjungti Telegram 2FA"</span>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-1">
-                  <Badge variant="outline" className="text-xs">✓ Greitas gavimas</Badge>
-                  <Badge variant="outline" className="text-xs">✓ Saugus šifravimas</Badge>
-                  <Badge variant="outline" className="text-xs">✓ 24/7 prieinamumas</Badge>
+                <div className="flex flex-wrap gap-1 pt-1">
+                  <Badge variant="outline" className="text-xs h-5">✓ Greitas</Badge>
+                  <Badge variant="outline" className="text-xs h-5">✓ Saugus</Badge>
+                  <Badge variant="outline" className="text-xs h-5">✓ 24/7</Badge>
                 </div>
               </CardContent>
             </Card>
 
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Label htmlFor="telegramId">Telegram ID</Label>
+            <div className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="telegramId" className="text-xs font-medium">Telegram ID</Label>
                 <Input
                   id="telegramId"
                   type="text"
                   value={telegramId}
                   onChange={(e) => setTelegramId(e.target.value)}
                   placeholder="123456789"
-                  className="font-mono text-sm"
+                  className="font-mono text-sm h-8"
                 />
               </div>
 
               <Button 
                 onClick={setupTelegram}
                 disabled={loading || !telegramId}
-                className="w-full"
+                className="w-full h-8 text-xs"
+                size="sm"
               >
                 {loading ? "Konfigūruojama..." : "Įjungti Telegram 2FA"}
               </Button>

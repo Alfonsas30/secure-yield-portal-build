@@ -25,8 +25,8 @@ serve(async (req) => {
       );
     }
 
-    // Validate token format (should start with digits followed by colon)
-    if (!telegramToken.match(/^\d+:[A-Za-z0-9_-]+$/)) {
+    // Validate token format (should start with digits followed by colon and contain at least some characters)
+    if (!telegramToken.match(/^\d+:.+$/)) {
       console.error('Invalid TELEGRAM_BOT_TOKEN format');
       return new Response(
         JSON.stringify({ 
