@@ -66,7 +66,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to admin
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
-    console.log(`Sending contact email to: ${adminEmail}`);
+    console.log(`📧 ADMIN_EMAIL secret value: ${Deno.env.get("ADMIN_EMAIL") ? 'Set' : 'Not set'}`);
+    console.log(`📧 Final recipient email: ${adminEmail}`);
+    console.log(`📧 Sending contact email from: ${sanitizedName} (${email})`);
 
     const emailResponse = await resend.emails.send({
       from: "LTB Bankas <onboarding@resend.dev>",
