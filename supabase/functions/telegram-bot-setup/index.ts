@@ -17,7 +17,22 @@ serve(async (req) => {
     if (!telegramToken) {
       console.error('TELEGRAM_BOT_TOKEN not configured');
       return new Response(
-        JSON.stringify({ error: 'TELEGRAM_BOT_TOKEN not configured' }),
+        JSON.stringify({ 
+          error: 'TELEGRAM_BOT_TOKEN not configured',
+          details: 'Please add your Telegram bot token to Supabase secrets'
+        }),
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
+    // Validate token format (should start with digits followed by colon)
+    if (!telegramToken.match(/^\d+:[A-Za-z0-9_-]+$/)) {
+      console.error('Invalid TELEGRAM_BOT_TOKEN format');
+      return new Response(
+        JSON.stringify({ 
+          error: 'Invalid TELEGRAM_BOT_TOKEN format',
+          details: 'Token should be in format: 123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'
+        }),
         { status: 500, headers: corsHeaders }
       );
     }
@@ -110,6 +125,46 @@ serve(async (req) => {
         JSON.stringify({ success: true, webhook: result.result }),
         { headers: corsHeaders }
       );
+    }
+
+    if (action === 'test_token') {
+      // Test if the bot token is valid by calling getMe
+      const telegramUrl = `https://api.telegram.org/bot${telegramToken}/getMe`;
+      
+      try {
+        const response = await fetch(telegramUrl);
+        const result = await response.json();
+        
+        if (!response.ok) {
+          console.error('Token test failed:', result);
+          return new Response(
+            JSON.stringify({ 
+              error: 'Invalid bot token', 
+              details: result.description || 'Token verification failed'
+            }),
+            { status: 400, headers: corsHeaders }
+          );
+        }
+
+        console.log('Token test successful:', result.result);
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: 'Bot token is valid',
+            bot: result.result 
+          }),
+          { headers: corsHeaders }
+        );
+      } catch (fetchError) {
+        console.error('Network error during token test:', fetchError);
+        return new Response(
+          JSON.stringify({ 
+            error: 'Network error', 
+            details: 'Unable to connect to Telegram API'
+          }),
+          { status: 500, headers: corsHeaders }
+        );
+      }
     }
 
     return new Response(

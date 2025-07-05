@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Info, CheckCircle, AlertCircle, RefreshCw } from "lucide-react";
+import { Info, CheckCircle, AlertCircle, RefreshCw, TestTube } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -14,6 +14,40 @@ export function TelegramBotSetup() {
   const [loading, setLoading] = useState(false);
   const [botInfo, setBotInfo] = useState(null);
   const [webhookInfo, setWebhookInfo] = useState(null);
+  const [tokenValid, setTokenValid] = useState(false);
+  const [error, setError] = useState(null);
+
+  const testToken = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('telegram-bot-setup', {
+        body: { action: 'test_token' }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setTokenValid(true);
+        setBotInfo(data.bot);
+        toast({
+          title: "Token sėkmingai patikrintas",
+          description: `Bot'as "${data.bot.first_name}" (@${data.bot.username}) veikia`,
+        });
+      }
+    } catch (error) {
+      console.error('Token test error:', error);
+      setError(error?.message || "Nepavyko patikrinti bot token");
+      setTokenValid(false);
+      toast({
+        title: "Token klaida",
+        description: error?.message || "Nepavyko patikrinti bot token",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const setupWebhook = async () => {
     setLoading(true);
@@ -89,10 +123,38 @@ export function TelegramBotSetup() {
           </AlertDescription>
         </Alert>
 
-        <div className="flex gap-2">
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              <strong>Klaida:</strong> {error}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <div className="flex gap-2 flex-wrap">
+          <Button 
+            onClick={testToken}
+            disabled={loading}
+            size="sm"
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            {loading ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                Tikrinama...
+              </>
+            ) : (
+              <>
+                <TestTube className="w-4 h-4" />
+                Testuoti Token
+              </>
+            )}
+          </Button>
           <Button 
             onClick={setupWebhook}
-            disabled={loading}
+            disabled={loading || !tokenValid}
             size="sm"
           >
             {loading ? (
