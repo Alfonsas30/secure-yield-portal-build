@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@4.0.0";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -14,7 +14,7 @@ interface ContactEmailRequest {
   message: string;
 }
 
-// FORCE REDEPLOYMENT - VERSION 3.0 - FIXED PROJECT ROUTING
+// GMAIL SMTP VERSION - PROPER IMPLEMENTATION
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -22,20 +22,22 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    console.log('🚀 Contact email function started - CORRECT PROJECT');
-    console.log('🎯 PROJECT CHECK: This should be latwptcvghypdopbpxfr');
-    console.log('🏆 CURRENT FUNCTION: send-contact-email (NOT resend-email)');
+    console.log('🚀 Gmail SMTP email function started');
+    console.log('🎯 PROJECT: latwptcvghypdopbpxfr');
+    console.log('📧 Using Gmail SMTP with Denomailer');
     
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    console.log('🔑 Checking RESEND_API_KEY:', resendApiKey ? 'Found' : 'Missing');
+    const gmailUser = Deno.env.get("GMAIL_USER");
+    const gmailPassword = Deno.env.get("GMAIL_APP_PASSWORD");
     
-    if (!resendApiKey) {
-      console.error('❌ RESEND_API_KEY not found in environment variables');
-      throw new Error('El. pašto paslauga nesukonfigūruota');
+    console.log('🔑 Checking Gmail credentials:', {
+      user: gmailUser ? 'Found' : 'Missing',
+      password: gmailPassword ? 'Found' : 'Missing'
+    });
+    
+    if (!gmailUser || !gmailPassword) {
+      console.error('❌ Gmail credentials not configured');
+      throw new Error('Gmail prisijungimo duomenys nesukonfigūruoti');
     }
-
-    const resend = new Resend(resendApiKey);
-    console.log('📧 Resend client initialized successfully');
     
     const { name, email, phone, message }: ContactEmailRequest = await req.json();
 
@@ -67,25 +69,53 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.replace(/[<>]/g, '').trim();
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
-    // Send email to admin - Enhanced logging and tracking
+    // Send email via Gmail SMTP
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
-    console.log(`📧 Current Supabase project: ${Deno.env.get("SUPABASE_URL")}`);
-    console.log(`📧 ADMIN_EMAIL secret value: ${Deno.env.get("ADMIN_EMAIL") ? 'Set' : 'Not set'}`);
-    console.log(`📧 Final recipient email: ${adminEmail}`);
-    console.log(`📧 Sending contact email FROM: LTB Bankas <onboarding@resend.dev>`);
-    console.log(`📧 Sending contact email TO: ${adminEmail}`);
-    console.log(`📧 Sender info: ${sanitizedName} (${email})`);
-    console.log(`📧 Function: send-contact-email (NOT resend-email)`);
+    console.log('📧 Gmail SMTP Configuration:');
+    console.log('📧 From Gmail:', gmailUser);  
+    console.log('📧 To Admin:', adminEmail);
+    console.log('📧 Subject: Nauja žinutė iš LTB Bankas svetainės');
     
-    // EMAIL DELIVERY TRACKING - VERSION 4.0
-    console.log('🚀 STARTING EMAIL SEND PROCESS...');
-    console.log('📍 Recipient confirmation:', adminEmail);
-    console.log('📍 Expected delivery to Gmail:', adminEmail === 'gmbhinvest333@gmail.com' ? 'YES' : 'NO');
+    // Prepare email content
+    const emailSubject = `Nauja žinutė iš LTB Bankas svetainės - ${sanitizedName}`;
+    const emailBody = `
+Nauja kontaktų forma
 
-    const emailResponse = await resend.emails.send({
-      from: "LTB Bankas <onboarding@resend.dev>",
-      to: [adminEmail],
-      subject: `Nauja žinutė iš LTB Bankas svetainės - ${sanitizedName}`,
+Kontaktinė informacija:
+Vardas: ${sanitizedName}
+El. paštas: ${email}
+${sanitizedPhone ? `Telefonas: ${sanitizedPhone}` : ''}
+
+Žinutė:
+${sanitizedMessage}
+
+---
+Ši žinutė buvo išsiųsta per LTB Bankas svetainės kontaktų formą.
+    `.trim();
+
+    console.log('🚀 STARTING GMAIL SMTP SEND...');
+    
+    // Create SMTP client for Gmail
+    const client = new SMTPClient({
+      connection: {
+        hostname: "smtp.gmail.com",
+        port: 587,
+        tls: true,
+        auth: {
+          username: gmailUser,
+          password: gmailPassword,
+        },
+      },
+    });
+
+    console.log('📧 Connecting to Gmail SMTP...');
+    
+    // Send the email
+    await client.send({
+      from: gmailUser,
+      to: adminEmail,
+      subject: emailSubject,
+      content: emailBody,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #2563eb; margin-bottom: 20px;">Nauja kontaktų forma</h2>
@@ -111,13 +141,13 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("✅ EMAIL SENT SUCCESSFULLY!");
-    console.log("📋 Email Response Details:", emailResponse);
-    console.log("🆔 Email ID:", emailResponse.data?.id || 'No ID returned');
+    await client.close();
+
+    console.log("✅ GMAIL EMAIL SENT SUCCESSFULLY!");
+    console.log("📧 Sent from Gmail:", gmailUser);
     console.log("📧 Sent to:", adminEmail);
-    console.log("📧 From address:", "LTB Bankas <onboarding@resend.dev>");
-    console.log("🎯 CHECK YOUR GMAIL INBOX AND SPAM FOLDER!");
-    console.log("🔍 Look for subject: 'Nauja žinutė iš LTB Bankas svetainės'");
+    console.log('🎯 CHECK ADMIN GMAIL INBOX!');
+    console.log("🔍 Look for subject:", emailSubject);
 
     return new Response(
       JSON.stringify({ 
