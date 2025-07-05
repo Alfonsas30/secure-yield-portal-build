@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-import { Resend } from "npm:resend@4.0.0";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -113,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
     
     try {
       const emailResponse = await resend.emails.send({
-        from: "LTB Bankas <onboarding@resend.dev>",
+        from: "LTB Bankas <noreply@ltb-bankas.com>",
         to: [adminEmail],
         subject: `Nauja kontaktų forma: ${sanitizedName}`,
         html: `
@@ -125,13 +125,12 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>El. paštas:</strong> ${email}</p>
               ${sanitizedPhone ? `<p><strong>Telefonas:</strong> ${sanitizedPhone}</p>` : ''}
             </div>
-            <div style="background: #fff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <div style="background: #fff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px;">
               <h3 style="color: #1e293b; margin-top: 0;">Žinutė:</h3>
               <p style="white-space: pre-wrap;">${sanitizedMessage}</p>
             </div>
-            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-            <p style="color: #64748b; font-size: 14px; text-align: center;">
-              Ši žinutė buvo išsiųsta ${new Date().toLocaleString('lt-LT')}
+            <p style="color: #64748b; font-size: 14px; text-align: center; margin-top: 30px;">
+              Išsiųsta ${new Date().toLocaleString('lt-LT')}
             </p>
           </div>
         `,

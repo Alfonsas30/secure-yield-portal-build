@@ -73,8 +73,8 @@ const ContactForm = () => {
       }
 
       toast({
-        title: "Žinutė gauta!",
-        description: "Jūsų žinutė buvo sėkmingai išsaugota ir išsiųsta. Susisieksime su jumis netrukus.",
+        title: "✅ Žinutė gauta!",
+        description: "Jūsų žinutė išsaugota duombazėje. Bandysime išsiųsti email pranešimą administratoriui.",
       });
       
       // Clear form on success

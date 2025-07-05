@@ -41,33 +41,18 @@ const handler = async (req: Request): Promise<Response> => {
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     console.log('🎯 Target email:', adminEmail);
 
-    // Send test email
+    // Send test email with improved sender and simpler content
     console.log('📤 Attempting to send test email...');
     const emailResponse = await resend.emails.send({
-      from: "LTB Bankas Debug <onboarding@resend.dev>",
+      from: `LTB Bankas <noreply@ltb-bankas.com>`,
       to: [adminEmail],
-      subject: `🔍 Email testavimas - ${new Date().toLocaleTimeString()}`,
+      subject: `Email Test - ${new Date().toLocaleTimeString()}`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #2563eb;">🔍 Email sistemos testavimas</h2>
-          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="color: #1e293b; margin-top: 0;">Testavimo informacija:</h3>
-            <p><strong>Laikas:</strong> ${new Date().toLocaleString('lt-LT')}</p>
-            <p><strong>Funkcija:</strong> debug-email</p>
-            <p><strong>Siuntėjas:</strong> onboarding@resend.dev</p>
-            <p><strong>Gavėjas:</strong> ${adminEmail}</p>
-          </div>
-          <div style="background: #dcfce7; border: 1px solid #16a34a; padding: 20px; border-radius: 8px;">
-            <h3 style="color: #16a34a; margin-top: 0;">✅ Sėkmė!</h3>
-            <p style="color: #166534; margin: 0;">
-              Jei matote šį laišką - email sistema veikia teisingai!
-            </p>
-          </div>
-          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
-          <p style="color: #64748b; font-size: 14px; text-align: center;">
-            LTB Bankas - Email sistemos testavimas
-          </p>
-        </div>
+        <h2>Email Test Successful!</h2>
+        <p>Test sent at: ${new Date().toLocaleString('lt-LT')}</p>
+        <p>Function: debug-email</p>
+        <p>Target: ${adminEmail}</p>
+        <p>If you see this - email system works!</p>
       `,
     });
 
