@@ -36,7 +36,7 @@ const Contact = () => {
     console.log('🔄 Pradedame siųsti kontaktų formą...', formData);
     
     try {
-      console.log('📤 Iškviečiama send-contact-email funkcija...');
+      console.log('📤 Iškviečiama send-contact-email funkcija (ne resend-email)...');
       console.log('📊 Siunčiami duomenys:', formData);
       
       const { data, error } = await supabase.functions.invoke('send-contact-email', {

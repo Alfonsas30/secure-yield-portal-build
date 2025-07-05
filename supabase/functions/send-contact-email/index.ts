@@ -64,11 +64,13 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.replace(/[<>]/g, '').trim();
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
-    // Send email to admin
+    // Send email to admin - Updated to force redeployment
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
+    console.log(`📧 Current Supabase project: ${Deno.env.get("SUPABASE_URL")}`);
     console.log(`📧 ADMIN_EMAIL secret value: ${Deno.env.get("ADMIN_EMAIL") ? 'Set' : 'Not set'}`);
     console.log(`📧 Final recipient email: ${adminEmail}`);
     console.log(`📧 Sending contact email from: ${sanitizedName} (${email})`);
+    console.log(`📧 Function: send-contact-email (not resend-email)`);
 
     const emailResponse = await resend.emails.send({
       from: "LTB Bankas <onboarding@resend.dev>",
