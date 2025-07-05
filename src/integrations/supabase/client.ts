@@ -2,6 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
+// CORRECT PROJECT: latwptcvghypdopbpxfr (NOT khcelroaozkzpyxayvpj)
 const SUPABASE_URL = "https://latwptcvghypdopbpxfr.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhdHdwdGN2Z2h5cGRvcGJweGZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjU0NTMsImV4cCI6MjA2NjYwMTQ1M30.O6TbhAN5nWrEl89gdiCWkIiVPmptpJo10QSTpOL9ciE";
 

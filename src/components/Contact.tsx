@@ -34,9 +34,12 @@ const Contact = () => {
     setIsLoading(true);
     
     console.log('🔄 Pradedame siųsti kontaktų formą...', formData);
+    console.log('🏗️ CURRENT URL:', window.location.origin);
+    console.log('🎯 TEISINGO PROJEKTO ID: latwptcvghypdopbpxfr');
     
     try {
-      console.log('📤 Iškviečiama send-contact-email funkcija (ne resend-email)...');
+      console.log('📤 TIKRAI iškviečiama send-contact-email funkcija (NE resend-email)...');
+      console.log('🎯 Projektas: latwptcvghypdopbpxfr (NE khcelroaozkzpyxayvpj)');
       console.log('📊 Siunčiami duomenys:', formData);
       
       const { data, error } = await supabase.functions.invoke('send-contact-email', {

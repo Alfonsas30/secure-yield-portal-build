@@ -14,6 +14,7 @@ interface ContactEmailRequest {
   message: string;
 }
 
+// FORCE REDEPLOYMENT - VERSION 3.0 - FIXED PROJECT ROUTING
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -21,7 +22,9 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    console.log('🚀 Contact email function started');
+    console.log('🚀 Contact email function started - CORRECT PROJECT');
+    console.log('🎯 PROJECT CHECK: This should be latwptcvghypdopbpxfr');
+    console.log('🏆 CURRENT FUNCTION: send-contact-email (NOT resend-email)');
     
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     console.log('🔑 Checking RESEND_API_KEY:', resendApiKey ? 'Found' : 'Missing');
