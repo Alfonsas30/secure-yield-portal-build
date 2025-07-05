@@ -33,15 +33,23 @@ const Contact = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    console.log('🔄 Pradedame siųsti kontaktų formą...', formData);
-    console.log('🏗️ CURRENT URL:', window.location.origin);
-    console.log('🎯 TEISINGO PROJEKTO ID: latwptcvghypdopbpxfr');
+    console.log('🚀 === CONTACT FORM SUBMISSION STARTED ===');
+    console.log('📋 Form data:', formData);
+    console.log('🏗️ Current URL:', window.location.origin);
+    console.log('🎯 Expected project:', 'latwptcvghypdopbpxfr');
+    console.log('⏰ Timestamp:', new Date().toISOString());
     
     try {
-      console.log('📤 TIKRAI iškviečiama send-contact-email funkcija (NE resend-email)...');
-      console.log('🎯 Projektas: latwptcvghypdopbpxfr (NE khcelroaozkzpyxayvpj)');
-      console.log('📊 Siunčiami duomenys:', formData);
+      console.log('📤 Calling supabase.functions.invoke...');
+      console.log('🔧 Function name: send-contact-email');
+      console.log('📊 Payload:', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message.substring(0, 50) + '...'
+      });
       
+      const startTime = Date.now();
       const { data, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name,
@@ -50,33 +58,71 @@ const Contact = () => {
           message: formData.message
         }
       });
+      const endTime = Date.now();
 
-      console.log('📨 Funkcijos atsakymas:', { data, error });
-      console.log('📊 Detalūs duomenys:', JSON.stringify({ data, error }, null, 2));
-
+      console.log('⏱️ Function call took:', endTime - startTime, 'ms');
+      console.log('📨 Function response received!');
+      console.log('✅ Data:', data);
+      console.log('❌ Error:', error);
+      
       if (error) {
-        console.error('❌ Funkcijos klaida:', error);
-        console.error('❌ Klaidos tipas:', typeof error);
-        console.error('❌ Klaidos turinys:', JSON.stringify(error, null, 2));
-        throw error;
+        console.error('🚨 === FUNCTION ERROR DETAILS ===');
+        console.error('Error object:', error);
+        console.error('Error type:', typeof error);
+        console.error('Error constructor:', error.constructor.name);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        console.error('Full error JSON:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+        
+        toast({
+          title: "Klaida siųsiant žinutę",
+          description: `Funkcijos klaida: ${error.message || 'Nežinoma klaida'}`,
+          variant: "destructive",
+        });
+        return;
       }
 
-      console.log('✅ Žinutė sėkmingai išsiųsta!');
+      if (data?.error) {
+        console.error('🚨 === FUNCTION RETURNED ERROR ===');
+        console.error('Function error:', data.error);
+        console.error('Function details:', data.details);
+        
+        toast({
+          title: "Klaida siųsiant žinutę", 
+          description: data.error,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log('🎉 === SUCCESS! EMAIL SENT ===');
+      console.log('✅ Function returned success');
+      console.log('📧 Email should be in Gmail inbox/spam');
+      console.log('🔍 Look for: "Nauja žinutė iš LTB Bankas svetainės"');
+      
       toast({
-        title: t('contact.toast.messageSent'),
-        description: t('contact.toast.messageDescription'),
+        title: "Žinutė išsiųsta!",
+        description: "Jūsų žinutė buvo sėkmingai išsiųsta. Patikrinkite el. paštą.",
       });
       
+      // Clear form only on success
       setFormData({ name: "", email: "", phone: "", message: "" });
+      
     } catch (error) {
-      console.error('❌ Kontaktų formos klaida:', error);
+      console.error('🚨 === CATCH BLOCK ERROR ===');
+      console.error('Caught error:', error);
+      console.error('Error type:', typeof error);
+      console.error('Error message:', error?.message);
+      console.error('Error stack:', error?.stack);
+      
       toast({
-        title: t('contact.toast.error'),
-        description: t('contact.toast.contactError'),
+        title: "Nepavyko išsiųsti žinutės",
+        description: `Klaida: ${error?.message || 'Nežinoma klaida'}`,
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
+      console.log('🏁 === CONTACT FORM SUBMISSION ENDED ===');
     }
   };
 
