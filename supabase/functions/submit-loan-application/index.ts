@@ -73,7 +73,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending admin notification to: ${adminEmail}`);
     
     const adminEmailResponse = await resend.emails.send({
-      from: "LTB Bankas <onboarding@resend.dev>",
+      from: "LTB Bankas <hello@viltb.com>",
       to: [adminEmail],
       subject: `Nauja paskolos paraiška - ${sanitizedName}`,
       html: `
@@ -119,7 +119,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send confirmation email to customer
     console.log(`Sending confirmation email to customer: ${data.email}`);
     const customerEmailResponse = await resend.emails.send({
-      from: "LTB Bankas <onboarding@resend.dev>",
+      from: "LTB Bankas <hello@viltb.com>",
       to: [data.email],
       subject: "Paskolos paraiška gauta - LTB Bankas",
       html: `

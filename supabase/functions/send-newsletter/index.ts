@@ -87,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
       `;
 
       return resend.emails.send({
-        from: "LTB Bankas <onboarding@resend.dev>",
+        from: "LTB Bankas <hello@viltb.com>",
         to: [subscriber.email],
         subject: campaign.subject,
         html: emailContent,
