@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from 'react-i18next';
 import { MessengerSetupModal } from "./MessengerSetupModal";
+import { TelegramBotSetup } from "./TelegramBotSetup";
 
 export function UserProfile() {
   const { t } = useTranslation();
@@ -237,6 +238,11 @@ export function UserProfile() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Telegram Bot Configuration */}
+          <TelegramBotSetup />
+          
+          <Separator />
+          
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
