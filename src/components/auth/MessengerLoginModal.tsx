@@ -76,15 +76,6 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
         });
 
         if (error) throw error;
-      } else if (selectedMethod.messenger_type === 'whatsapp') {
-        const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
-          body: { 
-            action: 'send_code',
-            phone_number: selectedMethod.messenger_id
-          }
-        });
-
-        if (error) throw error;
       } else if (selectedMethod.messenger_type === 'viber') {
         const { data, error } = await supabase.functions.invoke('send-viber-2fa', {
           body: { 
@@ -133,16 +124,6 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
           body: { 
             action: 'verify_code',
             telegram_id: selectedMethod.messenger_id,
-            code: code
-          }
-        });
-
-        if (error) throw error;
-      } else if (selectedMethod.messenger_type === 'whatsapp') {
-        const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
-          body: { 
-            action: 'verify_code',
-            phone_number: selectedMethod.messenger_id,
             code: code
           }
         });
@@ -242,7 +223,7 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
                 >
                   <CardContent className="p-3 flex items-center gap-3">
                     {method.messenger_type === 'telegram' && <MessageCircle className="w-4 h-4" />}
-                    {method.messenger_type === 'whatsapp' && <Phone className="w-4 h-4" />}
+                    
                     {method.messenger_type === 'viber' && <MessageCircle className="w-4 h-4" />}
                     {method.messenger_type === 'signal' && <Shield className="w-4 h-4" />}
                     <div className="flex-1">

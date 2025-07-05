@@ -23,8 +23,6 @@ verify_jwt = true
 [functions.send-telegram-2fa]
 verify_jwt = true
 
-[functions.send-whatsapp-2fa]
-verify_jwt = true
 
 [functions.send-viber-2fa]
 verify_jwt = true

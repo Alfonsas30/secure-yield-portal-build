@@ -25,7 +25,7 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [telegramId, setTelegramId] = useState("");
-  const [whatsappNumber, setWhatsappNumber] = useState("");
+  
   const [viberNumber, setViberNumber] = useState("");
   const [signalNumber, setSignalNumber] = useState("");
   const [activeTab, setActiveTab] = useState("telegram");
@@ -72,47 +72,6 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
     }
   };
 
-  const setupWhatsApp = async () => {
-    if (!whatsappNumber) {
-      toast({
-        title: t('discount.error'),
-        description: "Įveskite WhatsApp numerį",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('send-whatsapp-2fa', {
-        body: { 
-          action: 'setup',
-          phone_number: whatsappNumber,
-          display_name: `WhatsApp (${whatsappNumber})`
-        }
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "WhatsApp 2FA sukonfigūruotas",
-        description: "WhatsApp 2FA sėkmingai įjungtas jūsų paskyroje",
-      });
-      
-      onSetupComplete();
-      onOpenChange(false);
-      setWhatsappNumber("");
-    } catch (error) {
-      console.error('WhatsApp setup error:', error);
-      toast({
-        title: t('discount.error'),
-        description: error?.message || "Nepavyko nustatyti WhatsApp 2FA",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const setupViber = async () => {
     if (!viberNumber) {
@@ -209,14 +168,10 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 overflow-hidden">
-          <TabsList className="grid w-full grid-cols-4 flex-shrink-0">
+          <TabsList className="grid w-full grid-cols-3 flex-shrink-0">
             <TabsTrigger value="telegram" className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4" />
               Telegram
-            </TabsTrigger>
-            <TabsTrigger value="whatsapp" className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              WhatsApp
             </TabsTrigger>
             <TabsTrigger value="viber" className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4" />
@@ -296,53 +251,6 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
             </ScrollArea>
           </TabsContent>
 
-          <TabsContent value="whatsapp" className="space-y-4">
-            <Alert>
-              <Info className="h-4 w-4" />
-              <AlertDescription>
-                WhatsApp integracija naudoja Twilio API patvirtinimo kodų siuntimui.
-              </AlertDescription>
-            </Alert>
-
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm">WhatsApp Business API</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-xs space-y-1">
-                  <p>1. Įveskite savo WhatsApp numerį žemiau</p>
-                  <p>2. Numeris bus susietas su jūsų paskyra</p>
-                  <p>3. Gausite patvirtinimo kodus per WhatsApp</p>
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  <Badge variant="outline" className="text-xs">✓ Greitas gavimas</Badge>
-                  <Badge variant="outline" className="text-xs">✓ Patogus naudojimas</Badge>
-                  <Badge variant="outline" className="text-xs">✓ Pasaulinis</Badge>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Label htmlFor="whatsappNumber">WhatsApp numeris</Label>
-                <Input
-                  id="whatsappNumber"
-                  type="tel"
-                  value={whatsappNumber}
-                  onChange={(e) => setWhatsappNumber(e.target.value)}
-                  placeholder="+37060000000"
-                />
-              </div>
-
-              <Button 
-                onClick={setupWhatsApp}
-                disabled={loading || !whatsappNumber}
-                className="w-full"
-              >
-                {loading ? "Konfigūruojama..." : "Įjungti WhatsApp 2FA"}
-              </Button>
-            </div>
-          </TabsContent>
 
           <TabsContent value="viber" className="space-y-4">
             <Alert>
