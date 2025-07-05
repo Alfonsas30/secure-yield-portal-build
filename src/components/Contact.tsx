@@ -33,96 +33,46 @@ const Contact = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    console.log('🚀 === CONTACT FORM SUBMISSION STARTED ===');
-    console.log('📋 Form data:', formData);
-    console.log('🏗️ Current URL:', window.location.origin);
-    console.log('🎯 Expected project:', 'latwptcvghypdopbpxfr');
-    console.log('⏰ Timestamp:', new Date().toISOString());
-    
     try {
-      console.log('📤 Calling supabase.functions.invoke...');
-      console.log('🔧 Function name: send-contact-email');
-      console.log('📊 Payload:', {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: formData.message.substring(0, 50) + '...'
-      });
-      
-      const startTime = Date.now();
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message
-        }
-      });
-      const endTime = Date.now();
+      // Save contact message to database
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            message: formData.message
+          }
+        ]);
 
-      console.log('⏱️ Function call took:', endTime - startTime, 'ms');
-      console.log('📨 Function response received!');
-      console.log('✅ Data:', data);
-      console.log('❌ Error:', error);
-      
       if (error) {
-        console.error('🚨 === FUNCTION ERROR DETAILS ===');
-        console.error('Error object:', error);
-        console.error('Error type:', typeof error);
-        console.error('Error constructor:', error.constructor.name);
-        console.error('Error message:', error.message);
-        console.error('Error stack:', error.stack);
-        console.error('Full error JSON:', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
-        
+        console.error('Database error:', error);
         toast({
-          title: "Klaida siųsiant žinutę",
-          description: `Funkcijos klaida: ${error.message || 'Nežinoma klaida'}`,
+          title: "Klaida išsaugant žinutę",
+          description: "Nepavyko išsaugoti jūsų žinutės. Bandykite dar kartą.",
           variant: "destructive",
         });
         return;
       }
 
-      if (data?.error) {
-        console.error('🚨 === FUNCTION RETURNED ERROR ===');
-        console.error('Function error:', data.error);
-        console.error('Function details:', data.details);
-        
-        toast({
-          title: "Klaida siųsiant žinutę", 
-          description: data.error,
-          variant: "destructive",
-        });
-        return;
-      }
-
-      console.log('🎉 === SUCCESS! EMAIL SENT ===');
-      console.log('✅ Function returned success');
-      console.log('📧 Email should be in Gmail inbox/spam');
-      console.log('🔍 Look for: "Nauja žinutė iš LTB Bankas svetainės"');
-      
       toast({
-        title: "Žinutė išsiųsta!",
-        description: "Jūsų žinutė buvo sėkmingai išsiųsta. Patikrinkite el. paštą.",
+        title: "Žinutė gauta!",
+        description: "Jūsų žinutė buvo sėkmingai išsaugota. Susisieksime su jumis netrukus.",
       });
       
-      // Clear form only on success
+      // Clear form on success
       setFormData({ name: "", email: "", phone: "", message: "" });
       
     } catch (error) {
-      console.error('🚨 === CATCH BLOCK ERROR ===');
-      console.error('Caught error:', error);
-      console.error('Error type:', typeof error);
-      console.error('Error message:', error?.message);
-      console.error('Error stack:', error?.stack);
-      
+      console.error('Contact form error:', error);
       toast({
         title: "Nepavyko išsiųsti žinutės",
-        description: `Klaida: ${error?.message || 'Nežinoma klaida'}`,
+        description: "Įvyko nežinoma klaida. Bandykite dar kartą.",
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
-      console.log('🏁 === CONTACT FORM SUBMISSION ENDED ===');
     }
   };
 
