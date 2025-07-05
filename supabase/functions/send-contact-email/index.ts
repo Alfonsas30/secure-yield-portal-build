@@ -67,13 +67,20 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.replace(/[<>]/g, '').trim();
     const sanitizedPhone = phone?.replace(/[<>]/g, '').trim();
 
-    // Send email to admin - Updated to force redeployment
+    // Send email to admin - Enhanced logging and tracking
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     console.log(`📧 Current Supabase project: ${Deno.env.get("SUPABASE_URL")}`);
     console.log(`📧 ADMIN_EMAIL secret value: ${Deno.env.get("ADMIN_EMAIL") ? 'Set' : 'Not set'}`);
     console.log(`📧 Final recipient email: ${adminEmail}`);
-    console.log(`📧 Sending contact email from: ${sanitizedName} (${email})`);
-    console.log(`📧 Function: send-contact-email (not resend-email)`);
+    console.log(`📧 Sending contact email FROM: LTB Bankas <onboarding@resend.dev>`);
+    console.log(`📧 Sending contact email TO: ${adminEmail}`);
+    console.log(`📧 Sender info: ${sanitizedName} (${email})`);
+    console.log(`📧 Function: send-contact-email (NOT resend-email)`);
+    
+    // EMAIL DELIVERY TRACKING - VERSION 4.0
+    console.log('🚀 STARTING EMAIL SEND PROCESS...');
+    console.log('📍 Recipient confirmation:', adminEmail);
+    console.log('📍 Expected delivery to Gmail:', adminEmail === 'gmbhinvest333@gmail.com' ? 'YES' : 'NO');
 
     const emailResponse = await resend.emails.send({
       from: "LTB Bankas <onboarding@resend.dev>",
@@ -104,7 +111,13 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Contact email sent successfully:", emailResponse);
+    console.log("✅ EMAIL SENT SUCCESSFULLY!");
+    console.log("📋 Email Response Details:", emailResponse);
+    console.log("🆔 Email ID:", emailResponse.data?.id || 'No ID returned');
+    console.log("📧 Sent to:", adminEmail);
+    console.log("📧 From address:", "LTB Bankas <onboarding@resend.dev>");
+    console.log("🎯 CHECK YOUR GMAIL INBOX AND SPAM FOLDER!");
+    console.log("🔍 Look for subject: 'Nauja žinutė iš LTB Bankas svetainės'");
 
     return new Response(
       JSON.stringify({ 
