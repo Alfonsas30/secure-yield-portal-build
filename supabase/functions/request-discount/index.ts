@@ -81,7 +81,7 @@ serve(async (req) => {
     console.log(`Sending discount request to admin: ${adminEmail}`);
     
     const emailResponse = await resend.emails.send({
-      from: "LTB Bankas <hello@viltb.com>",
+      from: "LTB Bankas <onboarding@resend.dev>",
       to: [adminEmail],
       subject: `Nauja nuolaidų užklausa - ${name}`,
       html: `

@@ -66,7 +66,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send email with verification code
     console.log(`Sending verification code to: ${email}`);
     const emailResponse = await resend.emails.send({
-      from: 'LTB Bankas <hello@viltb.com>',
+      from: 'LTB Bankas <onboarding@resend.dev>',
       to: [email],
       subject: 'Jūsų prisijungimo kodas',
       html: `

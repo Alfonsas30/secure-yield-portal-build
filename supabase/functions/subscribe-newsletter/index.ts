@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send welcome email
     const emailResponse = await resend.emails.send({
-      from: "LTB Bankas <hello@viltb.com>",
+      from: "LTB Bankas <onboarding@resend.dev>",
       to: [email],
       subject: "Sveiki atvykę į LTB Banko naujienlaiškį!",
       html: `
