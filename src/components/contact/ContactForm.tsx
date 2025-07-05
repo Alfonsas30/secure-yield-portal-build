@@ -92,6 +92,34 @@ const ContactForm = () => {
     }
   };
 
+  const handleDebugEmail = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('debug-email');
+      
+      if (error) {
+        console.error('Debug email error:', error);
+        toast({
+          title: "Debug klaida",
+          description: `Email testavimas nepavyko: ${error.message}`,
+          variant: "destructive",
+        });
+      } else {
+        console.log('Debug email success:', data);
+        toast({
+          title: "Debug sėkmingas!",
+          description: "Testavimo email išsiųstas. Patikrinkite el. paštą.",
+        });
+      }
+    } catch (error) {
+      console.error('Debug email failed:', error);
+      toast({
+        title: "Debug nepavyko",
+        description: "Testavimo funkcija neveikia.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -184,6 +212,16 @@ const ContactForm = () => {
                 {t('contact.form.send')}
               </>
             )}
+          </Button>
+          
+          <Button 
+            type="button"
+            onClick={handleDebugEmail}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2"
+            variant="secondary"
+            size="sm"
+          >
+            🔍 Testuoti Email Siuntimą
           </Button>
         </form>
       </CardContent>
