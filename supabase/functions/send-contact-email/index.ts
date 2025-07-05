@@ -21,14 +21,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log('🚀 Contact email function started');
+    
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    console.log('🔑 Checking RESEND_API_KEY:', resendApiKey ? 'Found' : 'Missing');
+    
     if (!resendApiKey) {
-      console.error('RESEND_API_KEY not found in environment variables');
+      console.error('❌ RESEND_API_KEY not found in environment variables');
       throw new Error('El. pašto paslauga nesukonfigūruota');
     }
 
     const resend = new Resend(resendApiKey);
-    console.log('Processing contact email submission');
+    console.log('📧 Resend client initialized successfully');
     
     const { name, email, phone, message }: ContactEmailRequest = await req.json();
 
