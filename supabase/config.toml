@@ -23,7 +23,6 @@ verify_jwt = true
 [functions.send-telegram-2fa]
 verify_jwt = true
 
-
 [functions.send-viber-2fa]
 verify_jwt = true
 
@@ -37,4 +36,19 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.send-contact-email]
+verify_jwt = false
+
+[functions.send-newsletter]
+verify_jwt = true
+
+[functions.send-verification-code]
+verify_jwt = false
+
+[functions.subscribe-newsletter]
+verify_jwt = false
+
+[functions.unsubscribe-newsletter]
+verify_jwt = false
+
+[functions.verify-code]
 verify_jwt = false
