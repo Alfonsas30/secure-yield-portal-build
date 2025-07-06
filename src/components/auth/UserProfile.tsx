@@ -6,13 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown, Shield, MessageCircle } from "lucide-react";
+import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown, Shield } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from 'react-i18next';
 import { Simple2FASetupModal } from "./Simple2FASetupModal";
-import { TelegramBotSetup } from "./TelegramBotSetup";
 
 export function UserProfile() {
   const { t } = useTranslation();
@@ -238,17 +237,12 @@ export function UserProfile() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Telegram Bot Configuration */}
-          <TelegramBotSetup />
-          
-          <Separator />
-          
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <Label className="text-sm font-medium">2FA per Messenger</Label>
+                <Label className="text-sm font-medium">Dviejų faktorių autentifikacija (2FA)</Label>
                 <p className="text-xs text-muted-foreground">
-                  Gauti patvirtinimo kodus per Telegram, WhatsApp ar kitas aplikacijas
+                  Apsaugokite savo paskyrą su TOTP arba Email patvirtinimu
                 </p>
               </div>
               <Button
@@ -257,7 +251,7 @@ export function UserProfile() {
                 onClick={() => setShowMessengerSetup(true)}
                 className="flex items-center gap-2"
               >
-                <MessageCircle className="w-4 h-4" />
+                <Shield className="w-4 h-4" />
                 Konfigūruoti
               </Button>
             </div>
