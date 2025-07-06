@@ -49,11 +49,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             } else {
               setProfile(profileData);
               
-              // Check if TOTP setup is required after profile is loaded
-              if (profileData && !profileData.totp_enabled) {
-                console.log('TOTP not enabled, showing setup modal');
-                setShowTOTPSetup(true);
-              }
+              // TOTP temporarily disabled
+              // if (profileData && !profileData.totp_enabled) {
+              //   console.log('TOTP not enabled, showing setup modal');
+              //   setShowTOTPSetup(true);
+              // }
             }
             
             // Auto redirect to dashboard after login
@@ -116,9 +116,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         description: t('auth.toast.codeSentDescription'),
         variant: "default"
       });
-    } else if (result.requiresTOTP) {
-      setPendingTOTPEmail(email);
-      setPendingTOTPPassword(password);
+    // TOTP temporarily disabled
+    // } else if (result.requiresTOTP) {
+    //   setPendingTOTPEmail(email);
+    //   setPendingTOTPPassword(password);
     } else {
       toast({
         title: t('auth.toast.signInSuccess'),

@@ -74,11 +74,11 @@ export class AuthService {
         return { error: null, requiresMFA: true };
       }
 
-      // If user has TOTP enabled, require TOTP verification
-      if (profileData.totp_enabled) {
-        console.log('=== TOTP ENABLED - Requiring TOTP verification ===');
-        return { error: null, requiresTOTP: true };
-      }
+      // TOTP temporarily disabled
+      // if (profileData.totp_enabled) {
+      //   console.log('=== TOTP ENABLED - Requiring TOTP verification ===');
+      //   return { error: null, requiresTOTP: true };
+      // }
 
       // Regular sign in for users without MFA/TOTP
       console.log('=== REGULAR SIGNIN - No 2FA required ===');
