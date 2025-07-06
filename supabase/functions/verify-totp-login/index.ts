@@ -14,14 +14,10 @@ serve(async (req) => {
   }
 
   try {
-    const { email, code, isBackupCode = false } = await req.json()
+    const { email, token } = await req.json()
     
-    if (!email || !code) {
-      throw new Error('Email and code are required')
-    }
-
-    if (!isBackupCode && code.length !== 6) {
-      throw new Error('Invalid TOTP code format')
+    if (!email || !token) {
+      throw new Error('Email and token are required')
     }
 
     const supabaseClient = createClient(
@@ -29,107 +25,39 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    console.log('Verifying TOTP login for email:', email, 'backup code:', isBackupCode)
+    console.log('Verifying TOTP login for email:', email)
 
-    // Get user profile by email
+    // Get user profile with TOTP secret
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
-      .select('user_id, totp_secret, totp_enabled, email')
+      .select('totp_secret, totp_enabled, user_id')
       .eq('email', email)
       .single()
 
     if (profileError || !profile) {
+      console.error('Profile not found:', profileError)
       throw new Error('User not found')
     }
 
-    if (!profile.totp_enabled) {
+    if (!profile.totp_enabled || !profile.totp_secret) {
       throw new Error('TOTP not enabled for this user')
     }
 
-    let isValid = false
+    // Verify TOTP token
+    const totp = new TOTP({
+      issuer: 'Banko Sistema',
+      label: email,
+      algorithm: 'SHA1',
+      digits: 6,
+      period: 30,
+      secret: profile.totp_secret
+    })
 
-    if (isBackupCode) {
-      // Verify backup code
-      const { data: backupCode, error: backupError } = await supabaseClient
-        .from('backup_codes')
-        .select('id, used')
-        .eq('user_id', profile.user_id)
-        .eq('code', code.toUpperCase())
-        .single()
-
-      if (backupError || !backupCode) {
-        console.log('Backup code not found for user:', profile.user_id)
-        return new Response(
-          JSON.stringify({ 
-            success: false, 
-            error: 'Invalid backup code' 
-          }),
-          { 
-            status: 400, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-          }
-        )
-      }
-
-      if (backupCode.used) {
-        console.log('Backup code already used for user:', profile.user_id)
-        return new Response(
-          JSON.stringify({ 
-            success: false, 
-            error: 'Backup code already used' 
-          }),
-          { 
-            status: 400, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-          }
-        )
-      }
-
-      // Mark backup code as used
-      const { error: updateError } = await supabaseClient
-        .from('backup_codes')
-        .update({ 
-          used: true, 
-          used_at: new Date().toISOString() 
-        })
-        .eq('id', backupCode.id)
-
-      if (updateError) {
-        console.error('Error updating backup code:', updateError)
-        throw new Error('Failed to process backup code')
-      }
-
-      isValid = true
-    } else {
-      // Verify TOTP code
-      if (!profile.totp_secret) {
-        throw new Error('TOTP secret not found')
-      }
-
-      const totp = new TOTP({
-        issuer: 'Banko Sistema',
-        label: profile.email,
-        algorithm: 'SHA1',
-        digits: 6,
-        period: 30,
-        secret: profile.totp_secret
-      })
-
-      isValid = totp.validate({ token: code, window: 1 }) !== null
-    }
-
-    if (!isValid) {
-      console.log('Invalid TOTP code for user:', profile.user_id)
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Invalid code. Please try again.' 
-        }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      )
+    const delta = totp.validate({ token, window: 1 })
+    
+    if (delta === null) {
+      console.log('Invalid TOTP token provided')
+      throw new Error('Invalid TOTP token')
     }
 
     console.log('TOTP verification successful for user:', profile.user_id)
@@ -138,7 +66,7 @@ serve(async (req) => {
       JSON.stringify({
         success: true,
         message: 'TOTP verification successful',
-        userId: profile.user_id
+        user_id: profile.user_id
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -149,11 +77,10 @@ serve(async (req) => {
     console.error('TOTP login verification error:', error)
     return new Response(
       JSON.stringify({ 
-        success: false,
         error: error.message || 'Internal server error'
       }),
       { 
-        status: 500, 
+        status: 400, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
     )
