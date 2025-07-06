@@ -17,6 +17,8 @@ interface Profile {
   updated_at: string;
   totp_enabled: boolean;
   totp_secret: string | null;
+  mfa_enabled: boolean;
+  mfa_verified: boolean;
 }
 
 interface AuthContextType {
@@ -165,34 +167,67 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      console.log('Starting signIn for:', email);
+      console.log('=== SIGNIN STARTED ===');
+      console.log('Email:', email);
       
-      // First check if user exists and has MFA enabled
-      const { data: profileData } = await supabase
+      // First check if user exists and has MFA/TOTP enabled
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('mfa_enabled, totp_enabled')
+        .select('mfa_enabled, totp_enabled, email')
         .eq('email', email)
         .single();
 
-      console.log('Profile data:', profileData);
+      console.log('Profile query result:', { profileData, profileError });
 
-      // If user has MFA enabled, send verification code instead of signing in directly
-      if (profileData?.mfa_enabled) {
-        console.log('MFA enabled for user, sending verification code');
-        await sendVerificationCode(email);
+      // If user not found in profiles, try regular signin (might be new user)
+      if (profileError || !profileData) {
+        console.log('No profile found, attempting regular signin');
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (signInError) {
+          console.log('Regular SignIn error:', signInError);
+          toast({
+            title: t('auth.toast.signInError'),
+            description: getErrorMessage(signInError.message),
+            variant: "destructive"
+          });
+          return { error: signInError };
+        }
+
+        console.log('Regular SignIn successful');
+        toast({
+          title: t('auth.toast.signInSuccess'),
+          description: t('auth.toast.signInSuccessDescription'),
+          variant: "default"
+        });
+
+        return { error: null };
+      }
+
+      // If user has MFA enabled, send verification code
+      if (profileData.mfa_enabled) {
+        console.log('=== MFA ENABLED - Sending verification code ===');
+        const { error: codeError } = await sendVerificationCode(email);
+        if (codeError) {
+          return { error: codeError };
+        }
         setPendingMFAEmail(email);
         return { error: null, requiresMFA: true };
       }
 
       // If user has TOTP enabled, require TOTP verification
-      if (profileData?.totp_enabled) {
-        console.log('TOTP enabled for user, requiring TOTP verification');
+      if (profileData.totp_enabled) {
+        console.log('=== TOTP ENABLED - Requiring TOTP verification ===');
         setPendingTOTPEmail(email);
         setPendingTOTPPassword(password);
         return { error: null, requiresTOTP: true };
       }
 
       // Regular sign in for users without MFA/TOTP
+      console.log('=== REGULAR SIGNIN - No 2FA required ===');
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password

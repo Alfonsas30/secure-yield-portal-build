@@ -237,38 +237,116 @@ export function UserProfile() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
+          <div className="space-y-4">
+            {/* MFA Email Toggle */}
+            <div className="flex items-center justify-between p-4 border rounded-lg">
               <div>
-                <Label className="text-sm font-medium">Dviejų faktorių autentifikacija (2FA)</Label>
+                <Label className="text-sm font-medium">Email 2FA</Label>
                 <p className="text-xs text-muted-foreground">
-                  Apsaugokite savo paskyrą su TOTP arba Email patvirtinimu
+                  Gaukite patvirtinimo kodus el. paštu prisijungiant
                 </p>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowMessengerSetup(true)}
-                className="flex items-center gap-2"
-              >
-                <Shield className="w-4 h-4" />
-                Konfigūruoti
-              </Button>
+              <div className="flex items-center gap-2">
+                <Badge 
+                  variant={profile.mfa_enabled ? "default" : "outline"}
+                  className={profile.mfa_enabled ? "text-green-600 border-green-600" : ""}
+                >
+                  {profile.mfa_enabled ? 'Įjungtas' : 'Išjungtas'}
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={async () => {
+                    try {
+                      const { error } = await supabase
+                        .from('profiles')
+                        .update({ mfa_enabled: !profile.mfa_enabled })
+                        .eq('user_id', profile.user_id);
+                      
+                      if (error) throw error;
+                      
+                      toast({
+                        title: profile.mfa_enabled ? "MFA išjungtas" : "MFA įjungtas",
+                        description: profile.mfa_enabled ? 
+                          "Email patvirtinimas prisijungiant išjungtas" : 
+                          "Email patvirtinimas prisijungiant įjungtas"
+                      });
+                      
+                      // Refresh page to update profile state
+                      window.location.reload();
+                    } catch (error) {
+                      toast({
+                        title: "Klaida",
+                        description: "Nepavyko atnaujinti MFA nustatymų",
+                        variant: "destructive"
+                      });
+                    }
+                  }}
+                >
+                  {profile.mfa_enabled ? 'Išjungti' : 'Įjungti'}
+                </Button>
+              </div>
             </div>
 
-            {profile.totp_enabled && (
+            {/* TOTP Section */}
+            <div className="flex items-center justify-between p-4 border rounded-lg">
+              <div>
+                <Label className="text-sm font-medium">TOTP (Authenticator)</Label>
+                <p className="text-xs text-muted-foreground">
+                  Naudokite authenticator programėlę saugesniam prisijungimui
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge 
+                  variant={profile.totp_enabled ? "default" : "outline"}
+                  className={profile.totp_enabled ? "text-green-600 border-green-600" : ""}
+                >
+                  {profile.totp_enabled ? 'Sukonfigūruotas' : 'Nesukonfigūruotas'}
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowMessengerSetup(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Shield className="w-4 h-4" />
+                  {profile.totp_enabled ? 'Valdyti' : 'Sukonfigūruoti'}
+                </Button>
+              </div>
+            </div>
+
+            {/* Test Mode Toggle */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className="text-sm font-medium">TOTP (Authenticator)</Label>
-                  <p className="text-xs text-muted-foreground">
-                    Sukonfigūruotas ir aktyvus
+                  <Label className="text-sm font-medium text-blue-800">Test režimas</Label>
+                  <p className="text-xs text-blue-600">
+                    Išbandykite 2FA funkcionalumą su papildoma informacija
                   </p>
                 </div>
-                <Badge variant="outline" className="text-green-600 border-green-600">
-                  Įjungtas
-                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    // Enable both MFA and show current status in console
+                    console.log('=== MFA TEST MODE ===');
+                    console.log('Current profile:', {
+                      mfa_enabled: profile.mfa_enabled,
+                      totp_enabled: profile.totp_enabled,
+                      email: profile.email
+                    });
+                    
+                    toast({
+                      title: "Test režimas",
+                      description: "Patikrinkite console.log informaciją"
+                    });
+                  }}
+                  className="text-blue-700 border-blue-300"
+                >
+                  Test srautai
+                </Button>
               </div>
-            )}
+            </div>
           </div>
         </CardContent>
       </Card>
