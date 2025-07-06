@@ -157,7 +157,10 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
-                  onClick={() => setRegistrationModalOpen(true)}
+                  onClick={() => {
+                    setAuthModalTab("signup");
+                    setAuthModalOpen(true);
+                  }}
                   className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-pulse-glow relative overflow-hidden group"
                 >
                   <span className="relative z-10">{t('navigation.register')}</span>
@@ -257,7 +260,8 @@ const Navigation = () => {
                      <Button 
                        onClick={() => {
                          setIsOpen(false);
-                         setRegistrationModalOpen(true);
+                         setAuthModalTab("signup");
+                         setAuthModalOpen(true);
                        }}
                        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
                        style={{ animationDelay: '0.5s' }}
