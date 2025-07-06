@@ -9,21 +9,53 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white py-16">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
-          <div>
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <span className="font-bold text-xl">LTB Bankas</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
               {t('footer.description')}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mb-6">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Phone className="w-5 h-5" />
+              </div>
+            </div>
+
+            {/* Kontaktai */}
+            <div className="p-4 bg-slate-800 rounded-lg border border-slate-700 min-h-[200px]">
+              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
+                  <a 
+                    href="tel:+37544416678"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Phone className="w-4 h-4 mr-1" />
+                    {t('footer.contact.phoneNumber')}
+                  </a>
+                  <p className="text-xs text-slate-400 mt-1">{t('footer.contact.messengers')}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.workingHours')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {t('footer.contact.schedule')}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.languages')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Languages className="w-4 h-4 mr-1" />
+                    {t('footer.contact.supportedLanguages')}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -62,71 +94,32 @@ const Footer = () => {
               <li><a href="#" className="hover:text-white transition-colors">{t('footer.help.privacy')}</a></li>
               <li><a href="#" className="hover:text-white transition-colors">{t('footer.help.legal')}</a></li>
             </ul>
-          </div>
-        </div>
-
-        {/* Kontaktai - Full Width */}
-        <div className="mb-12">
-          <div className="p-6 bg-slate-800 rounded-lg border border-slate-700">
-            <h3 className="font-semibold text-lg text-white mb-6">{t('footer.contact.title')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Telefono kontaktai */}
-              <div>
-                <p className="text-sm text-slate-300 mb-2">{t('footer.contact.phone')}</p>
-                <a 
-                  href="tel:+37544416678"
-                  className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium mb-1"
-                >
-                  <Phone className="w-4 h-4 mr-1" />
-                  {t('footer.contact.phoneNumber')}
-                </a>
-                <p className="text-xs text-slate-400">{t('footer.contact.messengers')}</p>
-              </div>
-
-              {/* Darbo laikas */}
-              <div>
-                <p className="text-sm text-slate-300 mb-2">{t('footer.contact.workingHours')}</p>
-                <div className="inline-flex items-center text-slate-300 text-sm">
-                  <Clock className="w-4 h-4 mr-1" />
-                  {t('footer.contact.schedule')}
+            
+            {/* Techninė pagalba */}
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700 min-h-[200px]">
+              <h4 className="font-semibold text-white mb-2">{t('footer.techSupport.title')}</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.telegram')}</p>
+                  <a 
+                    href={t('footer.techSupport.telegramUrl')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    @VILTBbank
+                  </a>
                 </div>
-              </div>
-
-              {/* Kalbos */}
-              <div>
-                <p className="text-sm text-slate-300 mb-2">{t('footer.contact.languages')}</p>
-                <div className="inline-flex items-center text-slate-300 text-sm">
-                  <Languages className="w-4 h-4 mr-1" />
-                  {t('footer.contact.supportedLanguages')}
-                </div>
-              </div>
-
-              {/* Techninė pagalba */}
-              <div>
-                <p className="text-sm text-slate-300 mb-2">Techninė pagalba</p>
-                <div className="space-y-2">
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Telegram palaikymas:</p>
-                    <a 
-                      href="https://t.me/VILTBbank"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-                    >
-                      <ExternalLink className="w-4 h-4 mr-1" />
-                      @VILTBbank
-                    </a>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">El. paštas:</p>
-                    <a 
-                      href="mailto:gmbhinvest333@gmail.com"
-                      className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-                    >
-                      <Mail className="w-4 h-4 mr-1" />
-                      gmbhinvest333@gmail.com
-                    </a>
-                  </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.email')}</p>
+                  <a 
+                    href={`mailto:${t('footer.techSupport.emailAddress')}`}
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Mail className="w-4 h-4 mr-1" />
+                    {t('footer.techSupport.emailAddress')}
+                  </a>
                 </div>
               </div>
             </div>
