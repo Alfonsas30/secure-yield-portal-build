@@ -236,7 +236,9 @@
     "techSupport": {
       "title": "Technical support",
       "telegram": "Telegram support:",
-      "telegramUrl": "https://t.me/VILTBbank"
+      "telegramUrl": "https://t.me/VILTBbank",
+      "email": "Email:",
+      "emailAddress": "gmbhinvest333@gmail.com"
     },
     "copyright": "LTB Bank. All rights reserved.",
     "license": "Licensed by Bank of Lithuania",

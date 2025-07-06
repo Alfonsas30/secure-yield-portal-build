@@ -66,16 +66,30 @@ const Footer = () => {
             {/* Techninė pagalba */}
             <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
               <h4 className="font-semibold text-white mb-2">{t('footer.techSupport.title')}</h4>
-              <p className="text-sm text-slate-300 mb-2">{t('footer.techSupport.telegram')}</p>
-              <a 
-                href={t('footer.techSupport.telegramUrl')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-              >
-                <ExternalLink className="w-4 h-4 mr-1" />
-                @VILTBbank
-              </a>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.telegram')}</p>
+                  <a 
+                    href={t('footer.techSupport.telegramUrl')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    @VILTBbank
+                  </a>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.email')}</p>
+                  <a 
+                    href={`mailto:${t('footer.techSupport.emailAddress')}`}
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Mail className="w-4 h-4 mr-1" />
+                    {t('footer.techSupport.emailAddress')}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
