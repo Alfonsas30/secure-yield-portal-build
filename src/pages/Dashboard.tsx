@@ -14,6 +14,7 @@ import Navigation from "@/components/Navigation";
 import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
 import { useAuth } from "@/contexts/AuthContext";
 import { SEOHead } from "@/components/SEOHead";
+import { AuthDebugPanel } from "@/components/auth/AuthDebugPanel";
 
 export default function Dashboard() {
   const { t } = useTranslation();
@@ -93,11 +94,16 @@ export default function Dashboard() {
             </TabsContent>
 
             <TabsContent value="profile">
-              <Card>
-                <CardContent className="p-6">
-                  <UserProfile />
-                </CardContent>
-              </Card>
+              <div className="space-y-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <UserProfile />
+                  </CardContent>
+                </Card>
+                
+                {/* Debug panel for development/testing */}
+                <AuthDebugPanel />
+              </div>
             </TabsContent>
           </Tabs>
         </div>
