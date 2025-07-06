@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -66,12 +66,15 @@ const Footer = () => {
             {/* Techninė pagalba */}
             <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
               <h4 className="font-semibold text-white mb-2">{t('footer.techSupport.title')}</h4>
-              <p className="text-sm text-slate-300 mb-2">{t('footer.techSupport.calculatorIssues')}</p>
+              <p className="text-sm text-slate-300 mb-2">{t('footer.techSupport.telegram')}</p>
               <a 
-                href="mailto:gmbhinvest333@gmail.com?subject=Skaičiuoklės problema&body=Sveiki, turiu problemą su skaičiuokle:"
-                className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                href={t('footer.techSupport.telegramUrl')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
               >
-                {t('footer.techSupport.email')}
+                <ExternalLink className="w-4 h-4 mr-1" />
+                @VILTBbank
               </a>
             </div>
           </div>
