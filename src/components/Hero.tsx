@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Shield, Zap, Coins, Banknote, Star, Sparkles, Heart, Diamond, Gem, Hexagon, Triangle, Circle } from "lucide-react";
+import { RegistrationModal } from "./RegistrationModal";
 import { DiscountRequestModal } from "./DiscountRequestModal";
 import { AuthModal } from "./auth/AuthModal";
 
 const Hero = () => {
   const { t } = useTranslation();
+  const [registrationOpen, setRegistrationOpen] = useState(false);
   const [discountRequestOpen, setDiscountRequestOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
@@ -115,7 +117,15 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="flex justify-center mb-16 animate-scale-in" style={{ animationDelay: '0.4s' }}>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-scale-in" style={{ animationDelay: '0.4s' }}>
+          <Button 
+            onClick={() => setRegistrationOpen(true)}
+            size="lg" 
+            className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow group"
+          >
+            <span className="relative z-10">{t('hero.openAccount')}</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+          </Button>
           <Button 
             onClick={() => setAuthModalOpen(true)}
             size="lg" 
@@ -178,6 +188,10 @@ const Hero = () => {
         </div>
       </div>
 
+      <RegistrationModal 
+        open={registrationOpen} 
+        onOpenChange={setRegistrationOpen}
+      />
       <DiscountRequestModal 
         open={discountRequestOpen} 
         onOpenChange={setDiscountRequestOpen}
