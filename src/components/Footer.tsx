@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <span className="font-bold text-xl">LTB Bankas</span>
             </div>
@@ -28,9 +28,9 @@ const Footer = () => {
             </div>
 
             {/* Kontaktai */}
-            <div className="py-3 px-4 bg-slate-800 rounded-lg border border-slate-700">
-              <h4 className="font-semibold text-white mb-3">{t('footer.contact.title')}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
+              <div className="space-y-3">
                 <div>
                   <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
                   <a 
