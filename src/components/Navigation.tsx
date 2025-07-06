@@ -30,7 +30,6 @@ const Navigation = () => {
     { href: "/#paslaugos", label: t('navigation.services') },
     { href: "/#kaip-veikia", label: t('navigation.howItWorks') },
     { href: "/#apie-mus", label: t('navigation.about') },
-    { href: "/#kontaktai", label: t('navigation.contact') },
   ];
 
   const handleNavClick = (href: string) => {
