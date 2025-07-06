@@ -41,12 +41,27 @@ const handler = async (req: Request): Promise<Response> => {
     const adminEmail = Deno.env.get("ADMIN_EMAIL") || "gmbhinvest333@gmail.com";
     console.log('🎯 Target email:', adminEmail);
 
+    // Log email details before sending
+    const emailSubject = `Email Test - ${new Date().toLocaleTimeString()}`;
+    const emailContent = `Email test sent at: ${new Date().toLocaleString('lt-LT')}`;
+    
+    console.log('📧 ========== EMAIL SENDING DETAILS ==========');
+    console.log('📧 From:', 'LTB Bankas <noreply@ltb-bankas.com>');
+    console.log('📧 To:', adminEmail);
+    console.log('📧 Subject:', emailSubject);
+    console.log('📧 Content Length:', emailContent.length, 'characters');
+    console.log('📧 Timestamp:', new Date().toISOString());
+    console.log('📧 Domain Status: Need to verify noreply@ltb-bankas.com in Resend');
+    console.log('📧 =============================================');
+
     // Send test email with improved sender and simpler content
     console.log('📤 Attempting to send test email...');
+    const startTime = Date.now();
+    
     const emailResponse = await resend.emails.send({
       from: `LTB Bankas <noreply@ltb-bankas.com>`,
       to: [adminEmail],
-      subject: `Email Test - ${new Date().toLocaleTimeString()}`,
+      subject: emailSubject,
       html: `
         <h2>Email Test Successful!</h2>
         <p>Test sent at: ${new Date().toLocaleString('lt-LT')}</p>
@@ -56,9 +71,22 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log('📧 ========== RESEND RESPONSE ==========');
-    console.log('Response:', JSON.stringify(emailResponse, null, 2));
-    console.log('📧 =====================================');
+    const processingTime = Date.now() - startTime;
+
+    console.log('📧 ========== RESEND API RESPONSE ==========');
+    console.log('📧 Processing Time:', processingTime + 'ms');
+    console.log('📧 Response Status:', emailResponse.error ? 'ERROR' : 'SUCCESS');
+    
+    if (emailResponse.data) {
+      console.log('📧 Email ID:', emailResponse.data.id);
+      console.log('📧 Created At:', emailResponse.data.created_at);
+      console.log('📧 From:', emailResponse.data.from);
+      console.log('📧 To:', emailResponse.data.to);
+      console.log('📧 Subject:', emailResponse.data.subject);
+    }
+    
+    console.log('📧 Full Response:', JSON.stringify(emailResponse, null, 2));
+    console.log('📧 ==========================================');
 
     if (emailResponse.error) {
       console.error('❌ Resend API error:', emailResponse.error);
