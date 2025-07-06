@@ -157,6 +157,14 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
+                  variant="outline"
+                  onClick={() => setRegistrationModalOpen(true)}
+                  className="text-orange-600 border-orange-500 hover:bg-orange-50 hover:text-orange-700 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
+                >
+                  <span className="relative z-10">{t('navigation.paidRegistration')}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-100/0 via-orange-100/50 to-orange-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
+                </Button>
+                <Button 
                   onClick={() => {
                     setAuthModalTab("signup");
                     setAuthModalOpen(true);
@@ -257,6 +265,17 @@ const Navigation = () => {
                     >
                       {t('navigation.login')}
                     </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        setIsOpen(false);
+                        setRegistrationModalOpen(true);
+                      }}
+                      className="justify-start border-orange-500 text-orange-600 hover:bg-orange-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
+                      style={{ animationDelay: '0.5s' }}
+                    >
+                      {t('navigation.paidRegistration')}
+                    </Button>
                      <Button 
                        onClick={() => {
                          setIsOpen(false);
@@ -264,7 +283,7 @@ const Navigation = () => {
                          setAuthModalOpen(true);
                        }}
                        className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 hover:shadow-lg animate-scale-in relative overflow-hidden group"
-                       style={{ animationDelay: '0.5s' }}
+                       style={{ animationDelay: '0.6s' }}
                      >
                        <span className="relative z-10">{t('navigation.register')}</span>
                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>

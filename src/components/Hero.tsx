@@ -119,19 +119,20 @@ const Hero = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-scale-in" style={{ animationDelay: '0.4s' }}>
           <Button 
-            onClick={() => setAuthModalOpen(true)}
+            onClick={() => setRegistrationOpen(true)}
             size="lg" 
-            className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow group"
+            className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow group"
           >
-            <span className="relative z-10">{t('hero.startSaving')}</span>
+            <span className="relative z-10">{t('hero.openAccount')}</span>
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </Button>
           <Button 
+            onClick={() => setAuthModalOpen(true)}
             size="lg" 
             variant="outline" 
             className="px-8 py-6 text-lg font-semibold border-2 hover:bg-slate-50 transition-all duration-300 backdrop-blur-sm bg-white/80 hover:scale-105 transform"
           >
-            {t('hero.learnMore')}
+            {t('hero.startSaving')}
           </Button>
         </div>
 

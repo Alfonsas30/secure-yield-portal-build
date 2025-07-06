@@ -6,6 +6,7 @@
     "about": "About Us",
     "login": "Login",
     "register": "Register",
+    "paidRegistration": "Open Account",
     "dashboard": "Dashboard"
   },
   "auth": {
@@ -114,6 +115,7 @@
     "title": "Save wisely",
     "subtitle": "with daily interest",
     "description": "The world's first bank that pays interest daily. Transparent, secure, with no hidden fees – this is what modern savings look like.",
+    "openAccount": "Open Bank Account",
     "startSaving": "Start saving now",
     "learnMore": "Learn more",
     "features": {

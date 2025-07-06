@@ -6,6 +6,7 @@
     "about": "Apie mus",
     "login": "Prisijungti",
     "register": "Registruotis",
+    "paidRegistration": "Atidaryt sąskaitą",
     "dashboard": "Skydelis"
   },
   "auth": {
@@ -114,6 +115,7 @@
     "title": "Taupyk protingai",
     "subtitle": "su dienos palūkanomis",
     "description": "Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.",
+    "openAccount": "Atidaryt banko sąskaitą",
     "startSaving": "Pradėti taupyti dabar",
     "learnMore": "Sužinoti daugiau",
     "features": {
