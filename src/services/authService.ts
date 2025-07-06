@@ -150,14 +150,27 @@ export class AuthService {
 
   static async sendVerificationCode(email: string, t: (key: string) => string) {
     try {
+      console.log('Sending verification code to:', email);
       const { data, error } = await supabase.functions.invoke('send-verification-code', {
         body: { email }
       });
 
-      if (error) throw error;
+      console.log('send-verification-code response:', { data, error });
 
+      if (error) {
+        console.error('Edge function error:', error);
+        throw error;
+      }
+
+      if (data && !data.success) {
+        console.error('Verification code sending failed:', data.error);
+        throw new Error(data.error || 'Failed to send verification code');
+      }
+
+      console.log('Verification code sent successfully');
       return { error: null };
     } catch (error: any) {
+      console.error('sendVerificationCode error:', error);
       return { error };
     }
   }
