@@ -240,6 +240,16 @@
       "email": "El. paštas:",
       "emailAddress": "gmbhinvest333@gmail.com"
     },
+    "contact": {
+      "title": "Kontaktai",
+      "phone": "Telefonas:",
+      "phoneNumber": "+375 44 416 66 78",
+      "messengers": "WhatsApp, Viber, Signal, Telegram",
+      "workingHours": "Darbo laikas:",
+      "schedule": "Nuo pirmadienio iki penktadienio 10:00-16:00",
+      "languages": "Kalbos:",
+      "supportedLanguages": "Lietuvių, rusų, vokiečių"
+    },
     "copyright": "LTB Bankas. Visos teisės saugomos.",
     "license": "Licencijuotas Lietuvos banko",
     "insurance": "Indėliai apdrausti iki 100,000 €",

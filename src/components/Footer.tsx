@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink, Clock, Languages } from "lucide-react";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -88,6 +88,38 @@ const Footer = () => {
                     <Mail className="w-4 h-4 mr-1" />
                     {t('footer.techSupport.emailAddress')}
                   </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Kontaktai */}
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
+                  <a 
+                    href="tel:+37544416678"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Phone className="w-4 h-4 mr-1" />
+                    {t('footer.contact.phoneNumber')}
+                  </a>
+                  <p className="text-xs text-slate-400 mt-1">{t('footer.contact.messengers')}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.workingHours')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {t('footer.contact.schedule')}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.languages')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Languages className="w-4 h-4 mr-1" />
+                    {t('footer.contact.supportedLanguages')}
+                  </div>
                 </div>
               </div>
             </div>
