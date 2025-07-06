@@ -109,6 +109,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               console.error('Error fetching profile:', error);
             } else {
               setProfile(profileData);
+              
+              // Check if TOTP setup is required after profile is loaded
+              if (profileData && !profileData.totp_enabled) {
+                console.log('TOTP not enabled, showing setup modal');
+                setShowTOTPSetup(true);
+              }
             }
             
             // Auto redirect to dashboard after login
@@ -118,6 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }, 0);
         } else {
           setProfile(null);
+          setShowTOTPSetup(false);
         }
         
         setLoading(false);

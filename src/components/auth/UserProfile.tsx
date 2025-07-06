@@ -16,7 +16,7 @@ import { AuthDebugPanel } from "./AuthDebugPanel";
 
 export function UserProfile() {
   const { t } = useTranslation();
-  const { profile, user, signOut } = useAuth();
+  const { profile, user, signOut, setShowTOTPSetup } = useAuth();
   const { toast } = useToast();
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -307,7 +307,7 @@ export function UserProfile() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setShowMessengerSetup(true)}
+                  onClick={() => setShowTOTPSetup(true)}
                   className="flex items-center gap-2"
                 >
                   <Shield className="w-4 h-4" />
