@@ -11,51 +11,19 @@ const Footer = () => {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <span className="font-bold text-xl">LTB Bankas</span>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4">
               {t('footer.description')}
             </p>
-            <div className="flex space-x-4 mb-6">
+            <div className="flex space-x-4">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Phone className="w-5 h-5" />
-              </div>
-            </div>
-
-            {/* Kontaktai */}
-            <div className="p-6 bg-slate-800 rounded-lg border border-slate-700">
-              <h4 className="font-semibold text-white mb-4">{t('footer.contact.title')}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <p className="text-sm text-slate-300 mb-2">{t('footer.contact.phone')}</p>
-                  <a 
-                    href="tel:+37544416678"
-                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium mb-2"
-                  >
-                    <Phone className="w-4 h-4 mr-1" />
-                    {t('footer.contact.phoneNumber')}
-                  </a>
-                  <p className="text-xs text-slate-400">{t('footer.contact.messengers')}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-300 mb-2">{t('footer.contact.workingHours')}</p>
-                  <div className="inline-flex items-center text-slate-300 text-sm">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {t('footer.contact.schedule')}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-300 mb-2">{t('footer.contact.languages')}</p>
-                  <div className="inline-flex items-center text-slate-300 text-sm">
-                    <Languages className="w-4 h-4 mr-1" />
-                    {t('footer.contact.supportedLanguages')}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -96,9 +64,9 @@ const Footer = () => {
             </ul>
             
             {/* Techninė pagalba */}
-            <div className="mt-6 p-6 bg-slate-800 rounded-lg border border-slate-700">
-              <h4 className="font-semibold text-white mb-4">{t('footer.techSupport.title')}</h4>
-              <div className="space-y-4">
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">{t('footer.techSupport.title')}</h4>
+              <div className="space-y-3">
                 <div>
                   <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.telegram')}</p>
                   <a 
@@ -120,6 +88,38 @@ const Footer = () => {
                     <Mail className="w-4 h-4 mr-1" />
                     {t('footer.techSupport.emailAddress')}
                   </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Kontaktai */}
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
+                  <a 
+                    href="tel:+37544416678"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Phone className="w-4 h-4 mr-1" />
+                    {t('footer.contact.phoneNumber')}
+                  </a>
+                  <p className="text-xs text-slate-400 mt-1">{t('footer.contact.messengers')}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.workingHours')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {t('footer.contact.schedule')}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.languages')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Languages className="w-4 h-4 mr-1" />
+                    {t('footer.contact.supportedLanguages')}
+                  </div>
                 </div>
               </div>
             </div>
