@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Menu, Sparkles, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
-import { RegistrationModal } from "./RegistrationModal";
+
 import { DiscountRequestModal } from "./DiscountRequestModal";
 import { useNavigate } from "react-router-dom";
 import { getExchangeRateDisplay } from "@/lib/currency";
@@ -20,7 +20,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
-  const [registrationModalOpen, setRegistrationModalOpen] = useState(false);
+  
   const [discountRequestModalOpen, setDiscountRequestModalOpen] = useState(false);
   
   const { user, profile, signOut } = useAuth();
@@ -157,14 +157,6 @@ const Navigation = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
                 <Button 
-                  variant="outline"
-                  onClick={() => setRegistrationModalOpen(true)}
-                  className="text-orange-600 border-orange-500 hover:bg-orange-50 hover:text-orange-700 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
-                >
-                  <span className="relative z-10">{t('navigation.paidRegistration')}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-100/0 via-orange-100/50 to-orange-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
-                </Button>
-                <Button 
                   onClick={() => {
                     setAuthModalTab("signup");
                     setAuthModalOpen(true);
@@ -265,17 +257,6 @@ const Navigation = () => {
                     >
                       {t('navigation.login')}
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => {
-                        setIsOpen(false);
-                        setRegistrationModalOpen(true);
-                      }}
-                      className="justify-start border-orange-500 text-orange-600 hover:bg-orange-50 transition-all duration-300 hover:scale-105 transform animate-scale-in"
-                      style={{ animationDelay: '0.5s' }}
-                    >
-                      {t('navigation.paidRegistration')}
-                    </Button>
                      <Button 
                        onClick={() => {
                          setIsOpen(false);
@@ -302,10 +283,6 @@ const Navigation = () => {
         defaultTab={authModalTab}
       />
       
-      <RegistrationModal
-        open={registrationModalOpen}
-        onOpenChange={setRegistrationModalOpen}
-      />
       
       <DiscountRequestModal
         open={discountRequestModalOpen}
