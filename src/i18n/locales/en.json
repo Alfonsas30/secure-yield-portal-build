@@ -4,7 +4,6 @@
     "services": "Services",
     "howItWorks": "How it Works",
     "about": "About Us",
-    "contact": "Contact",
     "login": "Login",
     "register": "Register",
     "dashboard": "Dashboard"
@@ -734,47 +733,6 @@
     "login": "Log In",
     "signContract": "Sign contract"
   },
-  "contact": {
-    "badge": "Contact",
-    "title": "Get in touch",
-    "description": "Have questions? We're here to help. Contact us and we'll get back to you within 24 hours.",
-    "form": {
-      "title": "Contact Us",
-      "name": "Name",
-      "phone": "Phone",
-      "email": "Email",
-      "message": "Message",
-      "namePlaceholder": "Your name",
-      "phonePlaceholder": "+370 XXX XXXXX",
-      "emailPlaceholder": "your.email@example.com",
-      "messagePlaceholder": "Write your question or comment...",
-      "send": "Send Message",
-      "sending": "Sending..."
-    },
-    "newsletter": {
-      "title": "Subscribe to Newsletter",
-      "description": "Get the latest information about interest rate changes, new services and financial advice",
-      "email": "Email Address",
-      "name": "Name (optional)",
-      "emailPlaceholder": "your.email@example.com",
-      "namePlaceholder": "Your name",
-      "consent": "I agree that my data will be processed for newsletter purposes",
-      "subscribe": "Subscribe",
-      "subscribing": "Subscribing..."
-    },
-    "toast": {
-      "messageSent": "Message sent!",
-      "messageDescription": "We will contact you within 24 hours.",
-      "subscribeSuccess": "Successfully subscribed!",
-      "subscribeDescription": "You will receive our newsletter",
-      "alreadySubscribed": "Already subscribed",
-      "alreadyDescription": "This email is already subscribed to our newsletter",
-      "error": "Error",
-      "contactError": "Failed to send message. Please try again.",
-      "newsletterError": "Failed to subscribe to newsletter. Please try again.",
-      "newsletterValidation": "Please enter email and agree to terms"
-    }
-  },
   "dashboard": {
     "title": "Bank Management System",
     "description": "Manage your bank account and transactions",
@@ -782,7 +740,6 @@
       "overview": "Overview",
       "transactions": "Transactions",
       "analytics": "Reports",
-      "newsletter": "Newsletter",
       "profile": "Profile"
     }
   },

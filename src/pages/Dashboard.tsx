@@ -8,7 +8,6 @@ import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
 import { Analytics } from "@/components/banking/Analytics";
-import NewsletterAdmin from "@/components/NewsletterAdmin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
@@ -62,11 +61,10 @@ export default function Dashboard() {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 mb-6 md:mb-8 text-xs md:text-sm">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6 md:mb-8 text-xs md:text-sm">
               <TabsTrigger value="overview">{t('dashboard.tabs.overview')}</TabsTrigger>
               <TabsTrigger value="transactions">{t('dashboard.tabs.transactions')}</TabsTrigger>
               <TabsTrigger value="analytics">{t('dashboard.tabs.analytics')}</TabsTrigger>
-              <TabsTrigger value="newsletter">{t('dashboard.tabs.newsletter')}</TabsTrigger>
               <TabsTrigger value="profile">{t('dashboard.tabs.profile')}</TabsTrigger>
             </TabsList>
 
@@ -92,10 +90,6 @@ export default function Dashboard() {
 
             <TabsContent value="analytics">
               <Analytics />
-            </TabsContent>
-
-            <TabsContent value="newsletter">
-              <NewsletterAdmin />
             </TabsContent>
 
             <TabsContent value="profile">

@@ -17,7 +17,6 @@ import InterestCalculator from "@/components/InterestCalculator";
 import TermDepositCalculator from "@/components/TermDepositCalculator";
 import LoanCalculator from "@/components/LoanCalculator";
 import FAQ from "@/components/FAQ";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BoardInvitation from "@/components/BoardInvitation";
 import { LoanPaymentSuccess } from "@/components/LoanPaymentSuccess";
@@ -167,8 +166,7 @@ const Index = () => {
       <BoardInvitation />
       <HowItWorks />
       <FAQ />
-        <Contact />
-        <Footer />
+      <Footer />
       </div>
     </>
   );
