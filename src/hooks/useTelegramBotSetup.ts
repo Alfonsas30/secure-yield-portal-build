@@ -24,28 +24,39 @@ export function useTelegramBotSetup() {
   const testToken = async () => {
     setLoading(true);
     setError(null);
+    console.log('🔍 Testing Telegram bot token...');
+    
     try {
       const { data, error } = await supabase.functions.invoke('telegram-bot-setup', {
         body: { action: 'test_token' }
       });
 
-      if (error) throw error;
+      console.log('🔍 Bot test response:', { data, error });
 
-      if (data.success) {
+      if (error) {
+        console.error('🚨 Bot test error:', error);
+        throw error;
+      }
+
+      if (data?.success) {
         setTokenValid(true);
         setBotInfo(data.bot);
+        console.log('✅ Bot test successful:', data.bot);
         toast({
           title: "Token sėkmingai patikrintas",
           description: `Bot'as "${data.bot.first_name}" (@${data.bot.username}) veikia`,
         });
+      } else {
+        throw new Error(data?.error || 'Bot token testas nepavyko');
       }
     } catch (error: any) {
-      console.error('Token test error:', error);
-      setError(error?.message || "Nepavyko patikrinti bot token");
+      console.error('🚨 Token test error:', error);
+      const errorMessage = error?.message || error?.details || "Nepavyko patikrinti bot token";
+      setError(errorMessage);
       setTokenValid(false);
       toast({
-        title: "Token klaida",
-        description: error?.message || "Nepavyko patikrinti bot token",
+        title: "Token klaida", 
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -55,24 +66,37 @@ export function useTelegramBotSetup() {
 
   const setupWebhook = async () => {
     setLoading(true);
+    console.log('🔧 Setting up Telegram webhook...');
+    
     try {
       const { data, error } = await supabase.functions.invoke('telegram-bot-setup', {
         body: { action: 'setup_webhook' }
       });
 
-      if (error) throw error;
+      console.log('🔧 Webhook setup response:', { data, error });
 
-      toast({
-        title: "Webhook sukonfigūruotas",
-        description: "Telegram bot'as dabar gali priimti žinutes",
-      });
-      
-      await checkBotStatus();
+      if (error) {
+        console.error('🚨 Webhook setup error:', error);
+        throw error;
+      }
+
+      if (data?.success) {
+        console.log('✅ Webhook setup successful');
+        toast({
+          title: "Webhook sukonfigūruotas",
+          description: "Telegram bot'as dabar gali priimti žinutes",
+        });
+        
+        await checkBotStatus();
+      } else {
+        throw new Error(data?.error || 'Webhook konfigūracija nepavyko');
+      }
     } catch (error: any) {
-      console.error('Webhook setup error:', error);
+      console.error('🚨 Webhook setup error:', error);
+      const errorMessage = error?.message || error?.details || "Nepavyko sukonfigūruoti webhook";
       toast({
         title: "Klaida",
-        description: error?.message || "Nepavyko sukonfigūruoti webhook",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {

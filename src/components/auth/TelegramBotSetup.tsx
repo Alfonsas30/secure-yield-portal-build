@@ -4,6 +4,7 @@ import { Info, AlertCircle } from "lucide-react";
 import { useTelegramBotSetup } from "@/hooks/useTelegramBotSetup";
 import { TelegramBotControls } from "./telegram/TelegramBotControls";
 import { TelegramBotStatus } from "./telegram/TelegramBotStatus";
+import { TelegramTestMessage } from "./telegram/TelegramTestMessage";
 
 export function TelegramBotSetup() {
   const {
@@ -54,6 +55,10 @@ export function TelegramBotSetup() {
           botInfo={botInfo}
           webhookInfo={webhookInfo}
         />
+
+        {tokenValid && (
+          <TelegramTestMessage />
+        )}
       </CardContent>
     </Card>
   );

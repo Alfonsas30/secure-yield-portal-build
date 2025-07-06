@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { RefreshCw, TestTube } from "lucide-react";
+import { RefreshCw, TestTube, Webhook, CheckCircle } from "lucide-react";
 
 interface TelegramBotControlsProps {
   loading: boolean;
@@ -22,13 +22,18 @@ export function TelegramBotControls({
         onClick={onTestToken}
         disabled={loading}
         size="sm"
-        variant="outline"
+        variant={tokenValid ? "default" : "outline"}
         className="flex items-center gap-2 text-xs h-8"
       >
         {loading ? (
           <>
             <RefreshCw className="w-3 h-3 animate-spin" />
             Tikrinama...
+          </>
+        ) : tokenValid ? (
+          <>
+            <CheckCircle className="w-3 h-3" />
+            Token OK
           </>
         ) : (
           <>
@@ -37,21 +42,26 @@ export function TelegramBotControls({
           </>
         )}
       </Button>
+      
       <Button 
         onClick={onSetupWebhook}
         disabled={loading || !tokenValid}
         size="sm"
-        className="text-xs h-8"
+        className="text-xs h-8 flex items-center gap-2"
       >
         {loading ? (
           <>
-            <RefreshCw className="w-3 h-3 mr-2 animate-spin" />
+            <RefreshCw className="w-3 h-3 animate-spin" />
             Konfigūruojama...
           </>
         ) : (
-          "Webhook"
+          <>
+            <Webhook className="w-3 h-3" />
+            Webhook
+          </>
         )}
       </Button>
+      
       <Button 
         variant="outline"
         onClick={onCheckStatus}
@@ -59,6 +69,7 @@ export function TelegramBotControls({
         size="sm"
         className="text-xs h-8"
       >
+        <RefreshCw className={`w-3 h-3 mr-2 ${loading ? 'animate-spin' : ''}`} />
         Patikrinti būseną
       </Button>
     </div>

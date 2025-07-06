@@ -31,7 +31,7 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
   const [activeTab, setActiveTab] = useState("telegram");
 
   const setupTelegram = async () => {
-    if (!telegramId) {
+    if (!telegramId || telegramId.trim() === "") {
       toast({
         title: t('discount.error'),
         description: "Įveskite Telegram ID",
@@ -40,31 +40,54 @@ export function MessengerSetupModal({ open, onOpenChange, onSetupComplete }: Mes
       return;
     }
 
+    // Validate Telegram ID format (should be numeric)
+    if (!/^\d+$/.test(telegramId.trim())) {
+      toast({
+        title: t('discount.error'),
+        description: "Telegram ID turi būti skaičius (pvz., 123456789)",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
+    console.log('🔧 Setting up Telegram 2FA for ID:', telegramId);
+    
     try {
       const { data, error } = await supabase.functions.invoke('send-telegram-2fa', {
         body: { 
           action: 'setup',
-          telegram_id: telegramId,
-          display_name: `Telegram (${telegramId})`
+          telegram_id: telegramId.trim(),
+          display_name: `Telegram (${telegramId.trim()})`
         }
       });
 
-      if (error) throw error;
+      console.log('🔧 Telegram setup response:', { data, error });
 
-      toast({
-        title: "Telegram 2FA sukonfigūruotas",
-        description: "Telegram 2FA sėkmingai įjungtas jūsų paskyroje",
-      });
-      
-      onSetupComplete();
-      onOpenChange(false);
-      setTelegramId("");
-    } catch (error) {
-      console.error('Telegram setup error:', error);
+      if (error) {
+        console.error('🚨 Telegram setup error:', error);
+        throw error;
+      }
+
+      if (data?.success) {
+        console.log('✅ Telegram 2FA setup successful');
+        toast({
+          title: "Telegram 2FA sukonfigūruotas",
+          description: "Telegram 2FA sėkmingai įjungtas jūsų paskyroje",
+        });
+        
+        onSetupComplete();
+        onOpenChange(false);
+        setTelegramId("");
+      } else {
+        throw new Error(data?.error || 'Telegram 2FA konfigūracija nepavyko');
+      }
+    } catch (error: any) {
+      console.error('🚨 Telegram setup error:', error);
+      const errorMessage = error?.message || error?.details || "Nepavyko nustatyti Telegram 2FA";
       toast({
         title: t('discount.error'),
-        description: error?.message || "Nepavyko nustatyti Telegram 2FA",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
