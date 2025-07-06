@@ -4,90 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
-
-interface Profile {
-  id: string;
-  user_id: string;
-  account_number: string;
-  display_name: string | null;
-  email: string;
-  phone: string | null;
-  created_at: string;
-  updated_at: string;
-  totp_enabled: boolean;
-  totp_secret: string | null;
-  mfa_enabled: boolean;
-  mfa_verified: boolean;
-}
-
-interface AuthContextType {
-  user: User | null;
-  session: Session | null;
-  profile: Profile | null;
-  loading: boolean;
-  timeLeft: number;
-  pendingMFAEmail: string | null;
-  showTOTPSetup: boolean;
-  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any; requiresTOTP?: boolean; requiresMFA?: boolean }>;
-  signInWithGoogle: () => Promise<{ error: any }>;
-  signOut: () => Promise<{ error: any }>;
-  resendConfirmation: (email: string) => Promise<{ error: any }>;
-  sendVerificationCode: (email: string) => Promise<{ error: any }>;
-  verifyCodeAndSignIn: (email: string, password: string, code: string) => Promise<{ error: any }>;
-  setupTOTP: () => Promise<{ error: any }>;
-  verifyTOTP: (code: string, isBackupCode?: boolean) => Promise<{ error: any }>;
-  setShowTOTPSetup: (show: boolean) => void;
-}
+import { Profile, AuthContextType } from '@/types/auth';
+import { AuthService } from '@/services/authService';
+import { useAuthSession } from '@/hooks/useAuthSession';
+import { useAuthActivity } from '@/hooks/useAuthActivity';
+import { getErrorMessage } from '@/utils/authErrors';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
-  
-  // Mobile-optimized timeouts for better security
-  const IDLE_TIMEOUT = isMobile ? 2 * 60 * 1000 : 5 * 60 * 1000; // 2 min mobile, 5 min desktop
-  const WARNING_TIME = 30 * 1000; // 30 seconds warning
-  const VISIBILITY_TIMEOUT = isMobile ? 10 * 1000 : 30 * 1000; // 10 sec mobile, 30 sec desktop
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(IDLE_TIMEOUT);
-  const [lastActivity, setLastActivity] = useState(Date.now());
-  const [showWarning, setShowWarning] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [sessionTimeoutActive, setSessionTimeoutActive] = useState(false);
   const [pendingMFAEmail, setPendingMFAEmail] = useState<string | null>(null);
   const [showTOTPSetup, setShowTOTPSetup] = useState(false);
   const [pendingTOTPEmail, setPendingTOTPEmail] = useState<string | null>(null);
   const [pendingTOTPPassword, setPendingTOTPPassword] = useState<string | null>(null);
-  const { toast } = useToast();
-  const navigate = useNavigate();
 
-  // Comprehensive auth data cleanup function
-  const clearAllAuthData = () => {
-    try {
-      // Clear all possible Supabase auth tokens
-      const supabaseProjectRef = 'latwptcvghypdopbpxfr';
-      localStorage.removeItem('supabase.auth.token');
-      localStorage.removeItem(`sb-${supabaseProjectRef}-auth-token`);
-      sessionStorage.removeItem(`sb-${supabaseProjectRef}-auth-token`);
-      
-      // Clear any other auth-related storage
-      Object.keys(localStorage).forEach(key => {
-        if (key.includes('supabase') || key.includes('auth')) {
-          localStorage.removeItem(key);
-        }
-      });
-      
-      console.log(`Mobile logout cleanup completed. Mobile: ${isMobile}`);
-    } catch (error) {
-      console.error('Error clearing auth data:', error);
-    }
-  };
+  const sessionHook = useAuthSession();
 
   useEffect(() => {
     // Set up auth state listener first
@@ -139,26 +78,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          display_name: displayName
-        }
-      }
-    });
+    const { error } = await AuthService.signUp(email, password, t, displayName);
 
     if (error) {
       toast({
         title: t('auth.toast.signUpError'),
-        description: getErrorMessage(error.message),
+        description: getErrorMessage(error.message, t),
         variant: "destructive"
       });
     } else {
@@ -173,192 +101,84 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
-    try {
-      console.log('=== SIGNIN STARTED ===');
-      console.log('Email:', email);
-      
-      // First check if user exists and has MFA/TOTP enabled
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('mfa_enabled, totp_enabled, email')
-        .eq('email', email)
-        .single();
+    const result = await AuthService.signIn(email, password, t);
 
-      console.log('Profile query result:', { profileData, profileError });
-
-      // If user not found in profiles, try regular signin (might be new user)
-      if (profileError || !profileData) {
-        console.log('No profile found, attempting regular signin');
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        if (signInError) {
-          console.log('Regular SignIn error:', signInError);
-          toast({
-            title: t('auth.toast.signInError'),
-            description: getErrorMessage(signInError.message),
-            variant: "destructive"
-          });
-          return { error: signInError };
-        }
-
-        console.log('Regular SignIn successful');
-        toast({
-          title: t('auth.toast.signInSuccess'),
-          description: t('auth.toast.signInSuccessDescription'),
-          variant: "default"
-        });
-
-        return { error: null };
-      }
-
-      // If user has MFA enabled, send verification code
-      if (profileData.mfa_enabled) {
-        console.log('=== MFA ENABLED - Sending verification code ===');
-        const { error: codeError } = await sendVerificationCode(email);
-        if (codeError) {
-          return { error: codeError };
-        }
-        setPendingMFAEmail(email);
-        return { error: null, requiresMFA: true };
-      }
-
-      // If user has TOTP enabled, require TOTP verification
-      if (profileData.totp_enabled) {
-        console.log('=== TOTP ENABLED - Requiring TOTP verification ===');
-        setPendingTOTPEmail(email);
-        setPendingTOTPPassword(password);
-        return { error: null, requiresTOTP: true };
-      }
-
-      // Regular sign in for users without MFA/TOTP
-      console.log('=== REGULAR SIGNIN - No 2FA required ===');
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password
+    if (result.error) {
+      toast({
+        title: t('auth.toast.signInError'),
+        description: getErrorMessage(result.error.message, t),
+        variant: "destructive"
       });
-
-      if (signInError) {
-        console.log('SignIn error:', signInError);
-        toast({
-          title: t('auth.toast.signInError'),
-          description: getErrorMessage(signInError.message),
-          variant: "destructive"
-        });
-        return { error: signInError };
-      }
-
-      console.log('SignIn successful for user:', signInData.user.id);
-      
+    } else if (result.requiresMFA) {
+      setPendingMFAEmail(email);
+      toast({
+        title: t('auth.toast.codeSent'),
+        description: t('auth.toast.codeSentDescription'),
+        variant: "default"
+      });
+    } else if (result.requiresTOTP) {
+      setPendingTOTPEmail(email);
+      setPendingTOTPPassword(password);
+    } else {
       toast({
         title: t('auth.toast.signInSuccess'),
         description: t('auth.toast.signInSuccessDescription'),
         variant: "default"
       });
-
-      return { error: null };
-    } catch (error: any) {
-      console.error('SignIn exception:', error);
-      toast({
-        title: t('auth.toast.signInError'),
-        description: getErrorMessage(error.message),
-        variant: "destructive"
-      });
-      return { error };
     }
+
+    return result;
   };
 
   const signInWithGoogle = async () => {
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`
-        }
-      });
+    const { error } = await AuthService.signInWithGoogle();
 
-      if (error) {
-        toast({
-          title: t('auth.toast.googleSignInError'),
-          description: getErrorMessage(error.message),
-          variant: "destructive"
-        });
-        return { error };
-      }
-
-      return { error: null };
-    } catch (error: any) {
-      console.error('Google signIn exception:', error);
+    if (error) {
       toast({
         title: t('auth.toast.googleSignInError'),
-        description: getErrorMessage(error.message),
+        description: getErrorMessage(error.message, t),
         variant: "destructive"
       });
-      return { error };
     }
+
+    return { error };
   };
 
   const signOut = async () => {
-    if (isLoggingOut) return { error: null };
+    if (sessionHook.isLoggingOut) return { error: null };
     
-    setIsLoggingOut(true);
-    setSessionTimeoutActive(false);
-    console.log('Attempting to sign out...');
+    sessionHook.setIsLoggingOut(true);
+    sessionHook.setSessionTimeoutActive(false);
     
     // Clear all timers and state
-    setTimeLeft(IDLE_TIMEOUT);
-    setLastActivity(Date.now());
-    setShowWarning(false);
+    sessionHook.setTimeLeft(sessionHook.IDLE_TIMEOUT);
+    sessionHook.setLastActivity(Date.now());
+    sessionHook.setShowWarning(false);
     
     try {
-      // Check if we have a valid session before attempting logout
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      
-      if (!currentSession) {
-        console.log('No active session found, clearing state...');
-        // Clear all Supabase authentication data thoroughly
-        clearAllAuthData();
-        setUser(null);
-        setSession(null);
-        setProfile(null);
-        navigate('/');
-        return { error: null };
-      }
-      
-      const { error } = await supabase.auth.signOut();
+      const { error } = await AuthService.signOut(sessionHook.clearAllAuthData);
       
       if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
-        console.error('Logout error:', error);
         toast({
           title: t('auth.toast.signOutError'),
           description: t('auth.toast.signOutErrorDescription'),
           variant: "destructive"
         });
       } else {
-        console.log('Successfully signed out');
-        // Use comprehensive cleanup
-        clearAllAuthData();
+        setUser(null);
+        setSession(null);
+        setProfile(null);
         navigate('/');
       }
 
       return { error };
     } finally {
-      setIsLoggingOut(false);
+      sessionHook.setIsLoggingOut(false);
     }
   };
 
   const resendConfirmation = async (email: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.resend({
-      type: 'signup',
-      email,
-      options: {
-        emailRedirectTo: redirectUrl
-      }
-    });
+    const { error } = await AuthService.resendConfirmation(email);
 
     if (error) {
       toast({
@@ -378,130 +198,64 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const sendVerificationCode = async (email: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke('send-verification-code', {
-        body: { email }
+    const { error } = await AuthService.sendVerificationCode(email, t);
+
+    if (error) {
+      toast({
+        title: t('auth.toast.verificationError'),
+        description: error.message || t('auth.toast.verificationErrorDescription'),
+        variant: "destructive"
       });
-
-      if (error) throw error;
-
+    } else {
       setPendingMFAEmail(email);
       toast({
         title: t('auth.toast.codeSent'),
         description: t('auth.toast.codeSentDescription'),
         variant: "default"
       });
-
-      return { error: null };
-    } catch (error: any) {
-      toast({
-        title: t('auth.toast.verificationError'),
-        description: error.message || t('auth.toast.verificationErrorDescription'),
-        variant: "destructive"
-      });
-      return { error };
     }
+
+    return { error };
   };
 
   const verifyCodeAndSignIn = async (email: string, password: string, code: string) => {
-    try {
-      // First verify the code
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-code', {
-        body: { email, code }
+    const { error } = await AuthService.verifyCodeAndSignIn(email, password, code);
+
+    if (error) {
+      toast({
+        title: t('auth.toast.signInError'),
+        description: getErrorMessage(error.message, t),
+        variant: "destructive"
       });
-
-      if (verifyError) throw verifyError;
-      if (!verifyData.success) throw new Error(verifyData.error);
-
-      // If code is valid, proceed with normal sign in
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if (signInError) throw signInError;
-
+    } else {
       setPendingMFAEmail(null);
       toast({
         title: t('auth.toast.signInSuccess'),
         description: t('auth.toast.signInSuccessDescription'),
         variant: "default"
       });
-
-      return { error: null };
-    } catch (error: any) {
-      toast({
-        title: t('auth.toast.signInError'),
-        description: getErrorMessage(error.message),
-        variant: "destructive"
-      });
-      return { error };
     }
+
+    return { error };
   };
 
   const setupTOTP = async () => {
-    try {
-      console.log('Calling setup-totp edge function...');
-      const { data, error } = await supabase.functions.invoke('setup-totp');
-      
-      console.log('Setup-totp response:', { data, error });
-      
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error);
+    const { error } = await AuthService.setupTOTP();
 
-      return { error: null };
-    } catch (error: any) {
-      console.error('Setup TOTP error:', error);
+    if (error) {
       toast({
         title: t('auth.toast.totpSetupError'),
         description: error.message || t('auth.toast.totpSetupErrorDescription'),
         variant: "destructive"
       });
-      return { error };
     }
+
+    return { error };
   };
 
   const verifyTOTP = async (code: string, isBackupCode = false) => {
-    try {
-      if (!pendingTOTPEmail) {
-        throw new Error('No pending TOTP verification');
-      }
-
-      console.log('Verifying TOTP for email:', pendingTOTPEmail);
-
-      const { data, error } = await supabase.functions.invoke('verify-totp-login', {
-        body: { 
-          email: pendingTOTPEmail, 
-          code,
-          isBackupCode 
-        }
-      });
-      
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error);
-
-      console.log('TOTP verification successful, signing in user');
-
-      // Now complete the sign in using the stored password
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: pendingTOTPEmail,
-        password: pendingTOTPPassword!
-      });
-
-      if (signInError) throw signInError;
-
-      setPendingTOTPEmail(null);
-      setPendingTOTPPassword(null);
-      
-      toast({
-        title: t('auth.toast.signInSuccess'),
-        description: t('auth.toast.signInSuccessDescription'),
-        variant: "default"
-      });
-
-      return { error: null };
-    } catch (error: any) {
-      console.error('TOTP verification error:', error);
+    if (!pendingTOTPEmail) {
+      const error = new Error('No pending TOTP verification');
       toast({
         title: t('auth.toast.totpError'),
         description: error.message || t('auth.toast.totpErrorDescription'),
@@ -509,171 +263,70 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       return { error };
     }
-  };
 
-  const getErrorMessage = (message: string) => {
-    if (message.includes('Invalid login credentials')) {
-      return t('auth.toast.errors.invalidCredentials');
+    const { error } = await AuthService.verifyTOTP(pendingTOTPEmail, code, isBackupCode);
+
+    if (error) {
+      toast({
+        title: t('auth.toast.totpError'),
+        description: error.message || t('auth.toast.totpErrorDescription'),
+        variant: "destructive"
+      });
+      return { error };
     }
-    if (message.includes('User already registered')) {
-      return t('auth.toast.errors.userExists');
-    }
-    if (message.includes('Email not confirmed')) {
-      return t('auth.toast.errors.emailNotConfirmed');
-    }
-    if (message.includes('Password should be at least')) {
-      return t('auth.toast.errors.passwordTooShort');
-    }
-    return message;
-  };
 
-  // Activity tracking and idle timeout logic
-  const resetActivity = () => {
-    setLastActivity(Date.now());
-    setTimeLeft(IDLE_TIMEOUT);
-    setShowWarning(false);
-  };
-
-  // Activity tracking useEffect
-  useEffect(() => {
-    if (!user) return;
-
-    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
-    const handleActivity = () => resetActivity();
-
-    events.forEach(event => {
-      document.addEventListener(event, handleActivity, true);
+    // Now complete the sign in using the stored password
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+      email: pendingTOTPEmail,
+      password: pendingTOTPPassword!
     });
 
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, handleActivity, true);
+    if (signInError) {
+      toast({
+        title: t('auth.toast.signInError'),
+        description: getErrorMessage(signInError.message, t),
+        variant: "destructive"
       });
-    };
-  }, [user]);
+      return { error: signInError };
+    }
 
-  // Page unload security - automatic logout when leaving site
-  useEffect(() => {
-    if (!user) return;
+    setPendingTOTPEmail(null);
+    setPendingTOTPPassword(null);
+    
+    toast({
+      title: t('auth.toast.signInSuccess'),
+      description: t('auth.toast.signInSuccessDescription'),
+      variant: "default"
+    });
 
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      // Only show warning if user has been active recently
-      const timeSinceActivity = Date.now() - lastActivity;
-      if (timeSinceActivity < 60000) { // 1 minute
-        event.preventDefault();
-        return t('auth.toast.pageUnloadWarning');
-      }
-    };
+    return { error: null };
+  };
 
-    const handleUnload = () => {
-      // Quick signout on page unload - clear session immediately
-      try {
-        // Use comprehensive cleanup
-        clearAllAuthData();
-        
-        // Attempt to notify server with keepalive (mobile-friendly)
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon('/logout');
-        } else if (isMobile) {
-          // For mobile browsers, use sync XHR as last resort
-          const xhr = new XMLHttpRequest();
-          xhr.open('POST', '/logout', false); // synchronous
-          xhr.send();
-        } else {
-          // Fallback for browsers without sendBeacon
-          fetch('/logout', { 
-            method: 'POST', 
-            keepalive: true,
-            headers: { 'Content-Type': 'application/json' }
-          }).catch(() => {});
-        }
-      } catch (error) {
-        console.error('Error during unload cleanup:', error);
-      }
-    };
-
-    const handlePageHide = () => {
-      // Alternative to unload for better mobile support
-      console.log(`Page hidden on ${isMobile ? 'mobile' : 'desktop'}`);
-      handleUnload();
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        console.log(`Document hidden, starting ${VISIBILITY_TIMEOUT}ms timeout (Mobile: ${isMobile})`);
-        // Use mobile-optimized timeout when page becomes hidden
-        setTimeout(() => {
-          if (document.hidden) {
-            console.log('Signing out due to visibility timeout');
-            signOut();
-          }
-        }, VISIBILITY_TIMEOUT);
-      } else {
-        console.log('Document visible again');
-        resetActivity(); // Reset activity when user returns
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('unload', handleUnload);
-    window.addEventListener('pagehide', handlePageHide);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('unload', handleUnload);
-      window.removeEventListener('pagehide', handlePageHide);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [user, lastActivity, signOut]);
-
-  // Idle timeout timer
-  useEffect(() => {
-    if (!user || isLoggingOut || sessionTimeoutActive) return;
-
-    const timer = setInterval(async () => {
-      // Check if session still exists before proceeding
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      if (!currentSession || isLoggingOut || sessionTimeoutActive) {
-        return;
-      }
-
-      const now = Date.now();
-      const elapsed = now - lastActivity;
-      const remaining = IDLE_TIMEOUT - elapsed;
-
-      if (remaining <= 0 && !sessionTimeoutActive) {
-        setSessionTimeoutActive(true);
-        toast({
-          title: t('auth.toast.sessionExpired'),
-          description: t('auth.toast.sessionExpiredDescription'),
-          variant: "destructive"
-        });
-        signOut();
-        return;
-      }
-
-      if (remaining <= WARNING_TIME && !showWarning && !sessionTimeoutActive) {
-        setShowWarning(true);
-        toast({
-          title: t('auth.toast.sessionExpiring'),
-          description: t('auth.toast.sessionExpiringDescription', { seconds: Math.ceil(remaining / 1000) }),
-          variant: "destructive"
-        });
-      }
-
-      setTimeLeft(remaining);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [user, lastActivity, showWarning, isLoggingOut, sessionTimeoutActive]);
+  // Set up activity tracking
+  useAuthActivity({
+    user,
+    lastActivity: sessionHook.lastActivity,
+    timeLeft: sessionHook.timeLeft,
+    showWarning: sessionHook.showWarning,
+    isLoggingOut: sessionHook.isLoggingOut,
+    sessionTimeoutActive: sessionHook.sessionTimeoutActive,
+    resetActivity: sessionHook.resetActivity,
+    clearAllAuthData: sessionHook.clearAllAuthData,
+    signOut,
+    setTimeLeft: sessionHook.setTimeLeft,
+    setShowWarning: sessionHook.setShowWarning,
+    setSessionTimeoutActive: sessionHook.setSessionTimeoutActive,
+    IDLE_TIMEOUT: sessionHook.IDLE_TIMEOUT,
+    WARNING_TIME: sessionHook.WARNING_TIME,
+    VISIBILITY_TIMEOUT: sessionHook.VISIBILITY_TIMEOUT
+  });
 
   const value = {
     user,
     session,
     profile,
     loading,
-    timeLeft,
+    timeLeft: sessionHook.timeLeft,
     pendingMFAEmail,
     showTOTPSetup,
     signUp,
