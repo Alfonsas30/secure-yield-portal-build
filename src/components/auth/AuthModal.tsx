@@ -6,9 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield, Chrome } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield, Chrome, RefreshCw, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { TOTPSetupModal } from "./TOTPSetupModal";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface AuthModalProps {
   open: boolean;
@@ -34,6 +37,9 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
   const [totpCode, setTotpCode] = useState("");
   const [showTOTPStep, setShowTOTPStep] = useState(false);
   const [showBackupCode, setShowBackupCode] = useState(false);
+  const [showTroubleshooting, setShowTroubleshooting] = useState(false);
+  const [clearingCache, setClearingCache] = useState(false);
+  const { toast } = useToast();
 
   const { 
     signIn, 
@@ -152,6 +158,36 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
     setLoading(true);
     await resendConfirmation(resendEmail);
     setLoading(false);
+  };
+
+  const handleClearCache = async () => {
+    setClearingCache(true);
+    try {
+      // Clear localStorage data
+      localStorage.removeItem('sb-khcelroaozkzpyxayvpj-auth-token');
+      localStorage.removeItem('supabase.auth.token');
+      
+      // Sign out to clear any lingering session
+      await supabase.auth.signOut();
+      
+      // Clear any cached queries or data
+      window.location.reload();
+      
+      toast({
+        title: "Cache išvalyti",
+        description: "Naršyklės duomenys išvalyli. Pabandykite prisijungti dar kartą.",
+        variant: "default"
+      });
+    } catch (error) {
+      console.error('Cache clear error:', error);
+      toast({
+        title: "Klaida",
+        description: "Nepavyko išvalyti cache duomenų",
+        variant: "destructive"
+      });
+    } finally {
+      setClearingCache(false);
+    }
   };
 
   return (
@@ -494,6 +530,60 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
             </p>
           </TabsContent>
         </Tabs>
+
+        {/* Troubleshooting Section */}
+        <div className="mt-4 space-y-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowTroubleshooting(!showTroubleshooting)}
+            className="w-full text-xs text-muted-foreground"
+          >
+            <AlertCircle className="w-3 h-3 mr-2" />
+            Negalite prisijungti? Spausti pagalbai
+          </Button>
+
+          {showTroubleshooting && (
+            <div className="p-4 bg-muted/30 rounded-lg space-y-3">
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription className="text-sm">
+                  <strong>Dažnos problemos ir sprendimai:</strong>
+                </AlertDescription>
+              </Alert>
+
+              <div className="space-y-2 text-xs text-muted-foreground">
+                <p>• <strong>Neteisingi prisijungimo duomenys:</strong> Po duomenų bazės atnaujinimo, senų paskyrų gali nebelikti. Pabandykite užsiregistruoti iš naujo su tuo pačiu el. paštu.</p>
+                <p>• <strong>Prisijungimas per Google:</strong> Google autentifikacija gali būti neįgalinta. Naudokite el. pašto registraciją.</p>
+                <p>• <strong>Cache problemos:</strong> Išvalykite naršyklės duomenis mygtuku žemiau.</p>
+              </div>
+
+              <div className="space-y-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleClearCache}
+                  disabled={clearingCache}
+                  className="w-full"
+                >
+                  {clearingCache ? (
+                    <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+                  ) : (
+                    <RefreshCw className="w-3 h-3 mr-2" />
+                  )}
+                  Išvalyti cache duomenis
+                </Button>
+
+                <div className="text-xs text-muted-foreground space-y-1">
+                  <p><strong>Rekomenduojami veiksmai:</strong></p>
+                  <p>1. Pirma pabandykite registraciją su savo el. paštu</p>
+                  <p>2. Jei nepadeda - spauskite "Išvalyti cache"</p>
+                  <p>3. Atnaujinkite puslapį ir bandykite dar kartą</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
         <TOTPSetupModal
           open={showTOTPSetup}

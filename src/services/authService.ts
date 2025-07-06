@@ -23,6 +23,7 @@ export class AuthService {
     try {
       console.log('=== SIGNIN STARTED ===');
       console.log('Email:', email);
+      console.log('Timestamp:', new Date().toISOString());
       
       // First check if user exists and has MFA/TOTP enabled
       const { data: profileData, error: profileError } = await supabase
@@ -36,6 +37,8 @@ export class AuthService {
       // If user not found in profiles, try regular signin (might be new user)
       if (profileError || !profileData) {
         console.log('No profile found, attempting regular signin');
+        console.log('This might be a new user or profile was deleted after DB restore');
+        
         const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password
@@ -43,6 +46,17 @@ export class AuthService {
 
         if (signInError) {
           console.log('Regular SignIn error:', signInError);
+          console.log('Error code:', signInError.message);
+          
+          // Provide more helpful error messages
+          if (signInError.message.includes('Invalid login credentials')) {
+            const helpfulError = new Error(
+              'Neteisingi prisijungimo duomenys. Po duomenų bazės atnaujinimo jūsų senos paskyros gali nebelikti. ' +
+              'Pabandykite užsiregistruoti iš naujo su tuo pačiu el. paštu arba išvalykite cache duomenis.'
+            );
+            return { error: helpfulError };
+          }
+          
           return { error: signInError };
         }
 
@@ -75,6 +89,16 @@ export class AuthService {
 
       if (signInError) {
         console.log('SignIn error:', signInError);
+        
+        // Provide more helpful error messages
+        if (signInError.message.includes('Invalid login credentials')) {
+          const helpfulError = new Error(
+            'Neteisingi prisijungimo duomenys. Po duomenų bazės atnaujinimo jūsų senos paskyros gali nebelikti. ' +
+            'Pabandykite užsiregistruoti iš naujo su tuo pačiu el. paštu arba išvalykite cache duomenis.'
+          );
+          return { error: helpfulError };
+        }
+        
         return { error: signInError };
       }
 
