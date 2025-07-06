@@ -28,9 +28,9 @@ const Footer = () => {
             </div>
 
             {/* Kontaktai */}
-            <div className="p-4 bg-slate-800 rounded-lg border border-slate-700 flex flex-col justify-between min-h-[200px]">
+            <div className="p-4 bg-slate-800 rounded-lg border border-slate-700 min-h-[200px]">
               <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
-              <div className="space-y-3 flex-1">
+              <div className="space-y-3">
                 <div>
                   <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
                   <a 
@@ -96,9 +96,9 @@ const Footer = () => {
             </ul>
             
             {/* Techninė pagalba */}
-            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700 flex flex-col justify-between min-h-[200px]">
+            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700 min-h-[200px]">
               <h4 className="font-semibold text-white mb-2">{t('footer.techSupport.title')}</h4>
-              <div className="space-y-3 flex-1">
+              <div className="space-y-3">
                 <div>
                   <p className="text-sm text-slate-300 mb-1">{t('footer.techSupport.telegram')}</p>
                   <a 
