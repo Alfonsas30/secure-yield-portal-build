@@ -28,7 +28,7 @@ interface AuthContextType {
   pendingMFAEmail: string | null;
   showTOTPSetup: boolean;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any; requiresTOTP?: boolean }>;
+  signIn: (email: string, password: string) => Promise<{ error: any; requiresTOTP?: boolean; requiresMFA?: boolean }>;
   signInWithGoogle: () => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resendConfirmation: (email: string) => Promise<{ error: any }>;
@@ -61,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [pendingMFAEmail, setPendingMFAEmail] = useState<string | null>(null);
   const [showTOTPSetup, setShowTOTPSetup] = useState(false);
   const [pendingTOTPEmail, setPendingTOTPEmail] = useState<string | null>(null);
+  const [pendingTOTPPassword, setPendingTOTPPassword] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -166,6 +167,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('Starting signIn for:', email);
       
+      // First check if user exists and has MFA enabled
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('mfa_enabled, totp_enabled')
+        .eq('email', email)
+        .single();
+
+      console.log('Profile data:', profileData);
+
+      // If user has MFA enabled, send verification code instead of signing in directly
+      if (profileData?.mfa_enabled) {
+        console.log('MFA enabled for user, sending verification code');
+        await sendVerificationCode(email);
+        setPendingMFAEmail(email);
+        return { error: null, requiresMFA: true };
+      }
+
+      // If user has TOTP enabled, require TOTP verification
+      if (profileData?.totp_enabled) {
+        console.log('TOTP enabled for user, requiring TOTP verification');
+        setPendingTOTPEmail(email);
+        setPendingTOTPPassword(password);
+        return { error: null, requiresTOTP: true };
+      }
+
+      // Regular sign in for users without MFA/TOTP
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password
@@ -398,6 +425,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('No pending TOTP verification');
       }
 
+      console.log('Verifying TOTP for email:', pendingTOTPEmail);
+
       const { data, error } = await supabase.functions.invoke('verify-totp-login', {
         body: { 
           email: pendingTOTPEmail, 
@@ -409,13 +438,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (error) throw error;
       if (!data.success) throw new Error(data.error);
 
-      // Now complete the sign in
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      console.log('TOTP verification successful, signing in user');
+
+      // Now complete the sign in using the stored password
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: pendingTOTPEmail,
-        password: '' // This will be handled by TOTP verification
+        password: pendingTOTPPassword!
       });
 
+      if (signInError) throw signInError;
+
       setPendingTOTPEmail(null);
+      setPendingTOTPPassword(null);
       
       toast({
         title: t('auth.toast.signInSuccess'),
@@ -425,6 +459,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return { error: null };
     } catch (error: any) {
+      console.error('TOTP verification error:', error);
       toast({
         title: t('auth.toast.totpError'),
         description: error.message || t('auth.toast.totpErrorDescription'),

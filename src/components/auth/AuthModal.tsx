@@ -55,11 +55,14 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
     const result = await signIn(loginData.email, loginData.password);
     
     if (!result.error) {
-      if ((result as any).requiresTOTP) {
+      if ((result as any).requiresMFA) {
+        // Show MFA verification step
+        setShowOtpStep(true);
+      } else if ((result as any).requiresTOTP) {
         // Show TOTP verification step
         setShowTOTPStep(true);
       } else {
-        // Regular login success or TOTP setup required
+        // Regular login success
         setTimeout(() => {
           onOpenChange(false);
           setLoginData({ email: "", password: "" });
@@ -167,7 +170,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           </TabsList>
 
           <TabsContent value="login" className="space-y-4">
-            {!showOtpStep ? (
+            {!showOtpStep && !showTOTPStep ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <Label htmlFor="login-email">{t('auth.email')}</Label>
@@ -235,7 +238,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                   {t('auth.signInWithGoogle')}
                 </Button>
               </form>
-            ) : (
+            ) : showOtpStep ? (
               <div className="space-y-4">
                 <div className="text-center">
                   <Shield className="w-12 h-12 mx-auto mb-4 text-primary" />
@@ -294,6 +297,79 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                       onClick={() => {
                         setShowOtpStep(false);
                         setOtpCode("");
+                      }}
+                      className="text-sm"
+                    >
+                      {t('auth.goBack')}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <Shield className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <h3 className="text-lg font-semibold mb-2">TOTP Verification</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Enter your authenticator code or backup code
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="totp">{showBackupCode ? 'Backup Code' : 'Authenticator Code'}</Label>
+                    <div className="flex justify-center mt-2">
+                      <InputOTP
+                        maxLength={showBackupCode ? 8 : 6}
+                        value={totpCode}
+                        onChange={setTotpCode}
+                        className="gap-2"
+                      >
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                          {showBackupCode && (
+                            <>
+                              <InputOTPSlot index={6} />
+                              <InputOTPSlot index={7} />
+                            </>
+                          )}
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </div>
+                  </div>
+
+                  <Button 
+                    onClick={handleTOTPVerification} 
+                    className="w-full" 
+                    disabled={loading || (showBackupCode ? totpCode.length !== 8 : totpCode.length !== 6)}
+                  >
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    Verify & Login
+                  </Button>
+
+                  <div className="text-center">
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => setShowBackupCode(!showBackupCode)}
+                      disabled={loading}
+                      className="text-sm"
+                    >
+                      {showBackupCode ? 'Use Authenticator Code' : 'Use Backup Code'}
+                    </Button>
+                  </div>
+
+                  <div className="text-center">
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => {
+                        setShowTOTPStep(false);
+                        setTotpCode("");
+                        setShowBackupCode(false);
                       }}
                       className="text-sm"
                     >
