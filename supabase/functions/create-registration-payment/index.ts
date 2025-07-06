@@ -115,6 +115,7 @@ serve(async (req) => {
       email,
       name,
       account_type,
+      amount: finalPrice,
       original_price: originalPrice,
       discount_code: discount_code || null,
       final_price: finalPrice,

@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Loader2, User, Building, Percent, CreditCard, Clock } from "lucide-react";
+import { Loader2, User, Building, Percent, CreditCard, Clock, Check, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -22,9 +22,16 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
     name: "",
     email: "",
     phone: "",
-    accountType: "personal" as "personal" | "company"
+    accountType: "personal" as "personal" | "company",
+    discountCode: ""
   });
   const [loading, setLoading] = useState(false);
+  const [discountValidating, setDiscountValidating] = useState(false);
+  const [discountValidation, setDiscountValidation] = useState<{
+    valid: boolean;
+    discount_percent?: number;
+    message: string;
+  } | null>(null);
   const [timeLeft, setTimeLeft] = useState("");
   const { toast } = useToast();
 
@@ -63,12 +70,51 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
     company: 1500
   };
 
+  // Calculate discounts
   const originalPrice = prices[formData.accountType];
-  
-  // Apply automatic 50% campaign discount if active
-  const totalDiscount = isCampaignActive ? 50 : 0;
-  const discountAmount = (originalPrice * totalDiscount / 100);
-  const finalPrice = originalPrice - discountAmount;
+  let campaignDiscount = isCampaignActive ? 50 : 0;
+  let additionalDiscount = discountValidation?.valid ? discountValidation.discount_percent || 0 : 0;
+  let totalDiscount = Math.min(100, campaignDiscount + additionalDiscount);
+  let finalPrice = Math.round(originalPrice * (1 - totalDiscount / 100));
+
+  // Validate discount code
+  const validateDiscountCode = async (code: string, email: string) => {
+    if (!code.trim() || !email.trim()) {
+      setDiscountValidation(null);
+      return;
+    }
+
+    setDiscountValidating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('validate-discount-code', {
+        body: { code: code.trim(), email: email.trim() }
+      });
+
+      if (error) throw error;
+      setDiscountValidation(data);
+    } catch (error) {
+      console.error("Error validating discount code:", error);
+      setDiscountValidation({
+        valid: false,
+        message: "Klaida tikrinant nuolaidų kodą"
+      });
+    } finally {
+      setDiscountValidating(false);
+    }
+  };
+
+  // Debounced discount validation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (formData.discountCode && formData.email) {
+        validateDiscountCode(formData.discountCode, formData.email);
+      } else {
+        setDiscountValidation(null);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [formData.discountCode, formData.email]);
 
   const handlePayment = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
@@ -87,6 +133,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
           name: formData.name.trim(),
           email: formData.email.trim(),
           account_type: formData.accountType,
+          discount_code: formData.discountCode || undefined,
           campaign_active: isCampaignActive,
           campaign_discount: isCampaignActive ? 50 : 0
         }
@@ -221,6 +268,42 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
                 placeholder={t('registrationModal.phonePlaceholder')}
               />
             </div>
+            
+            {/* Discount Code */}
+            <div>
+              <Label htmlFor="discountCode">
+                {t('registrationModal.discountCode', 'Nuolaidų kodas')} 
+                <span className="text-sm text-muted-foreground ml-1">(neprivaloma)</span>
+              </Label>
+              <div className="relative">
+                <Input
+                  id="discountCode"
+                  value={formData.discountCode}
+                  onChange={(e) => setFormData(prev => ({ ...prev, discountCode: e.target.value.toUpperCase() }))}
+                  placeholder={t('registrationModal.discountCodePlaceholder', 'Įveskite nuolaidų kodą')}
+                  className={`pr-10 ${
+                    discountValidation?.valid ? 'border-green-500' : 
+                    discountValidation && !discountValidation.valid ? 'border-red-500' : ''
+                  }`}
+                />
+                {discountValidating && (
+                  <Loader2 className="absolute right-3 top-3 w-4 h-4 animate-spin text-muted-foreground" />
+                )}
+                {!discountValidating && discountValidation?.valid && (
+                  <Check className="absolute right-3 top-3 w-4 h-4 text-green-600" />
+                )}
+                {!discountValidating && discountValidation && !discountValidation.valid && (
+                  <X className="absolute right-3 top-3 w-4 h-4 text-red-600" />
+                )}
+              </div>
+              {discountValidation && (
+                <p className={`text-sm mt-1 ${
+                  discountValidation.valid ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {discountValidation.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <Separator />
@@ -234,7 +317,7 @@ export function RegistrationModal({ open, onOpenChange }: RegistrationModalProps
             {totalDiscount > 0 && (
               <div className="flex justify-between text-green-600">
                 <span>{t('registrationModal.discount')} ({totalDiscount}%):</span>
-                <span>-{discountAmount.toFixed(0)} €</span>
+                <span>-{(originalPrice - finalPrice).toFixed(0)} €</span>
               </div>
             )}
             <div className="flex justify-between font-semibold text-lg border-t pt-2">

@@ -965,6 +965,50 @@
       "errorDescription": "Nepavyko pateikti paraiškos. Bandykite dar kartą."
     }
   },
+  "registrationModal": {
+    "title": "Sąskaitos registracija",
+    "campaign": "⚡ 50% vasaros akcija!",
+    "campaignDescription": "Registruokitės dabar ir taupykite 50% už sąskaitos atidarymą!",
+    "timeLeft": "Liko laiko:",
+    "accountType": "Sąskaitos tipas",
+    "personal": "Asmeninė sąskaita",
+    "company": "Įmonės sąskaita",
+    "fullName": "Vardas ir pavardė",
+    "fullNamePlaceholder": "Įveskite vardą ir pavardę",
+    "email": "El. pašto adresas",
+    "emailPlaceholder": "Įveskite el. pašto adresą",
+    "phone": "Telefono numeris",
+    "phonePlaceholder": "Įveskite telefono numerį",
+    "discountCode": "Nuolaidų kodas",
+    "discountCodePlaceholder": "Įveskite nuolaidų kodą",
+    "initialPrice": "Pradinė kaina:",
+    "discount": "Nuolaida",
+    "finalPrice": "Galutinė kaina:",
+    "payWithStripe": "Mokėti su Stripe",
+    "error": "Klaida",
+    "fillRequiredFields": "Užpildykite visus privaltomus laukus"
+  },
+  "paymentSuccess": {
+    "title": "Mokėjimas sėkmingas!",
+    "message": "Jūsų banko sąskaitos registracijos mokėjimas buvo sėkmingai apmokėtas.",
+    "sessionId": "Mokėjimo ID:",
+    "nextSteps": "Kiti žingsniai:",
+    "step1": "Gausite patvirtinimo laišką per 24 valandas",
+    "step2": "Sąskaitos duomenys bus išsiųsti el. paštu",
+    "step3": "Galėsite prisijungti prie savo sąskaitos",
+    "backToHome": "Grįžti į pradžią",
+    "toDashboard": "Į valdymo skydą"
+  },
+  "paymentCanceled": {
+    "title": "Mokėjimas atšauktas",
+    "message": "Jūsų banko sąskaitos registracijos mokėjimas buvo atšauktas. Jokia suma nebuvo nuskaičiuota.",
+    "whatNext": "Ką daryti toliau?",
+    "option1": "Galite bandyti registruotis dar kartą",
+    "option2": "Susisiekite su mumis, jei turite klausimų",
+    "option3": "Patikrinkite savo el. paštą dėl nuolaidų kodų",
+    "tryAgain": "Bandyti dar kartą",
+    "backToHome": "Grįžti į pradžią"
+  },
   "seo": {
     "defaultTitle": "LTB Bankas - Taupyk protingai su dienos palūkanomis",
     "defaultDescription": "Pirmasis Lietuvoje bankas, mokantis palūkanas kasdien. Saugus, paprastas ir pelningas taupymas be ataskaičių. Aukštos palūkanos, terminuoti indėliai, paskolos.",

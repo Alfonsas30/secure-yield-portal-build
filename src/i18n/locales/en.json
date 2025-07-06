@@ -967,6 +967,50 @@
       "errorDescription": "Failed to submit application. Please try again."
     }
   },
+  "registrationModal": {
+    "title": "Account Registration",
+    "campaign": "⚡ 50% Summer Campaign!",
+    "campaignDescription": "Register now and save 50% on your account opening fee!",
+    "timeLeft": "Time left:",
+    "accountType": "Account Type",
+    "personal": "Personal Account",
+    "company": "Business Account",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email address",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "discountCode": "Discount Code",
+    "discountCodePlaceholder": "Enter discount code",
+    "initialPrice": "Initial Price:",
+    "discount": "Discount",
+    "finalPrice": "Final Price:",
+    "payWithStripe": "Pay with Stripe",
+    "error": "Error",
+    "fillRequiredFields": "Please fill in all required fields"
+  },
+  "paymentSuccess": {
+    "title": "Payment Successful!",
+    "message": "Your bank account registration payment has been successfully processed.",
+    "sessionId": "Payment ID:",
+    "nextSteps": "Next Steps:",
+    "step1": "You will receive a confirmation email within 24 hours",
+    "step2": "Account details will be sent via email",
+    "step3": "You can then log in to your account",
+    "backToHome": "Back to Home",
+    "toDashboard": "Go to Dashboard"
+  },
+  "paymentCanceled": {
+    "title": "Payment Canceled",
+    "message": "Your bank account registration payment has been canceled. No amount has been charged.",
+    "whatNext": "What to do next?",
+    "option1": "You can try to register again",
+    "option2": "Contact us if you have any questions",
+    "option3": "Check your email for discount codes",
+    "tryAgain": "Try Again",
+    "backToHome": "Back to Home"
+  },
   "seo": {
     "defaultTitle": "LTB Bank - Save Smart with Daily Interest",
     "defaultDescription": "Lithuania's first bank paying daily interest. Safe, simple, and profitable savings without reports. High interest rates, term deposits, loans.",
