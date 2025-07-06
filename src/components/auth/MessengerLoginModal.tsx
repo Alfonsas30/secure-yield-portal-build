@@ -67,7 +67,13 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
 
     setLoading(true);
     try {
-      if (selectedMethod.messenger_type === 'telegram') {
+      if (selectedMethod.messenger_type === 'email') {
+        const { data, error } = await supabase.functions.invoke('send-email-2fa', {
+          body: { action: 'send_code' }
+        });
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'telegram') {
         const { data, error } = await supabase.functions.invoke('send-telegram-2fa', {
           body: { 
             action: 'send_code',
@@ -119,7 +125,16 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
 
     setLoading(true);
     try {
-      if (selectedMethod.messenger_type === 'telegram') {
+      if (selectedMethod.messenger_type === 'email') {
+        const { data, error } = await supabase.functions.invoke('send-email-2fa', {
+          body: { 
+            action: 'verify_code',
+            code: code
+          }
+        });
+
+        if (error) throw error;
+      } else if (selectedMethod.messenger_type === 'telegram') {
         const { data, error } = await supabase.functions.invoke('send-telegram-2fa', {
           body: { 
             action: 'verify_code',
@@ -185,7 +200,7 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
           </DialogHeader>
           <div className="text-center py-6">
             <p className="text-muted-foreground mb-4">
-              Jūs dar nesukonfigūravote messenger 2FA. Prašome naudoti el. paštą arba TOTP.
+              Jūs dar nesukonfigūravote 2FA. Prašome sukonfigūruoti TOTP arba Email 2FA.
             </p>
             <Button onClick={() => onOpenChange(false)}>
               Grįžti
@@ -222,8 +237,8 @@ export function MessengerLoginModal({ open, onOpenChange, onVerified, email }: M
                   onClick={() => setSelectedMethod(method)}
                 >
                   <CardContent className="p-3 flex items-center gap-3">
+                    {method.messenger_type === 'email' && <MessageCircle className="w-4 h-4 text-blue-600" />}
                     {method.messenger_type === 'telegram' && <MessageCircle className="w-4 h-4" />}
-                    
                     {method.messenger_type === 'viber' && <MessageCircle className="w-4 h-4" />}
                     {method.messenger_type === 'signal' && <Shield className="w-4 h-4" />}
                     <div className="flex-1">

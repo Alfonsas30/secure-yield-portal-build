@@ -11,7 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from 'react-i18next';
-import { MessengerSetupModal } from "./MessengerSetupModal";
+import { Simple2FASetupModal } from "./Simple2FASetupModal";
 import { TelegramBotSetup } from "./TelegramBotSetup";
 
 export function UserProfile() {
@@ -285,13 +285,13 @@ export function UserProfile() {
         </Button>
       </div>
 
-      <MessengerSetupModal 
+      <Simple2FASetupModal 
         open={showMessengerSetup}
         onOpenChange={setShowMessengerSetup}
         onSetupComplete={() => {
           toast({
             title: "Sėkmingai sukonfigūruota",
-            description: "Messenger 2FA nustatymai atnaujinti"
+            description: "2FA nustatymai atnaujinti"
           });
         }}
       />
