@@ -18,12 +18,44 @@ const Footer = () => {
             <p className="text-slate-400 leading-relaxed mb-4">
               {t('footer.description')}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mb-6">
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Mail className="w-5 h-5" />
               </div>
               <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors cursor-pointer">
                 <Phone className="w-5 h-5" />
+              </div>
+            </div>
+
+            {/* Kontaktai */}
+            <div className="p-4 bg-slate-800 rounded-lg border border-slate-700">
+              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
+                  <a 
+                    href="tel:+37544416678"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
+                  >
+                    <Phone className="w-4 h-4 mr-1" />
+                    {t('footer.contact.phoneNumber')}
+                  </a>
+                  <p className="text-xs text-slate-400 mt-1">{t('footer.contact.messengers')}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.workingHours')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {t('footer.contact.schedule')}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.languages')}</p>
+                  <div className="inline-flex items-center text-slate-300 text-sm">
+                    <Languages className="w-4 h-4 mr-1" />
+                    {t('footer.contact.supportedLanguages')}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -88,38 +120,6 @@ const Footer = () => {
                     <Mail className="w-4 h-4 mr-1" />
                     {t('footer.techSupport.emailAddress')}
                   </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Kontaktai */}
-            <div className="mt-6 p-4 bg-slate-800 rounded-lg border border-slate-700">
-              <h4 className="font-semibold text-white mb-2">{t('footer.contact.title')}</h4>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.phone')}</p>
-                  <a 
-                    href="tel:+37544416678"
-                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
-                  >
-                    <Phone className="w-4 h-4 mr-1" />
-                    {t('footer.contact.phoneNumber')}
-                  </a>
-                  <p className="text-xs text-slate-400 mt-1">{t('footer.contact.messengers')}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.workingHours')}</p>
-                  <div className="inline-flex items-center text-slate-300 text-sm">
-                    <Clock className="w-4 h-4 mr-1" />
-                    {t('footer.contact.schedule')}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-300 mb-1">{t('footer.contact.languages')}</p>
-                  <div className="inline-flex items-center text-slate-300 text-sm">
-                    <Languages className="w-4 h-4 mr-1" />
-                    {t('footer.contact.supportedLanguages')}
-                  </div>
                 </div>
               </div>
             </div>
