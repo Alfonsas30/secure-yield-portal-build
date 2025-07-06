@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslation } from 'react-i18next';
 import { Simple2FASetupModal } from "./Simple2FASetupModal";
+import { AuthDebugPanel } from "./AuthDebugPanel";
 
 export function UserProfile() {
   const { t } = useTranslation();
@@ -350,6 +351,8 @@ export function UserProfile() {
           </div>
         </CardContent>
       </Card>
+
+      <AuthDebugPanel />
 
       <div className="flex justify-center">
         <Button variant="outline" onClick={signOut}>

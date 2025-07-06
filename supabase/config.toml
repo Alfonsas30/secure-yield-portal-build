@@ -2,8 +2,8 @@ project_id = "latwptcvghypdopbpxfr"
 
 [auth]
 enabled = true
-site_url = "https://viltb.com"
-additional_redirect_urls = ["https://viltb.com"]
+site_url = "https://latwptcvghypdopbpxfr.supabase.co"
+additional_redirect_urls = ["https://latwptcvghypdopbpxfr.supabase.co", "https://viltb.com"]
 
 [functions.request-discount]
 verify_jwt = false
@@ -51,4 +51,46 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.verify-code]
+verify_jwt = false
+
+[functions.debug-mfa]
+verify_jwt = false
+
+[functions.setup-totp]
+verify_jwt = true
+
+[functions.verify-totp-login]
+verify_jwt = false
+
+[functions.verify-totp-setup]
+verify_jwt = true
+
+[functions.send-email-2fa]
+verify_jwt = true
+
+[functions.create-deposit-payment]
+verify_jwt = true
+
+[functions.create-loan-payment]
+verify_jwt = true
+
+[functions.create-withdrawal-request]
+verify_jwt = true
+
+[functions.debug-email]
+verify_jwt = false
+
+[functions.email-status-checker]
+verify_jwt = false
+
+[functions.process-deposit-payment]
+verify_jwt = false
+
+[functions.process-loan-payment]
+verify_jwt = false
+
+[functions.setup-cron-jobs]
+verify_jwt = true
+
+[functions.submit-loan-application]
 verify_jwt = false
