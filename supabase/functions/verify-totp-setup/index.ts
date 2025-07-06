@@ -135,6 +135,7 @@ serve(async (req) => {
     console.error('TOTP setup verification error:', error)
     return new Response(
       JSON.stringify({ 
+        success: false,
         error: error.message || 'Internal server error'
       }),
       { 
