@@ -176,19 +176,34 @@ export class AuthService {
     try {
       console.log('Sending Email 2FA verification code to:', email);
       
-      // Send verification code using new Email 2FA system (setup is automatic)
-      const { data, error } = await supabase.functions.invoke('send-email-2fa', {
-        body: { action: 'send_code', email }
+      // Use direct HTTP call to send-email-2fa function
+      const functionUrl = 'https://khcelroaozkzpyxayvpj.supabase.co/functions/v1/send-email-2fa';
+      
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoY2Vscm9hb3prenB5eGF5dnBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NTEzODQsImV4cCI6MjA2NzEyNzM4NH0.vL2P2P6xuWR-n-dZGg7kcg8l5y1nOn2N_XznyqYL97c`,
+        },
+        body: JSON.stringify({ 
+          action: 'send_code', 
+          email 
+        })
       });
 
-      console.log('send-email-2fa response:', { data, error });
+      console.log('HTTP Response status:', response.status);
+      console.log('HTTP Response headers:', Object.fromEntries(response.headers.entries()));
 
-      if (error) {
-        console.error('Edge function error:', error);
-        throw error;
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('HTTP Error response:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      if (data && !data.success) {
+      const data = await response.json();
+      console.log('send-email-2fa response data:', data);
+
+      if (!data.success) {
         console.error('Verification code sending failed:', data.error);
         throw new Error(data.error || 'Failed to send verification code');
       }
@@ -205,14 +220,33 @@ export class AuthService {
     try {
       console.log('Verifying Email 2FA code and signing in...');
       
-      // Verify the code using new Email 2FA system
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('send-email-2fa', {
-        body: { action: 'verify_code', code, email }
+      // Use direct HTTP call to verify code
+      const functionUrl = 'https://khcelroaozkzpyxayvpj.supabase.co/functions/v1/send-email-2fa';
+      
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoY2Vscm9hb3prenB5eGF5dnBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NTEzODQsImV4cCI6MjA2NzEyNzM4NH0.vL2P2P6xuWR-n-dZGg7kcg8l5y1nOn2N_XznyqYL97c`,
+        },
+        body: JSON.stringify({ 
+          action: 'verify_code', 
+          code, 
+          email 
+        })
       });
 
-      console.log('Email 2FA verification response:', { verifyData, verifyError });
+      console.log('Verify HTTP Response status:', response.status);
 
-      if (verifyError) throw verifyError;
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Verify HTTP Error response:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      const verifyData = await response.json();
+      console.log('Email 2FA verification response:', verifyData);
+
       if (!verifyData.success) throw new Error(verifyData.error);
 
       // If code is valid, proceed with normal sign in
