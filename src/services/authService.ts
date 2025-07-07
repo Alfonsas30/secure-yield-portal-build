@@ -176,18 +176,9 @@ export class AuthService {
     try {
       console.log('Sending Email 2FA verification code to:', email);
       
-      // First setup Email 2FA if not already configured
-      const { error: setupError } = await supabase.functions.invoke('send-email-2fa', {
-        body: { action: 'setup' }
-      });
-
-      if (setupError) {
-        console.error('Email 2FA setup error:', setupError);
-      }
-
-      // Send verification code using new Email 2FA system
+      // Send verification code using new Email 2FA system (setup is automatic)
       const { data, error } = await supabase.functions.invoke('send-email-2fa', {
-        body: { action: 'send_code' }
+        body: { action: 'send_code', email }
       });
 
       console.log('send-email-2fa response:', { data, error });

@@ -121,60 +121,61 @@ serve(async (req) => {
       );
     }
 
-    // For other actions, we need authentication
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      console.error('No Authorization header provided');
-      return new Response(
-        JSON.stringify({ error: 'Authorization header required' }),
-        { status: 401, headers: corsHeaders }
-      );
-    }
+    if (action === 'send_code') {
+      const { email } = requestBody;
+      console.log('Sending Email 2FA code for email:', email);
 
-    const token = authHeader.replace('Bearer ', '');
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
-
-    if (authError || !user) {
-      console.error('Authentication failed:', authError);
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: corsHeaders }
-      );
-    }
-
-    console.log(`Action: ${action}, User: ${user.id}`);
-
-    if (action === 'setup') {
-      console.log('Setting up Email 2FA for user:', user.id, user.email);
-      
-      // Setup Email 2FA for user
-      const { error: insertError } = await supabaseClient
-        .from('messenger_2fa')
-        .upsert({
-          user_id: user.id,
-          messenger_type: 'email',
-          messenger_id: user.email,
-          display_name: `Email (${user.email})`,
-          is_active: true,
-          is_primary: true
-        });
-
-      if (insertError) {
-        console.error('Error setting up Email 2FA:', insertError);
+      if (!email) {
         return new Response(
-          JSON.stringify({ error: 'Failed to setup Email 2FA', details: insertError.message }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          JSON.stringify({ error: 'Email is required' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
-      console.log('Email 2FA setup successful for user:', user.id);
-      return new Response(
-        JSON.stringify({ success: true, message: 'Email 2FA setup successful' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+      // Get user by email to get user_id for messenger_2fa setup
+      const { data: userData, error: userError } = await supabaseClient.auth.admin.listUsers();
+      const user = userData?.users?.find(u => u.email === email);
 
-    if (action === 'send_code') {
+      if (!user) {
+        console.error('User not found for email:', email);
+        return new Response(
+          JSON.stringify({ error: 'User not found' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Check if Email 2FA is already configured, if not - set it up
+      const { data: existingMfa, error: mfaFetchError } = await supabaseClient
+        .from('messenger_2fa')
+        .select('*')
+        .eq('messenger_type', 'email')
+        .eq('messenger_id', email)
+        .single();
+
+      if (mfaFetchError || !existingMfa) {
+        console.log('Setting up Email 2FA for user:', user.id, email);
+        
+        // Setup Email 2FA for user
+        const { error: insertError } = await supabaseClient
+          .from('messenger_2fa')
+          .upsert({
+            user_id: user.id,
+            messenger_type: 'email',
+            messenger_id: email,
+            display_name: `Email (${email})`,
+            is_active: true,
+            is_primary: true
+          });
+
+        if (insertError) {
+          console.error('Error setting up Email 2FA:', insertError);
+          return new Response(
+            JSON.stringify({ error: 'Failed to setup Email 2FA', details: insertError.message }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      }
+
       // Generate 6-digit code
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
@@ -187,15 +188,14 @@ serve(async (req) => {
           code_expires_at: expiresAt.toISOString(),
           code_attempts: 0
         })
-        .eq('user_id', user.id)
         .eq('messenger_type', 'email')
-        .eq('messenger_id', user.email);
+        .eq('messenger_id', email);
 
       if (updateError) {
         console.error('Error updating verification code:', updateError);
         return new Response(
           JSON.stringify({ error: 'Failed to generate verification code' }),
-          { status: 500, headers: corsHeaders }
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
@@ -204,7 +204,7 @@ serve(async (req) => {
       if (!resendApiKey) {
         return new Response(
           JSON.stringify({ error: 'Email service not configured' }),
-          { status: 500, headers: corsHeaders }
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
@@ -213,7 +213,7 @@ serve(async (req) => {
       try {
         const emailResponse = await resend.emails.send({
           from: "VILTB Bankas <onboarding@resend.dev>",
-          to: [user.email],
+          to: [email],
           subject: "🔐 VILTB Patvirtinimo kodas",
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -241,16 +241,17 @@ serve(async (req) => {
 
         return new Response(
           JSON.stringify({ success: true, message: 'Verification code sent via email' }),
-          { headers: corsHeaders }
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       } catch (emailError) {
         console.error('Error sending email:', emailError);
         return new Response(
           JSON.stringify({ error: 'Failed to send email' }),
-          { status: 500, headers: corsHeaders }
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
     }
+
 
 
     return new Response(
