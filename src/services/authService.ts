@@ -174,12 +174,23 @@ export class AuthService {
 
   static async sendVerificationCode(email: string, t: (key: string) => string) {
     try {
-      console.log('Sending verification code to:', email);
-      const { data, error } = await supabase.functions.invoke('send-verification-code', {
-        body: { email }
+      console.log('Sending Email 2FA verification code to:', email);
+      
+      // First setup Email 2FA if not already configured
+      const { error: setupError } = await supabase.functions.invoke('send-email-2fa', {
+        body: { action: 'setup' }
       });
 
-      console.log('send-verification-code response:', { data, error });
+      if (setupError) {
+        console.error('Email 2FA setup error:', setupError);
+      }
+
+      // Send verification code using new Email 2FA system
+      const { data, error } = await supabase.functions.invoke('send-email-2fa', {
+        body: { action: 'send_code' }
+      });
+
+      console.log('send-email-2fa response:', { data, error });
 
       if (error) {
         console.error('Edge function error:', error);
@@ -191,7 +202,7 @@ export class AuthService {
         throw new Error(data.error || 'Failed to send verification code');
       }
 
-      console.log('Verification code sent successfully');
+      console.log('Email 2FA verification code sent successfully');
       return { error: null };
     } catch (error: any) {
       console.error('sendVerificationCode error:', error);
@@ -201,10 +212,14 @@ export class AuthService {
 
   static async verifyCodeAndSignIn(email: string, password: string, code: string) {
     try {
-      // First verify the code
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-code', {
-        body: { email, code }
+      console.log('Verifying Email 2FA code and signing in...');
+      
+      // Verify the code using new Email 2FA system
+      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('send-email-2fa', {
+        body: { action: 'verify_code', code }
       });
+
+      console.log('Email 2FA verification response:', { verifyData, verifyError });
 
       if (verifyError) throw verifyError;
       if (!verifyData.success) throw new Error(verifyData.error);
@@ -217,8 +232,10 @@ export class AuthService {
 
       if (signInError) throw signInError;
 
+      console.log('Email 2FA verification and sign in successful');
       return { error: null };
     } catch (error: any) {
+      console.error('verifyCodeAndSignIn error:', error);
       return { error };
     }
   }
