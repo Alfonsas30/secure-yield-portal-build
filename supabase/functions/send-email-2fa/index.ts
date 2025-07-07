@@ -132,14 +132,17 @@ serve(async (req) => {
         );
       }
 
-      // Get user by email to get user_id for messenger_2fa setup
-      const { data: userData, error: userError } = await supabaseClient.auth.admin.listUsers();
-      const user = userData?.users?.find(u => u.email === email);
+      // Get user by email from profiles table (no admin privileges needed)
+      const { data: profileData, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('user_id, email')
+        .eq('email', email)
+        .single();
 
-      if (!user) {
-        console.error('User not found for email:', email);
+      if (profileError || !profileData) {
+        console.error('User profile not found for email:', email, profileError);
         return new Response(
-          JSON.stringify({ error: 'User not found' }),
+          JSON.stringify({ error: 'User profile not found' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -153,13 +156,13 @@ serve(async (req) => {
         .single();
 
       if (mfaFetchError || !existingMfa) {
-        console.log('Setting up Email 2FA for user:', user.id, email);
+        console.log('Setting up Email 2FA for user:', profileData.user_id, email);
         
         // Setup Email 2FA for user
         const { error: insertError } = await supabaseClient
           .from('messenger_2fa')
           .upsert({
-            user_id: user.id,
+            user_id: profileData.user_id,
             messenger_type: 'email',
             messenger_id: email,
             display_name: `Email (${email})`,
