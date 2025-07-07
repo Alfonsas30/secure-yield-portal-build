@@ -216,7 +216,7 @@ export class AuthService {
       
       // Verify the code using new Email 2FA system
       const { data: verifyData, error: verifyError } = await supabase.functions.invoke('send-email-2fa', {
-        body: { action: 'verify_code', code }
+        body: { action: 'verify_code', code, email }
       });
 
       console.log('Email 2FA verification response:', { verifyData, verifyError });

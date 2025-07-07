@@ -28,6 +28,100 @@ serve(async (req) => {
       }
     );
 
+    let requestBody;
+    try {
+      requestBody = await req.json();
+    } catch (jsonError) {
+      console.error('Invalid JSON in request body:', jsonError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON in request body' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    const { action } = requestBody;
+    console.log(`Action: ${action}`);
+
+    // For verify_code action, we don't need authentication since user isn't logged in yet
+    if (action === 'verify_code') {
+      const { code, email } = requestBody;
+      console.log('Verifying Email 2FA code for email:', email);
+
+      if (!code || !email) {
+        return new Response(
+          JSON.stringify({ error: 'Verification code and email are required' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Get the stored verification data by email
+      const { data: messengerData, error: fetchError } = await supabaseClient
+        .from('messenger_2fa')
+        .select('*')
+        .eq('messenger_type', 'email')
+        .eq('messenger_id', email)
+        .single();
+
+      if (fetchError || !messengerData) {
+        console.error('Email 2FA not configured for email:', email, fetchError);
+        return new Response(
+          JSON.stringify({ error: 'Email 2FA not configured' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Check if code is expired
+      if (!messengerData.code_expires_at || new Date() > new Date(messengerData.code_expires_at)) {
+        console.log('Verification code expired for email:', email);
+        return new Response(
+          JSON.stringify({ error: 'Verification code expired' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Check attempts limit
+      if (messengerData.code_attempts >= 3) {
+        console.log('Too many failed attempts for email:', email);
+        return new Response(
+          JSON.stringify({ error: 'Too many failed attempts' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Verify the code
+      if (messengerData.verification_code !== code) {
+        console.log('Invalid verification code for email:', email);
+        
+        // Increment attempts
+        await supabaseClient
+          .from('messenger_2fa')
+          .update({ code_attempts: messengerData.code_attempts + 1 })
+          .eq('id', messengerData.id);
+
+        return new Response(
+          JSON.stringify({ error: 'Invalid verification code' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Clear the verification code after successful verification
+      await supabaseClient
+        .from('messenger_2fa')
+        .update({
+          verification_code: null,
+          code_expires_at: null,
+          code_attempts: 0
+        })
+        .eq('id', messengerData.id);
+
+      console.log('Email 2FA verification successful for email:', email);
+      return new Response(
+        JSON.stringify({ success: true, message: 'Email verification successful' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // For other actions, we need authentication
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       console.error('No Authorization header provided');
@@ -48,18 +142,6 @@ serve(async (req) => {
       );
     }
 
-    let requestBody;
-    try {
-      requestBody = await req.json();
-    } catch (jsonError) {
-      console.error('Invalid JSON in request body:', jsonError);
-      return new Response(
-        JSON.stringify({ error: 'Invalid JSON in request body' }),
-        { status: 400, headers: corsHeaders }
-      );
-    }
-
-    const { action } = requestBody;
     console.log(`Action: ${action}, User: ${user.id}`);
 
     if (action === 'setup') {
@@ -170,84 +252,6 @@ serve(async (req) => {
       }
     }
 
-    if (action === 'verify_code') {
-      const { code } = requestBody;
-      console.log('Verifying Email 2FA code for user:', user.id);
-
-      if (!code) {
-        return new Response(
-          JSON.stringify({ error: 'Verification code is required' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      // Get the stored verification data
-      const { data: messengerData, error: fetchError } = await supabaseClient
-        .from('messenger_2fa')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('messenger_type', 'email')
-        .eq('messenger_id', user.email)
-        .single();
-
-      if (fetchError || !messengerData) {
-        console.error('Email 2FA not configured for user:', user.id, fetchError);
-        return new Response(
-          JSON.stringify({ error: 'Email 2FA not configured' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      // Check if code is expired
-      if (!messengerData.code_expires_at || new Date() > new Date(messengerData.code_expires_at)) {
-        console.log('Verification code expired for user:', user.id);
-        return new Response(
-          JSON.stringify({ error: 'Verification code expired' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      // Check attempts limit
-      if (messengerData.code_attempts >= 3) {
-        console.log('Too many failed attempts for user:', user.id);
-        return new Response(
-          JSON.stringify({ error: 'Too many failed attempts' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      // Verify the code
-      if (messengerData.verification_code !== code) {
-        console.log('Invalid verification code for user:', user.id);
-        
-        // Increment attempts
-        await supabaseClient
-          .from('messenger_2fa')
-          .update({ code_attempts: messengerData.code_attempts + 1 })
-          .eq('id', messengerData.id);
-
-        return new Response(
-          JSON.stringify({ error: 'Invalid verification code' }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      // Clear the verification code after successful verification
-      await supabaseClient
-        .from('messenger_2fa')
-        .update({
-          verification_code: null,
-          code_expires_at: null,
-          code_attempts: 0
-        })
-        .eq('id', messengerData.id);
-
-      console.log('Email 2FA verification successful for user:', user.id);
-      return new Response(
-        JSON.stringify({ success: true, message: 'Email verification successful' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
 
     return new Response(
       JSON.stringify({ error: 'Invalid action' }),
