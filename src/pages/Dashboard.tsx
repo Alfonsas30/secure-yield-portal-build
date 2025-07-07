@@ -8,7 +8,7 @@ import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
 import { Analytics } from "@/components/banking/Analytics";
-import { AdminBalanceControl } from "@/components/banking/AdminBalanceControl";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
