@@ -17,11 +17,13 @@ import { useAuth } from "@/contexts/AuthContext";
 import { SEOHead } from "@/components/SEOHead";
 import { AuthDebugPanel } from "@/components/auth/AuthDebugPanel";
 import { AuthSecurityMonitor } from "@/components/auth/AuthSecurityMonitor";
+import { MessengerSetupModal } from "@/components/auth/MessengerSetupModal";
 
 export default function Dashboard() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
   const { showTOTPSetup, setShowTOTPSetup, user, profile, session, refreshSession } = useAuth();
+  const [showMessengerSetup, setShowMessengerSetup] = useState(false);
   
   // Enable dashboard security features
   useDashboardSecurity();
@@ -37,6 +39,11 @@ export default function Dashboard() {
   const handleTOTPSetupComplete = (backupCodes: string[]) => {
     console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);
     // TOTP setup completed successfully - modal will close automatically
+  };
+
+  const handleMessengerSetupComplete = () => {
+    console.log('Messenger 2FA setup completed in Dashboard');
+    setShowMessengerSetup(false);
   };
 
   // Check if TOTP is required but not set up
@@ -107,7 +114,7 @@ export default function Dashboard() {
               <div className="space-y-6">
                 <Card>
                   <CardContent className="p-6">
-                    <UserProfile />
+                    <UserProfile onOpenMessengerSetup={() => setShowMessengerSetup(true)} />
                   </CardContent>
                 </Card>
                 
@@ -131,6 +138,13 @@ export default function Dashboard() {
         onSetupComplete={handleTOTPSetupComplete}
           required={isTOTPRequired}
         />
+
+      {/* Messenger 2FA Setup Modal */}
+      <MessengerSetupModal 
+        open={showMessengerSetup}
+        onOpenChange={setShowMessengerSetup}
+        onSetupComplete={handleMessengerSetupComplete}
+      />
       </ProtectedRoute>
     </>
   );

@@ -52,8 +52,16 @@ serve(async (req) => {
     console.log('Action requested:', action);
 
     if (action === 'setup_webhook') {
-      // Set up webhook URL for the bot
-      const webhookUrl = `https://latwptcvghypdopbpxfr.supabase.co/functions/v1/telegram-webhook`;
+      // Set up webhook URL for the bot - use dynamic URL
+      const supabaseUrl = Deno.env.get('SUPABASE_URL');
+      if (!supabaseUrl) {
+        console.error('SUPABASE_URL not configured');
+        return new Response(
+          JSON.stringify({ error: 'SUPABASE_URL not configured' }),
+          { status: 500, headers: corsHeaders }
+        );
+      }
+      const webhookUrl = `${supabaseUrl}/functions/v1/telegram-webhook`;
       
       const telegramUrl = `https://api.telegram.org/bot${telegramToken}/setWebhook`;
       

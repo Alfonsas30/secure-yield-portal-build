@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown, Shield } from "lucide-react";
+import { User, CreditCard, Phone, Mail, Calendar, Copy, Check, ChevronDown, Shield, MessageCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,7 +14,11 @@ import { useTranslation } from 'react-i18next';
 import { Simple2FASetupModal } from "./Simple2FASetupModal";
 import { AuthDebugPanel } from "./AuthDebugPanel";
 
-export function UserProfile() {
+interface UserProfileProps {
+  onOpenMessengerSetup?: () => void;
+}
+
+export function UserProfile({ onOpenMessengerSetup }: UserProfileProps) {
   const { t } = useTranslation();
   const { profile, user, signOut, setShowTOTPSetup } = useAuth();
   const { toast } = useToast();
@@ -312,6 +316,27 @@ export function UserProfile() {
                 >
                   <Shield className="w-4 h-4" />
                   {profile.totp_enabled ? 'Valdyti' : 'Sukonfigūruoti'}
+                </Button>
+              </div>
+            </div>
+
+            {/* Messenger 2FA Section */}
+            <div className="flex items-center justify-between p-4 border rounded-lg">
+              <div>
+                <Label className="text-sm font-medium">Messenger 2FA</Label>
+                <p className="text-xs text-muted-foreground">
+                  Sukonfigūruokite Telegram, Viber ar Signal 2FA
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onOpenMessengerSetup?.()}
+                  className="flex items-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Nustatyti
                 </Button>
               </div>
             </div>

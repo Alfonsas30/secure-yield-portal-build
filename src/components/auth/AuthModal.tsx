@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Mail, Lock, User, Eye, EyeOff, Shield, Chrome, RefreshCw, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { TOTPSetupModal } from "./TOTPSetupModal";
+import { MessengerLoginModal } from "./MessengerLoginModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -39,6 +40,7 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
   const [showBackupCode, setShowBackupCode] = useState(false);
   const [showTroubleshooting, setShowTroubleshooting] = useState(false);
   const [clearingCache, setClearingCache] = useState(false);
+  const [showMessengerLogin, setShowMessengerLogin] = useState(false);
   const { toast } = useToast();
 
   const { 
@@ -399,7 +401,15 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
                     </Button>
                   </div>
 
-                  <div className="text-center">
+                  <div className="text-center space-y-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setShowMessengerLogin(true)}
+                      className="w-full text-sm"
+                    >
+                      Naudoti Messenger 2FA
+                    </Button>
+                    
                     <Button 
                       variant="ghost" 
                       onClick={() => {
@@ -589,6 +599,18 @@ export function AuthModal({ open, onOpenChange, defaultTab = "login" }: AuthModa
           open={showTOTPSetup}
           onOpenChange={setShowTOTPSetup}
           onSetupComplete={handleTOTPSetupComplete}
+        />
+
+        <MessengerLoginModal
+          open={showMessengerLogin}
+          onOpenChange={setShowMessengerLogin}
+          onVerified={() => {
+            setShowMessengerLogin(false);
+            setShowTOTPStep(false);
+            onOpenChange(false);
+            window.location.reload(); // Refresh to get updated session
+          }}
+          email={loginData.email}
         />
       </DialogContent>
     </Dialog>
