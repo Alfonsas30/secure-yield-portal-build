@@ -111,8 +111,7 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
                 
-                {/* Admin Balance Control */}
-                <AdminBalanceControl />
+                {/* Admin Balance Control - Removed from Dashboard */}
                 
                 {/* Auth Security Monitor */}
                 <AuthSecurityMonitor />
