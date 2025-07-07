@@ -28,6 +28,90 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const sessionHook = useAuthSession();
 
+  // Helper function to generate account number
+  const generateAccountNumber = async (): Promise<string> => {
+    try {
+      const { data, error } = await supabase.rpc('generate_account_number');
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Failed to generate account number, using fallback:', error);
+      return `LT${Math.random().toString().slice(2, 14)}`;
+    }
+  };
+
+  // Helper function to create missing user data manually
+  const createMissingUserData = async (user: User) => {
+    try {
+      console.log('Creating missing profile manually for user:', user.id);
+      
+      // Try to create profile first
+      const { data: newProfile, error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          user_id: user.id,
+          account_number: await generateAccountNumber(),
+          email: user.email || '',
+          display_name: user.email || ''
+        })
+        .select()
+        .single();
+
+      if (profileError) {
+        console.error('Failed to create profile manually:', profileError);
+        return;
+      }
+
+      console.log('Profile created manually:', newProfile);
+      setProfile(newProfile);
+
+      // Now create account balance
+      await ensureAccountBalance(newProfile);
+      
+    } catch (error) {
+      console.error('Exception in createMissingUserData:', error);
+    }
+  };
+
+  // Helper function to ensure account balance exists
+  const ensureAccountBalance = async (profile: Profile) => {
+    try {
+      console.log('Checking if account balance exists for:', profile.account_number);
+      
+      const { data: balance, error } = await supabase
+        .from('account_balances')
+        .select('*')
+        .eq('user_id', profile.user_id)
+        .single();
+
+      if (error && error.code === 'PGRST116') {
+        // No balance found, create one manually
+        console.log('Creating account balance manually');
+        
+        const { error: balanceError } = await supabase
+          .from('account_balances')
+          .insert({
+            user_id: profile.user_id,
+            account_number: profile.account_number,
+            balance: 0.00,
+            currency: 'LT'
+          });
+
+        if (balanceError) {
+          console.error('Failed to create account balance manually:', balanceError);
+        } else {
+          console.log('Account balance created manually');
+        }
+      } else if (error) {
+        console.error('Error checking account balance:', error);
+      } else {
+        console.log('Account balance already exists:', balance);
+      }
+    } catch (error) {
+      console.error('Exception in ensureAccountBalance:', error);
+    }
+  };
+
   useEffect(() => {
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -61,10 +145,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             
             if (error) {
               console.error('Error fetching profile:', error);
-              console.error('Profile fetch failed - this might indicate RLS issues');
+              console.error('Profile fetch failed - attempting to create profile manually');
+              
+              // Attempt to create profile manually if it doesn't exist
+              await createMissingUserData(session.user);
             } else {
               console.log('Profile fetched successfully:', profileData?.account_number);
               setProfile(profileData);
+              
+              // Ensure account balance exists for this profile
+              await ensureAccountBalance(profileData);
             }
             
             // Auto redirect to dashboard after login

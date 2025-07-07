@@ -49,13 +49,22 @@ export class AuthService {
           console.log('Error code:', signInError.message);
           
           // Provide more helpful error messages
-          if (signInError.message.includes('Invalid login credentials')) {
-            const helpfulError = new Error(
-              'Neteisingi prisijungimo duomenys. Po duomenų bazės atnaujinimo jūsų senos paskyros gali nebelikti. ' +
-              'Pabandykite užsiregistruoti iš naujo su tuo pačiu el. paštu arba išvalykite cache duomenis.'
-            );
-            return { error: helpfulError };
-          }
+        if (signInError.message.includes('Invalid login credentials')) {
+          const helpfulError = new Error(
+            'Neteisingi prisijungimo duomenys. Po duomenų bazės atnaujinimo jūsų senos paskyros gali nebelikti. ' +
+            'Pabandykite užsiregistruoti iš naujo su tuo pačiu el. paštu arba išvalykite cache duomenis.'
+          );
+          return { error: helpfulError };
+        }
+        
+        // Check if this might be a profile/balance creation issue
+        if (signInError.message.includes('violates row-level security') || 
+            signInError.message.includes('account_balances')) {
+          const helpfulError = new Error(
+            'Klaida kuriant vartotojo duomenis. Bandykite prisijungti dar kartą arba susisiekite su administracija.'
+          );
+          return { error: helpfulError };
+        }
           
           return { error: signInError };
         }
