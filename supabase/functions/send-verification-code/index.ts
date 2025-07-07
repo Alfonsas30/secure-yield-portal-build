@@ -5,6 +5,7 @@ import { Resend } from "npm:resend@4.0.0";
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
 interface VerificationRequest {
@@ -18,6 +19,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log('=== SEND VERIFICATION CODE STARTED ===');
+    console.log('Request method:', req.method);
+    console.log('Request headers:', Object.fromEntries(req.headers.entries()));
+    
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
       console.error('RESEND_API_KEY not found in environment variables');
@@ -32,7 +37,10 @@ const handler = async (req: Request): Promise<Response> => {
     const resend = new Resend(resendApiKey);
     console.log('Resend client initialized successfully');
 
-    const { email, user_id }: VerificationRequest = await req.json();
+    const requestBody = await req.json();
+    const { email, user_id }: VerificationRequest = requestBody;
+    
+    console.log('Request body:', { email, user_id: user_id ? 'present' : 'null' });
 
     // Generate 6-digit verification code
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -66,7 +74,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send email with verification code
     console.log(`Sending verification code to: ${email}`);
     const emailResponse = await resend.emails.send({
-      from: 'LTB Bankas <onboarding@resend.dev>',
+      from: 'VILTB Bankas <onboarding@resend.dev>',
       to: [email],
       subject: 'Jūsų prisijungimo kodas',
       html: `
@@ -87,10 +95,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (emailResponse.error) {
       console.error('Error sending email:', emailResponse.error);
+      console.error('Email response:', emailResponse);
       throw new Error('Nepavyko išsiųsti el. laiško');
     }
 
-    console.log(`Verification code sent to ${email}`);
+    console.log(`Verification code sent to ${email}`, emailResponse);
 
     return new Response(
       JSON.stringify({ 
@@ -104,7 +113,11 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
   } catch (error: any) {
-    console.error('Error in send-verification-code:', error);
+    console.error('=== ERROR IN SEND-VERIFICATION-CODE ===');
+    console.error('Error details:', error);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    
     return new Response(
       JSON.stringify({ 
         success: false, 

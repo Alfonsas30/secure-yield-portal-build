@@ -4,6 +4,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.50.2";
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
 interface VerifyRequest {
@@ -17,14 +18,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log('=== VERIFY CODE STARTED ===');
+    console.log('Request method:', req.method);
+    
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const { email, code }: VerifyRequest = await req.json();
+    const requestBody = await req.json();
+    const { email, code }: VerifyRequest = requestBody;
 
-    console.log(`Verifying code for email: ${email}`);
+    console.log(`Verifying code for email: ${email}`, { code: code ? 'present' : 'missing' });
 
     // Find the verification code
     const { data: verificationData, error: fetchError } = await supabase
@@ -39,7 +44,8 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (fetchError || !verificationData) {
-      console.log('Invalid or expired code');
+      console.log('Invalid or expired code - fetchError:', fetchError);
+      console.log('verificationData:', verificationData);
       return new Response(
         JSON.stringify({ 
           success: false, 
@@ -117,7 +123,11 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
   } catch (error: any) {
-    console.error('Error in verify-code:', error);
+    console.error('=== ERROR IN VERIFY-CODE ===');
+    console.error('Error details:', error);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    
     return new Response(
       JSON.stringify({ 
         success: false, 
