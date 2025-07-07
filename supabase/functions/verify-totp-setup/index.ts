@@ -124,7 +124,7 @@ serve(async (req) => {
       JSON.stringify({
         success: true,
         message: 'TOTP setup completed successfully',
-        backup_codes: backupCodes
+        backupCodes: backupCodes
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 

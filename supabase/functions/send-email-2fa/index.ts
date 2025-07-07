@@ -63,6 +63,8 @@ serve(async (req) => {
     console.log(`Action: ${action}, User: ${user.id}`);
 
     if (action === 'setup') {
+      console.log('Setting up Email 2FA for user:', user.id, user.email);
+      
       // Setup Email 2FA for user
       const { error: insertError } = await supabaseClient
         .from('messenger_2fa')
@@ -71,20 +73,22 @@ serve(async (req) => {
           messenger_type: 'email',
           messenger_id: user.email,
           display_name: `Email (${user.email})`,
-          is_active: true
+          is_active: true,
+          is_primary: true
         });
 
       if (insertError) {
         console.error('Error setting up Email 2FA:', insertError);
         return new Response(
-          JSON.stringify({ error: 'Failed to setup Email 2FA' }),
-          { status: 500, headers: corsHeaders }
+          JSON.stringify({ error: 'Failed to setup Email 2FA', details: insertError.message }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
+      console.log('Email 2FA setup successful for user:', user.id);
       return new Response(
         JSON.stringify({ success: true, message: 'Email 2FA setup successful' }),
-        { headers: corsHeaders }
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -168,6 +172,14 @@ serve(async (req) => {
 
     if (action === 'verify_code') {
       const { code } = requestBody;
+      console.log('Verifying Email 2FA code for user:', user.id);
+
+      if (!code) {
+        return new Response(
+          JSON.stringify({ error: 'Verification code is required' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
 
       // Get the stored verification data
       const { data: messengerData, error: fetchError } = await supabaseClient
@@ -179,30 +191,35 @@ serve(async (req) => {
         .single();
 
       if (fetchError || !messengerData) {
+        console.error('Email 2FA not configured for user:', user.id, fetchError);
         return new Response(
           JSON.stringify({ error: 'Email 2FA not configured' }),
-          { status: 400, headers: corsHeaders }
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
       // Check if code is expired
-      if (new Date() > new Date(messengerData.code_expires_at)) {
+      if (!messengerData.code_expires_at || new Date() > new Date(messengerData.code_expires_at)) {
+        console.log('Verification code expired for user:', user.id);
         return new Response(
           JSON.stringify({ error: 'Verification code expired' }),
-          { status: 400, headers: corsHeaders }
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
       // Check attempts limit
       if (messengerData.code_attempts >= 3) {
+        console.log('Too many failed attempts for user:', user.id);
         return new Response(
           JSON.stringify({ error: 'Too many failed attempts' }),
-          { status: 400, headers: corsHeaders }
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
       // Verify the code
       if (messengerData.verification_code !== code) {
+        console.log('Invalid verification code for user:', user.id);
+        
         // Increment attempts
         await supabaseClient
           .from('messenger_2fa')
@@ -211,7 +228,7 @@ serve(async (req) => {
 
         return new Response(
           JSON.stringify({ error: 'Invalid verification code' }),
-          { status: 400, headers: corsHeaders }
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
@@ -225,9 +242,10 @@ serve(async (req) => {
         })
         .eq('id', messengerData.id);
 
+      console.log('Email 2FA verification successful for user:', user.id);
       return new Response(
         JSON.stringify({ success: true, message: 'Email verification successful' }),
-        { headers: corsHeaders }
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
