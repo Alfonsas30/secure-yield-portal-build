@@ -31,13 +31,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
+        console.log('=== AUTH STATE CHANGE ===');
+        console.log('Event:', event);
+        console.log('Session user ID:', session?.user?.id);
+        console.log('Session access_token present:', !!session?.access_token);
+        console.log('Session expires_at:', session?.expires_at);
+        
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile and redirect to dashboard after successful login
+          // Fetch user profile with proper session context
           setTimeout(async () => {
+            console.log('Fetching profile for user:', session.user.id);
+            
+            // Verify session is still valid before making requests
+            const { data: { session: currentSession } } = await supabase.auth.getSession();
+            if (!currentSession || currentSession.user.id !== session.user.id) {
+              console.error('Session mismatch or invalid during profile fetch');
+              return;
+            }
+            
             const { data: profileData, error } = await supabase
               .from('profiles')
               .select('*')
@@ -46,22 +61,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             
             if (error) {
               console.error('Error fetching profile:', error);
+              console.error('Profile fetch failed - this might indicate RLS issues');
             } else {
+              console.log('Profile fetched successfully:', profileData?.account_number);
               setProfile(profileData);
-              
-              // TOTP temporarily disabled
-              // if (profileData && !profileData.totp_enabled) {
-              //   console.log('TOTP not enabled, showing setup modal');
-              //   setShowTOTPSetup(true);
-              // }
             }
             
             // Auto redirect to dashboard after login
             if (event === 'SIGNED_IN') {
               navigate('/dashboard');
             }
-          }, 0);
+          }, 100); // Slightly longer delay to ensure session is stable
         } else {
+          console.log('No session - clearing profile data');
           setProfile(null);
           setShowTOTPSetup(false);
         }
@@ -70,8 +82,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     );
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // Check for existing session with enhanced logging
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      console.log('=== INITIAL SESSION CHECK ===');
+      console.log('Session error:', error);
+      console.log('Session user ID:', session?.user?.id);
+      console.log('Session expires at:', session?.expires_at);
+      console.log('Session is expired:', session?.expires_at ? new Date(session.expires_at * 1000) < new Date() : 'N/A');
+      
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { UserProfile } from "@/components/auth/UserProfile";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -20,10 +20,28 @@ import { AuthDebugPanel } from "@/components/auth/AuthDebugPanel";
 export default function Dashboard() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
-  const { showTOTPSetup, setShowTOTPSetup, user, profile } = useAuth();
+  const { showTOTPSetup, setShowTOTPSetup, user, profile, session } = useAuth();
   
   // Enable dashboard security features
   useDashboardSecurity();
+
+  // Additional auth verification for security
+  useEffect(() => {
+    console.log('=== DASHBOARD AUTH VERIFICATION ===');
+    console.log('User ID:', user?.id);
+    console.log('Profile user_id:', profile?.user_id);
+    console.log('Session user ID:', session?.user?.id);
+    console.log('Session expires at:', session?.expires_at);
+    
+    if (user && profile && session) {
+      if (user.id !== profile.user_id || session.user.id !== profile.user_id) {
+        console.error('CRITICAL: Auth mismatch detected in Dashboard!');
+        console.error('Forcing re-authentication...');
+        // Force logout on mismatch
+        window.location.href = '/';
+      }
+    }
+  }, [user, profile, session]);
 
   const handleTOTPSetupComplete = (backupCodes: string[]) => {
     console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);

@@ -23,7 +23,7 @@ interface LastInterestTransaction {
 
 export function AccountBalance() {
   const { t } = useTranslation();
-  const { profile } = useAuth();
+  const { profile, user, session } = useAuth();
   const { toast } = useToast();
   const [balance, setBalance] = useState<AccountBalance | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,16 +31,33 @@ export function AccountBalance() {
   const [lastInterest, setLastInterest] = useState<LastInterestTransaction | null>(null);
 
   useEffect(() => {
-    if (profile) {
+    console.log('=== ACCOUNT BALANCE AUTH CHECK ===');
+    console.log('User ID:', user?.id);
+    console.log('Profile user_id:', profile?.user_id);
+    console.log('Session exists:', !!session);
+    console.log('Session user ID:', session?.user?.id);
+    
+    // Only fetch data if we have a valid session and profile
+    if (profile && user && session && session.user.id === profile.user_id) {
+      console.log('Fetching balance for verified user:', profile.user_id);
       fetchBalance();
       fetchLastInterest();
+    } else if (profile && user) {
+      console.error('Session/profile mismatch - potential security issue!');
+      console.error('Session user:', session?.user?.id);
+      console.error('Profile user:', profile.user_id);
+      console.error('Auth user:', user.id);
     }
-  }, [profile]);
+  }, [profile, user, session]);
 
   const fetchLastInterest = async () => {
-    if (!profile) return;
+    if (!profile || !user || !session) {
+      console.log('Skipping interest fetch - missing auth data');
+      return;
+    }
     
     try {
+      console.log('Fetching last interest for user:', profile.user_id);
       const { data, error } = await supabase
         .from('transactions')
         .select('created_at, amount')
@@ -50,19 +67,38 @@ export function AccountBalance() {
         .limit(1)
         .maybeSingle();
 
-      if (!error && data) {
+      if (error) {
+        console.error('Error fetching last interest:', error);
+      } else if (data) {
+        console.log('Last interest fetched:', data);
         setLastInterest(data);
+      } else {
+        console.log('No interest transactions found');
       }
     } catch (error) {
-      console.error('Error fetching last interest:', error);
+      console.error('Exception fetching last interest:', error);
     }
   };
 
   const fetchBalance = async () => {
-    if (!profile) return;
+    if (!profile || !user || !session) {
+      console.log('Skipping balance fetch - missing auth data');
+      setLoading(false);
+      return;
+    }
+
+    // Verify session is valid and matches profile
+    if (session.user.id !== profile.user_id) {
+      console.error('CRITICAL: Session user mismatch!');
+      console.error('Session user:', session.user.id);
+      console.error('Profile user:', profile.user_id);
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
     try {
+      console.log('Fetching balance for user:', profile.user_id);
       const { data, error } = await supabase
         .from('account_balances')
         .select('*')
@@ -71,14 +107,17 @@ export function AccountBalance() {
 
       if (error) {
         console.error('Error fetching balance:', error);
+        console.error('This might indicate RLS policy issues or auth problems');
         toast({
           title: t('discount.error'),
           description: t('accountBalance.loadError'),
           variant: "destructive"
         });
       } else if (data) {
+        console.log('Balance fetched successfully:', data.balance, 'for account:', data.account_number);
         setBalance(data);
       } else {
+        console.log('No balance found, creating default balance');
         // No balance found, create one with default amount
         const { data: newBalance, error: createError } = await supabase
           .from('account_balances')
@@ -99,11 +138,12 @@ export function AccountBalance() {
             variant: "destructive"
           });
         } else {
+          console.log('Default balance created:', newBalance);
           setBalance(newBalance);
         }
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Exception in fetchBalance:', error);
     } finally {
       setLoading(false);
     }
