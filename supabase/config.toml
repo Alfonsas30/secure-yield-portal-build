@@ -9,5 +9,8 @@ verify_jwt = false
 [functions.send-email-2fa]
 verify_jwt = false
 
+[functions.debug-email]
+verify_jwt = false
+
 [functions.verify-totp-setup]
 verify_jwt = true
