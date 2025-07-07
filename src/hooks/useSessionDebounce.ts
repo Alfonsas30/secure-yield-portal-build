@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 
-export function useSessionDebounce(delay: number = 1000) {
+export function useSessionDebounce(delay: number = 3000) {
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   const debouncedCall = useCallback((callback: () => Promise<void>) => {

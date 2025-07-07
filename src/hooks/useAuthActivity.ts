@@ -146,21 +146,8 @@ export function useAuthActivity({
       const elapsed = now - lastActivity;
       const remaining = IDLE_TIMEOUT - elapsed;
 
-      // Only check session every 30 seconds to reduce API calls
-      sessionCheckCount++;
-      if (sessionCheckCount % 30 === 0) {
-        try {
-          const { data: { session: currentSession } } = await supabase.auth.getSession();
-          if (!currentSession || isLoggingOut || sessionTimeoutActive) {
-            return;
-          }
-        } catch (error: any) {
-          if (error.message?.includes('429') || error.message?.includes('rate limit')) {
-            console.log('Rate limited during session check in idle timer');
-            return;
-          }
-        }
-      }
+      // Removed session checks from idle timer to prevent rate limiting
+      // Trust the existing session state and only check on user activity
 
       if (remaining <= 0 && !sessionTimeoutActive) {
         setSessionTimeoutActive(true);

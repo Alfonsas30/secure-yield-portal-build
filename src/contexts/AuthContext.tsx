@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [pendingTOTPPassword, setPendingTOTPPassword] = useState<string | null>(null);
 
   const sessionHook = useAuthSession();
-  const { debouncedCall } = useSessionDebounce(2000);
+  const { debouncedCall } = useSessionDebounce(5000);
 
   // Helper function to generate account number
   const generateAccountNumber = async (): Promise<string> => {
@@ -147,11 +147,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile with debounced session verification
+          // Fetch user profile with enhanced debouncing to prevent rate limits
           debouncedCall(async () => {
             console.log('Fetching profile for user:', session.user.id);
             
             try {
+              // Add small delay to prevent rapid calls
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
               const { data: profileData, error } = await supabase
                 .from('profiles')
                 .select('*')
@@ -160,16 +163,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               
               if (error) {
                 console.error('Error fetching profile:', error);
-                console.error('Profile fetch failed - attempting to create profile manually');
                 
-                // Attempt to create profile manually if it doesn't exist
-                await createMissingUserData(session.user);
+                // Only create missing data if it's a "not found" error, not rate limit
+                if (!error.message?.includes('429') && !error.message?.includes('rate limit')) {
+                  console.error('Profile fetch failed - attempting to create profile manually');
+                  await createMissingUserData(session.user);
+                }
               } else {
                 console.log('Profile fetched successfully:', profileData?.account_number);
                 setProfile(profileData);
                 
-                // Ensure account balance exists for this profile
-                await ensureAccountBalance(profileData);
+                // Ensure account balance exists for this profile (with delay)
+                setTimeout(() => ensureAccountBalance(profileData), 1000);
               }
               
               // Auto redirect to dashboard after login
@@ -178,7 +183,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               }
             } catch (error: any) {
               if (error.message?.includes('429') || error.message?.includes('rate limit')) {
-                console.log('Rate limited during profile fetch, will retry');
+                console.log('Rate limited during profile fetch, will retry later');
                 return;
               }
               console.error('Profile fetch exception:', error);
@@ -464,32 +469,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Periodic session validation with rate limiting
-  useEffect(() => {
-    if (!session || !user) return;
-    
-    const interval = setInterval(async () => {
-      try {
-        const { data: { session: currentSession } } = await supabase.auth.getSession();
-        
-        if (!currentSession) {
-          console.log('Session lost, forcing logout');
-          signOut();
-        } else if (currentSession.expires_at && new Date(currentSession.expires_at * 1000) < new Date()) {
-          console.log('Session expired, refreshing...');
-          await refreshSession();
-        }
-      } catch (error: any) {
-        if (error.message?.includes('429') || error.message?.includes('rate limit')) {
-          console.log('Rate limited during session check, skipping this interval');
-          return;
-        }
-        console.error('Session validation error:', error);
-      }
-    }, 5 * 60 * 1000); // Check every 5 minutes instead of 1 minute
-    
-    return () => clearInterval(interval);
-  }, [session, user]);
+  // Removed periodic session validation to prevent rate limiting
+  // Supabase handles token refresh automatically
 
   // Set up activity tracking
   useAuthActivity({
