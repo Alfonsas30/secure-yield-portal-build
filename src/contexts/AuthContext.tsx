@@ -8,6 +8,7 @@ import { Profile, AuthContextType } from '@/types/auth';
 import { AuthService } from '@/services/authService';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { useAuthActivity } from '@/hooks/useAuthActivity';
+import { useSessionDebounce } from '@/hooks/useSessionDebounce';
 import { getErrorMessage } from '@/utils/authErrors';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [pendingTOTPPassword, setPendingTOTPPassword] = useState<string | null>(null);
 
   const sessionHook = useAuthSession();
+  const { debouncedCall } = useSessionDebounce(2000);
 
   // Helper function to generate account number
   const generateAccountNumber = async (): Promise<string> => {
@@ -145,42 +147,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile with proper session context
-          setTimeout(async () => {
+          // Fetch user profile with debounced session verification
+          debouncedCall(async () => {
             console.log('Fetching profile for user:', session.user.id);
             
-            // Verify session is still valid before making requests
-            const { data: { session: currentSession } } = await supabase.auth.getSession();
-            if (!currentSession || currentSession.user.id !== session.user.id) {
-              console.error('Session mismatch or invalid during profile fetch');
-              return;
-            }
-            
-            const { data: profileData, error } = await supabase
-              .from('profiles')
-              .select('*')
-              .eq('user_id', session.user.id)
-              .single();
-            
-            if (error) {
-              console.error('Error fetching profile:', error);
-              console.error('Profile fetch failed - attempting to create profile manually');
+            try {
+              const { data: profileData, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('user_id', session.user.id)
+                .single();
               
-              // Attempt to create profile manually if it doesn't exist
-              await createMissingUserData(session.user);
-            } else {
-              console.log('Profile fetched successfully:', profileData?.account_number);
-              setProfile(profileData);
+              if (error) {
+                console.error('Error fetching profile:', error);
+                console.error('Profile fetch failed - attempting to create profile manually');
+                
+                // Attempt to create profile manually if it doesn't exist
+                await createMissingUserData(session.user);
+              } else {
+                console.log('Profile fetched successfully:', profileData?.account_number);
+                setProfile(profileData);
+                
+                // Ensure account balance exists for this profile
+                await ensureAccountBalance(profileData);
+              }
               
-              // Ensure account balance exists for this profile
-              await ensureAccountBalance(profileData);
+              // Auto redirect to dashboard after login
+              if (event === 'SIGNED_IN') {
+                navigate('/dashboard');
+              }
+            } catch (error: any) {
+              if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+                console.log('Rate limited during profile fetch, will retry');
+                return;
+              }
+              console.error('Profile fetch exception:', error);
             }
-            
-            // Auto redirect to dashboard after login
-            if (event === 'SIGNED_IN') {
-              navigate('/dashboard');
-            }
-          }, 100); // Slightly longer delay to ensure session is stable
+          });
         } else {
           console.log('No session - clearing profile data');
           setProfile(null);
@@ -430,42 +433,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null };
   };
 
-  // Add session refresh function for critical operations
-  const refreshSession = async () => {
+  // Add session refresh function with retry logic
+  const refreshSession = async (retryCount = 0) => {
     try {
       console.log('Refreshing session...');
       const { data: { session }, error } = await supabase.auth.refreshSession();
       
       if (error) {
+        // Handle rate limiting with exponential backoff
+        if ((error.message?.includes('429') || error.message?.includes('rate limit')) && retryCount < 3) {
+          const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+          console.log(`Rate limited, retrying in ${delay}ms (attempt ${retryCount + 1})`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return refreshSession(retryCount + 1);
+        }
+        
         console.error('Session refresh failed:', error);
-        // Force logout on refresh failure
-        signOut();
+        // Force logout on non-rate-limit failures
+        if (!error.message?.includes('429')) {
+          signOut();
+        }
         return null;
       }
       
       console.log('Session refreshed successfully');
       return session;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Exception during session refresh:', error);
       return null;
     }
   };
 
-  // Periodic session validation
+  // Periodic session validation with rate limiting
   useEffect(() => {
     if (!session || !user) return;
     
     const interval = setInterval(async () => {
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      
-      if (!currentSession) {
-        console.log('Session lost, forcing logout');
-        signOut();
-      } else if (currentSession.expires_at && new Date(currentSession.expires_at * 1000) < new Date()) {
-        console.log('Session expired, refreshing...');
-        await refreshSession();
+      try {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        
+        if (!currentSession) {
+          console.log('Session lost, forcing logout');
+          signOut();
+        } else if (currentSession.expires_at && new Date(currentSession.expires_at * 1000) < new Date()) {
+          console.log('Session expired, refreshing...');
+          await refreshSession();
+        }
+      } catch (error: any) {
+        if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+          console.log('Rate limited during session check, skipping this interval');
+          return;
+        }
+        console.error('Session validation error:', error);
       }
-    }, 60000); // Check every minute
+    }, 5 * 60 * 1000); // Check every 5 minutes instead of 1 minute
     
     return () => clearInterval(interval);
   }, [session, user]);

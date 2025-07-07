@@ -136,20 +136,31 @@ export function useAuthActivity({
     };
   }, [user, lastActivity, signOut, clearAllAuthData, resetActivity, t, isMobile, VISIBILITY_TIMEOUT]);
 
-  // Idle timeout timer
+  // Idle timeout timer with reduced session checks
   useEffect(() => {
     if (!user || isLoggingOut || sessionTimeoutActive) return;
 
+    let sessionCheckCount = 0;
     const timer = setInterval(async () => {
-      // Check if session still exists before proceeding
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      if (!currentSession || isLoggingOut || sessionTimeoutActive) {
-        return;
-      }
-
       const now = Date.now();
       const elapsed = now - lastActivity;
       const remaining = IDLE_TIMEOUT - elapsed;
+
+      // Only check session every 30 seconds to reduce API calls
+      sessionCheckCount++;
+      if (sessionCheckCount % 30 === 0) {
+        try {
+          const { data: { session: currentSession } } = await supabase.auth.getSession();
+          if (!currentSession || isLoggingOut || sessionTimeoutActive) {
+            return;
+          }
+        } catch (error: any) {
+          if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+            console.log('Rate limited during session check in idle timer');
+            return;
+          }
+        }
+      }
 
       if (remaining <= 0 && !sessionTimeoutActive) {
         setSessionTimeoutActive(true);

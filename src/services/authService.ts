@@ -150,28 +150,36 @@ export class AuthService {
     console.log('Attempting to sign out...');
     
     try {
-      // Check if we have a valid session before attempting logout
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      
-      if (!currentSession) {
-        console.log('No active session found, clearing state...');
-        // Clear all Supabase authentication data thoroughly
-        clearAllAuthData();
-        return { error: null };
-      }
-      
-      const { error } = await supabase.auth.signOut();
-      
-      if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
-        console.error('Logout error:', error);
-        return { error };
-      } else {
-        console.log('Successfully signed out');
-        // Use comprehensive cleanup
-        clearAllAuthData();
-      }
+      // Check if we have a valid session before attempting logout with rate limit handling
+      try {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        
+        if (!currentSession) {
+          console.log('No active session found, clearing state...');
+          clearAllAuthData();
+          return { error: null };
+        }
+        
+        const { error } = await supabase.auth.signOut();
+        
+        if (error && !error.message.includes('session_not_found') && !error.message.includes('Session not found')) {
+          console.error('Logout error:', error);
+          return { error };
+        } else {
+          console.log('Successfully signed out');
+          clearAllAuthData();
+        }
 
-      return { error };
+        return { error };
+      } catch (error: any) {
+        // Handle rate limiting gracefully during logout
+        if (error.message?.includes('429') || error.message?.includes('rate limit')) {
+          console.log('Rate limited during logout, clearing local state');
+          clearAllAuthData();
+          return { error: null };
+        }
+        throw error;
+      }
     } catch (error) {
       console.error('SignOut exception:', error);
       return { error };
