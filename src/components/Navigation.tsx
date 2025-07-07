@@ -12,6 +12,7 @@ import { DiscountRequestModal } from "./DiscountRequestModal";
 import { useNavigate } from "react-router-dom";
 import { getExchangeRateDisplay } from "@/lib/currency";
 import LanguageSelector from "./LanguageSelector";
+import { useAdminRole } from "@/hooks/useAdminRole";
 
 const Navigation = () => {
   const { t } = useTranslation();
@@ -24,6 +25,7 @@ const Navigation = () => {
   const [discountRequestModalOpen, setDiscountRequestModalOpen] = useState(false);
   
   const { user, profile, signOut } = useAuth();
+  const { isAdmin } = useAdminRole();
   const navigate = useNavigate();
 
   const menuItems = [
@@ -135,6 +137,16 @@ const Navigation = () => {
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
+                {isAdmin && (
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => navigate('/admin')}
+                    className="text-slate-600 hover:text-purple-600 hover:bg-purple-50/50 transition-all duration-300 hover:scale-105 transform relative overflow-hidden group"
+                  >
+                    <span className="relative z-10">Admin</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-100/0 via-purple-100/50 to-purple-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
+                  </Button>
+                )}
                 <Button 
                   variant="ghost"
                   onClick={signOut}
@@ -227,6 +239,19 @@ const Navigation = () => {
                       <User className="w-4 h-4 mr-2" />
                       {t('navigation.dashboard')}
                     </Button>
+                    {isAdmin && (
+                      <Button 
+                        variant="ghost" 
+                        onClick={() => {
+                          setIsOpen(false);
+                          navigate('/admin');
+                        }}
+                        className="justify-start hover:bg-purple-50 text-purple-600 transition-all duration-300 hover:scale-105 transform animate-scale-in"
+                        style={{ animationDelay: '0.5s' }}
+                      >
+                        Admin panelė
+                      </Button>
+                    )}
                     <Button 
                       variant="ghost"
                       onClick={() => {
@@ -234,7 +259,7 @@ const Navigation = () => {
                         signOut();
                       }}
                       className="justify-start hover:bg-red-50 text-red-600 transition-all duration-300 hover:scale-105 transform animate-scale-in"
-                      style={{ animationDelay: '0.5s' }}
+                      style={{ animationDelay: '0.6s' }}
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       Atsijungti
