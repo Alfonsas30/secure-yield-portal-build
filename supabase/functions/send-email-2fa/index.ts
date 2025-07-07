@@ -147,8 +147,20 @@ serve(async (req) => {
         );
       }
 
+      // Create service role client for messenger_2fa operations (bypass RLS)
+      const serviceRoleClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+        {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false
+          }
+        }
+      );
+
       // Check if Email 2FA is already configured, if not - set it up
-      const { data: existingMfa, error: mfaFetchError } = await supabaseClient
+      const { data: existingMfa, error: mfaFetchError } = await serviceRoleClient
         .from('messenger_2fa')
         .select('*')
         .eq('messenger_type', 'email')
@@ -158,8 +170,8 @@ serve(async (req) => {
       if (mfaFetchError || !existingMfa) {
         console.log('Setting up Email 2FA for user:', profileData.user_id, email);
         
-        // Setup Email 2FA for user
-        const { error: insertError } = await supabaseClient
+        // Setup Email 2FA for user using service role
+        const { error: insertError } = await serviceRoleClient
           .from('messenger_2fa')
           .upsert({
             user_id: profileData.user_id,
@@ -183,8 +195,8 @@ serve(async (req) => {
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
-      // Update the messenger_2fa record with the code
-      const { error: updateError } = await supabaseClient
+      // Update the messenger_2fa record with the code using service role
+      const { error: updateError } = await serviceRoleClient
         .from('messenger_2fa')
         .update({
           verification_code: code,
