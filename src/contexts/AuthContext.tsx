@@ -321,6 +321,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null };
   };
 
+  // Add session refresh function for critical operations
+  const refreshSession = async () => {
+    try {
+      console.log('Refreshing session...');
+      const { data: { session }, error } = await supabase.auth.refreshSession();
+      
+      if (error) {
+        console.error('Session refresh failed:', error);
+        // Force logout on refresh failure
+        signOut();
+        return null;
+      }
+      
+      console.log('Session refreshed successfully');
+      return session;
+    } catch (error) {
+      console.error('Exception during session refresh:', error);
+      return null;
+    }
+  };
+
+  // Periodic session validation
+  useEffect(() => {
+    if (!session || !user) return;
+    
+    const interval = setInterval(async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      
+      if (!currentSession) {
+        console.log('Session lost, forcing logout');
+        signOut();
+      } else if (currentSession.expires_at && new Date(currentSession.expires_at * 1000) < new Date()) {
+        console.log('Session expired, refreshing...');
+        await refreshSession();
+      }
+    }, 60000); // Check every minute
+    
+    return () => clearInterval(interval);
+  }, [session, user]);
+
   // Set up activity tracking
   useAuthActivity({
     user,
@@ -357,7 +397,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     verifyCodeAndSignIn,
     setupTOTP,
     verifyTOTP,
-    setShowTOTPSetup
+    setShowTOTPSetup,
+    refreshSession
   };
 
   return (

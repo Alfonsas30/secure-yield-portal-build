@@ -33,4 +33,5 @@ export interface AuthContextType {
   setupTOTP: () => Promise<{ error: any }>;
   verifyTOTP: (code: string, isBackupCode?: boolean) => Promise<{ error: any }>;
   setShowTOTPSetup: (show: boolean) => void;
+  refreshSession: () => Promise<Session | null>;
 }

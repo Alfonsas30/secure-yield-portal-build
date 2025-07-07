@@ -16,11 +16,12 @@ import { useDashboardSecurity } from "@/hooks/useDashboardSecurity";
 import { useAuth } from "@/contexts/AuthContext";
 import { SEOHead } from "@/components/SEOHead";
 import { AuthDebugPanel } from "@/components/auth/AuthDebugPanel";
+import { AuthSecurityMonitor } from "@/components/auth/AuthSecurityMonitor";
 
 export default function Dashboard() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("overview");
-  const { showTOTPSetup, setShowTOTPSetup, user, profile, session } = useAuth();
+  const { showTOTPSetup, setShowTOTPSetup, user, profile, session, refreshSession } = useAuth();
   
   // Enable dashboard security features
   useDashboardSecurity();
@@ -36,12 +37,23 @@ export default function Dashboard() {
     if (user && profile && session) {
       if (user.id !== profile.user_id || session.user.id !== profile.user_id) {
         console.error('CRITICAL: Auth mismatch detected in Dashboard!');
+        console.error('User ID:', user.id);
+        console.error('Profile user ID:', profile.user_id);
+        console.error('Session user ID:', session.user.id);
         console.error('Forcing re-authentication...');
         // Force logout on mismatch
         window.location.href = '/';
+        return;
       }
     }
-  }, [user, profile, session]);
+
+    // Refresh session on dashboard load for security
+    if (session && refreshSession) {
+      refreshSession().then(() => {
+        console.log('Dashboard session refreshed');
+      });
+    }
+  }, [user, profile, session, refreshSession]);
 
   const handleTOTPSetupComplete = (backupCodes: string[]) => {
     console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);
@@ -122,6 +134,9 @@ export default function Dashboard() {
                 
                 {/* Admin Balance Control */}
                 <AdminBalanceControl />
+                
+                {/* Auth Security Monitor */}
+                <AuthSecurityMonitor />
                 
                 {/* Debug panel for development/testing */}
                 <AuthDebugPanel />
