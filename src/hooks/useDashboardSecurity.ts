@@ -89,11 +89,11 @@ export function useDashboardSecurity() {
     };
   }, []);
 
-  // Handle page unload - automatic signout
+  // Handle page unload - automatic signout (removed aggressive signout)
   useEffect(() => {
     const handleUnload = () => {
-      // Quick signout on page unload
-      signOut();
+      // Only perform cleanup, don't force signout
+      console.log('Page unloading, cleaning up...');
     };
 
     window.addEventListener('unload', handleUnload);
@@ -101,7 +101,7 @@ export function useDashboardSecurity() {
     return () => {
       window.removeEventListener('unload', handleUnload);
     };
-  }, [signOut]);
+  }, []);
 
   return {
     isPageVisible,

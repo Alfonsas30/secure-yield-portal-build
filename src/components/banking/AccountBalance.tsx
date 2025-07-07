@@ -31,28 +31,16 @@ export function AccountBalance() {
   const [lastInterest, setLastInterest] = useState<LastInterestTransaction | null>(null);
 
   useEffect(() => {
-    console.log('=== ACCOUNT BALANCE AUTH CHECK ===');
-    console.log('User ID:', user?.id);
-    console.log('Profile user_id:', profile?.user_id);
-    console.log('Session exists:', !!session);
-    console.log('Session user ID:', session?.user?.id);
-    
-    // Only fetch data if we have a valid session and profile
-    if (profile && user && session && session.user.id === profile.user_id) {
-      console.log('Fetching balance for verified user:', profile.user_id);
+    // Only fetch data if we have complete auth data
+    if (profile?.user_id && user?.id && session?.user?.id) {
+      console.log('Fetching balance for user:', profile.user_id);
       fetchBalance();
       fetchLastInterest();
-    } else if (profile && user) {
-      console.error('Session/profile mismatch - potential security issue!');
-      console.error('Session user:', session?.user?.id);
-      console.error('Profile user:', profile.user_id);
-      console.error('Auth user:', user.id);
     }
-  }, [profile, user, session]);
+  }, [profile?.user_id, user?.id, session?.user?.id]);
 
   const fetchLastInterest = async () => {
-    if (!profile || !user || !session) {
-      console.log('Skipping interest fetch - missing auth data');
+    if (!profile?.user_id) {
       return;
     }
     
@@ -81,17 +69,7 @@ export function AccountBalance() {
   };
 
   const fetchBalance = async () => {
-    if (!profile || !user || !session) {
-      console.log('Skipping balance fetch - missing auth data');
-      setLoading(false);
-      return;
-    }
-
-    // Verify session is valid and matches profile
-    if (session.user.id !== profile.user_id) {
-      console.error('CRITICAL: Session user mismatch!');
-      console.error('Session user:', session.user.id);
-      console.error('Profile user:', profile.user_id);
+    if (!profile?.user_id || !user?.id) {
       setLoading(false);
       return;
     }

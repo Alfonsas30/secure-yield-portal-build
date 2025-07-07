@@ -26,34 +26,13 @@ export default function Dashboard() {
   // Enable dashboard security features
   useDashboardSecurity();
 
-  // Additional auth verification for security
+  // Log auth state for debugging
   useEffect(() => {
-    console.log('=== DASHBOARD AUTH VERIFICATION ===');
+    console.log('=== DASHBOARD AUTH STATE ===');
     console.log('User ID:', user?.id);
     console.log('Profile user_id:', profile?.user_id);
     console.log('Session user ID:', session?.user?.id);
-    console.log('Session expires at:', session?.expires_at);
-    
-    if (user && profile && session) {
-      if (user.id !== profile.user_id || session.user.id !== profile.user_id) {
-        console.error('CRITICAL: Auth mismatch detected in Dashboard!');
-        console.error('User ID:', user.id);
-        console.error('Profile user ID:', profile.user_id);
-        console.error('Session user ID:', session.user.id);
-        console.error('Forcing re-authentication...');
-        // Force logout on mismatch
-        window.location.href = '/';
-        return;
-      }
-    }
-
-    // Refresh session on dashboard load for security
-    if (session && refreshSession) {
-      refreshSession().then(() => {
-        console.log('Dashboard session refreshed');
-      });
-    }
-  }, [user, profile, session, refreshSession]);
+  }, [user, profile, session]);
 
   const handleTOTPSetupComplete = (backupCodes: string[]) => {
     console.log('TOTP setup completed in Dashboard with backup codes:', backupCodes);
