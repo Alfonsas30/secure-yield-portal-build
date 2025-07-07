@@ -45,28 +45,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('Creating missing profile manually for user:', user.id);
       
-      // Try to create profile first
-      const { data: newProfile, error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          user_id: user.id,
-          account_number: await generateAccountNumber(),
-          email: user.email || '',
-          display_name: user.email || ''
-        })
-        .select()
-        .single();
+      // First try using the database function for consistency
+      const { data: dbResult, error: dbError } = await supabase.rpc('create_missing_user_data', {
+        target_user_id: user.id
+      });
 
-      if (profileError) {
-        console.error('Failed to create profile manually:', profileError);
-        return;
+      if (dbError) {
+        console.error('Database function failed, trying manual creation:', dbError);
+        
+        // Fallback to direct table insertion
+        const { data: newProfile, error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: user.id,
+            account_number: await generateAccountNumber(),
+            email: user.email || '',
+            display_name: user.email || ''
+          })
+          .select()
+          .single();
+
+        if (profileError) {
+          console.error('Failed to create profile manually:', profileError);
+          return;
+        }
+
+        console.log('Profile created manually:', newProfile);
+        setProfile(newProfile);
+        await ensureAccountBalance(newProfile);
+      } else {
+        console.log('Database function succeeded:', dbResult);
+        // Fetch the created profile
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (profileData) {
+          setProfile(profileData);
+        }
       }
-
-      console.log('Profile created manually:', newProfile);
-      setProfile(newProfile);
-
-      // Now create account balance
-      await ensureAccountBalance(newProfile);
       
     } catch (error) {
       console.error('Exception in createMissingUserData:', error);

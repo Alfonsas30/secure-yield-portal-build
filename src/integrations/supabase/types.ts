@@ -693,6 +693,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      create_missing_user_data: {
+        Args: { target_user_id: string }
+        Returns: Json
+      }
       generate_account_number: {
         Args: Record<PropertyKey, never>
         Returns: string
