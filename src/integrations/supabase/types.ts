@@ -149,6 +149,39 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_interest_calculations: {
+        Row: {
+          accounts_processed: number
+          calculation_date: string
+          created_at: string
+          id: string
+          initiated_by: string | null
+          initiated_type: string
+          total_interest_paid: number
+          updated_at: string
+        }
+        Insert: {
+          accounts_processed?: number
+          calculation_date?: string
+          created_at?: string
+          id?: string
+          initiated_by?: string | null
+          initiated_type?: string
+          total_interest_paid?: number
+          updated_at?: string
+        }
+        Update: {
+          accounts_processed?: number
+          calculation_date?: string
+          created_at?: string
+          id?: string
+          initiated_by?: string | null
+          initiated_type?: string
+          total_interest_paid?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       discount_codes: {
         Row: {
           code: string
@@ -649,6 +682,10 @@ export type Database = {
         Returns: Json
       }
       calculate_daily_interest: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      check_daily_interest_status: {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
