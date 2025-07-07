@@ -185,41 +185,24 @@ export class AuthService {
 
   static async sendVerificationCode(email: string, t: (key: string) => string) {
     try {
-      console.log('Sending Email 2FA verification code to:', email);
+      console.log('Sending verification code to:', email);
       
-      // Use direct HTTP call to send-email-2fa function
-      const functionUrl = 'https://khcelroaozkzpyxayvpj.supabase.co/functions/v1/send-email-2fa';
-      
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoY2Vscm9hb3prenB5eGF5dnBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NTEzODQsImV4cCI6MjA2NzEyNzM4NH0.vL2P2P6xuWR-n-dZGg7kcg8l5y1nOn2N_XznyqYL97c`,
-        },
-        body: JSON.stringify({ 
-          action: 'send_code', 
-          email 
-        })
+      // Use Supabase functions invoke instead of direct HTTP
+      const { data, error } = await supabase.functions.invoke('send-verification-code', {
+        body: { email }
       });
 
-      console.log('HTTP Response status:', response.status);
-      console.log('HTTP Response headers:', Object.fromEntries(response.headers.entries()));
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('HTTP Error response:', errorText);
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      if (error) {
+        console.error('Function invoke error:', error);
+        throw error;
       }
-
-      const data = await response.json();
-      console.log('send-email-2fa response data:', data);
 
       if (!data.success) {
         console.error('Verification code sending failed:', data.error);
         throw new Error(data.error || 'Failed to send verification code');
       }
 
-      console.log('Email 2FA verification code sent successfully');
+      console.log('Verification code sent successfully');
       return { error: null };
     } catch (error: any) {
       console.error('sendVerificationCode error:', error);
@@ -229,36 +212,22 @@ export class AuthService {
 
   static async verifyCodeAndSignIn(email: string, password: string, code: string) {
     try {
-      console.log('Verifying Email 2FA code and signing in...');
+      console.log('Verifying code and signing in...');
       
-      // Use direct HTTP call to verify code
-      const functionUrl = 'https://khcelroaozkzpyxayvpj.supabase.co/functions/v1/send-email-2fa';
-      
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoY2Vscm9hb3prenB5eGF5dnBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1NTEzODQsImV4cCI6MjA2NzEyNzM4NH0.vL2P2P6xuWR-n-dZGg7kcg8l5y1nOn2N_XznyqYL97c`,
-        },
-        body: JSON.stringify({ 
-          action: 'verify_code', 
-          code, 
-          email 
-        })
+      // Use Supabase functions invoke to verify code
+      const { data, error } = await supabase.functions.invoke('verify-code', {
+        body: { email, code }
       });
 
-      console.log('Verify HTTP Response status:', response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Verify HTTP Error response:', errorText);
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      if (error) {
+        console.error('Function invoke error:', error);
+        throw error;
       }
 
-      const verifyData = await response.json();
-      console.log('Email 2FA verification response:', verifyData);
-
-      if (!verifyData.success) throw new Error(verifyData.error);
+      if (!data.success) {
+        console.error('Code verification failed:', data.error);
+        throw new Error(data.error || 'Invalid verification code');
+      }
 
       // If code is valid, proceed with normal sign in
       const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -268,7 +237,7 @@ export class AuthService {
 
       if (signInError) throw signInError;
 
-      console.log('Email 2FA verification and sign in successful');
+      console.log('Verification and sign in successful');
       return { error: null };
     } catch (error: any) {
       console.error('verifyCodeAndSignIn error:', error);
