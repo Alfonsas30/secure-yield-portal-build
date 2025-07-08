@@ -32,48 +32,58 @@ export function AdminUserManagement() {
     try {
       setLoading(true);
       
-      const { data, error } = await supabase
+      // Get all profiles first
+      const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          user_id,
-          email,
-          display_name,
-          account_number,
-          created_at,
-          account_balances!left(balance),
-          user_roles!left(role)
-        `);
+        .select('user_id, email, display_name, account_number, created_at');
 
-      if (error) {
-        console.error('Supabase query error:', error);
-        throw error;
+      if (profilesError) {
+        console.error('Profiles query error:', profilesError);
+        throw profilesError;
       }
 
-      console.log('Raw data from Supabase:', data);
+      console.log('Profiles data:', profiles);
 
-      const formattedUsers = data?.map(user => {
-        console.log('Processing user:', user);
+      // Get all balances
+      const { data: balances, error: balancesError } = await supabase
+        .from('account_balances')
+        .select('user_id, balance');
+
+      if (balancesError) {
+        console.error('Balances query error:', balancesError);
+        throw balancesError;
+      }
+
+      console.log('Balances data:', balances);
+
+      // Get all roles
+      const { data: roles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, role');
+
+      if (rolesError) {
+        console.error('Roles query error:', rolesError);
+        throw rolesError;
+      }
+
+      console.log('Roles data:', roles);
+
+      // Merge data in JavaScript
+      const formattedUsers = profiles?.map(profile => {
+        // Find balance for this user
+        const userBalance = balances?.find(b => b.user_id === profile.user_id);
         
-        // Handle balance - Supabase returns arrays from joins
-        let balance = 0;
-        if (user.account_balances && Array.isArray(user.account_balances) && user.account_balances.length > 0) {
-          balance = user.account_balances[0]?.balance || 0;
-        }
-
-        // Handle role - Supabase returns arrays from joins
-        let role = null;
-        if (user.user_roles && Array.isArray(user.user_roles) && user.user_roles.length > 0) {
-          role = user.user_roles[0]?.role || null;
-        }
+        // Find role for this user
+        const userRole = roles?.find(r => r.user_id === profile.user_id);
 
         return {
-          user_id: user.user_id,
-          email: user.email,
-          display_name: user.display_name,
-          account_number: user.account_number,
-          created_at: user.created_at,
-          balance: balance,
-          role: role
+          user_id: profile.user_id,
+          email: profile.email,
+          display_name: profile.display_name,
+          account_number: profile.account_number,
+          created_at: profile.created_at,
+          balance: userBalance?.balance || 0,
+          role: userRole?.role || null
         };
       }) || [];
 
