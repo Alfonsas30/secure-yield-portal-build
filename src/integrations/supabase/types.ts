@@ -716,9 +716,23 @@ export type Database = {
         }
         Returns: boolean
       }
+      process_internal_transfer: {
+        Args: {
+          p_from_user_id: string
+          p_to_account_number: string
+          p_amount: number
+          p_description?: string
+          p_recipient_name?: string
+        }
+        Returns: Json
+      }
       sanitize_html_input: {
         Args: { input_text: string }
         Returns: string
+      }
+      validate_account_number: {
+        Args: { account_number: string }
+        Returns: boolean
       }
     }
     Enums: {

@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { ltToEur, formatCurrency } from "@/lib/currency";
 import { useTranslation } from 'react-i18next';
+import { AlertTriangle } from "lucide-react";
 
 interface TransferModalProps {
   open: boolean;
@@ -26,73 +28,128 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
     amount: "",
     description: ""
   });
+  const [validationError, setValidationError] = useState<string>("");
+
+  // Validate account number format
+  const validateAccountNumber = (accountNumber: string): boolean => {
+    const pattern = /^LT[0-9]{12}$/;
+    return pattern.test(accountNumber);
+  };
+
+  // Validate form data
+  const validateForm = (): string | null => {
+    const amount = parseFloat(formData.amount);
+    
+    if (amount <= 0) {
+      return "Suma turi būti teigiama";
+    }
+
+    if (!validateAccountNumber(formData.toAccount)) {
+      return "Neteisingas sąskaitos numerio formatas. Turi būti: LT + 12 skaitmenų";
+    }
+
+    if (formData.toAccount === profile?.account_number) {
+      return "Negalite pervesti pinigų į savo pačių sąskaitą";
+    }
+
+    if (!formData.toName.trim()) {
+      return "Gavėjo vardas yra privalomas";
+    }
+
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
 
+    console.log('🔄 Transfer started:', {
+      from: profile.account_number,
+      to: formData.toAccount,
+      amount: formData.amount,
+      name: formData.toName
+    });
+
+    setValidationError("");
+    
+    // Validate form
+    const validationError = validateForm();
+    if (validationError) {
+      setValidationError(validationError);
+      console.log('❌ Validation failed:', validationError);
+      return;
+    }
+
     setLoading(true);
     try {
       const amount = parseFloat(formData.amount);
       
-      if (amount <= 0) {
-        toast({
-          title: t('transfer.error'),
-          description: t('transfer.amountMustBePositive'),
-          variant: "destructive"
-        });
-        return;
-      }
-
-      // Use atomic balance update function for security
-      const { data, error } = await supabase.rpc('atomic_balance_update', {
-        p_user_id: profile.user_id,
-        p_amount: -amount, // Negative for outgoing transfer
-        p_transaction_type: 'transfer_out',
-        p_description: formData.description || `${t('transfer.defaultDescription')} ${formData.toAccount}`,
-        p_recipient_account: formData.toAccount,
+      console.log('📤 Calling process_internal_transfer function...');
+      
+      // Use the new comprehensive transfer function
+      const { data, error } = await supabase.rpc('process_internal_transfer', {
+        p_from_user_id: profile.user_id,
+        p_to_account_number: formData.toAccount,
+        p_amount: amount,
+        p_description: formData.description || `Pervedimas iš ${profile.account_number}`,
         p_recipient_name: formData.toName
       });
 
-      if (error) throw error;
+      console.log('📥 Transfer function response:', { data, error });
 
-      const result = data as { success: boolean; error?: string; new_balance?: number };
+      if (error) {
+        console.error('❌ Transfer function error:', error);
+        throw error;
+      }
+
+      const result = data as { 
+        success: boolean; 
+        error?: string; 
+        from_new_balance?: number;
+        to_new_balance?: number;
+        transfer_id?: string;
+      };
       
       if (!result.success) {
+        console.log('❌ Transfer failed:', result.error);
+        
+        let errorMessage = result.error || 'Pervedimas nepavyko';
+        
+        // Provide specific error messages
+        if (result.error === 'Insufficient funds') {
+          errorMessage = 'Nepakanka lėšų sąskaitoje';
+        } else if (result.error === 'Recipient account not found') {
+          errorMessage = 'Gavėjo sąskaita nerasta mūsų sistemoje';
+        } else if (result.error === 'Cannot transfer to your own account') {
+          errorMessage = 'Negalite pervesti pinigų į savo pačių sąskaitą';
+        }
+        
         toast({
-          title: t('transfer.transferError'),
-          description: result.error === 'Insufficient funds' ? t('transfer.insufficientFunds') : t('transfer.transferFailed'),
+          title: "Pervedimo klaida",
+          description: errorMessage,
           variant: "destructive"
         });
         return;
       }
 
-      // Create transfer request record
-      await supabase
-        .from('transfer_requests')
-        .insert({
-          from_user_id: profile.user_id,
-          from_account: profile.account_number,
-          to_account: formData.toAccount,
-          to_name: formData.toName,
-          amount: amount,
-          description: formData.description || null,
-          status: 'completed'
-        });
+      console.log('✅ Transfer successful:', {
+        transferId: result.transfer_id,
+        newBalance: result.from_new_balance
+      });
 
       toast({
-        title: t('transfer.transferSuccess'),
-        description: t('transfer.transferSuccessDescription', { amount, account: formData.toAccount }),
+        title: "Pervedimas sėkmingas",
+        description: `Pervesta ${amount} LT į sąskaitą ${formData.toAccount}. Naujas balansas: ${result.from_new_balance?.toFixed(2)} LT`,
         variant: "default"
       });
 
       setFormData({ toAccount: "", toName: "", amount: "", description: "" });
       onOpenChange(false);
     } catch (error) {
-      console.error('Transfer error:', error);
+      console.error('❌ Transfer error:', error);
       toast({
-        title: t('transfer.transferError'),
-        description: t('transfer.transferFailed'),
+        title: "Pervedimo klaida",
+        description: "Pervedimas nepavyko. Bandykite dar kartą.",
         variant: "destructive"
       });
     } finally {
@@ -106,6 +163,13 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
         <DialogHeader>
           <DialogTitle>{t('transfer.title')}</DialogTitle>
         </DialogHeader>
+        
+        {validationError && (
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription>{validationError}</AlertDescription>
+          </Alert>
+        )}
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
