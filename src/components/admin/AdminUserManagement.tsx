@@ -40,28 +40,51 @@ export function AdminUserManagement() {
           display_name,
           account_number,
           created_at,
-          account_balances!inner(balance),
+          account_balances(balance),
           user_roles(role)
         `);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase query error:', error);
+        throw error;
+      }
 
-      const formattedUsers = data?.map(user => ({
-        user_id: user.user_id,
-        email: user.email,
-        display_name: user.display_name,
-        account_number: user.account_number,
-        created_at: user.created_at,
-        balance: Array.isArray(user.account_balances) ? user.account_balances[0]?.balance || 0 : 0,
-        role: Array.isArray(user.user_roles) && user.user_roles.length > 0 ? user.user_roles[0].role : null
-      })) || [];
+      console.log('Raw data from Supabase:', data);
 
+      const formattedUsers = data?.map(user => {
+        console.log('Processing user:', user);
+        
+        // Handle balance - Supabase returns arrays from joins
+        let balance = 0;
+        if (user.account_balances && Array.isArray(user.account_balances) && user.account_balances.length > 0) {
+          balance = user.account_balances[0]?.balance || 0;
+        }
+
+        // Handle role - Supabase returns arrays from joins
+        let role = null;
+        if (user.user_roles && Array.isArray(user.user_roles) && user.user_roles.length > 0) {
+          role = user.user_roles[0]?.role || null;
+        }
+
+        return {
+          user_id: user.user_id,
+          email: user.email,
+          display_name: user.display_name,
+          account_number: user.account_number,
+          created_at: user.created_at,
+          balance: balance,
+          role: role
+        };
+      }) || [];
+
+      console.log('Formatted users:', formattedUsers);
       setUsers(formattedUsers);
     } catch (error: any) {
       console.error('Error fetching users:', error);
+      console.error('Error details:', error.message, error.details, error.hint);
       toast({
         title: 'Klaida',
-        description: 'Nepavyko užkrauti vartotojų sąrašo',
+        description: `Nepavyko užkrauti vartotojų sąrašo: ${error.message || 'Nežinoma klaida'}`,
         variant: 'destructive'
       });
     } finally {
