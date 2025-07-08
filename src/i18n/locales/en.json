@@ -946,7 +946,7 @@
   "boardApplication": {
     "title": "Board Application",
     "description": "Apply to join our board of directors and help shape the future of banking",
-    "warning": "⚠️ This application requires serious commitment and financial expertise",
+    "warning": "⚠️ To become a board member, a minimum amount of 100,000 LT is required",
     "form": {
       "name": "Full Name",
       "email": "Email Address",

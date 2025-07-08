@@ -944,7 +944,7 @@
   "boardApplication": {
     "title": "Paraiška valdybai",
     "description": "Pateikite paraišką prisijungti prie mūsų direktorių valdybos ir padėti formuoti bankininkystės ateitį",
-    "warning": "⚠️ Ši paraiška reikalauja rimto įsipareigojimo ir finansų srities žinių",
+    "warning": "⚠️ Norint tapti valdybos nariu reikalinga minimali suma 100,000 LT",
     "form": {
       "name": "Vardas ir pavardė",
       "email": "El. pašto adresas",
