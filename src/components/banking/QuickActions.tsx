@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Send, Plus, Download, BarChart3, Calculator, Minus, Clock, CheckCircle } from "lucide-react";
+import { Send, Plus, Download, BarChart3, Calculator, Minus, Clock } from "lucide-react";
 import { TransferModal } from "./TransferModal";
 import { DepositModal } from "./DepositModal";
 import { WithdrawalModal } from "./WithdrawalModal";
@@ -23,27 +23,6 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
   const [depositModalOpen, setDepositModalOpen] = useState(false);
   const [withdrawalModalOpen, setWithdrawalModalOpen] = useState(false);
   const [calculatingInterest, setCalculatingInterest] = useState(false);
-  const [interestStatus, setInterestStatus] = useState<any>(null);
-  const [checkingStatus, setCheckingStatus] = useState(false);
-
-  // Check interest calculation status on component mount
-  useEffect(() => {
-    checkInterestStatus();
-  }, []);
-
-  const checkInterestStatus = async () => {
-    setCheckingStatus(true);
-    try {
-      const { data, error } = await supabase.rpc('check_daily_interest_status');
-      if (!error) {
-        setInterestStatus(data);
-      }
-    } catch (error) {
-      console.error('Error checking interest status:', error);
-    } finally {
-      setCheckingStatus(false);
-    }
-  };
 
   const handleCalculateInterest = async () => {
     // Check if user is admin
@@ -77,8 +56,6 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
           description: result.error || "Šiandien palūkanos jau buvo apskaičiuotos",
           variant: "destructive"
         });
-        // Refresh status
-        await checkInterestStatus();
         return;
       }
 
@@ -86,9 +63,6 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
         title: "Palūkanos apskaičiuotos",
         description: `Apdorota ${result.accounts_processed} sąskaitų, pridėta ${result.total_interest_paid?.toFixed(2)} LT palūkanų`,
       });
-      
-      // Refresh status after successful calculation
-      await checkInterestStatus();
     } catch (error) {
       console.error('Interest calculation error:', error);
       toast({
@@ -153,24 +127,12 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
               {t('quickActions.reports')}
             </Button>
             
-            {/* Interest calculation button */}
-            {interestStatus?.calculated_today ? (
-              <div className="col-span-3 p-3 bg-green-50 border border-green-200 rounded-md">
-                <div className="flex items-center gap-2 text-green-700">
-                  <CheckCircle className="w-4 h-4" />
-                  <span className="font-medium">Šiandien palūkanos jau apskaičiuotos</span>
-                </div>
-                <div className="text-sm text-green-600 mt-1">
-                  Apdorota: {interestStatus.accounts_processed} sąskaitų | 
-                  Pridėta: {interestStatus.total_interest_paid?.toFixed(2)} LT | 
-                  Laikas: {new Date(interestStatus.calculated_at).toLocaleTimeString('lt-LT')}
-                </div>
-              </div>
-            ) : (
+            {/* Admin interest calculation button - only show for admins */}
+            {isAdmin && (
               <Button 
                 variant="outline" 
                 onClick={handleCalculateInterest}
-                disabled={calculatingInterest || checkingStatus || !isAdmin}
+                disabled={calculatingInterest}
                 className="flex items-center gap-2 h-12 col-span-3"
               >
                 {calculatingInterest ? (
@@ -181,7 +143,7 @@ export function QuickActions({ onViewTransactions, onViewReports }: QuickActions
                 ) : (
                   <>
                     <Calculator className="w-4 h-4" />
-                    {isAdmin ? "Apskaičiuoti dienos palūkanas" : "Palūkanų skaičiavimas (tik admin)"}
+                    Apskaičiuoti dienos palūkanas
                   </>
                 )}
               </Button>
