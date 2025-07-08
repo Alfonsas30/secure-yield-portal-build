@@ -66,6 +66,75 @@ const Index = () => {
         <Navigation />
         <Hero />
         
+        {/* Offshore Account Section */}
+        <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
+          <div className="container mx-auto max-w-6xl">
+            <div className="text-center mb-12">
+              <Badge variant="outline" className="mb-4 bg-blue-50/80 backdrop-blur-sm text-blue-700 border-blue-200">
+                <Lock className="w-4 h-4 mr-2" />
+                {t('offshore.badge')}
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900">
+                {t('offshore.title')}
+              </h2>
+              <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                {t('offshore.description')}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 text-center">{t('offshore.benefits.privacy.title')}</h3>
+                  <p className="text-slate-600 text-center">{t('offshore.benefits.privacy.description')}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <Zap className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 text-center">{t('offshore.benefits.currency.title')}</h3>
+                  <p className="text-slate-600 text-center">{t('offshore.benefits.currency.description')}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <Eye className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 text-center">{t('offshore.benefits.cards.title')}</h3>
+                  <p className="text-slate-600 text-center">{t('offshore.benefits.cards.description')}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 text-center">{t('offshore.benefits.stability.title')}</h3>
+                  <p className="text-slate-600 text-center">{t('offshore.benefits.stability.description')}</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 hover:shadow-xl transition-all duration-300 md:col-span-2 lg:col-span-1">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 text-center">{t('offshore.benefits.protection.title')}</h3>
+                  <p className="text-slate-600 text-center">{t('offshore.benefits.protection.description')}</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
         
         <Services />
       

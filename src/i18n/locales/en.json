@@ -116,7 +116,7 @@
     "subtitle": "with daily interest",
     "description": "The world's first bank that pays interest daily. Transparent, secure, with no hidden fees – this is what modern savings look like.",
     "openAccount": "Open Bank Account",
-    "startSaving": "Start saving now",
+    "startSaving": "Offshore Account",
     "learnMore": "Learn more",
     "features": {
       "dailyInterest": {
@@ -1012,6 +1012,33 @@
     "option3": "Check your email for discount codes",
     "tryAgain": "Try Again",
     "backToHome": "Back to Home"
+  },
+  "offshore": {
+    "badge": "Offshore Banking Solutions",
+    "title": "Why Open an Offshore Account with VĮ LTB Bank?",
+    "description": "An offshore bank account at VĮ LTB provides a higher level of financial freedom, security, and profitability – a strategic step for expanding your business internationally.",
+    "benefits": {
+      "privacy": {
+        "title": "Highest Level Banking Secrecy",
+        "description": "Many offshore jurisdictions, including ours, ensure the highest level of banking secrecy. In some cases, disclosing any information about an account or its owner is considered a criminal offense."
+      },
+      "currency": {
+        "title": "Flexible Currency Control Solutions",
+        "description": "Foreign currency controls are generally much more flexible in offshore zones compared to high-tax countries. In addition, VĮ LTB helps clients avoid excessive service fees often charged by domestic banks, while offering highly competitive interest rates."
+      },
+      "cards": {
+        "title": "Additional Privacy Layer",
+        "description": "Foreign credit and debit cards linked to your VĮ LTB account provide an added layer of privacy, with all transactions processed through the offshore banking network."
+      },
+      "stability": {
+        "title": "Financial Strength and Efficiency",
+        "description": "Some offshore banks – including VĮ LTB – are financially stronger and better managed than many domestic institutions, thanks to stricter liquidity and risk management requirements."
+      },
+      "protection": {
+        "title": "Foundation for Financial Security and Growth",
+        "description": "For these reasons, managing your funds through an offshore account at VĮ LTB offers real advantages – protecting your assets from tax authorities, creditors, competitors, former spouses, and others who might attempt to seize them."
+      }
+    }
   },
   "seo": {
     "defaultTitle": "LTB Bank - Save Smart with Daily Interest",

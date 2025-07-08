@@ -116,7 +116,7 @@
     "subtitle": "su dienos palūkanomis",
     "description": "Pirmasis pasaulyje bankas, mokantis palūkanas kasdien. Skaidru, saugu, be paslėptų mokesčių – taip atrodo šiuolaikinis taupymas.",
     "openAccount": "Atidaryt banko sąskaitą",
-    "startSaving": "Pradėti taupyti dabar",
+    "startSaving": "Ofšorinė sąskaita",
     "learnMore": "Sužinoti daugiau",
     "features": {
       "dailyInterest": {
@@ -1010,6 +1010,33 @@
     "option3": "Patikrinkite savo el. paštą dėl nuolaidų kodų",
     "tryAgain": "Bandyti dar kartą",
     "backToHome": "Grįžti į pradžią"
+  },
+  "offshore": {
+    "badge": "Ofšorinės bankininkystės sprendimai",
+    "title": "Kodėl verta atidaryti ofšorinę sąskaitą banke VĮ LTB?",
+    "description": "Ofšorinė banko sąskaita banke VĮ LTB suteikia aukštesnį finansinės laisvės, saugumo ir pelningumo lygį – tai svarbus žingsnis plėtojant jūsų verslą tarptautiniu mastu.",
+    "benefits": {
+      "privacy": {
+        "title": "Aukščiausio lygio banko paslaptis",
+        "description": "Daugelis ofšorinių jurisdikcijų, įskaitant mūsų, garantuoja aukščiausio lygio banko paslaptį. Kai kuriose jų įstatymai yra tokie griežti, kad bet koks informacijos apie sąskaitą ar jos savininką atskleidimas laikomas nusikaltimu."
+      },
+      "currency": {
+        "title": "Lankstūs valiutų kontrolės sprendimai",
+        "description": "Valiutų kontrolė ofšorinėse teritorijose yra kur kas lankstesnė nei aukštus mokesčius taikančiose šalyse. Be to, bankas VĮ LTB leidžia išvengti daugumos vidaus bankuose taikomų paslaugų mokesčių, o palūkanų normos čia dažnai yra žymiai patrauklesnės."
+      },
+      "cards": {
+        "title": "Papildomas privatumo lygis",
+        "description": "Užsienio debeto ir kredito kortelės, susietos su jūsų VĮ LTB sąskaita, suteikia papildomą privatumo lygį – visi mokėjimai vyksta per ofšorinę sistemą."
+      },
+      "stability": {
+        "title": "Finansinis stiprumas ir efektyvumas",
+        "description": "Kai kurie ofšoriniai bankai, įskaitant VĮ LTB, yra finansiškai stipresni ir valdomi efektyviau nei tradiciniai šalies bankai – dėl griežtesnių reikalavimų likvidumui ir rizikos valdymui."
+      },
+      "protection": {
+        "title": "Finansinio saugumo ir augimo pagrindas",
+        "description": "Dėl visų šių priežasčių ofšorinė sąskaita VĮ LTB gali tapti jūsų finansinio saugumo ir augimo pagrindu – apsauga nuo mokesčių institucijų, kreditorių, konkurentų ar kitų interesų grupių, galinčių kelti grėsmę jūsų turtui."
+      }
+    }
   },
   "seo": {
     "defaultTitle": "LTB Bankas - Taupyk protingai su dienos palūkanomis",
