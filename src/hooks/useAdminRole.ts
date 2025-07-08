@@ -8,55 +8,36 @@ export function useAdminRole() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('🔧 useAdminRole: Starting admin check...', { 
-      user: user?.id, 
-      email: user?.email,
-      session: !!session 
-    });
-
     const checkAdminRole = async () => {
       if (!user) {
-        console.log('🔧 useAdminRole: No user found, setting admin=false');
         setIsAdmin(false);
         setLoading(false);
         return;
       }
 
-      console.log('🔧 useAdminRole: Checking admin role for user:', user.id);
-
       try {
-        // Simplified query to get all roles for user first
-        const { data: allRoles, error: allRolesError } = await supabase
+        const { data: roles, error } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', user.id);
 
-        console.log('🔧 useAdminRole: All user roles:', allRoles, 'Error:', allRolesError);
-
-        if (allRolesError) {
-          console.error('🔧 useAdminRole: Error fetching all roles:', allRolesError);
+        if (error) {
+          console.error('Error fetching admin role:', error);
           setIsAdmin(false);
-          setLoading(false);
-          return;
+        } else {
+          const hasAdminRole = roles?.some(roleData => roleData.role === 'admin') || false;
+          setIsAdmin(hasAdminRole);
         }
-
-        // Check if admin role exists
-        const hasAdminRole = allRoles?.some(roleData => roleData.role === 'admin') || false;
-        console.log('🔧 useAdminRole: Has admin role:', hasAdminRole);
-
-        setIsAdmin(hasAdminRole);
       } catch (error) {
-        console.error('🔧 useAdminRole: Exception during role check:', error);
+        console.error('Admin role check exception:', error);
         setIsAdmin(false);
       } finally {
         setLoading(false);
-        console.log('🔧 useAdminRole: Admin check complete, loading=false');
       }
     };
 
     checkAdminRole();
   }, [user, session]);
 
-  console.log('🔧 useAdminRole: Returning state:', { isAdmin, loading, userId: user?.id });
   return { isAdmin, loading };
 }

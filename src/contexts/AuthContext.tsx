@@ -28,7 +28,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [pendingTOTPPassword, setPendingTOTPPassword] = useState<string | null>(null);
 
   const sessionHook = useAuthSession();
-  const { debouncedCall } = useSessionDebounce(5000);
 
   // Helper function to generate account number
   const generateAccountNumber = async (): Promise<string> => {
@@ -147,14 +146,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user profile with enhanced debouncing to prevent rate limits
-          debouncedCall(async () => {
-            console.log('Fetching profile for user:', session.user.id);
-            
+          // Simplified profile fetch
+          const fetchProfile = async () => {
             try {
-              // Add small delay to prevent rapid calls
-              await new Promise(resolve => setTimeout(resolve, 500));
-              
               const { data: profileData, error } = await supabase
                 .from('profiles')
                 .select('*')
@@ -163,29 +157,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               
               if (error) {
                 console.error('Error fetching profile:', error);
-                
-                // Only create missing data if it's a "not found" error, not rate limit
-                if (!error.message?.includes('429') && !error.message?.includes('rate limit')) {
-                  console.error('Profile fetch failed - attempting to create profile manually');
+                if (error.code === 'PGRST116') {
+                  // Profile not found, create it
                   await createMissingUserData(session.user);
                 }
               } else {
-                console.log('Profile fetched successfully:', profileData?.account_number);
+                console.log('Profile fetched successfully');
                 setProfile(profileData);
-                
-                // Ensure account balance exists for this profile (with delay)
-                setTimeout(() => ensureAccountBalance(profileData), 1000);
+                ensureAccountBalance(profileData);
               }
-              
-              // Note: Removed automatic redirect to allow users to stay on intended page
             } catch (error: any) {
-              if (error.message?.includes('429') || error.message?.includes('rate limit')) {
-                console.log('Rate limited during profile fetch, will retry later');
-                return;
-              }
               console.error('Profile fetch exception:', error);
             }
-          });
+          };
+          
+          // Simple timeout to avoid rapid calls
+          setTimeout(fetchProfile, 100);
         } else {
           console.log('No session - clearing profile data');
           setProfile(null);

@@ -13,39 +13,13 @@ const Admin = () => {
   const { user, session, loading: authLoading } = useAuth();
   const { isAdmin, loading: adminLoading } = useAdminRole();
 
-  console.log('🔧 Admin Component: Render state', {
-    user: !!user,
-    userId: user?.id,
-    email: user?.email,
-    session: !!session,
-    authLoading,
-    adminLoading,
-    isAdmin
-  });
-
-  // Add debug panel when there are issues
-  const showDebugPanel = authLoading || adminLoading || (!authLoading && !adminLoading && !isAdmin);
 
   if (authLoading || adminLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Kraunama... (Auth: {authLoading ? 'loading' : 'ready'}, Admin: {adminLoading ? 'loading' : 'ready'})</p>
-          {showDebugPanel && (
-            <Card className="mt-8 max-w-md bg-yellow-50">
-              <CardHeader>
-                <CardTitle className="text-sm">🔧 Debug Info</CardTitle>
-              </CardHeader>
-              <CardContent className="text-xs text-left">
-                <p>User: {user ? '✓' : '✗'} ({user?.email})</p>
-                <p>Session: {session ? '✓' : '✗'}</p>
-                <p>Auth Loading: {authLoading ? '✓' : '✗'}</p>
-                <p>Admin Loading: {adminLoading ? '✓' : '✗'}</p>
-                <p>Is Admin: {isAdmin ? '✓' : '✗'}</p>
-              </CardContent>
-            </Card>
-          )}
+          <p>Kraunama administratoriaus panelė...</p>
         </div>
       </div>
     );
@@ -63,28 +37,15 @@ const Admin = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Card className="bg-yellow-50 border-yellow-200">
-                <CardHeader>
-                  <CardTitle className="text-sm text-yellow-800">🔧 Debug Info</CardTitle>
-                </CardHeader>
-                <CardContent className="text-xs space-y-1">
-                  <p><strong>User:</strong> {user ? '✓' : '✗'} ({user?.email || 'N/A'})</p>
-                  <p><strong>User ID:</strong> {user?.id || 'N/A'}</p>
-                  <p><strong>Session:</strong> {session ? '✓' : '✗'}</p>
-                  <p><strong>Auth Loading:</strong> {authLoading ? '✓' : '✗'}</p>
-                  <p><strong>Admin Loading:</strong> {adminLoading ? '✓' : '✗'}</p>
-                  <p><strong>Is Admin:</strong> {isAdmin ? '✓' : '✗'}</p>
-                  <div className="mt-2">
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => window.location.reload()}
-                    >
-                      Perkrauti
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="text-center">
+                <p className="mb-4">Jūs neturite administratoriaus teisių šiai sistemai pasiekti.</p>
+                <Button 
+                  onClick={() => window.location.href = '/'}
+                  variant="outline"
+                >
+                  Grįžti į pagrindinį puslapį
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
