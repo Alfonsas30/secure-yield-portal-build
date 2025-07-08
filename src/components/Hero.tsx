@@ -127,7 +127,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
           </Button>
           <Button 
-            onClick={() => setAuthModalOpen(true)}
+            onClick={() => setRegistrationOpen(true)}
             size="lg" 
             variant="outline" 
             className="px-8 py-6 text-lg font-semibold border-2 hover:bg-slate-50 transition-all duration-300 backdrop-blur-sm bg-white/80 hover:scale-105 transform"
