@@ -40,8 +40,8 @@ export function AdminUserManagement() {
           display_name,
           account_number,
           created_at,
-          account_balances(balance),
-          user_roles(role)
+          account_balances!left(balance),
+          user_roles!left(role)
         `);
 
       if (error) {
