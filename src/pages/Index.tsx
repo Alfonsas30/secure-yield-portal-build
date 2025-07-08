@@ -21,11 +21,16 @@ import Footer from "@/components/Footer";
 import BoardInvitation from "@/components/BoardInvitation";
 import { LoanPaymentSuccess } from "@/components/LoanPaymentSuccess";
 import { SEOHead } from "@/components/SEOHead";
+import { useAuth } from "@/contexts/AuthContext";
+import { useAdminRole } from "@/hooks/useAdminRole";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { t } = useTranslation();
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [sessionId, setSessionId] = useState<string>("");
+  const { user, session, loading } = useAuth();
+  const { isAdmin, loading: adminLoading } = useAdminRole();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -65,6 +70,52 @@ const Index = () => {
       <div className="min-h-screen bg-gradient-to-br from-vibrant-purple/30 via-vibrant-cyan/30 to-vibrant-lime/30 animate-aurora-wave">
         <Navigation />
         <Hero />
+        
+        {/* Temporary Debug Section - Remove after testing */}
+        {!loading && (
+          <section className="py-8 px-4 bg-yellow-50 border-y border-yellow-200">
+            <div className="container mx-auto max-w-4xl">
+              <Card className="border-yellow-300 bg-yellow-50">
+                <CardHeader>
+                  <CardTitle className="text-yellow-800">🔧 Admin Debug Panel (Temporary)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p><strong>User Logged In:</strong> {user ? 'Yes' : 'No'}</p>
+                      <p><strong>User ID:</strong> {user?.id || 'None'}</p>
+                      <p><strong>Email:</strong> {user?.email || 'None'}</p>
+                      <p><strong>Session Active:</strong> {session ? 'Yes' : 'No'}</p>
+                    </div>
+                    <div>
+                      <p><strong>Admin Loading:</strong> {adminLoading ? 'Yes' : 'No'}</p>
+                      <p><strong>Is Admin:</strong> {isAdmin ? 'Yes' : 'No'}</p>
+                      <p><strong>Auth Loading:</strong> {loading ? 'Yes' : 'No'}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    <Link to="/dashboard">
+                      <Button variant="outline" size="sm">Test Dashboard Link</Button>
+                    </Link>
+                    <Link to="/admin">
+                      <Button variant="outline" size="sm">Test Admin Link</Button>
+                    </Link>
+                    {user && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => window.location.href = '/admin'}
+                      >
+                        Force Navigate to Admin
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+        )}
+        
         <Services />
       
       {/* Calculator Section with Tabs */}
