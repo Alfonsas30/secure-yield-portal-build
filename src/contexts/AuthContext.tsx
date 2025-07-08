@@ -177,10 +177,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setTimeout(() => ensureAccountBalance(profileData), 1000);
               }
               
-              // Auto redirect to dashboard after login
-              if (event === 'SIGNED_IN') {
-                navigate('/dashboard');
-              }
+              // Note: Removed automatic redirect to allow users to stay on intended page
             } catch (error: any) {
               if (error.message?.includes('429') || error.message?.includes('rate limit')) {
                 console.log('Rate limited during profile fetch, will retry later');
