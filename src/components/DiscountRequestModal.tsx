@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as React from "react";
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Loader2, User, Building, Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { trackDiscountRequested, trackModalOpen } from "@/lib/analytics";
 
 interface DiscountRequestModalProps {
   open: boolean;
@@ -23,6 +25,13 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
   });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  // Track modal opening
+  React.useEffect(() => {
+    if (open) {
+      trackModalOpen('discount_request');
+    }
+  }, [open]);
 
   const handleSubmit = async () => {
     if (!formData.name.trim() || !formData.email.trim()) {
@@ -50,6 +59,9 @@ export function DiscountRequestModal({ open, onOpenChange }: DiscountRequestModa
         console.error("Edge function error:", error);
         throw new Error("Nepavyko išsiųsti užklausos");
       }
+
+      // Track successful discount request
+      trackDiscountRequested(formData.accountType);
 
       toast({
         title: t('discount.success'),

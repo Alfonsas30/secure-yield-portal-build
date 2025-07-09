@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as React from "react";
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +26,7 @@ import { Crown, Loader2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { trackBoardApplicationSubmitted, trackModalOpen } from "@/lib/analytics";
 
 const formSchema = z.object({
   name: z.string().min(2, "Vardas turi būti bent 2 simbolių"),
@@ -44,6 +46,13 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+
+  // Track modal opening
+  React.useEffect(() => {
+    if (open) {
+      trackModalOpen('board_application');
+    }
+  }, [open]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -69,6 +78,9 @@ export const BoardApplicationModal = ({ open, onOpenChange }: BoardApplicationMo
         }]);
 
       if (error) throw error;
+
+      // Track successful submission
+      trackBoardApplicationSubmitted();
 
       toast({
         title: t('boardApplication.toast.success'),
