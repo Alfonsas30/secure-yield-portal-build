@@ -701,6 +701,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      calculate_daily_interest_with_accumulation: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       check_daily_interest_status: {
         Args: Record<PropertyKey, never>
         Returns: Json
@@ -724,6 +728,10 @@ export type Database = {
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      get_daily_interest_preview: {
+        Args: { target_balance?: number }
+        Returns: Json
       }
       has_role: {
         Args: {

@@ -3,11 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Percent, TrendingUp, Calendar, Calculator } from "lucide-react";
+import { Percent, TrendingUp, Calendar, Calculator, RefreshCw, AlertCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from 'react-i18next';
+import { useQuery } from "@tanstack/react-query";
 
 interface InterestTransaction {
   id: string;
@@ -25,6 +26,15 @@ interface InterestSummary {
   lastInterestDate: string | null;
 }
 
+interface InterestPreview {
+  balance: number;
+  daily_rate_percent: number;
+  daily_interest: number;
+  monthly_interest: number;
+  yearly_interest: number;
+  daily_interest_rounded: number;
+}
+
 export function InterestTracker() {
   const { t } = useTranslation();
   const { profile } = useAuth();
@@ -33,6 +43,40 @@ export function InterestTracker() {
   const [summary, setSummary] = useState<InterestSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState("month");
+
+  // Get current balance
+  const { data: currentBalance } = useQuery({
+    queryKey: ["balance", profile?.user_id],
+    queryFn: async () => {
+      if (!profile?.user_id) return 0;
+      
+      const { data, error } = await supabase
+        .from("account_balances")
+        .select("balance")
+        .eq("user_id", profile.user_id)
+        .single();
+        
+      if (error) throw error;
+      return data?.balance || 0;
+    },
+    enabled: !!profile?.user_id,
+  });
+
+  // Get precise interest calculations
+  const { data: interestPreview, refetch: refetchPreview } = useQuery({
+    queryKey: ["interestPreview", currentBalance],
+    queryFn: async () => {
+      if (!currentBalance) return null;
+      
+      const { data, error } = await supabase.rpc('get_daily_interest_preview', {
+        target_balance: currentBalance
+      });
+      
+      if (error) throw error;
+      return data as unknown as InterestPreview;
+    },
+    enabled: !!currentBalance,
+  });
 
   useEffect(() => {
     if (profile) {
@@ -194,6 +238,63 @@ export function InterestTracker() {
       <CardContent>
         {summary && (
           <div className="space-y-6">
+            {/* Interest Preview Card */}
+            {interestPreview && (
+              <Card className="mb-4">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">Tikslūs palūkanų skaičiavimai</CardTitle>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => refetchPreview()}
+                      className="flex items-center space-x-2"
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                      <span>Atnaujinti</span>
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-3 border rounded">
+                      <div className="text-sm text-muted-foreground">Dienos palūkanos (tikslios)</div>
+                      <div className="text-lg font-bold">{interestPreview.daily_interest.toFixed(6)} LT</div>
+                      <div className="text-xs text-muted-foreground">
+                        Apvalinta: {interestPreview.daily_interest_rounded.toFixed(2)} LT
+                      </div>
+                    </div>
+                    <div className="p-3 border rounded">
+                      <div className="text-sm text-muted-foreground">Mėnesio prognozė</div>
+                      <div className="text-lg font-bold">{interestPreview.monthly_interest.toFixed(2)} LT</div>
+                    </div>
+                    <div className="p-3 border rounded">
+                      <div className="text-sm text-muted-foreground">Metų prognozė</div>
+                      <div className="text-lg font-bold">{interestPreview.yearly_interest.toFixed(2)} LT</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 p-3 bg-muted/50 rounded">
+                    <div className="text-sm">
+                      <strong>Balansas:</strong> {interestPreview.balance.toFixed(2)} LT | 
+                      <strong> Dienos norma:</strong> {interestPreview.daily_rate_percent.toFixed(8)}%
+                    </div>
+                  </div>
+                  
+                  {interestPreview.daily_interest < 0.01 && interestPreview.balance > 0 && (
+                    <div className="mt-4 p-3 border-yellow-200 bg-yellow-50 rounded">
+                      <div className="flex items-center space-x-2">
+                        <AlertCircle className="h-4 w-4 text-yellow-600" />
+                        <div className="text-sm text-yellow-800">
+                          <p className="font-semibold">Mažos palūkanos</p>
+                          <p>Jūsų dienos palūkanos ({interestPreview.daily_interest.toFixed(6)} LT) yra mažesnės nei 0.01 LT. Jos bus pridėtos pasiekus minimalų limitą.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
             {/* Summary Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="p-4 border rounded-lg">
@@ -286,9 +387,10 @@ export function InterestTracker() {
               </h4>
               <div className="text-sm text-muted-foreground space-y-1">
                 <p>• Metinė palūkanų norma: 2%</p>
-                <p>• Dienos palūkanų norma: ~0.0055%</p>
+                <p>• Dienos palūkanų norma: {interestPreview ? interestPreview.daily_rate_percent.toFixed(8) : '~0.00547945'}%</p>
                 <p>• Palūkanos skaičiuojamos kasdien nuo balanso</p>
                 <p>• Palūkanos pridedamos automatiškai kiekvieną dieną 00:01</p>
+                <p>• Minimalios dienos palūkanos: 0.01 LT (mažesnės sumuojamos)</p>
                 {summary.todaysInterest === 0 && (
                   <p className="text-amber-600">• Šiandien palūkanos dar neapskaičiuotos arba balansas 0</p>
                 )}

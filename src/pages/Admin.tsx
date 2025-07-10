@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { AdminUserManagement } from '@/components/admin/AdminUserManagement';
 import { AdminStats } from '@/components/admin/AdminStats';
 import { AdminBalanceControl } from '@/components/banking/AdminBalanceControl';
+import { AdminInterestManagement } from '@/components/admin/AdminInterestManagement';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -64,7 +65,7 @@ const Admin = () => {
           </div>
 
           <Tabs defaultValue="users" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Vartotojai
@@ -76,6 +77,10 @@ const Admin = () => {
               <TabsTrigger value="finance" className="flex items-center gap-2">
                 <DollarSign className="w-4 h-4" />
                 Finansai
+              </TabsTrigger>
+              <TabsTrigger value="interest" className="flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Palūkanos
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="w-4 h-4" />
@@ -105,6 +110,10 @@ const Admin = () => {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            <TabsContent value="interest" className="space-y-6">
+              <AdminInterestManagement />
             </TabsContent>
 
             <TabsContent value="settings" className="space-y-6">
