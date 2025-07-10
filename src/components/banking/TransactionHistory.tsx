@@ -116,6 +116,8 @@ export function TransactionHistory() {
         return t('transactions.types.deposit');
       case 'withdrawal':
         return t('transactions.types.withdrawal');
+      case 'daily_interest':
+        return 'Dienos palūkanos';
       default:
         return type;
     }

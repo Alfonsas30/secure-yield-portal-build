@@ -8,6 +8,8 @@ import { AccountBalance } from "@/components/banking/AccountBalance";
 import { QuickActions } from "@/components/banking/QuickActions";
 import { TransactionHistory } from "@/components/banking/TransactionHistory";
 import { Analytics } from "@/components/banking/Analytics";
+import { InterestTracker } from "@/components/banking/InterestTracker";
+import { InterestCalculator } from "@/components/banking/InterestCalculator";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -79,10 +81,11 @@ export default function Dashboard() {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6 md:mb-8 text-xs md:text-sm">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-6 md:mb-8 text-xs md:text-sm">
               <TabsTrigger value="overview">{t('dashboard.tabs.overview')}</TabsTrigger>
               <TabsTrigger value="transactions">{t('dashboard.tabs.transactions')}</TabsTrigger>
               <TabsTrigger value="analytics">{t('dashboard.tabs.analytics')}</TabsTrigger>
+              <TabsTrigger value="interest">Palūkanos</TabsTrigger>
               <TabsTrigger value="profile">{t('dashboard.tabs.profile')}</TabsTrigger>
             </TabsList>
 
@@ -108,6 +111,11 @@ export default function Dashboard() {
 
             <TabsContent value="analytics">
               <Analytics />
+            </TabsContent>
+
+            <TabsContent value="interest" className="space-y-6">
+              <InterestTracker />
+              <InterestCalculator />
             </TabsContent>
 
             <TabsContent value="profile">
