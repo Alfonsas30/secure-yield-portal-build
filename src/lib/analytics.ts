@@ -15,7 +15,7 @@ const hasAnalyticsConsent = (): boolean => {
 export const trackPageView = (page_title: string, page_location: string) => {
   if (!hasAnalyticsConsent() || typeof window.gtag === 'undefined') return;
   
-  window.gtag('config', 'G-70424W9WGM', {
+  window.gtag('config', 'G-T2VKMD3NV4', {
     page_title,
     page_location,
   });
