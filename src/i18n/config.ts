@@ -26,7 +26,7 @@ const geoDetector = {
       callback(geoLanguage);
     } catch (error) {
       console.warn('Geographic language detection failed, falling back to navigator language');
-      callback('lt'); // fallback to Lithuanian
+      callback('en'); // fallback to English
     }
   },
   init: () => {},
@@ -38,7 +38,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'lt',
+    fallbackLng: 'en',
     debug: false,
     
     interpolation: {
