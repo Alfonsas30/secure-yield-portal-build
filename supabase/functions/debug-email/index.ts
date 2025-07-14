@@ -46,12 +46,13 @@ const handler = async (req: Request): Promise<Response> => {
     const emailContent = `Email test sent at: ${new Date().toLocaleString('lt-LT')}`;
     
     console.log('📧 ========== EMAIL SENDING DETAILS ==========');
-    console.log('📧 From:', 'LTB Bankas <noreply@ltb-bankas.com>');
+    console.log('📧 From:', 'LTB Bankas <onboarding@resend.dev>');
     console.log('📧 To:', adminEmail);
     console.log('📧 Subject:', emailSubject);
     console.log('📧 Content Length:', emailContent.length, 'characters');
     console.log('📧 Timestamp:', new Date().toISOString());
-    console.log('📧 Domain Status: Need to verify noreply@ltb-bankas.com in Resend');
+    console.log('📧 Using verified Resend sender address');
+    console.log('📧 Note: To use custom domain, verify ltb-bankas.com in Resend');
     console.log('📧 =============================================');
 
     // Send test email with improved sender and simpler content
@@ -59,7 +60,7 @@ const handler = async (req: Request): Promise<Response> => {
     const startTime = Date.now();
     
     const emailResponse = await resend.emails.send({
-      from: `LTB Bankas <noreply@ltb-bankas.com>`,
+      from: `LTB Bankas <onboarding@resend.dev>`,
       to: [adminEmail],
       subject: emailSubject,
       html: `
@@ -67,6 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
         <p>Test sent at: ${new Date().toLocaleString('lt-LT')}</p>
         <p>Function: debug-email</p>
         <p>Target: ${adminEmail}</p>
+        <p>Using verified Resend sender address</p>
         <p>If you see this - email system works!</p>
       `,
     });

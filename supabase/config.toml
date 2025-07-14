@@ -12,5 +12,8 @@ verify_jwt = false
 [functions.debug-email]
 verify_jwt = false
 
+[functions.email-status-checker]
+verify_jwt = false
+
 [functions.verify-totp-setup]
 verify_jwt = true

@@ -73,22 +73,35 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send email with verification code
-    console.log(`Sending verification code to: ${email}`);
+    // Detect language preference (default to Lithuanian)
+    const isEnglish = email.toLowerCase().includes('en') || false; // Simple detection, can be improved
+    
+    const subject = isEnglish ? 'Your login code' : 'Jūsų prisijungimo kodas';
+    const title = isEnglish ? 'Login Code' : 'Prisijungimo kodas';
+    const instruction = isEnglish 
+      ? 'This code expires in 5 minutes. If you did not request a login code, please ignore this email.'
+      : 'Šis kodas galioja 5 minutes. Jei neprašėte prisijungimo kodo, ignoruokite šį laišką.';
+    const footer = isEnglish 
+      ? 'Banking System - Secure Login'
+      : 'Banko Sistema - Saugus prisijungimas';
+
+    console.log(`Sending verification code to: ${email} (${isEnglish ? 'EN' : 'LT'})`);
+    
     const emailResponse = await resend.emails.send({
-      from: 'VILTB Bankas <onboarding@resend.dev>',
+      from: 'LTB Bankas <onboarding@resend.dev>',
       to: [email],
-      subject: 'Jūsų prisijungimo kodas',
+      subject: subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #333; text-align: center;">Prisijungimo kodas</h1>
+          <h1 style="color: #333; text-align: center;">${title}</h1>
           <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
             <h2 style="color: #2563eb; font-size: 32px; letter-spacing: 8px; margin: 0;">${code}</h2>
           </div>
           <p style="color: #666; text-align: center;">
-            Šis kodas galioja 5 minutes. Jei neprašėte prisijungimo kodo, ignoruokite šį laišką.
+            ${instruction}
           </p>
           <p style="color: #666; text-align: center; font-size: 12px;">
-            Banko Sistema - Saugus prisijungimas
+            ${footer}
           </p>
         </div>
       `,
