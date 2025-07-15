@@ -15,5 +15,8 @@ verify_jwt = false
 [functions.email-status-checker]
 verify_jwt = false
 
+[functions.create-registration-payment]
+verify_jwt = false
+
 [functions.verify-totp-setup]
 verify_jwt = true

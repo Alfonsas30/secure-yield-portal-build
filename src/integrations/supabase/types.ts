@@ -60,8 +60,11 @@ export type Database = {
           currency: string
           discount_code: string | null
           email: string
+          final_price: number | null
           id: string
           name: string
+          original_price: number | null
+          payment_status: string | null
           phone: string | null
           status: string
           stripe_session_id: string | null
@@ -74,8 +77,11 @@ export type Database = {
           currency?: string
           discount_code?: string | null
           email: string
+          final_price?: number | null
           id?: string
           name: string
+          original_price?: number | null
+          payment_status?: string | null
           phone?: string | null
           status?: string
           stripe_session_id?: string | null
@@ -88,8 +94,11 @@ export type Database = {
           currency?: string
           discount_code?: string | null
           email?: string
+          final_price?: number | null
           id?: string
           name?: string
+          original_price?: number | null
+          payment_status?: string | null
           phone?: string | null
           status?: string
           stripe_session_id?: string | null
