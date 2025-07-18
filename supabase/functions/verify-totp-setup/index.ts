@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { TOTP } from 'https://esm.sh/otpauth@9.4.0'
@@ -6,6 +5,12 @@ import { TOTP } from 'https://esm.sh/otpauth@9.4.0'
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+// Function to validate base32 format
+function isValidBase32(secret: string): boolean {
+  const base32Regex = /^[A-Z2-7]+$/;
+  return base32Regex.test(secret) && secret.length % 8 === 0;
 }
 
 // Generate random backup codes
@@ -74,9 +79,35 @@ serve(async (req) => {
       throw new Error('TOTP dar nebuvo sukonfigūruotas. Pirmiausia paleiskite TOTP setup.')
     }
 
+    // Validate that the stored secret is proper base32
+    if (!isValidBase32(profile.totp_secret)) {
+      console.error('Invalid TOTP secret format detected:', {
+        secret: profile.totp_secret.substring(0, 8) + '...',
+        length: profile.totp_secret.length,
+        isValid: false
+      })
+      
+      // Clear the invalid secret
+      await supabaseClient
+        .from('profiles')
+        .update({ 
+          totp_secret: null,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id)
+      
+      throw new Error('TOTP secret formatas neteisingas. Prašome iš naujo sukonfigūruoti TOTP - perkraukite puslapį ir pradėkite iš naujo.')
+    }
+
     if (profile.totp_enabled) {
       throw new Error('TOTP jau įjungtas')
     }
+
+    console.log('TOTP secret validation passed:', {
+      secretLength: profile.totp_secret.length,
+      isValidBase32: isValidBase32(profile.totp_secret),
+      sample: profile.totp_secret.substring(0, 8) + '...'
+    })
 
     // Verify TOTP token with the temporary secret
     const totp = new TOTP({

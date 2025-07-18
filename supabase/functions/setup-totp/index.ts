@@ -8,7 +8,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-// Base32 alphabet for proper TOTP secret generation
+// Proper Base32 alphabet (RFC 4648) - ONLY these 32 characters are allowed
 const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
 function generateBase32Secret(length = 32): string {
@@ -17,6 +17,12 @@ function generateBase32Secret(length = 32): string {
     secret += BASE32_ALPHABET[Math.floor(Math.random() * BASE32_ALPHABET.length)];
   }
   return secret;
+}
+
+// Validate that secret is proper base32
+function isValidBase32(secret: string): boolean {
+  const base32Regex = /^[A-Z2-7]+$/;
+  return base32Regex.test(secret) && secret.length % 8 === 0;
 }
 
 serve(async (req) => {
@@ -73,9 +79,31 @@ serve(async (req) => {
       )
     }
 
-    // Generate proper base32 secret for TOTP
-    const base32Secret = generateBase32Secret(32)
-    console.log('Generated base32 secret length:', base32Secret.length)
+    // Clear any existing invalid TOTP secret first
+    await supabaseClient
+      .from('profiles')
+      .update({ 
+        totp_secret: null,
+        updated_at: new Date().toISOString()
+      })
+      .eq('user_id', user.id)
+
+    console.log('Cleared existing TOTP secret for fresh setup')
+
+    // Generate proper base32 secret for TOTP (must be multiple of 8 for proper base32)
+    const base32Secret = generateBase32Secret(32) // 32 chars = proper base32 length
+    
+    // Validate the generated secret
+    if (!isValidBase32(base32Secret)) {
+      console.error('Generated invalid base32 secret:', base32Secret)
+      throw new Error('Failed to generate valid base32 secret')
+    }
+    
+    console.log('Generated valid base32 secret:', {
+      length: base32Secret.length,
+      isValid: isValidBase32(base32Secret),
+      sample: base32Secret.substring(0, 8) + '...'
+    })
 
     // Create TOTP instance with the secret
     const totp = new TOTP({
@@ -86,6 +114,15 @@ serve(async (req) => {
       period: 30,
       secret: base32Secret
     })
+
+    // Test that the TOTP instance works
+    try {
+      const testToken = totp.generate()
+      console.log('TOTP test generation successful, token length:', testToken.length)
+    } catch (totpError) {
+      console.error('TOTP generation test failed:', totpError)
+      throw new Error('Generated secret cannot be used for TOTP')
+    }
 
     // Save the secret to database (will be confirmed when user verifies)
     const { error: updateError } = await supabaseClient
@@ -103,7 +140,7 @@ serve(async (req) => {
 
     // Generate QR code URL
     const totpUrl = totp.toString()
-    console.log('TOTP URL generated successfully')
+    console.log('TOTP URL generated successfully for secret:', base32Secret.substring(0, 8) + '...')
 
     console.log('TOTP setup successful for user:', user.id)
 

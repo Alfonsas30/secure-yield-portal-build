@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -70,11 +69,22 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
     } catch (error: any) {
       console.error('TOTP setup error:', error);
       const errorMessage = error.message || error.error || 'TOTP konfigūracijos klaida';
-      toast({
-        title: "TOTP konfigūracijos klaida",
-        description: errorMessage,
-        variant: "destructive"
-      });
+      
+      // Check if it's an invalid secret format error that requires restart
+      if (errorMessage.includes('neteisingas') && errorMessage.includes('iš naujo')) {
+        toast({
+          title: "TOTP konfigūracijos klaida",
+          description: errorMessage + " Perkraukite puslapį ir pradėkite iš naujo.",
+          variant: "destructive",
+          duration: 10000 // Longer duration for important message
+        });
+      } else {
+        toast({
+          title: "TOTP konfigūracijos klaida",
+          description: errorMessage,
+          variant: "destructive"
+        });
+      }
       
       // Reset to allow retry
       setStep('setup');
@@ -111,6 +121,24 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
       if (!data || !data.success) {
         const errorMessage = data?.error || 'TOTP patvirtinimo klaida';
         console.error('TOTP verification failed:', errorMessage);
+        
+        // Check if it's an invalid secret error that requires restart
+        if (errorMessage.includes('neteisingas') && errorMessage.includes('iš naujo')) {
+          toast({
+            title: "TOTP konfigūracijos klaida",
+            description: errorMessage,
+            variant: "destructive",
+            duration: 10000
+          });
+          
+          // Reset the entire modal to setup step
+          setStep('setup');
+          setTotpCode("");
+          setQrCodeDataUrl("");
+          setSecret("");
+          return;
+        }
+        
         throw new Error(errorMessage);
       }
 
@@ -200,6 +228,9 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
             <p>Konfigūruojama TOTP...</p>
+            <p className="text-xs text-muted-foreground">
+              Generuojamas saugus base32 secret ir QR kodas
+            </p>
           </div>
         )}
 
