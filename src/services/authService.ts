@@ -281,18 +281,26 @@ export class AuthService {
 
   static async verifyTOTP(email: string, code: string, isBackupCode = false) {
     try {
-      console.log('Verifying TOTP for email:', email);
+      console.log('Verifying TOTP for email:', email, 'isBackupCode:', isBackupCode);
 
       const { data, error } = await supabase.functions.invoke('verify-totp-login', {
         body: { 
           email, 
-          code,
+          token: code,
           isBackupCode 
         }
       });
       
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error);
+      if (error) {
+        console.error('TOTP verification invoke error:', error);
+        throw error;
+      }
+      
+      if (!data || !data.success) {
+        const errorMessage = data?.error || 'TOTP patvirtinimo klaida';
+        console.error('TOTP verification failed:', errorMessage);
+        throw new Error(errorMessage);
+      }
 
       console.log('TOTP verification successful');
       return { error: null };

@@ -31,5 +31,11 @@ verify_jwt = false
 [functions.send-notification-email]
 verify_jwt = false
 
+[functions.setup-totp]
+verify_jwt = true
+
 [functions.verify-totp-setup]
 verify_jwt = true
+
+[functions.verify-totp-login]
+verify_jwt = false

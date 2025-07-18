@@ -36,10 +36,23 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
   const setupTOTP = async () => {
     setLoading(true);
     try {
+      console.log('Starting TOTP setup...');
       const { data, error } = await supabase.functions.invoke('setup-totp');
       
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error);
+      console.log('TOTP setup response:', { data, error });
+      
+      if (error) {
+        console.error('TOTP setup error:', error);
+        throw error;
+      }
+      
+      if (!data || !data.success) {
+        const errorMessage = data?.error || 'TOTP konfigūracijos klaida';
+        console.error('TOTP setup failed:', errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      console.log('TOTP setup successful, generating QR code...');
 
       // Generate QR code
       const qrDataUrl = await QRCode.toDataURL(data.qrCodeUrl, {
@@ -51,43 +64,71 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
       setQrCodeDataUrl(qrDataUrl);
       setSecret(data.secret);
       setStep('verify');
+      
+      console.log('QR code generated, moving to verify step');
     } catch (error: any) {
       console.error('TOTP setup error:', error);
+      const errorMessage = error.message || error.error || 'TOTP konfigūracijos klaida';
       toast({
-        title: t('totpSetup.toast.setupError'),
-        description: error.message || t('totpSetup.toast.setupErrorDescription'),
+        title: "TOTP konfigūracijos klaida",
+        description: errorMessage,
         variant: "destructive"
       });
+      
+      // Reset to allow retry
+      setStep('setup');
     } finally {
       setLoading(false);
     }
   };
 
   const verifyTOTP = async () => {
-    if (totpCode.length !== 6) return;
+    if (totpCode.length !== 6) {
+      toast({
+        title: "Neteisingas kodas",
+        description: "Įveskite 6 skaitmenų kodą",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setLoading(true);
     try {
+      console.log('Verifying TOTP setup with code:', totpCode);
+      
       const { data, error } = await supabase.functions.invoke('verify-totp-setup', {
-        body: { code: totpCode }
+        body: { token: totpCode }
       });
       
-      if (error) throw error;
-      if (!data.success) throw new Error(data.error);
+      console.log('TOTP verification response:', { data, error });
+      
+      if (error) {
+        console.error('TOTP verification error:', error);
+        throw error;
+      }
+      
+      if (!data || !data.success) {
+        const errorMessage = data?.error || 'TOTP patvirtinimo klaida';
+        console.error('TOTP verification failed:', errorMessage);
+        throw new Error(errorMessage);
+      }
 
       setBackupCodes(data.backupCodes || []);
       setStep('complete');
       
+      console.log('TOTP verification successful, backup codes:', data.backupCodes?.length);
+      
       toast({
-        title: t('totpSetup.toast.setupSuccess'),
-        description: t('totpSetup.toast.setupSuccessDescription'),
+        title: "TOTP sėkmingai sukonfigūruotas",
+        description: "Dviejų faktorių autentifikavimas įjungtas",
         variant: "default"
       });
     } catch (error: any) {
       console.error('TOTP verification error:', error);
+      const errorMessage = error.message || error.error || 'TOTP patvirtinimo klaida';
       toast({
-        title: t('totpSetup.toast.verifyError'),
-        description: error.message || t('totpSetup.toast.verifyErrorDescription'),
+        title: "TOTP patvirtinimo klaida",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -98,20 +139,20 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
   const copySecret = () => {
     navigator.clipboard.writeText(secret);
     toast({
-      title: t('totpSetup.toast.copied'),
-      description: t('totpSetup.toast.copiedDescription'),
+      title: "Nukopijuota",
+      description: "Slaptasis kodas nukopijuotas į iškarpinę",
       variant: "default"
     });
   };
 
   const downloadBackupCodes = () => {
-    const content = `${t('dashboard.title')} - ${t('totpSetup.success.backupCodes')}\n\n${t('totpSetup.success.backupDescription')}\n\n${backupCodes.join('\n')}\n\n${t('userProfile.registrationDate')}: ${new Date().toLocaleString()}`;
+    const content = `VILTB Bankas - Atsarginiai kodai\n\nŠie kodai leidžia prisijungti, jei neturite prieigos prie autentifikavimo programėlės.\n\n${backupCodes.join('\n')}\n\nSukurta: ${new Date().toLocaleString()}`;
     
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'banko-sistema-backup-codes.txt';
+    a.download = 'viltb-atsarginiai-kodai.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -139,15 +180,15 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-center flex items-center justify-center gap-2">
             <Shield className="w-6 h-6" />
-            {required ? t('totpSetup.requiredTitle') : t('totpSetup.title')}
+            {required ? "Privalomas TOTP nustatymas" : "TOTP nustatymas"}
           </DialogTitle>
         </DialogHeader>
 
         {required && (
           <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg text-sm">
-            <p className="text-yellow-800 font-medium">{t('totpSetup.requiredWarning')}</p>
+            <p className="text-yellow-800 font-medium">Saugumo sumetimais TOTP yra privalomas</p>
             <p className="text-yellow-700 mt-1">
-              {t('totpSetup.requiredDescription')}
+              Įdiekite autentifikavimo programėlę ir sukonfigūrūokite TOTP
             </p>
           </div>
         )}
@@ -157,7 +198,7 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
             <div className="flex justify-center">
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
-            <p>{t('totpSetup.setupInProgress')}</p>
+            <p>Konfigūruojama TOTP...</p>
           </div>
         )}
 
@@ -165,18 +206,18 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
           <div className="space-y-4">
             <div className="text-center space-y-4">
               <p className="text-sm text-muted-foreground">
-                {t('totpSetup.step1')}
+                1. Nuskenuokite QR kodą savo autentifikavimo programėlėje
               </p>
               
               {qrCodeDataUrl && (
                 <div className="flex justify-center">
-                  <img src={qrCodeDataUrl} alt="QR kodas" className="border rounded" />
+                  <img src={qrCodeDataUrl} alt="TOTP QR kodas" className="border rounded" />
                 </div>
               )}
 
               <div className="space-y-2">
                 <p className="text-xs text-muted-foreground">
-                  {t('totpSetup.manualEntry')}
+                  Arba įveskite kodą rankiniu būdu:
                 </p>
                 <div className="flex items-center gap-2">
                   <Input 
@@ -197,7 +238,7 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
 
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
-                  {t('totpSetup.step2')}
+                  2. Įveskite 6 skaitmenų kodą iš programėlės
                 </p>
                 <div className="flex justify-center">
                   <InputOTP
@@ -224,17 +265,17 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
                 disabled={loading || totpCode.length !== 6}
               >
                 {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                {loading ? t('totpSetup.verifying') : t('totpSetup.verify')}
+                {loading ? 'Tikrinama...' : 'Patvirtinti'}
               </Button>
             </div>
 
             <div className="bg-muted/50 p-3 rounded-lg text-xs space-y-1">
-              <p className="font-medium">{t('totpSetup.apps.title')}</p>
+              <p className="font-medium">Rekomenduojamos programėlės:</p>
               <ul className="text-muted-foreground">
-                <li>• {t('totpSetup.apps.google')}</li>
-                <li>• {t('totpSetup.apps.microsoft')}</li>
-                <li>• {t('totpSetup.apps.authy')}</li>
-                <li>• {t('totpSetup.apps.onepassword')}</li>
+                <li>• Google Authenticator</li>
+                <li>• Microsoft Authenticator</li>
+                <li>• Authy</li>
+                <li>• 1Password</li>
               </ul>
             </div>
           </div>
@@ -244,16 +285,16 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
           <div className="space-y-4">
             <div className="text-center">
               <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-500" />
-              <h3 className="text-lg font-semibold mb-2">{t('totpSetup.success.title')}</h3>
+              <h3 className="text-lg font-semibold mb-2">TOTP sėkmingai sukonfigūruotas!</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {t('totpSetup.success.description')}
+                Dviejų faktorių autentifikavimas įjungtas jūsų paskyroje
               </p>
             </div>
 
             <div className="space-y-3">
-              <Label className="text-sm font-medium">{t('totpSetup.success.backupCodes')}</Label>
+              <Label className="text-sm font-medium">Atsarginiai kodai</Label>
               <p className="text-xs text-muted-foreground">
-                {t('totpSetup.success.backupDescription')}
+                Išsaugokite šiuos kodus saugioje vietoje. Jie leis prisijungti be programėlės.
               </p>
               
               <div className="bg-muted/50 p-3 rounded border font-mono text-xs space-y-1 max-h-32 overflow-y-auto">
@@ -268,11 +309,11 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
                 className="w-full"
               >
                 <Download className="w-4 h-4 mr-2" />
-                {t('totpSetup.success.download')}
+                Atsisiųsti atsarginius kodus
               </Button>
 
               <Button onClick={handleComplete} className="w-full">
-                {t('totpSetup.success.complete')}
+                Baigti
               </Button>
             </div>
           </div>

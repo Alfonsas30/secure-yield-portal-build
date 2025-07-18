@@ -1,3 +1,4 @@
+
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { TOTP } from 'https://esm.sh/otpauth@9.4.0'
@@ -14,10 +15,19 @@ serve(async (req) => {
   }
 
   try {
-    const { email, token } = await req.json()
+    const { email, token, isBackupCode = false } = await req.json()
     
     if (!email || !token) {
-      throw new Error('Email and token are required')
+      throw new Error('El. paštas ir kodas yra privalomi')
+    }
+
+    // Validate token format
+    if (!isBackupCode && (token.length !== 6 || !/^\d{6}$/.test(token))) {
+      throw new Error('TOTP kodas turi būti 6 skaitmenų')
+    }
+
+    if (isBackupCode && (token.length !== 8 || !/^[A-F0-9]{8}$/.test(token.toUpperCase()))) {
+      throw new Error('Atsarginis kodas turi būti 8 simbolių')
     }
 
     const supabaseClient = createClient(
@@ -25,59 +35,98 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    console.log('Verifying TOTP login for email:', email)
+    console.log('Verifying TOTP login for email:', email, 'isBackupCode:', isBackupCode)
 
     // Get user profile with TOTP secret
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
-      .select('totp_secret, totp_enabled, user_id')
+      .select('totp_secret, totp_enabled, user_id, email')
       .eq('email', email)
       .single()
 
     if (profileError || !profile) {
       console.error('Profile not found:', profileError)
-      throw new Error('User not found')
+      throw new Error('Vartotojas nerastas')
     }
 
     if (!profile.totp_enabled || !profile.totp_secret) {
-      throw new Error('TOTP not enabled for this user')
+      throw new Error('TOTP neįjungtas šiam vartotojui')
     }
 
-    // Verify TOTP token
-    const totp = new TOTP({
-      issuer: 'Banko Sistema',
-      label: email,
-      algorithm: 'SHA1',
-      digits: 6,
-      period: 30,
-      secret: profile.totp_secret
-    })
+    let verificationSuccessful = false
 
-    const delta = totp.validate({ token, window: 1 })
-    
-    if (delta === null) {
-      console.log('Invalid TOTP token provided')
-      throw new Error('Invalid TOTP token')
-    }
+    if (isBackupCode) {
+      // Verify backup code
+      const { data: backupCode, error: backupError } = await supabaseClient
+        .from('backup_codes')
+        .select('id, used')
+        .eq('user_id', profile.user_id)
+        .eq('code', token.toUpperCase())
+        .eq('used', false)
+        .single()
 
-    console.log('TOTP verification successful for user:', profile.user_id)
-
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: 'TOTP verification successful',
-        user_id: profile.user_id
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      if (backupError || !backupCode) {
+        console.log('Invalid or used backup code for user:', profile.user_id)
+        throw new Error('Neteisingas arba jau panaudotas atsarginis kodas')
       }
-    )
+
+      // Mark backup code as used
+      const { error: markUsedError } = await supabaseClient
+        .from('backup_codes')
+        .update({ 
+          used: true, 
+          used_at: new Date().toISOString() 
+        })
+        .eq('id', backupCode.id)
+
+      if (markUsedError) {
+        console.error('Error marking backup code as used:', markUsedError)
+        throw new Error('Nepavyko atnaujinti atsarginio kodo')
+      }
+
+      verificationSuccessful = true
+      console.log('Backup code verification successful for user:', profile.user_id)
+    } else {
+      // Verify TOTP token
+      const totp = new TOTP({
+        issuer: 'VILTB Bankas',
+        label: email,
+        algorithm: 'SHA1',
+        digits: 6,
+        period: 30,
+        secret: profile.totp_secret
+      })
+
+      const delta = totp.validate({ token, window: 1 })
+      
+      if (delta === null) {
+        console.log('Invalid TOTP token provided for user:', profile.user_id)
+        throw new Error('Neteisingas TOTP kodas. Patikrinkite laiką ir bandykite dar kartą.')
+      }
+
+      verificationSuccessful = true
+      console.log('TOTP verification successful for user:', profile.user_id, 'delta:', delta)
+    }
+
+    if (verificationSuccessful) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'TOTP patvirtinimas sėkmingas',
+          user_id: profile.user_id
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
   } catch (error) {
     console.error('TOTP login verification error:', error)
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Internal server error'
+        success: false,
+        error: error.message || 'TOTP patvirtinimo klaida'
       }),
       { 
         status: 400, 
