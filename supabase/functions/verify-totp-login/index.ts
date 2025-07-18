@@ -36,6 +36,7 @@ serve(async (req) => {
     )
 
     console.log('Verifying TOTP login for email:', email, 'isBackupCode:', isBackupCode)
+    console.log('Server time:', new Date().toISOString())
 
     // Get user profile with TOTP secret
     const { data: profile, error: profileError } = await supabaseClient
@@ -97,11 +98,20 @@ serve(async (req) => {
         secret: profile.totp_secret
       })
 
-      const delta = totp.validate({ token, window: 1 })
+      // Increased window from 1 to 2 for better time synchronization (±60 seconds)
+      const delta = totp.validate({ token, window: 2 })
+      
+      console.log('TOTP validation attempt:', {
+        token,
+        window: 2,
+        delta,
+        serverTime: new Date().toISOString(),
+        secret: profile.totp_secret.substring(0, 8) + '...' // Log partial secret for debugging
+      })
       
       if (delta === null) {
         console.log('Invalid TOTP token provided for user:', profile.user_id)
-        throw new Error('Neteisingas TOTP kodas. Patikrinkite laiką ir bandykite dar kartą.')
+        throw new Error('Neteisingas TOTP kodas. Patikrinkite, ar jūsų įrenginio laikas yra sinchronizuotas. TOTP kodai veikia 30 sekundžių ir priklauso nuo tikslaus laiko. Bandykite naują kodą iš programėlės.')
       }
 
       verificationSuccessful = true

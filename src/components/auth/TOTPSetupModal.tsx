@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -5,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Loader2, Shield, Copy, Download, CheckCircle } from "lucide-react";
+import { Loader2, Shield, Copy, Download, CheckCircle, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import QRCode from "qrcode";
@@ -267,6 +268,22 @@ export function TOTPSetupModal({ open, onOpenChange, onSetupComplete, required =
                 {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                 {loading ? 'Tikrinama...' : 'Patvirtinti'}
               </Button>
+            </div>
+
+            {/* Time synchronization warning */}
+            <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-xs space-y-2">
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-blue-600" />
+                <p className="font-medium text-blue-800">Svarbu apie laiką</p>
+              </div>
+              <p className="text-blue-700">
+                TOTP kodai priklauso nuo tikslaus laiko. Jei kodas neveikia:
+              </p>
+              <ul className="text-blue-700 list-disc list-inside space-y-1">
+                <li>Patikrinkite įrenginio laiko nustatymus</li>
+                <li>Įjunkite automatinį laiko sinchronizavimą</li>
+                <li>Bandykite naują kodą (kodai keičiasi kas 30 sek.)</li>
+              </ul>
             </div>
 
             <div className="bg-muted/50 p-3 rounded-lg text-xs space-y-1">
