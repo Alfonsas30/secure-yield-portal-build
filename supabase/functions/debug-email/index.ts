@@ -1,5 +1,6 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -42,34 +43,45 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('🎯 Target email:', adminEmail);
 
     // Log email details before sending
-    const emailSubject = `Email Test - ${new Date().toLocaleTimeString()}`;
+    const emailSubject = `VILTB Email Test - ${new Date().toLocaleTimeString()}`;
     const emailContent = `Email test sent at: ${new Date().toLocaleString('lt-LT')}`;
     
     console.log('📧 ========== EMAIL SENDING DETAILS ==========');
-    console.log('📧 From:', 'LTB Bankas <onboarding@resend.dev>');
+    console.log('📧 From:', 'VILTB Bankas <noreply@viltb.com>');
     console.log('📧 To:', adminEmail);
     console.log('📧 Subject:', emailSubject);
     console.log('📧 Content Length:', emailContent.length, 'characters');
     console.log('📧 Timestamp:', new Date().toISOString());
-    console.log('📧 Using verified Resend sender address');
-    console.log('📧 Note: To use custom domain, verify ltb-bankas.com in Resend');
+    console.log('📧 Using verified VILTB domain');
+    console.log('📧 Domain viltb.com should be verified in Resend');
     console.log('📧 =============================================');
 
-    // Send test email with improved sender and simpler content
+    // Send test email with VILTB branding
     console.log('📤 Attempting to send test email...');
     const startTime = Date.now();
     
     const emailResponse = await resend.emails.send({
-      from: `LTB Bankas <onboarding@resend.dev>`,
+      from: `VILTB Bankas <noreply@viltb.com>`,
       to: [adminEmail],
       subject: emailSubject,
       html: `
-        <h2>Email Test Successful!</h2>
-        <p>Test sent at: ${new Date().toLocaleString('lt-LT')}</p>
-        <p>Function: debug-email</p>
-        <p>Target: ${adminEmail}</p>
-        <p>Using verified Resend sender address</p>
-        <p>If you see this - email system works!</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h1 style="color: #2563eb; text-align: center;">📧 VILTB Email Test Success!</h1>
+          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>Test sent at:</strong> ${new Date().toLocaleString('lt-LT')}</p>
+            <p><strong>Function:</strong> debug-email</p>
+            <p><strong>Target:</strong> ${adminEmail}</p>
+            <p><strong>Domain:</strong> viltb.com (verified)</p>
+            <p><strong>Sender:</strong> noreply@viltb.com</p>
+          </div>
+          <p style="color: #16a34a; font-weight: bold; text-align: center;">
+            ✅ If you see this - VILTB email system works perfectly!
+          </p>
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          <p style="font-size: 12px; color: #6b7280; text-align: center;">
+            VILTB Banko Sistema - Patikimas ir saugus
+          </p>
+        </div>
       `,
     });
 
@@ -111,9 +123,11 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: true,
-        message: "Debug email sent successfully",
+        message: "VILTB debug email sent successfully",
         email_id: emailResponse.data?.id,
         sent_to: adminEmail,
+        domain: "viltb.com",
+        sender: "noreply@viltb.com",
         resend_response: emailResponse.data
       }),
       {

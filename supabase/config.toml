@@ -1,3 +1,4 @@
+
 project_id = "khcelroaozkzpyxayvpj"
 
 [functions.send-verification-code]
@@ -16,6 +17,18 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.create-registration-payment]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false
+
+[functions.send-registration-confirmation]
+verify_jwt = false
+
+[functions.send-payment-confirmation]
+verify_jwt = false
+
+[functions.send-notification-email]
 verify_jwt = false
 
 [functions.verify-totp-setup]

@@ -82,13 +82,13 @@ const handler = async (req: Request): Promise<Response> => {
       ? 'This code expires in 5 minutes. If you did not request a login code, please ignore this email.'
       : 'Šis kodas galioja 5 minutes. Jei neprašėte prisijungimo kodo, ignoruokite šį laišką.';
     const footer = isEnglish 
-      ? 'Banking System - Secure Login'
-      : 'Banko Sistema - Saugus prisijungimas';
+      ? 'VILTB Banking System - Secure Login'
+      : 'VILTB Banko Sistema - Saugus prisijungimas';
 
     console.log(`Sending verification code to: ${email} (${isEnglish ? 'EN' : 'LT'})`);
     
     const emailResponse = await resend.emails.send({
-      from: 'LTB Bankas <onboarding@resend.dev>',
+      from: 'VILTB Bankas <noreply@viltb.com>',
       to: [email],
       subject: subject,
       html: `

@@ -227,7 +227,7 @@ serve(async (req) => {
 
       try {
         const emailResponse = await resend.emails.send({
-          from: "VILTB Bankas <onboarding@resend.dev>",
+          from: "VILTB Bankas <noreply@viltb.com>",
           to: [email],
           subject: "🔐 VILTB Patvirtinimo kodas",
           html: `
@@ -266,8 +266,6 @@ serve(async (req) => {
         );
       }
     }
-
-
 
     return new Response(
       JSON.stringify({ error: 'Invalid action' }),
