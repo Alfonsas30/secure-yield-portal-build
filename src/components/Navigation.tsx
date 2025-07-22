@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { Button } from "@/components/ui/button";
@@ -53,7 +52,6 @@ const Navigation = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Scroll progress ir blur efektas
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -114,9 +112,7 @@ const Navigation = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {item.label}
-                {/* Animuotas underline */}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 group-hover:w-full transition-all duration-300 ease-out"></span>
-                {/* Hover glow efektas */}
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md -z-10"></span>
               </button>
             ))}
@@ -137,7 +133,7 @@ const Navigation = () => {
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/50 to-blue-100/0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
                 </Button>
-                {isAdmin && (
+                {user && isAdmin && (
                   <Button 
                     variant="ghost" 
                     onClick={() => navigate('/admin')}
@@ -191,7 +187,6 @@ const Navigation = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-80 bg-white/95 backdrop-blur-md">
-              {/* Fono efektai */}
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-10 right-10 w-3 h-3 bg-blue-300 rounded-full opacity-30 animate-pulse"></div>
                 <div className="absolute bottom-20 left-10 w-2 h-2 bg-green-300 rounded-full opacity-40 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
@@ -239,7 +234,7 @@ const Navigation = () => {
                       <User className="w-4 h-4 mr-2" />
                       {t('navigation.dashboard')}
                     </Button>
-                    {isAdmin && (
+                    {user && isAdmin && (
                       <Button 
                         variant="ghost" 
                         onClick={() => {

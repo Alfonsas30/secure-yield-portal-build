@@ -3,8 +3,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useAdminRole } from "@/hooks/useAdminRole";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, AlertTriangle } from "lucide-react";
+import { Loader2, AlertTriangle, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface AdminProtectedRouteProps {
   children: React.ReactNode;
@@ -14,26 +15,83 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, loading: adminLoading, error } = useAdminRole();
   const navigate = useNavigate();
+  const [timeoutReached, setTimeoutReached] = useState(false);
 
-  console.log('AdminProtectedRoute state:', {
-    user: user?.id,
-    authLoading,
-    adminLoading,
-    isAdmin,
-    error
-  });
+  console.log('=== AdminProtectedRoute Debug ===');
+  console.log('User:', user?.id);
+  console.log('Auth loading:', authLoading);
+  console.log('Admin loading:', adminLoading);
+  console.log('Is admin:', isAdmin);
+  console.log('Error:', error);
 
+  // Add timeout protection - if loading takes too long, show error
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (authLoading || adminLoading) {
+        console.log('AdminProtectedRoute: Timeout reached while loading');
+        setTimeoutReached(true);
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(timeout);
+  }, [authLoading, adminLoading]);
+
+  // Reset timeout when loading states change
+  useEffect(() => {
+    if (!authLoading && !adminLoading) {
+      setTimeoutReached(false);
+    }
+  }, [authLoading, adminLoading]);
+
+  // Show timeout error
+  if (timeoutReached) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-amber-500" />
+              Laukimo limitas viršytas
+            </CardTitle>
+            <CardDescription>
+              Sistemos atsakymas užtruko per ilgai
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Patikrinimas užtruko ilgiau nei tikėtasi. Pabandykite perkrauti puslapį.
+            </p>
+            <div className="flex gap-2">
+              <Button onClick={() => window.location.reload()}>
+                Perkrauti
+              </Button>
+              <Button variant="outline" onClick={() => navigate('/')}>
+                Grįžti
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show loading state
   if (authLoading || adminLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
           <p>Tikrinamos administratoriaus teisės...</p>
+          <p className="text-xs text-muted-foreground mt-2">
+            Auth: {authLoading ? 'kraunama' : 'užkrauta'} | 
+            Admin: {adminLoading ? 'kraunama' : 'užkrauta'}
+          </p>
         </div>
       </div>
     );
   }
 
+  // Show auth required
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -54,6 +112,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
     );
   }
 
+  // Show error state
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -83,22 +142,27 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
     );
   }
 
+  // Show access denied
   if (!isAdmin) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Prieiga uždrausta</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-amber-500" />
+              Prieiga uždrausta
+            </CardTitle>
             <CardDescription>
               Jūs neturite administratoriaus teisių
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="text-xs text-muted-foreground mb-4">
+          <CardContent className="space-y-4">
+            <div className="text-xs text-muted-foreground p-3 bg-muted/50 rounded">
               <p>Vartotojas: {user.email}</p>
               <p>ID: {user.id}</p>
+              <p>Admin status: {isAdmin ? 'taip' : 'ne'}</p>
             </div>
-            <Button onClick={() => navigate('/')}>
+            <Button onClick={() => navigate('/')} className="w-full">
               Grįžti į pagrindinį puslapį
             </Button>
           </CardContent>
@@ -107,5 +171,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
     );
   }
 
+  console.log('AdminProtectedRoute: Rendering admin content');
   return <>{children}</>;
 }
