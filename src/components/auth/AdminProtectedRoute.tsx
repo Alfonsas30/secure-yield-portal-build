@@ -12,36 +12,27 @@ interface AdminProtectedRouteProps {
 }
 
 export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
-  console.log('=== AdminProtectedRoute rendering ===');
-  
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, loading: adminLoading, error } = useAdminRole();
   const navigate = useNavigate();
   const [timeoutReached, setTimeoutReached] = useState(false);
-  const [renderCount, setRenderCount] = useState(0);
 
-  useEffect(() => {
-    setRenderCount(prev => prev + 1);
-    console.log(`AdminProtectedRoute render #${renderCount + 1}`);
-  }, []);
-
-  console.log('AdminProtectedRoute Debug:', {
-    user: user?.id,
+  console.log('AdminProtectedRoute:', {
+    user: user?.email,
     authLoading,
     adminLoading, 
     isAdmin,
-    error,
-    timeoutReached
+    hasError: !!error
   });
 
-  // Add timeout protection
+  // Add timeout protection (reduced to 5 seconds)
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (authLoading || adminLoading) {
         console.log('AdminProtectedRoute: Timeout reached');
         setTimeoutReached(true);
       }
-    }, 8000); // 8 second timeout
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [authLoading, adminLoading]);
@@ -55,7 +46,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show timeout error
   if (timeoutReached) {
-    console.log('AdminProtectedRoute: Showing timeout error');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -88,16 +78,11 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show loading state
   if (authLoading || adminLoading) {
-    console.log('AdminProtectedRoute: Showing loading state');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
           <p>Tikrinamos administratoriaus teisės...</p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Auth: {authLoading ? 'kraunama' : 'užkrauta'} | 
-            Admin: {adminLoading ? 'kraunama' : 'užkrauta'}
-          </p>
         </div>
       </div>
     );
@@ -105,7 +90,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show auth required
   if (!user) {
-    console.log('AdminProtectedRoute: No user, showing auth required');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -127,7 +111,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show error state
   if (error) {
-    console.log('AdminProtectedRoute: Showing error state:', error);
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -158,7 +141,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show access denied
   if (!isAdmin) {
-    console.log('AdminProtectedRoute: Not admin, showing access denied');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">

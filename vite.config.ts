@@ -9,17 +9,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    // Fix for client-side routing - handle all routes that don't match files
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/admin/, to: '/index.html' },
-        { from: /^\/dashboard/, to: '/index.html' },
-        { from: /.*/, to: '/index.html' }
-      ]
-    },
   },
   preview: {
-    historyApiFallback: true,
+    host: "::",
+    port: 4173,
   },
   plugins: [
     react(),
