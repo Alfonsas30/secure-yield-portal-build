@@ -11,13 +11,13 @@ export function useAdminRole() {
   const [retryCount, setRetryCount] = useState(0);
 
   const checkAdminRole = useCallback(async (retryAttempt = 0) => {
-    console.log('=== ADMIN ROLE CHECK START ===');
-    console.log('User:', user?.id);
+    console.log('=== useAdminRole - checkAdminRole START ===');
+    console.log('User ID:', user?.id);
     console.log('Session exists:', !!session);
     console.log('Retry attempt:', retryAttempt);
 
     if (!user) {
-      console.log('No user - setting isAdmin to false');
+      console.log('useAdminRole: No user, setting isAdmin to false');
       setIsAdmin(false);
       setLoading(false);
       setError(null);
@@ -26,7 +26,7 @@ export function useAdminRole() {
     }
 
     try {
-      console.log('Checking admin role for user:', user.id);
+      console.log('useAdminRole: Checking admin role for user:', user.id);
       setError(null);
       
       const { data: roles, error: queryError } = await supabase
@@ -34,22 +34,22 @@ export function useAdminRole() {
         .select('role')
         .eq('user_id', user.id);
 
-      console.log('User roles query result:', { roles, error: queryError });
+      console.log('useAdminRole: Query result:', { roles, error: queryError });
 
       if (queryError) {
-        console.error('Error fetching admin role:', queryError);
+        console.error('useAdminRole: Query error:', queryError);
         
-        // Retry logic for network errors
-        if (retryAttempt < 3 && (
+        // Retry for specific errors
+        if (retryAttempt < 2 && (
           queryError.message?.includes('fetch') || 
           queryError.message?.includes('network') || 
           queryError.code === 'PGRST301'
         )) {
-          console.log(`Retrying admin role check (attempt ${retryAttempt + 1})`);
+          console.log(`useAdminRole: Retrying (attempt ${retryAttempt + 1})`);
           setTimeout(() => {
             setRetryCount(retryAttempt + 1);
             checkAdminRole(retryAttempt + 1);
-          }, 1000 * (retryAttempt + 1)); // Exponential backoff
+          }, 1000 * (retryAttempt + 1));
           return;
         }
         
@@ -57,16 +57,16 @@ export function useAdminRole() {
         setIsAdmin(false);
       } else {
         const hasAdminRole = roles?.some(roleData => roleData.role === 'admin') || false;
-        console.log('Has admin role:', hasAdminRole);
+        console.log('useAdminRole: Has admin role:', hasAdminRole);
         setIsAdmin(hasAdminRole);
         setRetryCount(0);
       }
     } catch (error: any) {
-      console.error('Admin role check exception:', error);
+      console.error('useAdminRole: Exception:', error);
       
-      // Retry for network exceptions
-      if (retryAttempt < 3) {
-        console.log(`Retrying admin role check after exception (attempt ${retryAttempt + 1})`);
+      // Retry for exceptions
+      if (retryAttempt < 2) {
+        console.log(`useAdminRole: Retrying after exception (attempt ${retryAttempt + 1})`);
         setTimeout(() => {
           setRetryCount(retryAttempt + 1);
           checkAdminRole(retryAttempt + 1);
@@ -78,22 +78,25 @@ export function useAdminRole() {
       setIsAdmin(false);
     } finally {
       setLoading(false);
+      console.log('=== useAdminRole - checkAdminRole END ===');
     }
   }, [user, session]);
 
   useEffect(() => {
-    console.log('useAdminRole effect triggered');
+    console.log('useAdminRole: Effect triggered, user changed');
     setLoading(true);
     
-    // Small delay to prevent race conditions and allow auth to stabilize
     const timeoutId = setTimeout(() => {
       checkAdminRole(0);
     }, 100);
     
-    return () => clearTimeout(timeoutId);
+    return () => {
+      console.log('useAdminRole: Cleanup timeout');
+      clearTimeout(timeoutId);
+    };
   }, [checkAdminRole]);
 
-  console.log('useAdminRole hook state:', { 
+  console.log('useAdminRole: Current state:', { 
     isAdmin, 
     loading, 
     error, 

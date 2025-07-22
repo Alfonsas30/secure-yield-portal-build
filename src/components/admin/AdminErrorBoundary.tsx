@@ -11,6 +11,7 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
+  errorInfo?: React.ErrorInfo;
 }
 
 export class AdminErrorBoundary extends React.Component<Props, State> {
@@ -20,13 +21,22 @@ export class AdminErrorBoundary extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    console.error('Admin Error Boundary caught error:', error);
+    console.error('=== AdminErrorBoundary - Error caught ===');
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    console.error('========================================');
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Admin Error Boundary - Component stack:', errorInfo.componentStack);
-    console.error('Admin Error Boundary - Error:', error);
+    console.error('=== AdminErrorBoundary - Component Info ===');
+    console.error('Component stack:', errorInfo.componentStack);
+    console.error('Error:', error);
+    console.error('Error Info:', errorInfo);
+    console.error('==========================================');
+    
+    this.setState({ errorInfo });
   }
 
   render() {
@@ -44,18 +54,43 @@ export class AdminErrorBoundary extends React.Component<Props, State> {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-sm text-muted-foreground">
-                <strong>Klaida:</strong> {this.state.error?.message || 'Nežinoma klaida'}
+              <div className="text-sm text-muted-foreground space-y-2">
+                <div>
+                  <strong>Klaida:</strong> {this.state.error?.message || 'Nežinoma klaida'}
+                </div>
+                {this.state.error?.name && (
+                  <div>
+                    <strong>Tipas:</strong> {this.state.error.name}
+                  </div>
+                )}
+                <details className="mt-2">
+                  <summary className="cursor-pointer text-xs">Techninė informacija</summary>
+                  <pre className="text-xs mt-2 p-2 bg-muted rounded overflow-auto max-h-32">
+                    {this.state.error?.stack || 'Stack trace neprieinamas'}
+                  </pre>
+                </details>
               </div>
-              <Button 
-                onClick={() => {
-                  this.setState({ hasError: false, error: undefined });
-                  window.location.reload();
-                }}
-                className="w-full"
-              >
-                Perkrauti puslapį
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={() => {
+                    console.log('AdminErrorBoundary: Clearing error state');
+                    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+                  }}
+                  variant="outline"
+                  size="sm"
+                >
+                  Bandyti dar kartą
+                </Button>
+                <Button 
+                  onClick={() => {
+                    console.log('AdminErrorBoundary: Reloading page');
+                    window.location.reload();
+                  }}
+                  size="sm"
+                >
+                  Perkrauti puslapį
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

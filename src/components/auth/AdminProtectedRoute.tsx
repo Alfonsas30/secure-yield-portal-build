@@ -12,31 +12,41 @@ interface AdminProtectedRouteProps {
 }
 
 export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
+  console.log('=== AdminProtectedRoute rendering ===');
+  
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, loading: adminLoading, error } = useAdminRole();
   const navigate = useNavigate();
   const [timeoutReached, setTimeoutReached] = useState(false);
+  const [renderCount, setRenderCount] = useState(0);
 
-  console.log('=== AdminProtectedRoute Debug ===');
-  console.log('User:', user?.id);
-  console.log('Auth loading:', authLoading);
-  console.log('Admin loading:', adminLoading);
-  console.log('Is admin:', isAdmin);
-  console.log('Error:', error);
+  useEffect(() => {
+    setRenderCount(prev => prev + 1);
+    console.log(`AdminProtectedRoute render #${renderCount + 1}`);
+  }, []);
 
-  // Add timeout protection - if loading takes too long, show error
+  console.log('AdminProtectedRoute Debug:', {
+    user: user?.id,
+    authLoading,
+    adminLoading, 
+    isAdmin,
+    error,
+    timeoutReached
+  });
+
+  // Add timeout protection
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (authLoading || adminLoading) {
-        console.log('AdminProtectedRoute: Timeout reached while loading');
+        console.log('AdminProtectedRoute: Timeout reached');
         setTimeoutReached(true);
       }
-    }, 10000); // 10 second timeout
+    }, 8000); // 8 second timeout
 
     return () => clearTimeout(timeout);
   }, [authLoading, adminLoading]);
 
-  // Reset timeout when loading states change
+  // Reset timeout when loading completes
   useEffect(() => {
     if (!authLoading && !adminLoading) {
       setTimeoutReached(false);
@@ -45,6 +55,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show timeout error
   if (timeoutReached) {
+    console.log('AdminProtectedRoute: Showing timeout error');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -77,6 +88,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show loading state
   if (authLoading || adminLoading) {
+    console.log('AdminProtectedRoute: Showing loading state');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -93,6 +105,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show auth required
   if (!user) {
+    console.log('AdminProtectedRoute: No user, showing auth required');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -114,6 +127,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show error state
   if (error) {
+    console.log('AdminProtectedRoute: Showing error state:', error);
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -144,6 +158,7 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
 
   // Show access denied
   if (!isAdmin) {
+    console.log('AdminProtectedRoute: Not admin, showing access denied');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="w-full max-w-md">
@@ -172,5 +187,30 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
   }
 
   console.log('AdminProtectedRoute: Rendering admin content');
-  return <>{children}</>;
+  
+  try {
+    return <>{children}</>;
+  } catch (error) {
+    console.error('AdminProtectedRoute: Error rendering children:', error);
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-red-500" />
+              Renderavimo klaida
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">
+              Įvyko klaida rodant administratoriaus panelę
+            </p>
+            <Button onClick={() => window.location.reload()}>
+              Perkrauti puslapį
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 }
