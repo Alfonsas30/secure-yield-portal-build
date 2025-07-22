@@ -17,19 +17,11 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
   const navigate = useNavigate();
   const [timeoutReached, setTimeoutReached] = useState(false);
 
-  console.log('AdminProtectedRoute:', {
-    user: user?.email,
-    authLoading,
-    adminLoading, 
-    isAdmin,
-    hasError: !!error
-  });
-
-  // Add timeout protection (reduced to 5 seconds)
+  // Add timeout protection (5 seconds)
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (authLoading || adminLoading) {
-        console.log('AdminProtectedRoute: Timeout reached');
+        console.log('AdminProtectedRoute: Timeout reached after 5 seconds');
         setTimeoutReached(true);
       }
     }, 5000);
@@ -168,8 +160,6 @@ export function AdminProtectedRoute({ children }: AdminProtectedRouteProps) {
     );
   }
 
-  console.log('AdminProtectedRoute: Rendering admin content');
-  
   try {
     return <>{children}</>;
   } catch (error) {

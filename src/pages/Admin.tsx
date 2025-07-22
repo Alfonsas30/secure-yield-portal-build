@@ -8,33 +8,43 @@ import { AdminInterestManagement } from '@/components/admin/AdminInterestManagem
 import { AdminErrorBoundary } from '@/components/admin/AdminErrorBoundary';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, BarChart, DollarSign, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Users, BarChart, DollarSign, Settings, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
-  console.log('=== ADMIN COMPONENT RENDER START ===');
-  
   const { user } = useAuth();
-  const [renderCount, setRenderCount] = useState(0);
+  const navigate = useNavigate();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setRenderCount(prev => prev + 1);
-    console.log(`Admin component render #${renderCount + 1}`);
-    console.log('Admin component user:', user?.id);
-  }, [renderCount, user]);
-
-  console.log('Admin component rendering main content');
+    console.log('Full Admin panel loaded for user:', user?.email);
+    setIsLoaded(true);
+  }, [user]);
 
   return (
     <AdminErrorBoundary>
       <div className="min-h-screen bg-background">
         <div className="container mx-auto py-8 px-4">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Administratoriaus panelė</h1>
-            <p className="text-muted-foreground mt-2">
-              Valdykite vartotojus, finansus ir sistemos nustatymus
-            </p>
-            <div className="text-xs text-muted-foreground mt-1">
-              Render #{renderCount} | User: {user?.email}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h1 className="text-3xl font-bold text-foreground">Pilna administratoriaus panelė</h1>
+                <p className="text-muted-foreground mt-2">
+                  Valdykite vartotojus, finansus ir sistemos nustatymus
+                </p>
+              </div>
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/admin')}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Atgal į paprastą panelę
+              </Button>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Vartotojas: {user?.email} | Status: {isLoaded ? 'Užkrauta' : 'Kraunama...'}
             </div>
           </div>
 
@@ -97,7 +107,7 @@ const Admin = () => {
                   <CardDescription>
                     Konfigūruokite sistemos parametrus
                   </CardDescription>
-                </CardHeader>
+                  </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
                     Sistemos nustatymai bus pridėti ateityje...

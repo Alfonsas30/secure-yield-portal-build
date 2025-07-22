@@ -4,15 +4,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Clock, User } from 'lucide-react';
+import { Shield, Clock, User, Settings } from 'lucide-react';
 
 export function SimpleAdminPage() {
-  console.log('=== SimpleAdminPage rendering ===');
-  
   const { user } = useAuth();
   const navigate = useNavigate();
-  
-  console.log('SimpleAdminPage - User:', user?.email);
   
   return (
     <div className="min-h-screen bg-background">
@@ -21,7 +17,7 @@ export function SimpleAdminPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-6 h-6 text-green-500" />
-              Simple Admin Page
+              Administratoriaus panelė
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -57,7 +53,8 @@ export function SimpleAdminPage() {
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit',
-                        second: '2-digit'
+                        second: '2-digit',
+                        timeZone: 'Europe/Vilnius'
                       })}
                     </div>
                   </div>
@@ -67,8 +64,9 @@ export function SimpleAdminPage() {
               <div className="flex gap-3 pt-4">
                 <Button 
                   onClick={() => navigate('/admin-full')}
-                  className="flex-1"
+                  className="flex-1 flex items-center gap-2"
                 >
+                  <Settings className="w-4 h-4" />
                   Eiti į pilną admin panelę
                 </Button>
                 <Button 
@@ -78,6 +76,10 @@ export function SimpleAdminPage() {
                 >
                   Grįžti į dashboard
                 </Button>
+              </div>
+
+              <div className="text-xs text-center text-muted-foreground pt-4 border-t">
+                Jei pilna panelė nerodo 404 klaidą, routing problema išspręsta ✓
               </div>
             </div>
           </CardContent>

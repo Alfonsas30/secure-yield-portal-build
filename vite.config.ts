@@ -9,10 +9,12 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    historyApiFallback: true,
   },
   preview: {
     host: "::",
     port: 4173,
+    historyApiFallback: true,
   },
   plugins: [
     react(),
